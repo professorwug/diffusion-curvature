@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A battery of randomly generated manifold surfaces in any dimension, sampled correctly, and useful for testing and training models on curvature">
+
+<title>diffusion_curvature - Random Surfaces</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="diffusion_curvature - Random Surfaces">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://professorwug.github.io/diffusion_curvature/library/Random Surfaces_files/figure-html/cell-28-output-1.png">
+<meta property="og:site-name" content="diffusion_curvature">
+<meta property="og:image:height" content="790">
+<meta property="og:image:width" content="766">
+<meta name="twitter:title" content="diffusion_curvature - Random Surfaces">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://professorwug.github.io/diffusion_curvature/library/Random Surfaces_files/figure-html/cell-28-output-1.png">
+<meta name="twitter:image-height" content="790">
+<meta name="twitter:image-width" content="766">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">diffusion_curvature</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/professorwug/diffusion_curvature" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../library/Comparison Space Construction.html">library</a></li><li class="breadcrumb-item"><a href="../library/Random Surfaces.html">Random Surfaces</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">documentation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../documentation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Curvature</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">experiments</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a Visual Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a A Visual Battery of Benchmarks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a1 DC of Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a1 Computing the diffusion curvature of the battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a1a DC of LowD High Sample Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a1a Computing the diffusion curvature of the battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a2 Hickok Curvature of Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a2 Hickok Curvature of Battery.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3b Hickok Comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3b Hickok Comparison.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3c Sampling Experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3c Sampling Experiments on Diffusion Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3d Detecting Negative Curvature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3d Detecting Negative Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3d1 Effects of Graph Construction on Negative Curvature Detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3d1 Effects of Graph Construction on Negative Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e Curvature with (Neural) Flattening.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e Curvature Via (Neural) Flattening</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e1 Flattening with Diffusion Models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e1 Flattening with Diffusion Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e2 Neural Flattening with Gromov Wasserstein.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e2 Neural Flattening with Gromov Wasserstein</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Curvature by Quadratic Fitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scalar Curvature by Volume Comparison</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Diffusion Laziness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measurements of Diffusion Laziness</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Explorations in Lazy-first diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explorations in Lazy-first Diffusion Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Neumann Heat Kernel via Chebyshev Approximation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analytic estimation of the heat kernel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">library</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Comparison Space Construction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison Space Construction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Construct Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a Construct Battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Implementation (PyGSP + JAX)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Curvature Enhanced Spectral Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1d Curvature Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Datasets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Entropy for Optimal t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Entropy for Optimal t.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Laziness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Laziness Estimators</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Ricci Curvature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Ricci Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Graphs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph Creation Utils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Heat Diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heat Diffusion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Kernels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kernels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Manifold Distances.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Manifold Distances</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Mean Flat Entropies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1c1 Mean Entropy of Uniform Flat Spaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Random Surfaces.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Random Surfaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Utils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Utils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Volume Estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Volume Estimation with Heat Diffusion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/continuous_normalizing_flows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapping the Data to a Flat Space with Continuous Normalizing Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#function-for-a-random-surface" id="toc-function-for-a-random-surface" class="nav-link active" data-scroll-target="#function-for-a-random-surface">Function for a random surface</a>
+  <ul>
+  <li><a href="#random_polynomial" id="toc-random_polynomial" class="nav-link" data-scroll-target="#random_polynomial">random_polynomial</a></li>
+  <li><a href="#random_surface" id="toc-random_surface" class="nav-link" data-scroll-target="#random_surface">random_surface</a></li>
+  </ul></li>
+  <li><a href="#rejection-sampling" id="toc-rejection-sampling" class="nav-link" data-scroll-target="#rejection-sampling">Rejection Sampling</a>
+  <ul>
+  <li><a href="#the-determinant-problem" id="toc-the-determinant-problem" class="nav-link" data-scroll-target="#the-determinant-problem">The Determinant Problem</a>
+  <ul class="collapse">
+  <li><a href="#manifold_density" id="toc-manifold_density" class="nav-link" data-scroll-target="#manifold_density">manifold_density</a></li>
+  <li><a href="#max_value" id="toc-max_value" class="nav-link" data-scroll-target="#max_value">max_value</a></li>
+  <li><a href="#rejection_sample_from_surface" id="toc-rejection_sample_from_surface" class="nav-link" data-scroll-target="#rejection_sample_from_surface">rejection_sample_from_surface</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#curvature-computation" id="toc-curvature-computation" class="nav-link" data-scroll-target="#curvature-computation">Curvature Computation</a>
+  <ul>
+  <li><a href="#second_fundamental_form" id="toc-second_fundamental_form" class="nav-link" data-scroll-target="#second_fundamental_form">second_fundamental_form</a></li>
+  <li><a href="#riemannian_curvature_tensor" id="toc-riemannian_curvature_tensor" class="nav-link" data-scroll-target="#riemannian_curvature_tensor">riemannian_curvature_tensor</a></li>
+  <li><a href="#scalar_curvature_at_origin" id="toc-scalar_curvature_at_origin" class="nav-link" data-scroll-target="#scalar_curvature_at_origin">scalar_curvature_at_origin</a></li>
+  </ul></li>
+  <li><a href="#samples-and-curvature" id="toc-samples-and-curvature" class="nav-link" data-scroll-target="#samples-and-curvature">Samples and Curvature</a>
+  <ul>
+  <li><a href="#samples_from_random_surface" id="toc-samples_from_random_surface" class="nav-link" data-scroll-target="#samples_from_random_surface">samples_from_random_surface</a></li>
+  </ul></li>
+  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">Tests</a>
+  <ul>
+  <li><a href="#sanity-check-on-torus" id="toc-sanity-check-on-torus" class="nav-link" data-scroll-target="#sanity-check-on-torus">Sanity Check on Torus</a></li>
+  <li><a href="#sanity-check-on-sphere" id="toc-sanity-check-on-sphere" class="nav-link" data-scroll-target="#sanity-check-on-sphere">Sanity Check on Sphere</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/professorwug/diffusion_curvature/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Random Surfaces</h1>
+</div>
+
+<div>
+  <div class="description">
+    A battery of randomly generated manifold surfaces in any dimension, sampled <em>correctly</em>, and useful for testing and training models on curvature
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>There’s a general paucity of high-dimensional test data. To test diffusion curvature, we developed a battery of benchmark datasets: randomly generated quadric surfaces in arbitrary dimensions, sampled uniformly <em>from the manifold space</em> using rejection sampling. This provides a more challenging benchmark than our toy datasets.</p>
+<section id="function-for-a-random-surface" class="level1">
+<h1>Function for a random surface</h1>
+<hr>
+<section id="random_polynomial" class="level3">
+<h3 class="anchored" data-anchor-id="random_polynomial">random_polynomial</h3>
+<blockquote class="blockquote">
+<pre><code> random_polynomial (vars, degree=2)</code></pre>
+</blockquote>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>vars</td>
+<td></td>
+<td></td>
+<td>variables to construct polynomial from</td>
+</tr>
+<tr class="even">
+<td>degree</td>
+<td>int</td>
+<td>2</td>
+<td>maximum degree of terms</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-execution_count="154">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">vars</span> <span class="op">=</span> sp.symbols(<span class="st">'x0:</span><span class="sc">%d</span><span class="st">'</span> <span class="op">%</span> <span class="dv">2</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>random_polynomial(<span class="bu">vars</span>, degree<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="154">
+<p><span class="math inline">\(\displaystyle 0.368771307178377 x_{0}^{2} - 0.0921503407497667 x_{0} x_{1} - 1.1913499897892 x_{0} - 0.10332888368711 x_{1}^{2} - 1.94815235555664 x_{1}\)</span></p>
+</div>
+</div>
+<p>To convert our random polynomials into a surface, this function constructs a 1d sympy matrix <span class="math inline">\(f\)</span> where for the first d entries, <span class="math inline">\(f_1 = x_i\)</span>. Then, for the remaining <span class="math inline">\(N - d\)</span> entries, <span class="math inline">\(f_i\)</span> is assigned to a random polynomial computed with the random_polynomial function.</p>
+<hr>
+</section>
+<section id="random_surface" class="level3">
+<h3 class="anchored" data-anchor-id="random_surface">random_surface</h3>
+<blockquote class="blockquote">
+<pre><code> random_surface (d:int, N:int, degree=2)</code></pre>
+</blockquote>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>d</td>
+<td>int</td>
+<td></td>
+<td>intrinsic dimension, number of tangent coordinates</td>
+</tr>
+<tr class="even">
+<td>N</td>
+<td>int</td>
+<td></td>
+<td>ambient dimension,</td>
+</tr>
+<tr class="odd">
+<td>degree</td>
+<td>int</td>
+<td>2</td>
+<td>maximum degree of terms</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-execution_count="156">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>random_surface(<span class="dv">2</span>,<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="156">
+<pre><code>(Matrix([
+ [                                                                                                                      x0],
+ [                                                                                                                      x1],
+ [0.702434933384133*x0**2 - 0.411107103732997*x0*x1 + 0.954049505032996*x0 - 1.00119015907479*x1**2 + 0.501078680286306*x1],
+ [  0.218443674051343*x0**2 - 1.56872451208389*x0*x1 - 0.199560682820346*x0 + 1.47665406845928*x1**2 + 1.27908853531226*x1]]),
+ (x0, x1))</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="rejection-sampling" class="level1">
+<h1>Rejection Sampling</h1>
+<p>Next, we need to rejection sample <span class="math inline">\(n\)</span> points from the random surface. We’re constraining the tangent variables <span class="math inline">\(x_1 \dots x_d\)</span> to range between -1 and 1. (The origin, of course, is our point of interest, where the curvature will be calculated.)</p>
+<p>To rejection sample, we first randomly sample a point <span class="math inline">\(x\)</span> from the proxy distribution, <span class="math inline">\(Y\)</span>, given in this case by the naive uniform sampling in euclidean space, mapped into the manifold. We simulatneously sample <span class="math inline">\(u\)</span> from the uniform distribution on the unit interval. Then, if</p>
+<p><span class="math display">\[ u \leq \frac{f(x)}{Mg(x)} \]</span></p>
+<p>we keep x, otherwise we reject it and sample again. Here, <span class="math inline">\(f(x)\)</span> is the true manifold density function at <span class="math inline">\(x\)</span>, and <span class="math inline">\(g(x)\)</span> is our proxy - the uniform density over area 4.</p>
+<p><span class="math inline">\(M\)</span> is a constant such that for all inputs considered, <span class="math inline">\(f(x)/g(x) \leq M\)</span>. In our case, since <span class="math inline">\(g\)</span> is the uniform density with a constant value, this corresponds to finding the maximum value of <span class="math inline">\(f\)</span> and multiplying it by <span class="math inline">\(4\)</span>.</p>
+<section id="the-determinant-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-determinant-problem">The Determinant Problem</h2>
+<p>Rejection sampling requires taking the determinant of the Hessian, which (if using the standard algorithm) increases in terms factorially with the size of the matrix. The default sympy method (Bareiss) is painfully slow here, but the LU or Berkowitz methods do much better.</p>
+<div class="cell" data-execution_count="157">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>f, variables <span class="op">=</span> random_surface(<span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> sp.Matrix.zeros(<span class="bu">len</span>(variables), <span class="bu">len</span>(variables))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, x1 <span class="kw">in</span> tqdm(<span class="bu">enumerate</span>(variables)):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, x2 <span class="kw">in</span> tqdm(<span class="bu">enumerate</span>(variables)):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        G[i,j] <span class="op">=</span> (sp.diff(f, x1).T  <span class="op">*</span> sp.diff(f, x2))[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"961e9567343f44cf83e71d2f6bc26a30","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"a6283df398704ae7a6c8e08849745dab","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"a0dcdce1985c40bfb9a407f41b7456af","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"6542793bef27490b8786004bfc9886b6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"8fc8a7c917ec4300aa78c964c22bfb42","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell" data-execution_count="158">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>G.det(method<span class="op">=</span><span class="st">'lu'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CPU times: user 49.1 ms, sys: 8 µs, total: 49.1 ms
+Wall time: 48.7 ms</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="158">
+<p><span class="math inline">\(\displaystyle \left(1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1\right) \left(2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1 - \frac{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right) \left(- \frac{\left(\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) - \frac{\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right)^{2}}{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1 - \frac{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}} + 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} + 1 - \frac{7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right) \left(- \frac{\left(\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) - \frac{\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} \cdot \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right)^{2}}{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1 - \frac{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}} - \frac{\left(- \frac{\left(\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) - \frac{\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right) \left(\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) - \frac{\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} \cdot \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right)}{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1 - \frac{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}} + \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) - \frac{\left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} \cdot \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right)^{2}}{- \frac{\left(\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) - \frac{\left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right)^{2}}{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1 - \frac{2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}} + 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} + 1 - \frac{7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}} + 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} + 1 - \frac{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} \cdot 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}}{1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} + 1}\right)\)</span></p>
+</div>
+</div>
+<div class="cell" data-execution_count="159">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># %%time</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># G.det(method='bareiss')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="160">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>G.det(method<span class="op">=</span><span class="st">'berkowitz'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>CPU times: user 46.6 ms, sys: 21 µs, total: 46.7 ms
+Wall time: 46.1 ms</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="160">
+<p><span class="math inline">\(\displaystyle \left(- 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} - 1\right) \left(\left(\left(- 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} - 1\right) \left(- 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} - 1\right) - 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(- 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} - 1\right) + \left(- 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} - 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(- 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} - 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} - 2\right) - \left(\left(7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} + 1\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) - \left(\left(7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} + 1\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) - \left(\left(2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1\right) \left(\left(2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) + \left(\left(7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} + 1\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) + \left(\left(7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} + 1\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) - \left(\left(7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} + 1\right) \left(\left(7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} + 1\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) + \left(\left(2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) + \left(\left(7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} + 1\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) - \left(\left(7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} + 1\right) \left(\left(7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} + 1\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) + \left(\left(2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + \left(\left(7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} + 1\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + \left(- 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} - 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} - 1.64829031015765 \left(0.220643585572026 x_{0} - x_{1} + 0.106949298560283 x_{2} + 0.699452823395452 x_{3} + 0.0952121791339656\right)^{2} \cdot 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(\left(- 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} - 1\right) \left(- 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} - 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} - 2\right) + \left(- 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} - 1\right) \left(- 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} - 1\right) - 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} - 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} - 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) + \left(- \left(\left(2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} + 1\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(- 1.28385758951593 x_{0} + 1.59104631286197 x_{1} + 0.997318021037841 x_{2} - 0.352713739100065 x_{3} - 0.881673650061698\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) - \left(\left(7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} + 1\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) + \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2}\right) \left(0.137307668650024 x_{0} + 0.997318021037841 x_{1} + 0.398416880657731 x_{2} - 2.73426624171553 x_{3} - 1.67633928947153\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) - \left(\left(7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} + 1\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right) + 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} \cdot \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) \left(0.283274941914653 x_{0} - 1.28385758951593 x_{1} + 0.137307668650024 x_{2} + 0.897997815824595 x_{3} + 0.122238878795492\right) \left(0.897997815824595 x_{0} - 0.352713739100065 x_{1} - 2.73426624171553 x_{2} - 1.13257563120039 x_{3} - 0.191222223510257\right)\right) \left(- 2.53142836967166 \left(- 0.806926598639691 x_{0} + x_{1} + 0.626831546621588 x_{2} - 0.221686657546508 x_{3} - 0.554147068463235\right)^{2} - 7.47621188058517 \left(0.0502173733322597 x_{0} + 0.364747955346186 x_{1} + 0.145712540563627 x_{2} - x_{3} - 0.613085611011957\right)^{2} - 7.47621188058517 \left(0.328423692661756 x_{0} - 0.128997583965622 x_{1} - x_{2} - 0.414215563181511 x_{3} - 0.0699354805296065\right)^{2} - 3\right)\)</span></p>
+</div>
+</div>
+<hr>
+<section id="manifold_density" class="level3">
+<h3 class="anchored" data-anchor-id="manifold_density">manifold_density</h3>
+<blockquote class="blockquote">
+<pre><code> manifold_density (f, variables)</code></pre>
+</blockquote>
+<div class="cell" data-execution_count="162">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>f, <span class="bu">vars</span> <span class="op">=</span> random_surface(<span class="dv">3</span>,<span class="dv">5</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> manifold_density(f,<span class="bu">vars</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>g</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="162">
+<p><span class="math inline">\(\displaystyle 13.5614352769329 \sqrt{- 1.02623740481724 \cdot 10^{-17} x_{0}^{6} + 1.93174099730304 \cdot 10^{-17} x_{0}^{5} x_{1} - 1.488044236985 \cdot 10^{-16} x_{0}^{5} x_{2} + 5.91595680424056 \cdot 10^{-17} x_{0}^{5} - 9.6587049865152 \cdot 10^{-17} x_{0}^{4} x_{1}^{2} + 1.29788848256298 \cdot 10^{-17} x_{0}^{4} x_{1} x_{2} - 2.70443739622426 \cdot 10^{-16} x_{0}^{4} x_{1} + 3.59183091686034 \cdot 10^{-17} x_{0}^{4} x_{2}^{2} + 1.63594315709101 \cdot 10^{-16} x_{0}^{4} x_{2} + 0.0428981842836413 x_{0}^{4} - 5.02252659298791 \cdot 10^{-16} x_{0}^{3} x_{1}^{3} - 2.4146762466288 \cdot 10^{-16} x_{0}^{3} x_{1}^{2} x_{2} - 1.54539279784243 \cdot 10^{-16} x_{0}^{3} x_{1}^{2} + 1.55746617907558 \cdot 10^{-16} x_{0}^{3} x_{1} x_{2}^{2} + 4.8293524932576 \cdot 10^{-18} x_{0}^{3} x_{1} x_{2} + 0.158101724304246 x_{0}^{3} x_{1} + 7.90806470770932 \cdot 10^{-17} x_{0}^{3} x_{2}^{3} + 1.05038416728353 \cdot 10^{-16} x_{0}^{3} x_{2}^{2} + 0.0886474424859319 x_{0}^{3} x_{2} - 0.0944889101075168 x_{0}^{3} - 2.55955682142653 \cdot 10^{-16} x_{0}^{2} x_{1}^{4} + 1.54539279784243 \cdot 10^{-16} x_{0}^{2} x_{1}^{3} x_{2} + 1.54539279784243 \cdot 10^{-16} x_{0}^{2} x_{1}^{3} + 1.93174099730304 \cdot 10^{-15} x_{0}^{2} x_{1}^{2} x_{2} + 0.348121417877565 x_{0}^{2} x_{1}^{2} + 1.03589610980376 \cdot 10^{-15} x_{0}^{2} x_{1} x_{2}^{3} - 1.90276488234349 \cdot 10^{-15} x_{0}^{2} x_{1} x_{2}^{2} - 0.0715208880245337 x_{0}^{2} x_{1} x_{2} + 0.470963907716864 x_{0}^{2} x_{1} - 9.6587049865152 \cdot 10^{-17} x_{0}^{2} x_{2}^{4} + 2.70443739622426 \cdot 10^{-16} x_{0}^{2} x_{2}^{3} + 0.19782156165004 x_{0}^{2} x_{2}^{2} - 0.443309605155563 x_{0}^{2} x_{2} + 0.350971090329827 x_{0}^{2} - 2.23357552813164 \cdot 10^{-17} x_{0} x_{1}^{5} + 5.79522299190912 \cdot 10^{-17} x_{0} x_{1}^{4} x_{2} + 7.48549636454928 \cdot 10^{-17} x_{0} x_{1}^{4} - 1.15904459838182 \cdot 10^{-16} x_{0} x_{1}^{3} x_{2}^{2} - 8.49966038813338 \cdot 10^{-16} x_{0} x_{1}^{3} x_{2} - 0.501405484463605 x_{0} x_{1}^{3} + 2.99419854581971 \cdot 10^{-16} x_{0} x_{1}^{2} x_{2}^{3} + 8.49966038813338 \cdot 10^{-16} x_{0} x_{1}^{2} x_{2}^{2} + 0.652830619403015 x_{0} x_{1}^{2} x_{2} - 0.651188652398792 x_{0} x_{1}^{2} - 1.14697121714868 \cdot 10^{-17} x_{0} x_{1} x_{2}^{4} - 2.45814041906812 \cdot 10^{-15} x_{0} x_{1} x_{2}^{3} - 0.236963314995756 x_{0} x_{1} x_{2}^{2} + x_{0} x_{1} x_{2} - 0.495218153250122 x_{0} x_{1} + 9.30027648115624 \cdot 10^{-18} x_{0} x_{2}^{5} + 1.40202139569885 \cdot 10^{-16} x_{0} x_{2}^{4} + 0.196816648150011 x_{0} x_{2}^{3} - 0.520113025199358 x_{0} x_{2}^{2} + 0.266472942657378 x_{0} x_{2} + 0.17421012991701 x_{0} + 9.6587049865152 \cdot 10^{-18} x_{1}^{6} - 4.10494961926896 \cdot 10^{-17} x_{1}^{5} x_{2} + 7.72696398921216 \cdot 10^{-17} x_{1}^{5} + 4.8293524932576 \cdot 10^{-17} x_{1}^{4} x_{2}^{2} - 7.72696398921216 \cdot 10^{-17} x_{1}^{4} x_{2} + 0.141799855637808 x_{1}^{4} - 1.93174099730304 \cdot 10^{-17} x_{1}^{3} x_{2}^{3} - 1.93174099730304 \cdot 10^{-16} x_{1}^{3} x_{2}^{2} - 0.311168249960423 x_{1}^{3} x_{2} + 0.249939163482498 x_{1}^{3} + 4.50337119996271 \cdot 10^{-16} x_{1}^{2} x_{2}^{4} + 1.60817438025478 \cdot 10^{-15} x_{1}^{2} x_{2}^{3} + 0.34011554110888 x_{1}^{2} x_{2}^{2} - 0.102939136514011 x_{1}^{2} x_{2} + 0.671511677094302 x_{1}^{2} - 7.74205571575359 \cdot 10^{-17} x_{1} x_{2}^{5} - 3.48920717637862 \cdot 10^{-16} x_{1} x_{2}^{4} - 0.126802862844654 x_{1} x_{2}^{3} + 0.375850587154057 x_{1} x_{2}^{2} - 0.243797669999287 x_{1} x_{2} + 0.0665729373707557 x_{1} - 7.2440287398864 \cdot 10^{-18} x_{2}^{6} + 3.25415353549584 \cdot 10^{-17} x_{2}^{5} + 0.0753922499719916 x_{2}^{4} - 0.144561150709131 x_{2}^{3} + 0.0319114359028648 x_{2}^{2} + 0.00798012960396319 x_{2} + 0.11710543118272}\)</span></p>
+</div>
+</div>
+<p>To get M, we need the max value of <span class="math inline">\(f\)</span>.</p>
+<hr>
+</section>
+<section id="max_value" class="level3">
+<h3 class="anchored" data-anchor-id="max_value">max_value</h3>
+<blockquote class="blockquote">
+<pre><code> max_value (expr, bounds)</code></pre>
+</blockquote>
+<div class="cell" data-execution_count="164">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>max_value(g, bounds <span class="op">=</span> (<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="164">
+<pre><code>19.570601051506028</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="rejection_sample_from_surface" class="level3">
+<h3 class="anchored" data-anchor-id="rejection_sample_from_surface">rejection_sample_from_surface</h3>
+<blockquote class="blockquote">
+<pre><code> rejection_sample_from_surface (F, n_points, bounds=[-1, 1],
+                                batch_size=1024, verbose=False)</code></pre>
+</blockquote>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>F</td>
+<td></td>
+<td></td>
+<td>a sympy matrix of size <span class="math inline">\(N \times 1\)</span> representing a surface</td>
+</tr>
+<tr class="even">
+<td>n_points</td>
+<td></td>
+<td></td>
+<td>number of points to sample</td>
+</tr>
+<tr class="odd">
+<td>bounds</td>
+<td>list</td>
+<td>[-1, 1]</td>
+<td>bounds for each variable</td>
+</tr>
+<tr class="even">
+<td>batch_size</td>
+<td>int</td>
+<td>1024</td>
+<td>number of points to test sampling at a time</td>
+</tr>
+<tr class="odd">
+<td>verbose</td>
+<td>bool</td>
+<td>False</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-execution_count="166">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> rejection_sample_from_surface(f, <span class="dv">1000</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plot_3d(X,X[:,<span class="op">-</span><span class="dv">1</span>], use_plotly<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>                            <div id="692efb62-3829-4ac6-b08d-1886c44e234f" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("692efb62-3829-4ac6-b08d-1886c44e234f")) {                    Plotly.newPlot(                        "692efb62-3829-4ac6-b08d-1886c44e234f",                        [{"hovertemplate":"x=%{x}\u003cbr\u003ey=%{y}\u003cbr\u003ez=%{z}\u003cbr\u003ecolors=%{marker.color}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":[0.0,-1.6890672524068926,-1.206930237812241,-2.0193466985978943,-1.2253739097161684,-2.057731641785997,-1.8491992572900637,-3.095641863101308,0.26098931847788687,-1.7149626264780475,-0.5865724315002008,0.49949143849306354,-0.8047511194681324,-1.1225821872362518,-0.20281584066099528,1.948730402154848,-1.4471341900230672,-0.6563829850935061,-1.0032016903215184,-2.261197752918815,-2.7014896594968834,1.561502436603922,-0.5899357681900864,-1.7125567807775754,-1.3438152065775717,-0.814326863003891,-1.2702859328425093,1.0495759211578952,-0.317003885496182,-0.13368462857925184,2.4593896732897598,-1.0700694800415116,-1.2869335105598445,1.226394012758706,1.902091102091929,0.7710970451559074,-0.10209603976519444,-0.3709787278678441,-1.044199829217286,0.5405080527391495,1.9338324108686549,-1.338687369971087,0.1371204709743229,0.13660747570015286,-1.7640392373643359,2.459298768046895,-1.6625360139371015,-0.9064920020995071,-2.0744040008655036,-1.0410818811189013,-1.5104840879088879,-2.2584302167830814,-0.8249131869790609,0.3520906538155134,-0.8654464368191629,2.180614499879392,-0.2382997124425617,-1.7885577179842307,-1.515850560481312,-1.0815762533140236,0.7390886623264482,-0.5969297334745758,0.1805962211649237,-0.19298055069675718,-1.2361562508851773,-0.6513404078368961,1.0554935192474173,-1.4240134861237488,-1.6977804199863864,-1.8220197572778218,-2.450166098124526,-0.8188084600432656,-1.544790943054132,-1.8320890736088775,-0.8855660697706488,-0.9885939116636037,-1.3811823385049025,-1.1757479872370167,0.024253146991982222,-0.6026237291364437,1.0087104545256578,-1.223667230805991,0.7997219922388339,-2.8545953673014526,0.8614362375439586,-2.501281668784041,-1.2668338300040523,-1.35285435343259,-0.13980420433493285,0.18393324338205475,-0.8059124871276059,2.5998532150318843,-0.3078499697012023,2.8036273293778793,0.879542621381999,0.15724585010258382,-1.4138789611940383,-1.5279818147890838,-1.0173071078330742,-3.3457591060360485,1.7250882505019502,0.4571167547828896,-0.8094947364122485,1.0007092739810153,0.9091168692778315,-1.4845481217678134,-0.2809595014097031,1.75828801735967,-1.0946072306212549,-2.3562917393041136,-1.056880546976257,-1.112042470411585,-1.1911833138254537,-3.279956099257466,-1.8141715259959768,-2.1230448280757614,-0.6808686419689196,-1.7398483810150946,-2.409860461967261,-2.3753132226696585,-2.9553549598267024,-1.0305533149270114,-1.8977104759710772,0.8381989648901891,-1.1239034241702095,-0.5061450613627638,-2.222550735402419,1.7308510711946625,-1.1610099385241377,-0.3404993540599402,0.12283989206863166,-0.7387101837517436,1.7954494201018147,1.288343325495002,-0.7259255866048877,-2.457623884837788,-1.7206618580585107,-1.6510053978106816,-0.039237689901345185,-0.1865032401445672,1.7788804983350472,-1.1397970528887578,-1.4508991097854005,0.011189803987181723,-0.36442087228786485,0.09736865811242876,-0.4482525488318725,0.8379021077581028,-0.8726651125313776,0.4050363339142362,-0.6128488389182811,-2.831914706299729,0.5871915546316664,-0.18213274363042303,-2.427724212877975,0.1237890714305418,-0.40864968906618243,0.2500957302352135,-1.4939933948682707,2.3000791985887536,0.017312468309931585,-0.3388702271519388,2.510988585801887,-1.3040742605617024,1.629182610006977,-2.577247572287951,-1.1863273564060295,-1.6017184928315227,-0.1019791513897883,-0.3292656983740947,-1.0876812625702694,-1.646450607719584,-1.0443633258602352,-1.8465058595658652,-1.544098157827946,-0.26755297708606696,-0.6581429661522298,-0.642544522640935,-0.6251610904804523,-1.805798352840714,-0.45183120178726555,2.2724918749589698,0.9932879159814103,-1.2631821273931596,-1.9835483304896373,-1.4507598260108798,-2.0522466556266017,-0.9746939239060266,-0.34365892784784746,1.1226217924042021,1.6873183720183478,-1.9994417795216672,-0.32101280572477914,-0.5567667444047216,-1.1635806477758934,-2.4138912282622873,-0.49122645439962936,0.8715483874103238,-0.9172751611505229,1.3165463705887817,-1.4990266800557372,-2.106889200576105,-2.873887046492776,-4.279471869361342,0.8470815008488297,-1.567782260510198,-1.365781514246279,-1.2924974569164274,-3.099108784574793,-2.202357688104531,0.1827686905199888,-2.28680934089191,-1.498123972664855,-0.9150956342739327,-0.6747582132120942,-1.4109415335121553,-1.1418624759347267,1.0833728854712066,-1.3649452746034367,-0.2578950249306516,-1.9079380850462377,0.9852128157006045,-1.3080441343972362,-1.5143096970976315,-0.8857285379572954,1.0472776416152307,2.470175024040114,-2.7335545145637643,-1.634052995888779,-3.353067104522618,0.2436965986231805,-0.6410519745234173,-0.7856092753700465,-0.05912790264658557,-1.6604682233489392,-0.2511567368446558,-0.5912298570205994,-2.402905914893772,0.6704155752543222,-1.0341192117894316,1.262247411742202,-1.5686692221842442,-1.7686492062185115,-1.7823151093976621,-1.8481453652576099,0.10784135254736057,1.8358382298941631,-1.7330143485472767,-2.8893072331976697,-1.020628248313548,-0.8200108339985985,-0.7967565613402849,-0.017899611437573792,-0.03392408731073926,-0.13284886748669006,-0.835616855524716,2.3589106102988433,0.48116759456143837,-2.1634621456438,-0.8080208727255904,-2.4545914756624643,-1.9411367448747754,-3.203256200317268,1.1607014252932348,1.303861752557499,-2.8126913837344545,1.3203901287514268,-0.9237934119059898,1.5784947005870613,-2.0623939420582076,-0.7612785827280599,-0.21134649992894128,-2.2382331184272415,-1.3759259240584858,-2.044331089878136,0.6128855646569129,-1.5100633232334568,-1.8968740140028788,-0.3538881767701668,-1.4179166431679897,-1.5875298789537169,-2.1709122432402093,0.7488140806071011,-0.6856819681220963,-1.5089844638659087,-2.44711779515397,-0.08371088669618382,-0.4697045437305261,-2.1115476692405792,-2.870987798499841,1.3503657825495925,1.6318063327065118,1.7008951704848816,-0.9566019234102373,1.0985096215764034,1.5482103543343784,0.49120725735573034,-1.2912160422455954,-0.3498406551367674,0.8344365267947875,-0.34474296385414455,-2.1751957743982606,-2.8204910588566543,0.30369553090575513,1.0863380824582258,-2.662140928493912,1.408516653113439,0.21870452245933486,-1.5239104148936182,1.0838729939024225,-0.9609751570248865,-0.5782080685517581,-2.462695097522523,-2.6650255762112707,0.207798014349613,-1.8871217730246754,-0.5280328394367945,-1.086925457817851,0.6332166504270045,2.248871848553589,-1.7195546436527822,-0.7909927109827597,0.09273864920146574,-2.8004639449796747,-1.5291099978356895,-0.13436284531251497,1.7155421648137779,-1.6441745860859016,-1.740321918776659,-2.1889514859939516,-1.1993091470836672,-1.132985747450149,0.13357985143119677,-0.4770527090331863,0.1933337168856859,1.3339057482625691,-0.48643143075015727,-2.79400663479218,-1.296342411395938,-1.1664522232433385,1.4505960039921004,-1.185373669546399,1.2069150372041413,2.7376045933874713,1.3256584192328629,-4.305109569261775,-1.450785120360822,-0.9102347645417144,-1.5391644579188368,-1.1305578752154912,0.10426266375742366,-0.23083376203604195,-1.0415471663366085,1.0260817467681806,-1.4069273703121281,-0.6941984287798663,-4.855161185585714,2.0644507590382637,0.4381419790483647,0.9225162553610465,-1.6535371498528355,-1.5914683880567084,-0.6837555483117153,-1.315469930996484,-0.32492626315815665,0.018076570596489747,-1.5627809976569491,-2.014052993962585,-0.8819953056452566,-1.0850132438832225,-0.04598487821929553,-1.350080520183899,-2.997007232050342,-0.7914574327175159,-1.4630421016717143,-2.341037727554671,-1.8140654301097079,-2.007249866896638,0.763419375654588,2.6274785408968553,-1.0259391058085223,1.720334622584779,-2.2448324372373847,-0.7421600539576477,-1.7226940251174645,-0.8641296032882515,-0.7644308032011076,-0.060883205880829655,2.2347292162437586,1.301220974296816,-1.320545598133214,-0.06465922881996664,1.1570672370772952,1.4947303226171857,-1.151626631234312,0.5296171478483492,-1.985558522824046,0.5526298732661625,-0.0814672691530191,0.8238795865591775,-0.07140913010481431,-1.074662042456827,-0.9766405666479562,-0.08009668244010143,-1.5335494279368873,-0.8825836307583614,-1.1935076625800214,0.596835437070815,1.376391405563194,-0.05779129422709395,2.6961842880695954,-2.071885396379942,-1.5056132556816082,-2.1768069686409808,-0.369728804873639,-0.5016501130298698,1.9711266276130854,-0.7908174388244238,-1.615999023649218,-0.5360407185459724,-1.0095401944030424,1.4845778763001216,-0.33139237054518733,-1.2429731532337744,1.2563793208806417,0.6441477821796275,1.4951241428890774,-0.7660817146597478,-0.8570562124153456,-2.407875613801247,0.6502510388449658,0.13266623627332397,-0.8283891346667412,-2.3067698231663214,-1.1689299739987822,1.1670107521112298,-1.6230408959730767,-1.8541880677026976,2.2547866310626397,-0.6129714381351103,-1.8250541591666287,-0.2992593216398215,-0.8872727623603723,-2.8857588935560834,-0.7113763181069889,0.10638274967801682,-1.557041332141675,-1.054212275232239,0.6704111669831864,-0.4892920795218672,-0.6937369987530285,-1.48633191247289,0.6548108048307858,-1.2709047028564848,-1.768141783471593,0.3087818959889972,2.7934033135579117,-0.9633434555263364,1.2069599431802736,-0.5846773027776837,-1.1017677146801415,0.15363823670152174,1.1096607080235614,2.0699007153548363,-2.288634884359958,2.3121011911206697,-0.6300687190360186,0.9013526280999986,-1.8054194534637684,0.28213726429667463,-0.6190641196128839,0.456565088079774,-0.7074403964569327,1.053624580394356,-0.004100170144659139,-1.2569682046834336,0.5114646373166452,-1.5889514601238144,-1.2427883031050426,0.6895793988643508,2.8480492470660823,-1.5544495405344037,0.7751177444953599,-0.09587151069895616,-0.27331099320177354,-3.8650001528349014,-0.9336426293088055,0.6404643009440801,-1.2855871852013165,-0.1921427234275307,-0.5059315545872625,1.2962497613533714,-1.3865699683875867,-3.9871295809425646,-0.024568348480408786,-2.371027932872006,-0.83922684960675,-1.198506327638659,-1.8035051411651972,-2.6022736281060954,-2.501474932903321,-1.1814571738283537,-0.5328833325611503,-1.4366814577469038,-2.4871775461182004,-0.8766157856627902,-1.2163438791157082,-0.704474139241086,-1.8854658172128116,-0.17759588431162748,-1.4140149982187233,-0.44786009602407595,1.200052502738915,-0.32421329169053065,1.8612630643350672,-3.009622477719713,0.22184588234679092,-2.4660697385844523,2.002091496612576,-0.9333545666907668,-0.3874119482495503,-1.6648679831470048,-0.7063132764543285,1.2559455744054877,-1.8605301078287206,-1.7407114228302552,-0.3967906947024622,-1.8243776181762217,1.8819246747358216,-1.5636744943422494,-1.5803680459165839,-1.192987633726395,-1.6783024730473588,-1.1912100212857708,-1.168348820183244,1.1698698350267516,-0.02208322151599802,-0.447621835540157,-1.5154803982001168,-0.7068653330118283,-2.3530024799579565,-1.4886553461872718,-2.2201976718969023,0.6504072048478132,0.7144989316447845,-1.318678335207931,-1.558951575818001,-0.8717655989822368,-1.6214673559975585,1.8177989675876134,-1.8634765164287623,0.5482956340127491,-1.810191854633164,-1.6650686251200064,1.3467100638030802,-1.0738893687107103,-1.1437139921928337,-1.0577062632793828,-1.1691544277565258,-0.24803940770633884,-2.325257305539778,-1.6253668363545077,-3.137914767595836,-1.8703563821118554,1.0155139531138908,0.528535101662076,-1.0503682691339151,-0.23155985921645278,1.4991697578167942,-0.35465580438030453,-1.864578096415868,-2.779644197670972,1.6254547867095046,-0.06332760628004608,0.5836289753741721,2.461249241867786,0.9522531170009827,1.5682575416137303,-0.0033276670748394214,2.0351932457174935,-1.8730086242417023,-1.398621898093078,1.330501840918913,-0.154594827441636,0.31176611418502986,-1.3317051642331263,-0.6236723970141806,0.7859942344778826,0.5934784091561373,0.219212892248298,0.6469093543001551,-0.2429546759087785,-0.16658283841209176,-2.022979801193967,1.7198743082845114,-1.038077473042734,0.4398017292222065,-0.25279858784226117,1.1149101339546696,0.7141152554200441,-0.02822364774422692,-2.050297495755691,-0.9093254289281992,-0.94912974125004,0.4439656902799657,-1.2800302881286552,-0.05377162341342279,-1.5298585133330636,1.0976556682171874,-2.1922576347291023,-1.622949195175487,-0.8787953085202068,0.8888759233972383,-0.9072610210073097,-0.3192461374859251,-1.693295243534318,-0.9291022945811813,-1.164762407249525,-1.1891171621204795,-0.13114743348806449,-3.3423230751760165,-1.9585665312350646,-0.8190399020650829,-3.8446158922147937,1.279157104908208,2.660955364882497,0.0018099483501575198,0.9692618220040756,-1.772019930144402,-1.8251258109765804,1.4810540138337704,0.9490343003300736,2.7728402929362463,-1.0431561782407521,-4.4326956995380105,0.29238182380757693,0.26983698907016246,0.9369618303273439,-0.8860605017662557,1.0806360643973607,-2.9644918763987063,-0.8171682659794681,-1.0327590960645578,-0.96166028418433,-0.9074054794649663,-0.7677120247480089,-3.2298614445356515,-0.919522062373108,-1.0496778171435603,-1.3483213581898024,-0.8041049843651077,-1.8901128990385385,-0.38432765303795535,-0.6782289723811221,0.6901073786794395,-0.49213487344229945,-0.7622893371363552,1.077662000626775,-0.006070559049503092,-0.23823867980563812,0.454236591310469,1.192803024393404,-0.283055756744626,-3.476892701050785,2.2562975156700875,1.0687456927219499,0.6565200053698632,-1.4647631537966443,1.6378595152469029,-2.960510627089416,-1.412041259319123,-1.2657476422265865,-2.3855274660645653,1.6877358617377025,-3.47967136837448,-1.6085755168313898,-0.08106190624861587,0.7919775613952268,-1.4205144965175744,-2.5058566389463555,0.7874560796718924,-0.7946160537422511,-1.3094925585970931,-1.4981498563604219,-1.2630170218089003,0.3292250319698602,0.6671312725067868,-2.537057155718198,0.25047892558330487,-4.24371198704107,2.5232354572464017,0.5125333108107015,0.6252183651754054,-2.4465550992238616,-1.7882635659457402,1.2033783315718534,-1.528874142949409,0.41854353279141665,0.3212296333371374,-1.538777524429228,-0.8890995356586309,1.2489861654315666,-1.8895964989233807,-0.4094743493241142,2.6374954254044436,-1.5385444657716019,-1.3451022722825974,0.1532098871111509,-1.5813709265530633,-0.46622668698750197,1.6346817695464646,-2.1262169332405767,-1.426850500740824,-2.3200620684011257,0.8747744493050447,0.37229774971038576,-1.6597426100220412,1.0657462434373612,-1.2457589887815068,0.4513306486585348,0.6524752076124303,-0.8221514368421468,-1.7836996742626228,-0.6882266834650391,-1.4523919944445227,1.4152760894399727,-0.6289996704892761,-2.1636977731216107,-0.46236154399586904,-2.907512349485053,-2.1318001132455757,0.5845577436101415,1.3382957177397024,-0.949478725798258,-1.2505281515893776,2.5236740176371324,-0.6190735625070773,-1.971323692723668,0.1812370045170444,0.515025340790354,0.015262579254947017,-1.7185554476919949,-0.18096026167217324,-1.020451589306274,-0.17088928296491673,0.0197628404510047,-2.1568200695940885,-0.2626972358527184,-0.8849982353402744,0.31199382437816636,-0.24265599843335078,-0.8025593435519783,-0.28561625749050246,-2.0570364270940105,-1.8210039144135517,0.42137690385183313,0.5927140858862585,-0.18779230563095062,-0.6493835784042057,1.4769526888991134,0.318293204437105,-1.3408716847088153,1.9272526324207153,-1.644474944750168,1.6100310086744636,-2.8460668722011535,0.8585507050361354,-0.5222241760959321,-1.973896108475537,-1.4891510663706637,0.5516059033549396,-1.6043996885076017,-2.675924312107494,-0.7440529242901549,-1.306924998355568,-0.4209473145133571,-1.7620210588397132,0.5555210297929838,0.3261695209283596,0.6248713858564479,-0.1559438523057495,-1.4731392192848787,-1.1813845062320445,-1.8415278674793543,0.2284263607663201,1.6608586602614142,-2.4921757206288504,-2.4237844093940013,2.5655693162269326,0.45233967862206076,-0.6456429319081058,-2.144300881057883,2.260636387371841,1.003519717400011,-1.0085511487490655,0.6066803157774604,-1.2901169251520737,0.6400172682439076,-2.8341799426806693,0.4823249863552581,-5.010536116410498,-1.8236744395512832,-2.4940360900557197,0.7575625855819508,-1.7922193483449065,-0.5174573358784427,1.6541819805420264,-1.046510148315636,-1.4091772984188513,-4.465032186166809,-2.564290037841448,-1.3319963908717418,-1.537118554243592,-0.07764395627549131,-1.2106332170110594,-0.9519743292792444,-0.3822369959500397,0.718056166189059,1.1693776732954413,-1.4423425755754817,-0.9777351169080423,2.1619781630658093,-1.5064119488380676,2.446507007465568,-0.7861545043304425,0.280021995720066,-0.47480816581940727,-0.23400010595988374,-1.2654120194290446,-1.0787773522368274,-0.1911752782293923,-2.741229845634723,2.7980617682052236,-0.20520804340526647,-0.6610890296245286,-2.4651361748202993,-1.8131853236410003,-2.9083799459160367,-2.220649493981253,0.5612117441094725,-0.44902371877432584,-1.5943051268557205,-1.587452635401313,-0.5720636729830949,-1.589358588453168,1.2590194066316385,-0.4399138606573685,-1.3064231563702364,-0.8260772164085092,-1.572108915370541,-1.3981315299276893,0.09594229274303406,0.4183778244812329,-0.8083919257506571,-0.9321307415114602,0.9351216170951815,-1.453336173947318,-1.1855721692341101,-0.9154311567131054,-1.9878052363094407,-4.906378093230942,-3.011235324471561,-1.351398959485821,-0.9194187721720274,-1.0189881617863565,-1.689042557741601,-1.3811304518487608,-0.8593695432372651,-1.9231415235705003,-2.5090092385685545,-0.27644552058020827,-0.24794951479253524,-0.9831160914784084,0.2913378045861128,-0.8209211049149597,-2.725781915016481,-2.005965308141264,-2.264275347920929,1.0305363055150096,-1.0131289750413683,-1.6569135650404896,-0.05816598911229118,-0.10779530576834451,1.3608288808604945,-0.46079801148223254,2.0818177925360937,-1.5837656962551248,-1.755531314171524,-0.4262081721741091,-2.1396183836174774,0.31288563522938373,-1.1736688761079046,-1.3732225803647875,-0.3253029160085199,-1.1236611318671914,-0.5110088944523885,0.00464800553279239,0.01961181645566107,-1.1482129349582022,-1.4992743822594428,-1.5668824535863293,-0.9261744298048125,-0.9979100495691292,-0.24393873579399333,0.6833890074676445,-0.29623891627225635,-0.11400968161039149,-1.433509083879487,0.6944583432935406,-0.42266004338939883,-0.9812092058840186,-1.865936379380418,-1.4466503646181894,-0.8834606451260213,-0.21285860438573231,0.2916681873526071,0.03217329383441274,-1.4397258049855768,-2.2093203604706173,-1.7404332949338186,-0.22223908531115727,-1.9018077921617278,-1.3434458426037845,0.5436787225988797,-2.8446757964633598,0.9844219927521181,1.8833413603461664,0.6417247158958567,2.0402989417875803,1.650645815096974,-3.2615700342142784,0.6302076255187017,-0.8946543940919265,-0.8381491545387212,0.9808630682105025,-1.6800308741518921,-1.1467937873340799,-2.7296047692273535,-0.017936601118522914,0.9253443280991466,1.2192515449431274,-0.1344916289344278,0.7198235670112125,-0.87219072999867,2.54223962676932,-1.1138174490871102,-2.0351202335596934,-0.8967559946152444,-2.1456528438318454,-1.5939405692928743,-1.7788879165649931,-2.6605674823135406,1.0072673596623742,0.3200792397828454,1.0984997037430508,0.5541481182585489,2.9308062536929604,-1.9466725378522602,1.582486450276356,-2.791289667308515,-1.0748556100663134,1.4153602587547542,-1.919507911765446,-0.5463039603102975,0.6364068064296947,-1.7025517863837016,-1.2181316850320636,0.6657157507572765,-1.7682031527872286,-2.917540396246807,0.011509842458671149,0.3840421232901104,-1.4551400594579442,0.7936482657791466,-0.40900032277976917,-0.9923872163503922,0.24153429866074438,-0.6024865541890767,-1.712316023625956,-1.9000243560774266,-2.1862446791577637,-0.9178520759733793,0.9703942857632322,-1.6063695644893645,-2.2684743659851914,1.0814482842523236,-0.46878047438455706,-1.9481921861850586,-0.35448626597555866,-2.435871774693916,1.064500936279527,-1.0949415424116966,-1.1386600628482157,-1.377827509613566,-0.6411161036183773,-2.94672018001543,1.9680443587554213,-1.3247486292173156,0.8825434651372264,-1.4125844399685714],"coloraxis":"coloraxis","symbol":"circle"},"mode":"markers","name":"","scene":"scene","showlegend":false,"x":[0.0,0.2815722371303311,0.46608591765987173,0.9479235902697392,0.17857470466575776,0.8131145259742696,-0.9571422740597846,-0.801425454684082,-0.3422776347266423,-0.24917010435110698,0.18373732011009491,0.7537955149404185,-0.510148212638067,0.24975303023561768,-0.09603065305619785,-0.8783499732825735,0.005035780725651806,0.9303224278777555,0.41170942057804183,-0.8149522000248399,-0.9391086270690667,-0.36204494966140155,0.8410263355302379,-0.5107671871203427,-0.3345513534011626,0.32733986871709697,0.02462457975113308,0.45358189091068746,0.28790880504763594,-0.4637137182043134,-0.5888790543296991,-0.46457472406990963,0.13825002583861634,-0.5758339483610786,0.13363564262869243,-0.4369800503794947,0.6970134459254593,-0.24648571403104969,-0.09434027903679532,-0.07678668835251012,-0.2737864931569678,0.558188718874588,0.11267524964385145,0.9281863154475911,-0.40284712967948355,-0.4507606578068961,-0.3992405228049074,0.8301608441237649,0.012934019232295979,0.601511424799815,0.42216396626007,-0.19326530813898724,-0.4501528963209134,-0.4099135283240074,-0.783663654172605,-0.7807961810227417,-0.08968221665327514,-0.36222451164839287,-0.8914244195647762,-0.632547808356291,0.7027211609308213,0.08183452938453417,0.5877364009142247,-0.6583181413800996,0.27180257724672696,0.9385800738073184,-0.30573526982155164,-0.8515141103490433,0.5513994429375093,-0.0469843051518295,-0.802512079435783,0.22945595210031766,0.5605158150892566,-0.9897442282682949,0.8470628832051181,0.2792717359800405,-0.08791892201032336,0.7519520999301983,0.4341459676593491,-0.846028750751068,-0.1956640906036331,0.9367566599332511,0.11851783666921722,0.8753379153255683,-0.38827938758650005,-0.3487078812105391,0.3732554596148563,0.5738675558128374,0.22033898872653768,0.865206965007443,-0.23533478189239032,-0.6784545253434915,-0.4692720189611641,-0.2171041219975811,-0.0331413148937878,-0.8310547826419854,-0.3987974255226048,0.7814050273566222,0.07854341515828822,-0.9292887737329614,-0.45625168935857663,-0.452716856075569,0.8534066816497399,-0.21101162509942872,0.3321393937217789,-0.5262821411803724,-0.7694537145077178,0.13922792631670777,0.7600511585827812,0.7569212298481691,0.14619985099783328,-0.9454647394580169,0.8197394343919193,0.9895600259985393,0.5577084726955845,0.6978966869624066,0.3846705368764989,-0.46334144396767685,-0.19877429388523904,0.8758359615642943,0.9583348070809468,-0.08898445322207293,0.7219695147444918,-0.5941875176568079,0.006405832471097828,-0.21876204576460268,-0.7035980283794048,0.13509515583634357,-0.5208798994766071,0.8306303442666647,0.6837659337834323,0.3043156841199963,-0.3597531211865064,-0.3648198561826348,-0.055649669777063204,-0.6155315244335648,0.7905272413152329,-0.3988610173790974,-0.8093967999932286,-0.38849354528712277,-0.03381112285947818,0.6401330013449622,0.5435433086568549,-0.7521059752491774,-0.048627299369103705,-0.8487734242196832,-0.5823851603052808,-0.2788317911461211,0.8372594580819839,0.2979408573018689,0.0552280170748618,-0.41632731607336715,0.6940515188751375,-0.7317654492203036,-0.047775497816600954,0.699384738524579,0.01810657844710062,0.456416778131282,-0.7484929049175828,-0.5574181131180906,-0.8688130417201168,-0.8936197095013105,-0.8984999185088662,0.5456359092553487,0.3498562103591729,-0.7304131402324221,0.8164311774896631,-0.9736136112641081,-0.22463494916538118,0.7499064116775187,-0.03194090085418422,-0.3344546260416146,-0.48381509586176263,0.7051692709219815,-0.6581898544907099,0.06478342586107866,0.3262845961819869,0.6806929755702049,0.3585748259018555,0.8351058442258175,0.059265681233608314,-0.6238880250135879,-0.7644504892990027,-0.06432293470208439,-0.22223263441059093,-0.5578076089918058,0.9901130569694996,-0.19713163073585838,0.17329449037063127,-0.8981978331323561,-0.5071930985783066,-0.807478418017354,0.5483433313269215,0.26001510218299195,-0.2455136262837514,-0.5721562917294603,-0.6657449062330174,-0.11868115434385396,0.25122582495372514,0.3613347456717304,0.38512568185109664,0.7503473932647176,-0.8771497973961095,-0.9450813235098272,0.6690717381623437,0.5663331379217962,-0.814919673324813,0.8015164430446451,0.9564859746673096,-0.8936018898282005,-0.43000462881567136,-0.3878033746311291,0.9477215981386322,-0.4763187390107768,0.8179476302283821,0.43211823306592945,0.4930826882357715,-0.07959836902119521,0.9228928425950746,-0.9423800211631286,-0.8375882779122028,0.352444492368404,0.8771523597085089,0.9137785332490311,0.5817897452608645,0.17970895191064318,-0.37109651934322696,-0.80711016136834,-0.7224722960460641,-0.7626853847811443,-0.6390284664896626,-0.03001986557158509,-0.6363771401111598,-0.2968842358574846,-0.1931611607434387,0.867770250940523,0.4238484667362383,-0.7892431619302509,0.4614628556897906,0.7529404949743475,-0.4145547893512096,0.8103061794435713,0.6373349413137503,0.7755477562803876,0.6115783861954385,-0.8266462891038251,-0.36606036320074553,-0.1461155489427295,-0.9163028776723838,-0.10779412803612498,0.7198878825166526,0.4308740812127292,-0.9019760663323759,0.6788124952945351,0.5876372456142045,-0.7598644045316425,-0.8228227862275761,0.039739470204732896,-0.8630938180268486,-0.3998943716355865,0.7839617052070058,-0.8839567138181685,-0.8100131827671169,-0.17871223916576828,-0.37540248631913853,0.9491285806161056,-0.059689265232989674,-0.7155729878721226,0.06765611523291248,-0.3145399633984025,0.029659338469907537,0.8726009204969234,-0.3234616895525235,-0.8473868507972755,-0.8472346842752547,-0.926706343976641,0.47534565897449443,-0.36191229676192016,0.9087053633385094,-0.8235695422918616,0.5946373527816877,0.833557833486755,-0.20143343124062008,0.6530810288929432,0.6750642865733452,-0.2779171034289163,-0.4380839550638158,0.5348776728334572,-0.4199860921326959,0.8968322704039726,-0.25612693458518554,-0.49840091243240225,-0.6052325371197707,0.046533807104160996,-0.5018130371414096,-0.15619736495655379,0.8595758107369569,0.9636989098550017,-0.44860196160944743,-0.6766508335592591,0.006604492442389587,0.724412122470729,-0.8093900218248788,-0.4998929338144835,-0.35252976767218924,-0.846881632300202,0.5173637333881174,-0.15100888210349894,-0.2658349558825961,-0.3024475752249649,0.26305982334029765,0.6288372216882687,-0.8629505361428338,-0.6067711113599563,-0.8169532416012546,-0.8547815114131627,0.21294566680130966,0.48629644901899294,0.023049458637989906,-0.6512721831828181,0.9786748725801742,0.28434937809026684,0.5127573793134033,-0.9821655072037572,0.666618593285657,0.6811120696816291,-0.7330978885085038,0.6072280835614192,-0.6327957613911306,-0.9903929852399456,0.7959235466970711,-0.0307917389484611,0.039845788407127714,0.5759844498737081,-0.14637199749930896,-0.02832485676033536,0.009639938337702825,-0.5404147872858747,-0.757026021984603,0.7630009061245557,-0.21765782071478612,0.8473511933005997,-0.5199181801715247,-0.9352340168109685,-0.4905904934227441,-0.9266535639154738,0.8799534106702767,0.9846587064862276,-0.6233457691788076,0.9782047034454917,0.30719589920675827,0.5822314707234015,0.7086726868592277,0.4268544694279688,0.8436221406650246,0.9154531607571008,-0.962648694844586,0.24119295547145048,0.9253547269981677,0.47031695312670374,0.24413473758975912,-0.007847266119278107,0.32179155527942704,0.9454871638323386,0.42744995243907336,-0.09656743550257652,-0.33362737481284555,0.6864812147091888,0.5993503613619353,-0.20841017669438355,0.6035712566686098,0.3069885133884964,-0.928959862896481,-0.08786377071435147,-0.8098935700051468,0.8212922997660019,-0.6478554420800668,0.665634333101758,0.13391516041445772,-0.7003746261713559,0.2500820706760438,-0.49373010881094936,-0.5749533678045611,0.992862581916361,-0.35930336562942977,0.2547866303023616,-0.9452306119158995,0.10851404084824279,-0.762313062374743,-0.2386598176234087,-0.9476379271099364,0.4209773879196135,0.32529395940129757,-0.4848943783598936,0.8370062162292677,-0.5325805602652474,0.6139940807507418,-0.24919013072438756,-0.9208359243391242,0.22610600840583062,0.8187892235306873,-0.06430770839326083,0.5736321545199334,-0.5634492977791576,0.5716266053368184,0.41751470468018614,-0.14974611009659688,0.8476350081558501,0.31554775250237843,-0.1726478144356538,-0.4347540557812244,-0.7595293097196609,-0.40526815744486555,-0.7327721656709751,-0.4186293341665013,0.5454248366623928,-0.5472067759355763,-0.5958644703672409,-0.1348066924583442,-0.0213211343094184,-0.3113793397758098,-0.6232494250953751,-0.09129183190175794,0.05305063210841099,0.6525279449893895,0.06903842462800447,-0.5400862327758065,0.3212826986438888,-0.7282830076325957,-0.42259584341974565,-0.966901455456306,0.46687847325805,0.677920830257601,-0.6675427705991159,0.38303416449858707,-0.6419578190624473,0.7909186524158485,0.5974948253054941,0.02973891458207656,0.517882944651793,0.007450813008456958,-0.5919794683479414,0.47206804259416235,0.9310496920830056,-0.13683160300163388,0.268706598662263,0.5180131534523871,-0.5502304306499817,-0.24933473353677504,-0.14261441523171503,0.3415442855290345,0.8134755351416383,-0.49294130131963043,-0.7722458747340266,0.8709667335930158,-0.17125944723375808,-0.48762505105859666,0.37709590411605176,-0.477849462409643,0.9841323750020325,0.05827607005260926,-0.3565513893241712,0.3832711282680512,0.12616926339778667,-0.10407890534155162,-0.6911167910373095,-0.44843182146033955,-0.5675318290144493,0.7213087928747859,-0.9409657496559785,0.5808350836877063,-0.7017065139670504,0.337255641505837,0.11895690691653993,-0.8266344033775093,-0.7552264348623878,0.03688782607607499,0.7429985337351654,0.20737622242068565,0.1656581594313402,-0.6662728438694621,0.6306156429714482,0.8809469547777353,0.7968446418453914,-0.7384892602749082,-0.9124289310409566,-0.08927268783415321,0.38274628172901726,0.9198388065595284,0.11352752747051609,0.7238479099832591,-0.8945264992687489,-0.21551438752707464,-0.8819900840580488,0.4256291394255134,-0.29256071396323824,0.43706653195348033,0.08331325486575336,0.578497345799557,-0.6159266918763853,-0.8059492286720822,0.21868543101839233,-0.19213086693905268,0.9946176361129706,0.8732974031745857,-0.47892169255216177,0.1434149912105096,0.6188229881780047,-0.44986550971753325,0.0949487538329088,0.7156192393972438,0.2015178922470049,-0.38089808864716446,-0.15284800710516677,0.10683770370846868,-0.6301232299306714,0.15516219940052323,0.9677608381750333,0.42957543278137766,-0.9674806751111078,-0.8496790632328168,0.43213367233753974,0.12167208162137766,-0.08195387171017532,-0.26668868296517245,-0.7106427922388414,0.9094616962395567,-0.920542967519673,-0.6260868180451811,-0.6469745041793475,0.11268738354574315,0.16575823076360563,0.559143664908357,-0.7498285320595384,0.20189048183269032,-0.8402132362160459,-0.5458876268145074,0.7936754149449632,0.6928244039943474,-0.9356356654996796,-0.20164043137251997,0.9331791548212822,0.7732559908001795,0.06551320877162237,0.24467772387794207,-0.5437188429217696,-0.6661612209075614,0.14197224896247085,0.7937804004900055,-0.12511953347144744,0.6011926903453821,-0.799876807070059,-0.8957582803844415,0.6693978808624588,-0.9359584440397695,0.02998612995011629,0.08900139271678209,0.09113891269885932,-0.7507955713835963,-0.7940580144555711,-0.8768560957029077,-0.8917816891047954,-0.6060770593551774,0.7348356552354673,-0.11981766795040505,0.11859481498771718,-0.3878370405661655,-0.5998452854419161,-0.2813127617619833,-0.1630462122901113,-0.8112417183905234,-0.8131946847181033,-0.07405982105040221,0.920113165947003,-0.23369884612838154,-0.1725672364392119,0.8236775032008461,-0.7068216141775578,0.12312260358494287,-0.9307531589592795,0.7789346516667297,-0.690128754022798,0.28168986837147547,0.1070705772898477,0.695288234370186,0.3277464776328054,-0.7461255556445048,0.19070460348523954,0.16231637130352317,-0.5473281292900865,0.252257208497211,0.09320783623258322,0.06075883406920535,-0.7100659164347547,-0.9867097475992785,0.4622105520634414,-0.120775015592826,0.3186061826761517,-0.4592324540442603,0.6323382772584194,0.008063371320327972,0.7357347830006289,0.678848408637978,0.6384013582106418,-0.2809078652187742,0.43389372525371317,-0.8338325666714745,0.7505298530391626,-0.5980009557320727,0.8118643519186668,0.870202508492574,-0.27134424790799416,0.44594176701283117,0.2984433568629441,-0.992283374134201,-0.8448488324483205,0.48845914786055444,-0.5610038790153715,-0.9440918596966972,-0.20924682285492047,-0.7285755924680182,0.6195420187904646,0.8668568140721669,-0.7694140159470653,-0.788143358330915,-0.2767664484761476,-0.6587111272756228,0.33347839911246724,0.8489702238546117,-0.8493449298904183,-0.8903756513333829,-0.16188549495916038,-0.21542897898663527,0.22651209559780572,-0.9464143301598953,-0.08127486665098371,-0.1152806361040366,-0.16506636784394835,0.1686408288307013,-0.908117092884986,-0.8021064340166011,0.5550627807848398,0.9850284343979652,0.6461563791410838,0.3150373330177705,0.043437592649045786,-0.801922407189122,0.5682269617801408,-0.8303585759622778,0.9875141130152425,-0.5650246099732574,-0.86003264439637,-0.1925800955628998,0.3270151181556973,0.5067837865454123,-0.35566372319539763,0.2315193248396774,-0.5571132344803735,0.3619447632547179,-0.4367434737374942,-0.5492450040784496,-0.6638511923261978,0.12755755894172816,-0.601808666369759,-0.4081589878456644,0.6750281769864366,0.7177777722873222,0.4310672806087552,-0.3599424779746607,0.8856575295996165,0.001488586021022753,0.9681478811750648,-0.3883486298590757,-0.06479051522287071,-0.8503364290144095,-0.17108271117562324,-0.4474388106783711,-0.07251243421553677,0.7532205104763321,-0.18181622203553083,-0.5652412799863116,0.19585124896837725,0.32871109661143416,0.3304520851363395,0.5585933561699732,0.6419488645282914,-0.6592592741934913,-0.8781561313894435,-0.9040789702838552,-0.9298246564145569,-0.8730995962306702,-0.6109285897443588,0.3453198527989907,-0.2646304286905079,0.19488581729379928,0.39198874336077494,0.4104801036987098,0.9006807225615754,-0.07830883630683227,0.04246468597441666,-0.08282295225152647,-0.09622896315706608,0.6284591813056759,0.22361910931125584,-0.6309319009944971,0.5545258443601735,-0.768316112331817,-0.5963861921827756,-0.38210896842846287,-0.5826257339621776,-0.766253022982857,-0.12005678752765392,-0.4484172842933418,-0.6408586478322964,-0.4579328293411209,-0.822042308086528,-0.8435653541765771,0.26064431489427053,-0.8082301719182121,-0.3065051523088851,-0.8103973027949187,0.8102458577876437,0.9530199058592232,0.3100801127539603,0.6269124160775856,0.24100968539738044,0.4777877872741356,-0.339216352327508,0.5654468556144006,-0.808255053934658,0.7226680829957746,-0.149276548886228,0.020893112714949647,-0.16149529495274595,0.5527551701053401,-0.9214849112373793,0.1348196782244555,0.07865444230146967,0.888578150300072,-0.2666018851488332,-0.7382451858789667,0.3806713740498471,-0.1512448024221691,-0.07200569629053066,-0.20153319496127464,-0.4180130068253862,-0.9061894700099964,-0.16802143622514465,-0.20012607388752102,-0.44200671118465085,0.11399633160731604,0.8174133710272131,-0.9031685616509633,0.8208394216202353,-0.6809306124787895,0.9188669045077009,0.3690902879441855,-0.5379019428948568,0.29609970438890154,-0.7105887134129751,-0.36549160539436554,0.5221192272204995,-0.4720026517635141,-0.6758657277265394,-0.9990611588643272,0.9830555551255644,0.20157719705741073,-0.11504378498778123,0.7857565577206074,0.8768705312485454,-0.9557435539943568,-0.22217885075360688,-0.33035538393028085,0.514618665220562,0.5284638726678534,0.6217560339271275,0.968371637449952,0.1294699398044279,0.13531787989662458,0.09178577297097923,-0.6017349923167148,-0.40029531840484034,0.6152499782340235,-0.21272440689127392,-0.07695855619738112,-0.79667910220774,-0.3129534943300818,-0.5182736227177123,-0.4224394683597308,-0.5646932583221689,-0.8433071181792078,0.9365396934034147,-0.841292914277735,0.5108993342371888,-0.7291915812604426,0.37897416131205763,0.7269957765514399,-0.0010630040082042491,-0.9180965290848837,0.5616604281260253,-0.9890651698828294,-0.6632235974577847,0.8448715086888234,0.4817906384730577,-0.45982249961584354,0.4065481072780499,-0.11415283978208257,0.044529525570556894,-0.13392942410852782,-0.9806249703122694,0.8919569157225691,0.8812403406336138,-0.7825510041864725,0.6554295296677721,-0.9795752665012989,0.43113148454662964,-0.36563940266123773,0.7537996975674348,-0.15113268102996513,-0.9420841055842382,0.5008325881831626,-0.1880547377290982,-0.07593855666095317,-0.7206674343006303,0.32375698426213595,0.34176102194008484,0.8137648215110453,0.22893857023623254,0.1324418602979116,-0.9872066890432565,0.9086902143185662,0.9716556657985822,-0.6316901316790222,0.3807704695188634,0.9275944801629781,0.8746326906246318,-0.10591104366566517,0.9534769241491237,-0.7154709483374992,0.06125956617475126,0.4614806547746877,0.8101879703316357,0.6367402683692345,0.3987358778514576,0.6976028930253249,-0.0032642787760823744,0.9726946306040265,-0.7806560998506356,-0.8387162134383366,-0.49080483301661504,-0.7768450082172629,0.3373511630282009,-0.35365772135207485,0.49787131010861274,0.43404788395829197,-0.25873376750897115,0.6673920499255488,-0.48825627002280614,0.3318988234678104,0.6774959425647247,-0.9314720435429074,-0.5053604447765385,-0.1468241177485905,-0.6761134199239234,0.8416877552081661,0.8503713808105202,-0.9027141508283365,0.5297813447133475,0.905447376773383,0.8019978067451616,-0.006957309568248471,0.10054355649598401,0.6418611948756021,0.6486766296947326,-0.27422069515584035,-0.1940932385104579,0.9487971093393632,-0.4951365471554108,-0.10685296158489788,-0.9113717083764752,-0.5502288144752492,-0.6328715991371738,0.7391193503881208,0.09296909679967702,0.6408036329507869,-0.7586599993720049,-0.1497805564112089,-0.5781774909244075,0.9306385243212971,-0.7291415214311034,-0.6650391404526692,0.9401640516067622,0.04830578457055057,-0.6502381759468512,0.49665042824441796,-0.9577598257656543,0.15710552549182988,0.8371841441110677,0.7209454575037086,0.6454637125155642,0.5520191485777606,-0.39528357921661184,-0.8755585844322218,-0.37601605151095785,0.577494379389049,0.6434405825417508,0.48743459298471703,0.7678328334825801,-0.6304563354138828,0.2124362603850487,-0.013858377892186136,-0.9426740225021684,-0.9190117793347519,-0.9164467979130739,0.6920093316796025,-0.7555642650563428,0.27635841542146,0.9950125056307295,-0.7585172331181,-0.4270408279592439,0.11805211443911712,0.8552521956524055,0.301324440627049,-0.01628155233392503,-0.7080381112594694,-0.8587063709300156,-0.41624629586548734,-0.8859570130925014,-0.07630569804127152,-0.485823476231386,-0.6732573046582147,-0.8273084540167686,0.46593137328380063,-0.9612094464952248,0.005367699021425976,0.8499709330317615,-0.6600977936126833,0.9605970733232203,0.27584938192498476,0.4942286526986388,-0.2883611870573479,0.7232418653940984,-0.14590973275496077,-0.3358485186145954,-0.14800965954723977,0.539641793176064,-0.4408921587226353,0.9671694873953771,-0.8885137322846379,-0.7514939725198426,0.721754205178885,0.8170964346490959,0.47490167845851317,-0.0814614031154246,-0.3524548331350481,0.009485106927880294,-0.3383175685052555,0.9924505310177563,-0.3376108832686684,-0.9526140902672084,0.8413164854891853,-0.21984166390973892,0.9180868114828529,0.30713222940693274,0.7131725818926147,0.9327130491202966,0.5658627021112133,0.10151071847477255,0.6653133913459752,-0.6137456690052314,-0.14920032730323096,-0.43633339793018266,0.7202658753996569,-0.7974688497803963,-0.3347239903242367,0.9722572619183985,0.04676501224713858,0.33638553339147514,0.678199619751918,0.7752369961009093,-0.07012537558872611,0.8518675302801857,-0.2569265001483654,0.32939048964887796,0.8607128389533891,0.1183887153075327,0.2206699206882723,0.2556901446280573,0.21222430996279873,-0.6722292067111149,0.3501887250652871,0.466746484312061,0.363375108983395,-0.7254216194274736,0.3849399250426504,-0.5681555156790348,-0.4588035058658684,-0.25302948337427655,-0.38460392129942744,-0.4908143470684514],"y":[0.0,0.7034700598660673,-0.9471513459438896,-0.41274087218153466,-0.7389547057857604,-0.6749225470814364,-0.8714183095084151,0.13935161768898796,0.3824723988233012,0.05519819588821484,-0.7525090025083085,0.7420609863820016,-0.9300927971369213,-0.626118389050951,-0.5505076743119304,-0.06394246351787314,-0.857014037744992,0.6958946510118957,-0.8532624230581565,-0.5644138142128696,-0.2494179488681385,0.1516413581553533,0.7472120196907737,0.5941468027742054,0.808853282907164,0.9819470236209316,-0.19003411698005102,0.40223762232412397,0.9972825408542714,-0.1987606718172985,0.8611129397559831,0.17830678270809996,0.08694748390997109,-0.7212465887445425,0.9928634717374605,0.6072838889090999,0.16396168300394143,0.44875676864617575,0.9677918477342236,0.06344247705408979,0.3691677433352174,-0.47483992377849416,-0.652946952386674,0.9238997146341261,-0.5876834788581919,0.26114710906962135,0.14041161430625104,0.1290512898701981,0.7260378071794558,-0.31248419617728107,-0.8357573913649861,0.457197648377325,0.38691131024671255,0.5368553132961931,0.6273146248152657,-0.9093584487936504,-0.42700292998361156,0.986210377923896,-0.001861481932012632,0.5136275639770427,0.7833269819252957,-0.9030647270885941,0.3851657966062827,-0.6983997715746388,-0.9388445858124741,0.11458324859491276,0.046989494589589675,-0.641403709765219,-0.6557023705203271,0.13747403904351074,0.243818754252624,0.14262717078704834,-0.7809206527281811,-0.19586938380112784,0.018333670224240928,0.8390302982143198,0.21769441919427446,0.7097523636265863,-0.2544344121038822,-0.8182776041152828,0.3155167443612332,0.31609510905470417,0.8732549584021554,-0.9576900725591047,-0.8020098415217434,0.4045102210514637,-0.6761124521672472,0.6649805050130808,-0.06284916211870262,0.8476251664790715,-0.4900331738812238,0.756392878619325,-0.30599977347891394,0.6361161158609623,0.4559519640797074,-0.761672253606942,0.9461853670010114,-0.31876414652900675,-0.7563975230040669,0.5797550190793546,-0.41568599081394564,-0.8980073811014717,0.8138622818696757,0.8466178908063273,0.07962849784198922,0.21159818964259758,0.7433058372224415,0.6196391126116862,0.013051700375087405,-0.9794057045858005,-0.4904200584878571,-0.15000514445474855,0.5754306405794294,-0.9790403409445261,-0.905798618666847,-0.9576008608945701,-0.7775302046182757,0.8159843239189823,0.9490242208987838,-0.7522519507398389,-0.8453041851475409,0.5924865789177072,-0.8124128995283209,0.5545633240279157,-0.9074382949872422,0.5742708205769504,0.5275647368270913,0.9999880692946743,0.07696367925806458,0.940787667987413,0.5008340382682408,-0.48686859675968486,-0.6048581198347505,-0.856373214443904,-0.7795894618632979,-0.11681052953924231,-0.5318505224966505,0.9623843244484678,0.6461962771361722,0.15860546395417074,0.1013262900907137,0.3256881356852852,-0.6069169596007002,0.7986956988769385,-0.631005255243202,0.33380838034787996,0.16080257263820807,-0.7657486095289807,0.13231668431884636,0.7873432440564836,0.7946925279269947,0.8883844105301433,0.5652594170729968,0.9897272297968263,0.9470217270962162,0.7639496021279955,-0.8834708369180755,0.17074193261586146,0.28317933585655797,0.6483076136775339,-0.6575310503506995,0.46639057980977583,0.7137449910534801,-0.5785816268282489,0.9555419698804757,0.5434712746908812,0.6089034632165689,-0.2542069131202611,-0.9875498998934391,0.3562738808438446,0.9472738542315879,-0.6398118118318787,0.33191684881449834,-0.7754050060577269,-0.19238564627612353,-0.8998934835949988,-0.6301123364205476,0.6032433739791043,-0.6236098007654496,-0.35975667671980815,-0.5805562076573443,0.7660411316453768,0.7976534745642332,0.25255187400449963,0.8524793617984403,0.533024778942625,-0.3720932382567299,0.8675835506630007,-0.9717759778727841,-0.6926542379456246,-0.8662552108836763,0.496223751993776,0.2960099604205215,0.7896723036428872,0.8075658260653651,0.4850058410941793,0.9698559798048649,-0.7862277834312454,-0.06373308463973149,0.46757639404818163,-0.8538757666711847,-0.8325585466484906,0.08135174660217048,0.724680988353587,0.4844239057449673,-0.5748380111880418,-0.6736952202721427,0.9247267447179952,-0.9189622093404441,-0.584665936377972,-0.3695977950716005,0.9054450660697884,-0.1131924659171415,-0.1126582305732231,0.010434659234916266,0.7041605610429871,-0.4232155670691997,-0.4002337547009174,-0.18352759818929965,-0.9037850844270767,0.21283897439098198,0.11375103174530654,0.4757624413574886,0.03287294854123157,0.6092822893592076,0.6507902428412349,0.8644277304255765,-0.23721046124618717,0.7890744504962646,0.8318281086941037,0.820178972718983,-0.9816443737633729,-0.8515009758982346,-0.9090841766458966,0.5746154583995371,0.8712891196359833,0.25017237086966637,0.9147211613246868,-0.008101978151465072,0.4558593927103811,0.16360598796887071,-0.17242129487387947,-0.891533459566203,-0.5444828331490061,-0.796785353975014,-0.758138322906956,0.6046076514325867,-0.2690935362420903,0.7473965696518226,-0.3475294824866093,0.6330851538031939,-0.216234039041578,0.5730558834720179,0.4886959016665342,0.8178591007038167,0.41221383607568085,0.20135866043262096,-0.2658922149405849,0.7050561839296938,-0.4890557303787266,-0.9727809314712856,0.2825758834803338,0.5653576360956343,0.7887452750157815,-0.8709342208791455,-0.9226114229129243,0.46215795433782314,0.49294110100491495,0.36098998117546466,0.7249396385837554,-0.7062080033928488,0.6145798845828856,0.43141081098692924,0.8118980294342633,-0.10805051917840514,0.8492665298543118,0.7748071907034433,0.10799275503531702,0.46190774116456734,0.10969067809458566,-0.7078094054874944,-0.8048544481809599,-0.7094931682966819,-0.3932083063973939,0.27937406437302914,0.9855599409477898,-0.49070450132225707,0.3391378395837077,0.7116496203560516,-0.925489548068755,0.8039035394976002,0.12350854746423301,-0.7133468765877264,-0.4336189614216073,-0.240823527560736,-0.31941225622198965,0.9480962630672092,0.5926593404525751,0.6291371100710672,0.48084846992254326,0.17962705653812083,-0.9341394598577919,0.5497912293258043,-0.34755697155994403,-0.957214212523626,0.5164109796097225,0.7730494524546163,-0.7865605409253735,0.8172618096211974,-0.964379424122696,0.7963702976923104,-0.12462202414638979,-0.3349734365065462,0.24563258150656186,0.5997404768180088,-0.4005314725567486,0.32809578678636897,0.5392314536981635,-0.8108635581220847,0.2693887629409677,-0.13950697269408052,-0.9253656800011785,0.631425137098492,-0.06836678961295428,-0.29093594962588565,-0.08057333570135206,-0.037547943145430196,-0.6069676688591423,0.45245791032368077,-0.8905020709160378,0.7693231158551008,-0.4053657134513178,-0.472441215231614,0.432159169916535,-0.9734532763365584,0.7529914041657617,0.8634342872917578,0.5529525856990549,0.9128176569237778,-0.2744596075023611,0.9080114383406528,-0.17228352660564705,0.17306686624973344,-0.2149236980804894,0.47734239419653957,0.7892751227161547,-0.007322421559240233,0.11462791273363093,0.8893936533382871,0.6632006892580935,0.055959160108681294,0.40379812889659816,-0.2409949413465502,0.7683440555624073,0.12081818848927517,0.6958265661379632,0.895860730494666,0.933815529482783,0.7080128882654511,0.5458667613363988,0.6099423775939912,0.5354536279836417,0.10463231129965744,0.37796448280409534,-0.4299822135710327,0.4304977411060391,-0.9465306371806794,-0.8900222699387821,-0.12496318968644649,0.4842491564634157,-0.16225710020964512,-0.23580809844062856,0.8084669910142199,0.42235722186762636,-0.9651165673881985,-0.8381007931619395,-0.23326348564669663,-0.9035897549927703,-0.4209163884799576,0.9906837606690984,0.22042947260457946,0.869716345245862,-0.009312263252470698,0.7312303376218496,-0.05091176044880741,-0.5003482299320414,0.7392090465670929,-0.28451794147287623,-0.7077854424814234,-0.8298945555073991,0.6440123196916234,0.6138822194392404,0.6715271616456424,-0.8715455512641321,0.01816357533591173,0.43330201497277976,-0.9804590673067812,0.6571958375681834,0.790150271300506,0.6313429706486584,0.8824699092554018,0.8180561368544987,-0.5016526009538009,0.2034770266618222,-0.7369445759126951,-0.33446239765807806,0.2535880846692429,0.9781593551346273,0.6869827707411444,-0.8322057098611237,0.8305376665801318,0.24157946018818977,0.5670439492498118,-0.6168856652679058,0.8879209308032778,0.05565237695448122,0.4193939683981729,0.06335275538215424,0.6998356747952899,-0.2687505974906217,0.8976198079729552,0.4160427779620868,-0.791577495852084,-0.7565503385065047,0.7824423051772424,0.439101436624709,-0.8624085768540437,-0.6454641668104868,0.250905255738598,0.7657365024052787,0.5201865363815126,-0.023300057801882046,-0.22555486238638345,0.8845766027106756,-0.856381831164525,-0.8379010813290637,-0.30043992221896487,-0.8894666638601816,0.6786799067493341,-0.5382996172561225,0.5805149902574684,-0.7960316641815748,0.7018674951525175,-0.9375625713156135,-0.23887735315941017,0.4147923632794852,-0.847780155643818,0.824524172763818,-0.8794191356773116,0.287508845484133,0.31630099181557125,-0.2913492937606499,0.3658762638492201,-0.6182664504901774,-0.23968489879801025,-0.8264429651323446,0.7864177923656703,0.370081239341602,0.09550476887556503,0.3302096366962137,0.7997455908334672,0.8889994650039843,0.7896997744888159,0.9987414811703168,0.8501690097754486,-0.5997386767661468,-0.9167825064194148,-0.6833048003955773,-0.642547066386099,-0.7056683235259005,0.6701168748063515,-0.7642385957606896,-0.9753445385924933,0.8220872049492403,-0.48080138365901526,-0.028419616540519055,-0.1660853157025599,-0.21790322751792135,-0.7656014415292696,0.05113524172871187,0.7778758019987877,-0.039497000858540465,0.9225807212085746,0.5374941179171553,0.18256566187823187,0.5294280186282994,-0.8622403456710146,0.41024068952540893,0.515256450317285,-0.7006209950083662,0.400446216283326,-0.06634922034220603,0.5510785786505057,0.5080843642956938,0.003935076463257303,0.6862196662783597,0.66637170683547,0.6729440183688695,-0.8003521096813675,0.4738049104005031,-0.41351661196438494,-0.48738403017986065,0.7397389089727484,0.1923780220164315,-0.871649583086247,0.3216641731761376,0.17811059181944322,-0.41103609673302266,0.2265018061328541,0.7804142991974616,0.5968278540001017,-0.9907598998091567,0.9565486169136215,-0.8606121930966828,0.3878792145346226,0.87717370210493,0.3447730286048569,-0.8056542441606345,0.9989059370887068,0.8911614305332787,0.06690273617981846,-0.9596180702299026,0.8250133752152906,-0.27284391482171055,0.6815227409183242,0.4135004215534608,0.5341469182298706,0.6241189758663424,-0.796262159440732,0.8741580328281269,0.8577698353912542,0.6410458331618318,-0.9920627769390238,-0.06354568615920297,-0.23590083742456103,0.3333519984659554,-0.7500776376171983,0.24822664330194932,-0.2733957420922415,0.29980639144797605,0.5447009386944028,0.0877202032715294,-0.8568116585792858,0.5151902478917816,-0.2043776705950573,0.7597690947279048,0.6067468467248827,0.001975240895056629,-0.28480632690710705,0.8650715523833055,-0.9431203886928472,0.27119759951084155,-0.6520000063336542,-0.5109020042679115,-0.5246065721505986,0.33489299443444476,0.9113098113407896,-0.6202383724169074,-0.036647991300492455,0.5920623199011412,0.7674054539002593,0.4402875717751389,0.7175913019394771,-0.616561768801583,-0.6150275701024968,0.7149181494372203,-0.8080135015146506,0.8682293377290133,-0.38556291000011744,0.7465341833740449,-0.3751121921278868,0.15960111041520753,-0.17356472190681105,0.9326379593638687,-0.33710681180860336,0.7627227129396024,0.8842846392385832,-0.9470943796743603,0.18405129523653163,0.6232810291260631,-0.6753271876629874,0.3519568495298562,0.8993417181562477,-0.9464954026161747,0.5739653350883123,-0.7715784415701183,0.5477101026692184,0.06735056975626108,0.41469663299994886,0.6498911697299072,0.4478429223728386,-0.9277429011846128,-0.7444098219439832,-0.5979212591826049,-0.5484601426359672,0.8973784068420272,0.323544491310529,-0.6519842184978002,0.208588045713215,0.46121599237345934,-0.7327265013933493,-0.8673826028112741,0.1596843770701748,-0.07171338360620005,-0.6950527484373275,-0.8477411892574507,0.6044578681509656,0.037853274942011295,0.9702123233050162,-0.7878678019742278,-0.43928739183824117,-0.10706455313960084,0.9137388441587484,-0.7769816523363913,-0.40471615593833987,-0.3674439673067771,0.10305545509919489,0.6757715944906395,0.39477034256167975,0.7989188901758442,0.5376868805852337,-0.9791633553673471,0.05177381520898794,0.6768869309089165,0.9049624489245565,0.8216298357983169,0.5172552203905387,0.6217596063248774,-0.23626444137733404,-0.369630491450307,0.8227055848665088,0.8589114963990114,0.6324914856681376,-0.8784623578966946,0.9876249876095669,0.3798793130267262,0.8268578851140305,-0.49548045210594416,0.5274647422820091,0.6436286395518751,0.6917349640240378,-0.5149828295182854,0.9604317801769298,-0.08644485442917893,-0.9266959797015912,0.9808306660118962,0.9014736841081952,-0.012284940508413777,0.37248780217016586,0.33420249645401845,0.6137721073754574,0.8217305365865049,0.49396592425333563,0.9862412962116183,0.5422799545130315,-0.941157829508489,0.28078854945151854,0.6263683933613611,0.46208288572479117,-0.7053325645090336,-0.6951987012172982,-0.671471242115746,-0.5901376002024634,0.9356940611329065,0.06770436927837897,0.6992677491008978,0.8595482047185303,0.8685848702771191,0.23122100611204388,-0.9916625517107576,0.017986333686048184,0.7446209944340902,0.578790933932317,0.9168049231479938,0.6065395422571365,0.6522885366971969,-0.13017289790822462,-0.8250934217888275,0.9644688845259322,0.7604142687748725,-0.5196406599663765,-0.7524022045416983,-0.46964419639142196,0.4588831176048087,-0.16294451230390194,0.10874318306848907,-0.5856078391673947,0.2782099308562165,0.6963273028259449,0.764999328860005,0.4587732657587582,0.10568961933752608,0.8428109084018109,0.6204752155250832,0.5941076892368742,0.5489083546562947,0.663813422028734,0.9469509996516114,0.7756389968484323,-0.7762629529442711,-0.6259684084383825,0.9245054195251889,-0.9732066511570041,-0.9750212839378607,0.7770847917086932,0.7967728682059081,0.656729063795682,-0.28290085630714334,0.9851023088766722,-0.6145260276902722,0.9109675596836513,0.9552218800080172,-0.9428195398241503,0.23778644323214593,0.7400752825596542,-0.4360113300667141,-0.1633799650196821,-0.1589568302805353,-0.9769923948808286,-0.18437612315834206,0.34368655463119535,0.1224398639024209,-0.09824484019661739,0.2608684468562663,-0.5296207342127881,0.9096585951327887,0.22185258923319973,0.41466418556575846,0.4553352437208713,0.30467889971497497,-0.9230400760955273,0.19799791559201219,0.10979370623763374,0.6527884669628166,-0.3325813907540156,0.9350184682886682,-0.18907002601923617,0.9031913636919444,0.5691605493559153,-0.8313241262080098,-0.7034638269986744,0.9871596596318386,0.7423666142571868,-0.13516159533152594,-0.9960686782325783,0.5307630877069502,0.25361032312489185,0.8041941567813924,0.03427816812610596,0.8227386578563667,-0.5322409782092608,0.3461806555849143,0.3603197743979971,-0.6967763867172911,0.46323730885029346,0.7132901359129826,0.17569787048606456,0.8159832524404,-0.9971403642749903,-0.8175971541407143,0.8360815170057083,0.42125709365004727,0.86459642306865,0.5083825519824114,0.9458162169404829,-0.8158613964552779,0.9523817699792392,-0.3252475907638146,-0.6519379098172975,-0.004497520322276349,-0.5042609429563552,-0.517993766459871,0.9561315192652642,-0.5199573638636501,-0.6574581583686274,-0.1017948777849087,0.04187637964436042,0.867462285914913,0.8024107902624624,0.2292573723979634,-0.5448514174711847,-0.6802249765573161,0.9020524239259011,0.3535522461832423,-0.6363851023027693,-0.7271033675091776,0.9674537806900239,0.6423152510247709,0.8977644350367966,0.646995600975877,-0.9912856100089702,-0.5071869310471595,-0.8162258644118108,0.4486685915135942,-0.8812767527917547,0.5917140127659408,0.4990479947670683,0.9060432058055186,0.34122209133753323,0.06565750024426786,0.8696011984872223,0.03241092772923193,-0.8707918677624482,0.9365621797394716,-0.6932820518830676,-0.606250724591213,0.8231270148929766,0.18255598449581956,-0.8216016067723293,0.6217595997560987,-0.9052588390208993,0.5806993801356295,0.33385021762891265,0.7067510190605473,-0.7874878554365816,-0.7333954846477313,-0.04324113932242124,0.9148003383623609,-0.6024875417543809,0.5996326729865775,-0.06918188106165402,0.17428260072583068,-0.8097188089267366,0.5664430381164616,-0.9428926146857604,0.796586875344454,0.6498180605887804,-0.8682122864864794,-0.45858120971112015,-0.7212006812798062,0.5281707451436002,-0.8516539865754724,0.8893379009933644,0.7500432722649155,0.9109379397992896,-0.9862534336801871,0.5675535726376146,-0.8712647083932934,-0.39050094300653004,-0.5262611522702949,0.37285483059236846,0.06736035200719703,-0.5988721234462655,0.6258656929312556,-0.5696530058204345,-0.027058714814544693,0.33049033428805963,0.04004690514576881,0.5176697817769327,-0.4813518820337448,-0.9512417735004437,0.4576369070792694,-0.8820391337647264,-0.13929283858696118,-0.712510389002659,0.4208332709526281,-0.646607228839418,-0.7682742918385472,-0.7350443896136449,-0.9531888631642162,0.9798003996735412,0.5296273233454196,0.3915000024270934,-0.8341307344598632,0.08696115772649882,-0.2420927946302851,-0.22994680170975634,-0.45219080717888427,-0.35301493545221163,-0.9459349184061614,-0.8806003281713166,-0.912992719284238,0.6734955503893616,0.09993654140289387,0.40345634473266134,0.9114808309394486,-0.37606684324599926,0.2611750131691257,0.6370359925528086,-0.9718955869655859,-0.7256824590822863,-0.2109705447444521,0.21754964642091812,0.9130350460101051,-0.3274993669755879,-0.2329637173694088,-0.42451314766739623,-0.8475365973436106,0.33441183336941527,-0.7022982494370236,-0.4723714463269706,0.8824603324342031,-0.8226962038324552,0.8018902908933796,-0.6289652865311075,0.760031621662342,0.40580075289483863,0.9368168140754687,-0.5111553523913799,-0.5629373910890056,-0.5305074478101612,0.4060215021626099,0.7404821026922646,0.6499928513578408,0.9355984906236015,0.4775026813641683,0.030042161062859174,-0.05058830506523071,-0.6741058414457515,0.516409522044426,0.8567259512154903,0.5613990282530108,-0.8754280046838994,-0.6623728334478567,0.9589146879848749,0.17783951222735195,0.4884418717422767,0.4510304356098285,-0.1218913908094923,0.6623597899332296,0.8952158041638736,-0.4940397451826679,-0.6975200327390145,-0.8222271994022061,0.6074914772725242,-0.21785672520220145,0.9554248498481301,0.5327993856872697,0.22823182664776231,-0.5758848537110051,0.6513294951291928,-0.36283451383561705,0.6464137261069551,0.49447396361240314,-0.6052332301626864,-0.21168964637918242,0.37923182035256064,-0.8554946662941441,0.4786336887059415,0.5222435486375181,-0.7043290762897523,0.20766215876944583,0.6978400301443841,0.9113768346654476,0.9400407999849989,-0.3848497527514283,-0.2716228871482127,0.2508821580393932,-0.11163591844923948,-0.9773280737648173,-0.484088941860622,-0.9830760391244839,0.330262179437695,0.08459713101918442,-0.9820722833140698,0.609338846640836,0.7689817293518941,-0.21551702046996524,-0.4375662549042829,0.17904031840481593,0.005555955548529834,-0.6126457515973256,-0.35716883956445233,-0.17293392761382798,0.9126546625443246,-0.1839184333830619,-0.6880015489442926,-0.011884042457928734,-0.613221123311652,0.268109697682521,-0.7487477404771894,0.9674630424926243,-0.19069913656888304,-0.052391405940074076,-0.598755820283944,0.04709490886126577,-0.6747202285497764,-0.5380514754862276,-0.77112920514312,-0.7147127883973412,0.7819042787935935,-0.10305588668459009,-0.22356475333569614,0.48375992294369285,-0.768866450033485,0.1418775682239357,-0.8373799449302501,0.937756501416505,0.6053688232547978,-0.272277313828557,0.8491458935805578,-0.5886182818747094,-0.5448614254836555,-0.7906808482311374,-0.687526241549044,0.6536997648910625,0.45679126258301395,-0.7442821991955837,0.4192480438271031,0.7863487252227488],"z":[0.0,-0.9363457224819609,0.7573563675634467,0.11350277584464674,-0.5879269749272149,-0.18342643765420363,-0.7094390842303575,-0.9372697645846702,0.07712086760526993,-0.8340417375474318,0.141849691633692,0.5923050807278618,-0.39363073601523646,-0.463639700626838,-0.001962152141126383,0.7018363825860976,-0.8817112048800859,-0.027408702883711555,0.49327170900386186,-0.8870319633024377,-0.8416193176225888,0.5871882198898137,-0.1283862542013987,-0.5224411444543267,-0.43855574186042934,-0.4512054303964581,-0.7479711148453714,0.786006351187799,-0.21110139133157002,-0.07816015511522112,0.8165686287922151,-0.41882803478073316,-0.7607194096856269,0.5863788677550574,0.6984337385232182,0.2806308495398053,0.6223305483093571,-0.1812554925676786,-0.41059586745370624,0.2408199049828581,0.7113146770941594,-0.35485478326944997,0.5608460378568905,0.45183236046302566,-0.9413210946184412,0.8766372803361846,-0.6994095980710815,0.1491820897229723,-0.9561412086200414,-0.006803230878707378,-0.4978562819740109,-0.9874122627076307,-0.29335129646212676,0.12992335279599998,-0.09962328197203818,0.9666172409693017,-0.0643922692155603,-0.5215307251639636,-0.3945588085590426,-0.26857925825975193,0.6447415949779176,0.10599561551428249,0.405652836116988,-0.07913935782944592,-0.24385185322550496,0.9958334366515649,0.41371548715293316,-0.5396931172785291,-0.9230939276381513,-0.9861410602414837,-0.6818748169204034,-0.46009324361762216,-0.03794691979871301,-0.4912147367157824,0.4663600069005467,-0.5421683075915187,-0.7143028404845595,-0.6790884293237454,0.6624769273200404,-0.22641028048237555,0.37469344483008626,-0.28865000747403613,0.2719357904152033,0.7770778766967759,0.5469917604272054,-0.9887054031740548,-0.4154262401119544,-0.8328788271499861,0.050297992800233615,0.45052259743691536,-0.428820546618657,0.8627653744155235,-0.15496615701014793,0.988689522720988,0.33224740120808005,0.08916184614081413,-0.39063205997262296,-0.1959751943072221,-0.4393666360220747,-0.7240546366129594,0.7641090812822622,0.3251900224494524,-0.3370661652603124,0.3383543060258831,0.7845469463395256,-0.5379034984181497,0.08384422066677044,0.7455185831821549,-0.13952692730506944,-0.1416681854100117,-0.5433159712957965,-0.2683248908714897,-0.6251095651026444,0.35134831759729135,-0.5769266235263617,0.6300228081247121,0.6608069552800615,-0.4949325879361308,-0.8579948158332837,0.7353190733572874,0.8069494709708043,-0.4815634532482749,0.6950272763393133,0.3286560802665819,-0.527873223359693,-0.22767083472689054,-0.5826799088242354,0.6307899988322143,-0.4486660977510466,-0.0445759146519098,0.4119194605915759,-0.0771129568477611,0.9494697055258625,0.8336355710546615,-0.2646706650653441,-0.9608787719956058,0.21337651170654626,-0.4620456974945111,0.1502224839368449,-0.09909157863120721,0.8493692361758058,-0.6104933127463388,-0.3856857407574643,0.1679062110813463,-0.047880469011632565,0.15401639616499074,-0.1432371701730768,0.6073188737229158,0.21269448347781927,0.146151778901352,-0.31943431615277085,-0.86076417421594,0.7145645992182192,0.14305235422887375,-0.9787937076391484,0.24549992177731483,0.16119575653788232,0.4390791389357247,-0.3955596522564766,0.7731124396061255,0.03862459919552497,0.06884592879679596,0.8652883123069341,-0.13383392935090166,0.6969720214739816,-0.6682913122812995,-0.6341627745363765,-0.4406872301549065,0.1881526299437284,0.28678029742014166,-0.45853049394022216,-0.9226446220757005,-0.3691642824031658,0.31116293808217965,-0.5891197939875343,0.3933214119140931,0.22340924477617508,-0.25214935465252575,0.33872871336558497,-0.7129442482064254,-0.050655699101437524,0.766478641328558,0.4407367070310866,-0.6585068094966449,-0.7196172136609653,-0.42426459842455433,-0.9975888095567236,-0.3613044742015086,0.7050123920927747,0.4644903426004501,0.912537304049452,-0.45395436296888203,0.0340782214699491,-0.32863955164316594,-0.4205288010804302,-0.754449317343864,0.024869236865826094,0.8422729064427235,-0.4947872772269908,0.782249049491075,-0.5592603902395004,0.1792030539387779,-0.8227630195369846,-0.9071418060144762,0.9363576210911015,-0.6448828875218995,-0.5415664719126856,-0.781708041039405,0.6652329151846854,-0.8108625425421654,0.06965638502101301,-0.694832909341409,0.2663096065161008,-0.4016702124164129,0.6566736477054709,-0.8363553463546918,-0.2785468193036702,0.7233000459399215,0.6981119759203225,-0.06365058380048971,-0.4934209870749384,0.8352103486977205,-0.6596130320703006,-0.4298560435382539,-0.489756307575836,0.43639732383722807,0.8173832383341371,-0.9580972439328237,-0.3124962423310973,-0.7613339987814371,0.19378380147837437,-0.03864381783436954,-0.3649119295994334,0.11623026160886774,-0.697621158452336,0.10237476165098047,-0.25631179659826997,-0.4442063977679229,0.943873456384513,-0.4714641552493102,0.4632844525639652,-0.5468916464252569,0.5959956023129274,-0.15230885861611454,-0.9387856653183897,0.06833940993935905,0.6319751452968656,-0.9901986114515013,-0.5431812877769702,-0.5714552341511914,-0.37790173842260044,-0.17950038794001122,0.18154226451792166,0.2928886925101404,-0.03407604734168923,-0.1508334848417514,0.8138932161489962,0.40341543301312677,-0.39722736570355455,-0.41064287197931404,0.07801905805486209,-0.4521189972550239,-0.7875348189401199,0.394547750218027,0.8406645544978595,-0.2176973726316962,0.5115781564677162,-0.18193578536564758,0.7158416304555244,-0.7294688273312224,-0.2664678249917356,0.36332542863694184,-0.8921871675941335,-0.15996006208217484,-0.6313781788045285,0.4043554379558545,-0.8994986941477454,-0.8317967275119837,0.5072551922361501,-0.37294226727959434,-0.20937254282004059,-0.9298796188060836,0.596992521713753,0.9054261736973761,-0.9706762828033988,-0.7991043398414059,-0.045037175952723274,-0.11973787272267411,-0.6799542951683382,0.7698894474453415,0.46041410847945907,0.5950135933346457,0.7821906760910942,-0.5101933967472738,0.4400354223891185,0.8497815221755489,0.5792494536971085,-0.6025760716170914,-0.08730339405357435,0.3403619428218876,-0.20747512882313202,0.6319255551041838,-0.6796496423806062,0.11802672743134024,0.8015953652888583,-0.6162907132288298,0.8155300933480247,0.36000931559246974,-0.5370312895381613,0.8680994476293149,-0.5295581991621747,0.3695141025211881,-0.8478603208228384,-0.9064513425363105,0.214613389006024,-0.657994617571031,-0.3012798701278405,-0.6433151410613056,0.9601051773641922,0.7775310225935816,-0.033754186442436884,0.44437799563695735,0.1227834228151945,-0.771173055355123,-0.7097435820849689,0.9593460770275506,0.6237364217391723,-0.6320927348565788,-0.4981122457232168,-0.8339961670692484,-0.6934702451814303,-0.6508244508339129,0.3000617742696423,-0.13393882198868212,0.491969168272558,0.47573270106698384,-0.247898686729632,-0.8832516800096031,-0.16305462089987954,0.3638184986990731,0.4908924356474451,0.49356942372828727,0.43738974519091567,0.9590128489389631,0.46781117695781593,-0.9014266927548802,-0.33710138793738254,0.8679835581313198,-0.3156812368268911,-0.43339912111559387,0.23364632234649685,0.07571853603864098,0.23595755685237818,0.5307268130449625,-0.5687197908581347,-0.0883704608483411,-0.9641478762532554,0.8288655039642157,0.9296622226184608,0.6299930372489433,-0.9226271685953953,-0.7806894823458328,-0.33320871662187757,-0.4853875535764376,0.5606050535193807,-0.04436897252987171,-0.921036901508677,-0.9233080969258185,-0.06640067658413318,-0.47644816316052685,0.9369774445961172,-0.8219154087489915,-0.5396803138137785,-0.40293545219814275,-0.645624236040087,0.09594688001931884,-0.714715698525455,-0.3550540616107445,0.8302452701845433,0.8755519977460848,-0.5994150710801551,0.5944114032824672,-0.8669357727508717,-0.035543108717947414,-0.8018741871375026,-0.2644995566815098,0.037515534645170545,0.1217509935537,0.9274152632581774,0.9749332767442285,-0.1322944547564553,-0.020399515142417224,0.5636147064318604,0.8381980074557329,0.0092547585267444,0.20826603398694776,-0.8350114360296645,0.18095729619686662,0.2140140731837612,0.35678640826603325,0.17140867894211143,-0.4664428852231022,0.3756557580852915,-0.012758419450525249,-0.09507891611593733,-0.19024714441450952,-0.5910741837306139,0.6089689020385518,0.6587331890367447,0.1753379315167536,0.8852267503395388,-0.5895756403819938,-0.520115547182471,-0.9308868201424103,-0.0617950963514029,0.052757938274056615,0.6817581288962291,-0.27790432193853754,-0.6776994293760921,-0.26692695208522754,-0.31485052105851796,0.5299925895851727,0.025716241702616216,-0.6808246623920444,0.895069372486039,0.256897278640152,0.7902514638934939,0.10552581691186735,-0.20688347154578945,-0.760602783484096,0.37855431509978343,0.5464680614039263,0.39968338883322674,-0.5124866430757684,0.08879701393447892,0.5674693388871723,-0.4728226025243265,-0.45335246118611017,0.8748794212492204,0.7479988933412041,-0.886216306559539,-0.12834764721637093,-0.5166045415448721,0.09048588932257995,-0.3871317651310846,0.06137578529324306,-0.11007647558185707,-0.2282495075645743,0.611588856875966,-0.26648789613947765,-0.3777429259923071,0.0211074994825029,0.24029863097521953,-0.5116985215475096,-0.7299811114618608,0.42625355794577646,0.9146631000415097,-0.5584162729189401,0.44403985697364234,0.747581579405858,-0.5305418755109932,0.08451445623356135,0.5334436294787621,0.7593452607417661,-0.9184910418863306,0.9551930645970188,-0.29236871688796584,0.42954675355881866,-0.2873838098182817,0.15146487120791607,-0.31380679211027473,0.2164118962270467,0.9230965822203534,0.3840875351577906,0.0286056507631669,-0.38968067977755383,0.36739191456305664,-0.7470152693258401,-0.5626418836163409,0.471104647446819,0.9304713886405294,-0.9844077072437434,0.8360138044684897,0.39681057447958024,-0.024094905979255676,-0.9090059415194216,-0.425931977070487,0.45103101624770914,-0.6030047423963514,0.33334250465605453,0.03394265365827587,0.49852807631175855,-0.5808491560631552,-0.9827681367028056,0.32247689080865793,-0.8728046099936726,-0.48763635791118487,-0.6074645066528226,-0.8783004696844245,-0.7892595661135271,-0.937568908139268,-0.6256452171446163,-0.2235137229558033,-0.26465210048517585,-0.3052327426513697,-0.31215787518826255,-0.7086916804246295,0.7588225576671435,-0.7334208443669847,-0.13941561421569904,-0.8871050220432255,0.7180793085121879,0.42522559442683394,0.015797730592445713,0.8641411477054199,-0.7504303474716252,0.09578508200214042,-0.8043792710807236,0.9060550466119179,0.04354606715364717,-0.03599525042694163,-0.5962077592431827,-0.37287675053281455,0.7392028982970085,-0.6998958316564798,-0.4612892587697488,0.3638484472842023,-0.2911549500979971,0.8828071799282486,-0.3131401886199203,-0.753461826169131,-0.640169332991726,0.6314280495903286,-0.37714232747333454,-0.6779641048774272,0.4667867987057024,0.006608141203553908,0.40744303802541415,-0.6361857033841554,-0.050754900247305335,-0.9880136066296066,-0.40776145735069114,0.2910259581415593,0.24478924836225024,0.7720492532102319,-0.329802701176946,-0.37594270145911923,-0.4918702009568774,-0.4972869285073733,0.6257179969988655,0.028974372796267245,0.2660040487912263,-0.6727730446081737,-0.6539972449238225,0.5304464876851869,-0.5821194530326288,-0.5389814270620215,-0.5285576351786667,-0.3628919901478491,0.07492444037250534,-0.4116814081622664,-0.3067302688136093,-0.8748094172129457,-0.7965399574398082,0.7875854833536002,0.17318624112427417,-0.5558645167269678,0.04930486555119806,0.7558017776826433,-0.164421084698118,-0.670462979899973,-0.8130587064594155,0.8834154902078906,0.2767845953411636,0.3081293888591743,0.8566905881478721,0.8898900368595839,0.7562482162292727,-0.0013797792972423117,0.7436466068012622,0.4934732502739245,-0.3798889974566091,0.5439606715856753,0.6660152711815019,0.5090281569576951,-0.49960211129670085,-0.06467705260078782,0.5425181741062415,0.273143091793008,0.13258015665275025,0.33771061304380745,0.5159367607595469,0.3106819452671645,-0.8719906266432114,0.6600262344205088,-0.5989195365218272,0.1435494232841028,0.6862118005092075,0.40271554399632103,0.7963694662620096,0.3343756389000141,0.808491288113915,-0.23842817036416908,-0.12772482079097403,0.339417635740789,0.08286363811973452,0.1488287833644355,-0.8705662007659019,0.44192800806020327,-0.4650991998263667,0.8875344247570844,-0.4501306735024506,0.4184069261528496,0.06036928815066256,-0.027937453800465084,-0.5817810118401021,-0.43464715878300697,-0.29325558367875426,-0.1629413318117079,-0.06359197527633986,-0.9111648823655141,0.12623781695635117,0.5715050981721177,-0.9667685706903086,0.536144827711245,0.892745847985378,0.08367576013999445,0.49386404220145685,-0.9005626779095215,-0.6291627005109188,0.6084911225340275,0.3175684947248796,0.979253116360806,-0.15500272446689523,-0.8264375379386857,0.07750805996391352,0.06639911476380123,0.6128175905037636,-0.49765728596747616,0.48944258814350583,-0.6735052657818017,0.5690575838308216,-0.48562235512981133,-0.10831340154719915,0.39883714051745,-0.3546892045912138,-0.6665245399841244,-0.2751862606022315,-0.1892108242668884,-0.37824798868122045,-0.19056900481554995,-0.2877554070030601,-0.19544940767658314,-0.38517308646137605,0.5332972295849774,-0.18363061771253264,-0.43518473361648824,0.40006407396856525,0.02807838223949588,-0.0985620687621509,0.2284029663158369,0.5259290022393852,0.17496465669085048,-0.8899536492650757,0.8572711257695131,0.8837908871729458,0.556984419444901,-0.8374556698267193,0.6039519907627617,0.6474494723532636,-0.8051233785744116,-0.6487846101865957,-0.8467871055277862,0.5823440284585408,-0.8180276268306015,-0.6675104100490725,-0.057073736294158905,0.9040528767482934,-0.8777145915920341,-0.9805347232770674,0.34372756997187026,-0.05931197652267928,-0.7009569492668379,-0.9010687662710284,-0.5839693944151119,0.9508610365589476,0.28825869404455573,-0.6407790583179243,0.2762065946502914,-0.892919896675582,0.8590893053425466,0.20017356906173367,0.2583192022093179,-0.9480453576353953,-0.9745601384660363,0.7039042789093368,-0.9099890903248873,0.595072325838395,0.07995936807272153,-0.9852158856590114,-0.4538267171563406,0.4218666858864606,0.6488901545809842,0.8119373317429868,0.8701248820254581,-0.9405750364435572,-0.2389642836347976,0.05634745599925228,-0.4430199298837414,-0.214792568054754,0.6238330545921573,-0.8062462621975954,-0.7842582193208771,-0.7594183681583275,0.3250939411205156,0.16962869485281185,-0.5151781198183705,0.9947402790588646,-0.5453004826546684,0.18578094229564002,0.3075902930277059,0.21028155083010058,-0.741314235202494,-0.37340439852688445,-0.21548298876497363,0.5601234679449529,-0.23824642942319652,-0.8569645990412691,-0.1417313916204106,-0.8020843474217141,-0.6850368582587691,0.21792562693771522,0.6733225662085567,-0.4091064191301341,-0.4191890709458115,0.8857145401822155,-0.28885219152597275,-0.8931816719657528,0.8088572212763259,0.464547429224319,0.01965629834702609,-0.924354598127684,-0.1021772916385899,-0.5711782445597984,0.1660561310388582,0.016198781057846112,-0.5120983235563743,-0.12190948725821649,-0.4583635510854436,0.15147834038278774,0.14524834986499258,-0.05018357106557514,0.06825854386017705,-0.9497361390036172,-0.4909340677738647,0.892297022456868,0.5537188069009655,0.028308588482910846,0.8631311275340103,0.6705320421580341,0.13431785044847633,-0.8315887452161419,0.6537037079976,-0.42464984213167867,0.6880756045561718,0.1184867023755225,0.30189459015210796,-0.2680177904789445,-0.4459680663036456,-0.44030708730432244,0.25432998772861315,-0.9269437623640011,-0.8490850213759225,0.515304894499665,-0.02695519273476954,0.49009956750585526,-0.9571501718881965,0.17196251307884625,0.0789122197753267,0.3099516736704584,-0.0712373325270832,-0.7946774768721439,-0.7030162690289299,-0.8273138340349491,0.34700295536556736,0.6937095179791235,-0.7954294426970221,-0.740606767715625,0.8422849710135145,0.2099243784194862,-0.25661150021550094,-0.23917087952807714,0.9379362703022389,0.802149141485621,-0.4506493785210537,0.344172504363508,-0.7566906036896137,0.1986366843130567,-0.6776063466884101,0.9331093944045037,-0.9920557750188641,-0.6312823471056912,0.28068039239894294,0.3656007015435758,-0.9503953975579551,0.58716952464375,0.5734203398028386,-0.5874506399315518,-0.846253967238312,-0.9730309934487162,-0.38532610233773457,-0.7327071810415682,-0.3756085969124421,0.09435487682867394,-0.41823248937109025,0.358537565469063,-0.19636796218221586,0.6041214339144787,0.831218419364208,-0.1805171825459193,-0.38289193191525617,0.8874273760225591,-0.9398395508950925,0.8244595943346422,0.6546142191498252,0.09608603135715521,-0.00015212252811847016,0.8135598351275806,-0.7433741361486446,-0.3512645257438598,0.5746075618055322,-0.28469930635643004,0.9131846520242559,-0.13872051538418595,-0.1859690218095571,-0.8189960038222468,-0.815713701151721,0.3544783567791403,-0.8852693598725812,0.6701563409056275,-0.1728518335533198,-0.9258971300968049,-0.32132448326416485,-0.3285049305202752,-0.019556677202690054,0.6788593045202849,0.8790493372331649,-0.377020179293144,-0.0855072186123309,-0.763823675412066,-0.6282967587095056,0.07658368717869202,0.3601902085688584,-0.1562141506436192,0.3528511641042775,0.3282687181607,0.46140894876768423,-0.6091239920042055,0.07528052993686685,0.901500887231816,-0.9669620407619528,-0.9980732570902358,-0.636614799862947,-0.42005643855753005,0.10194910259975876,-0.5281178966109965,-0.4004831469573533,0.2724174487552813,-0.9291248984314264,0.7267091886256221,0.23749914835274177,0.5079908406699514,-0.5535965383461898,0.9497745890244551,-0.35791406940735726,-0.993157803020901,-0.8355642323299248,-0.8376354795583782,0.3593614270760559,-0.3965442121642413,-0.8308896732657571,-0.019676940933503584,0.6510708327602341,0.4889370421562744,0.972353655716518,0.766756343424543,-0.9289872328506106,-0.897275044122696,0.7197904803116224,-0.9454293690068833,0.13102031573299389,-0.6249369050224018,-0.8001890715541178,0.0307454509009486,0.10952012530162336,0.11437443521609492,-0.029060657983326132,0.22500733552342767,0.9694485833721995,-0.13763512440139536,-0.7550927552749833,-0.35022697615975584,-0.061021447893863545,-0.07304841156235664,0.3914491568751597,0.04892261969717415,0.3243889056632896,-0.5842869771841912,0.3177752131956766,-0.25690203852619975,-0.4416139414045137,-0.3073217039865854,-0.5631741986557732,-0.29766370880567505,-0.06722420939498441,0.16393154961744827,0.005448916163232953,-0.6573608808209415,-0.7575443924050465,-0.5629919538285992,-0.1566698076905304,-0.06857298610316076,-0.6337773454351443,0.8245235004717832,-0.7442702816119731,0.39151216819525714,0.6365825549966755,0.350071368127125,0.882582046016535,0.7741151026195989,-0.8848643807743666,0.2646465834499838,-0.5198892787161375,-0.03145431534092835,0.942997319788226,-0.5944345437192882,-0.307033282433099,-0.2426002607620874,-0.020289411645459055,0.6756023861030969,0.7765170195256994,0.5973252075432838,0.23567933149669962,-0.2546011488904787,0.8614892365257774,-0.17646551772245744,-0.9630400698374013,0.428935399606287,-0.6388841198347099,-0.7428305002235218,-0.9233833946369785,0.767236296572571,0.8504436275750606,0.12668392516381988,0.8271823867938353,0.18027335368881459,0.9759020571636681,-0.9903006034216277,0.7794030663550275,-0.6983905117565479,0.17805246478936487,0.8978659972507552,-0.43143562386118717,-0.12352513314433056,0.5042627426458552,-0.1830054168379971,0.4381752020836982,0.43423384799243925,-0.7843050672835208,-0.9828822438451095,0.19702100680375523,0.18958336946785237,-0.5569618242577925,0.3218404936835404,-0.19463757527907388,0.880894037950011,0.5510836681630269,0.18561685332403433,0.47092738968750614,0.6772060576895484,-0.9264113382317063,0.7685789598175254,0.45422336515174644,-0.9652445791539492,-0.5426495597698824,0.6025402659208687,0.47415956314941554,-0.9839189055832656,-0.22561722137910234,-0.9656133870153056,0.4707081985699071,-0.03014854677832557,-0.3914934154654013,-0.614284604012826,0.5183203662857263,-0.8710061446450723,0.6819607521221125,-0.7582913736253427,0.3097671409858689,-0.3818778178328983],"type":"scatter3d"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"scene":{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"xaxis":{"title":{"text":"x"},"range":[-5.445073641505789,5.445073641505789]},"yaxis":{"title":{"text":"y"},"range":[-5.445073641505789,5.445073641505789]},"zaxis":{"title":{"text":"z"},"range":[-5.445073641505789,5.445073641505789]}},"coloraxis":{"colorbar":{"title":{"text":"colors"}},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"legend":{"tracegroupgap":0},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('692efb62-3829-4ac6-b08d-1886c44e234f');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="curvature-computation" class="level1">
+<h1>Curvature Computation</h1>
+<p>Last, we need to compute the scalar curvature of the second point on our random surface. We do this following the method of Sritharan 2021, using the second fundamental form (here, analytically obtained) and Gauss Codazzi to compute the Riemannian curvature tensor, which we contract to the scalar curvature.</p>
+<hr>
+<section id="second_fundamental_form" class="level3">
+<h3 class="anchored" data-anchor-id="second_fundamental_form">second_fundamental_form</h3>
+<blockquote class="blockquote">
+<pre><code> second_fundamental_form (F)</code></pre>
+</blockquote>
+<div class="cell" data-execution_count="168">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>H <span class="op">=</span> second_fundamental_form(f)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(H.shape)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>H</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(3, 3, 2)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="168">
+<pre><code>array([[[ 4.00810715, -0.5490857 ],
+        [-0.63143663,  0.82454393],
+        [ 0.28880557,  0.97686605]],
+
+       [[-0.63143663,  0.82454393],
+        [-2.10001943,  0.18369197],
+        [-0.27175928, -1.47595539]],
+
+       [[ 0.28880557,  0.97686605],
+        [-0.27175928, -1.47595539],
+        [ 1.14245392, -2.0107507 ]]])</code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="riemannian_curvature_tensor" class="level3">
+<h3 class="anchored" data-anchor-id="riemannian_curvature_tensor">riemannian_curvature_tensor</h3>
+<blockquote class="blockquote">
+<pre><code> riemannian_curvature_tensor (F)</code></pre>
+</blockquote>
+<hr>
+</section>
+<section id="scalar_curvature_at_origin" class="level3">
+<h3 class="anchored" data-anchor-id="scalar_curvature_at_origin">scalar_curvature_at_origin</h3>
+<blockquote class="blockquote">
+<pre><code> scalar_curvature_at_origin (F)</code></pre>
+</blockquote>
+<div class="cell" data-execution_count="171">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>scalar_curvature_at_origin(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="171">
+<pre><code>-19.943811536181904</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="samples-and-curvature" class="level1">
+<h1>Samples and Curvature</h1>
+<hr>
+<section id="samples_from_random_surface" class="level3">
+<h3 class="anchored" data-anchor-id="samples_from_random_surface">samples_from_random_surface</h3>
+<blockquote class="blockquote">
+<pre><code> samples_from_random_surface (n_samples, d, N, degree=2, noise_level=0,
+                              verbose=False)</code></pre>
+</blockquote>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>n_samples</td>
+<td></td>
+<td></td>
+<td>number of samples to generate</td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td></td>
+<td></td>
+<td>intrinsic dimension</td>
+</tr>
+<tr class="odd">
+<td>N</td>
+<td></td>
+<td></td>
+<td>ambient dimension</td>
+</tr>
+<tr class="even">
+<td>degree</td>
+<td>int</td>
+<td>2</td>
+<td>maximum degree of terms</td>
+</tr>
+<tr class="odd">
+<td>noise_level</td>
+<td>int</td>
+<td>0</td>
+<td>standard deviation of noise to add to samples</td>
+</tr>
+<tr class="even">
+<td>verbose</td>
+<td>bool</td>
+<td>False</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-execution_count="173">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> rejection_sample_from_surface(f, <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="tests" class="level1">
+<h1>Tests</h1>
+<section id="sanity-check-on-torus" class="level2">
+<h2 class="anchored" data-anchor-id="sanity-check-on-torus">Sanity Check on Torus</h2>
+<div class="cell" data-execution_count="174">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> sp.Symbol(<span class="st">'theta'</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>phi <span class="op">=</span> sp.Symbol(<span class="st">'phi'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>F_torus <span class="op">=</span> sp.Matrix([(R <span class="op">+</span> r<span class="op">*</span>sp.cos(theta))<span class="op">*</span>sp.cos(phi), (R <span class="op">+</span> r<span class="op">*</span>sp.cos(theta))<span class="op">*</span>sp.sin(phi), r<span class="op">*</span>sp.sin(theta)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="175">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>G_torus <span class="op">=</span> manifold_density(F_torus, [theta, phi])</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>G_torus</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="175">
+<p><span class="math inline">\(\displaystyle \sqrt{\sin^{4}{\left(\phi \right)} \sin^{2}{\left(\theta \right)} \cos^{2}{\left(\theta \right)} + 4 \sin^{4}{\left(\phi \right)} \sin^{2}{\left(\theta \right)} \cos{\left(\theta \right)} + 4 \sin^{4}{\left(\phi \right)} \sin^{2}{\left(\theta \right)} + 2 \sin^{2}{\left(\phi \right)} \sin^{2}{\left(\theta \right)} \cos^{2}{\left(\phi \right)} \cos^{2}{\left(\theta \right)} + 8 \sin^{2}{\left(\phi \right)} \sin^{2}{\left(\theta \right)} \cos^{2}{\left(\phi \right)} \cos{\left(\theta \right)} + 8 \sin^{2}{\left(\phi \right)} \sin^{2}{\left(\theta \right)} \cos^{2}{\left(\phi \right)} + \sin^{2}{\left(\phi \right)} \cos^{4}{\left(\theta \right)} + 4 \sin^{2}{\left(\phi \right)} \cos^{3}{\left(\theta \right)} + 4 \sin^{2}{\left(\phi \right)} \cos^{2}{\left(\theta \right)} + \sin^{2}{\left(\theta \right)} \cos^{4}{\left(\phi \right)} \cos^{2}{\left(\theta \right)} + 4 \sin^{2}{\left(\theta \right)} \cos^{4}{\left(\phi \right)} \cos{\left(\theta \right)} + 4 \sin^{2}{\left(\theta \right)} \cos^{4}{\left(\phi \right)} + \cos^{2}{\left(\phi \right)} \cos^{4}{\left(\theta \right)} + 4 \cos^{2}{\left(\phi \right)} \cos^{3}{\left(\theta \right)} + 4 \cos^{2}{\left(\phi \right)} \cos^{2}{\left(\theta \right)}}\)</span></p>
+</div>
+</div>
+<div class="cell" data-execution_count="176">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>X_torus <span class="op">=</span> rejection_sample_from_surface(F_torus, <span class="dv">2000</span>, bounds<span class="op">=</span>[<span class="dv">0</span>, <span class="dv">2</span><span class="op">*</span>np.pi], verbose<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hey, just woke up
+Computed f, M, g
+Computed bouncer np
+computed sample candidates
+computed bouncer results
+Points added 666 for a total of 667
+computed sample candidates
+computed bouncer results
+Points added 692 for a total of 1359
+computed sample candidates
+computed bouncer results
+Points added 677 for a total of 2036</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.hickok <span class="im">import</span> KDE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="177">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>kde_density <span class="op">=</span> KDE(<span class="dv">2</span>, X<span class="op">=</span>X_torus)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>density <span class="op">=</span> kde_density.density()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="178">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>plot_3d(X_torus, density, colorbar<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Random Surfaces_files/figure-html/cell-28-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>As hoped, the density differences between the outside and inside are negligible.</p>
+</section>
+<section id="sanity-check-on-sphere" class="level2">
+<h2 class="anchored" data-anchor-id="sanity-check-on-sphere">Sanity Check on Sphere</h2>
+<p>To ensure that our curvature computation is working as expected, here’s the computation on the upper half of a sphere.</p>
+<div class="cell" data-execution_count="179">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a sympy function giving the parametrization of the upper half of a sphere in terms of x and y</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># creata sympy variables x and y</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> sp.Symbol(<span class="st">'x'</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> sp.Symbol(<span class="st">'y'</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>rs <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>])</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>ks <span class="op">=</span> []</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r <span class="kw">in</span> rs:</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    F_sphere <span class="op">=</span> sp.Matrix([x, y, sp.sqrt(r<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (x)<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> (y)<span class="op">**</span><span class="dv">2</span>)])</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    X_sphere <span class="op">=</span> rejection_sample_from_surface(F_sphere, <span class="dv">1000</span>, bounds<span class="op">=</span>[<span class="op">-</span><span class="fl">0.6</span>,<span class="fl">0.6</span>])</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    k_sphere <span class="op">=</span> scalar_curvature_at_origin(F_sphere)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    ks.append(k_sphere)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="180">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>plot_3d(X_sphere)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Random Surfaces_files/figure-html/cell-30-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="194">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(np.array(ks), <span class="dv">2</span><span class="op">/</span>rs<span class="op">**</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

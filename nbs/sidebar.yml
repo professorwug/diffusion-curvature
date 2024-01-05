@@ -1,6 +1,43 @@
 website:
   sidebar:
     contents:
-      - section: docs
+      - section: documentation
         contents:
-          - docs/index.ipynb
+          - documentation/index.ipynb
+      - section: experiments
+        contents:
+          - experiments/3a Visual Battery.ipynb
+          - experiments/3a1 DC of Battery.ipynb
+          - experiments/3a1a DC of LowD High Sample Battery.ipynb
+          - experiments/3a2 Hickok Curvature of Battery.ipynb
+          - experiments/3b Hickok Comparison.ipynb
+          - experiments/3c Sampling Experiments.ipynb
+          - experiments/3d Detecting Negative Curvature.ipynb
+          - experiments/3d1 Effects of Graph Construction on Negative Curvature Detection.ipynb
+          - experiments/3e Curvature with (Neural) Flattening.ipynb
+          - experiments/3e1 Flattening with Diffusion Models.ipynb
+          - experiments/3e2 Neural Flattening with Gromov Wasserstein.ipynb
+          - experiments/Curvature by Quadratic Fitting.ipynb
+          - experiments/Diffusion Laziness.ipynb
+          - experiments/Examples.ipynb
+          - experiments/Explorations in Lazy-first diffusion.ipynb
+          - experiments/Neumann Heat Kernel via Chebyshev Approximation.ipynb
+      - section: library
+        contents:
+          - library/Comparison Space Construction.ipynb
+          - library/Construct Battery.ipynb
+          - library/Core.ipynb
+          - library/Curvature Enhanced Spectral Clustering.ipynb
+          - library/Datasets.ipynb
+          - library/Diffusion Entropy for Optimal t.ipynb
+          - library/Diffusion Laziness.ipynb
+          - library/Diffusion Ricci Curvature.ipynb
+          - library/Graphs.ipynb
+          - library/Heat Diffusion.ipynb
+          - library/Kernels.ipynb
+          - library/Manifold Distances.ipynb
+          - library/Mean Flat Entropies.ipynb
+          - library/Random Surfaces.ipynb
+          - library/Utils.ipynb
+          - library/Volume Estimation.ipynb
+          - library/continuous_normalizing_flows.ipynb

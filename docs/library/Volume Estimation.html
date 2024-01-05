@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>diffusion_curvature - Volume Estimation with Heat Diffusion</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="diffusion_curvature - Volume Estimation with Heat Diffusion">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://professorwug.github.io/diffusion_curvature/library/Volume Estimation_files/figure-html/cell-17-output-1.png">
+<meta property="og:site-name" content="diffusion_curvature">
+<meta property="og:image:height" content="458">
+<meta property="og:image:width" content="569">
+<meta name="twitter:title" content="diffusion_curvature - Volume Estimation with Heat Diffusion">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://professorwug.github.io/diffusion_curvature/library/Volume Estimation_files/figure-html/cell-17-output-1.png">
+<meta name="twitter:image-height" content="458">
+<meta name="twitter:image-width" content="569">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">diffusion_curvature</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/professorwug/diffusion_curvature" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../library/Comparison Space Construction.html">library</a></li><li class="breadcrumb-item"><a href="../library/Volume Estimation.html">Volume Estimation with Heat Diffusion</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">documentation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../documentation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Curvature</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">experiments</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a Visual Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a A Visual Battery of Benchmarks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a1 DC of Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a1 Computing the diffusion curvature of the battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a1a DC of LowD High Sample Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a1a Computing the diffusion curvature of the battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a2 Hickok Curvature of Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a2 Hickok Curvature of Battery.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3b Hickok Comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3b Hickok Comparison.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3c Sampling Experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3c Sampling Experiments on Diffusion Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3d Detecting Negative Curvature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3d Detecting Negative Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3d1 Effects of Graph Construction on Negative Curvature Detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3d1 Effects of Graph Construction on Negative Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e Curvature with (Neural) Flattening.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e Curvature Via (Neural) Flattening</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e1 Flattening with Diffusion Models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e1 Flattening with Diffusion Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e2 Neural Flattening with Gromov Wasserstein.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e2 Neural Flattening with Gromov Wasserstein</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Curvature by Quadratic Fitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scalar Curvature by Volume Comparison</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Diffusion Laziness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measurements of Diffusion Laziness</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Explorations in Lazy-first diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explorations in Lazy-first Diffusion Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Neumann Heat Kernel via Chebyshev Approximation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analytic estimation of the heat kernel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">library</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Comparison Space Construction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison Space Construction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Construct Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a Construct Battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Implementation (PyGSP + JAX)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Curvature Enhanced Spectral Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1d Curvature Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Datasets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Entropy for Optimal t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Entropy for Optimal t.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Laziness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Laziness Estimators</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Ricci Curvature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Ricci Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Graphs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph Creation Utils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Heat Diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heat Diffusion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Kernels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kernels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Manifold Distances.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Manifold Distances</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Mean Flat Entropies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1c1 Mean Entropy of Uniform Flat Spaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Random Surfaces.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random Surfaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Utils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Utils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Volume Estimation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Volume Estimation with Heat Diffusion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/continuous_normalizing_flows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapping the Data to a Flat Space with Continuous Normalizing Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#volume_via_heat_at_scales" id="toc-volume_via_heat_at_scales" class="nav-link active" data-scroll-target="#volume_via_heat_at_scales">volume_via_heat_at_scales</a></li>
+  <li><a href="#correcting-for-the-time-delay-of-a-discrete-dirac" id="toc-correcting-for-the-time-delay-of-a-discrete-dirac" class="nav-link" data-scroll-target="#correcting-for-the-time-delay-of-a-discrete-dirac">Correcting for the time-delay of a discrete dirac</a>
+  <ul>
+  <li><a href="#calculate_radius_offset" id="toc-calculate_radius_offset" class="nav-link" data-scroll-target="#calculate_radius_offset">calculate_radius_offset</a></li>
+  </ul></li>
+  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments">Experiments</a>
+  <ul>
+  <li><a href="#volume-in-the-nd-euclidean-plane-compared-to-the-actual-volume" id="toc-volume-in-the-nd-euclidean-plane-compared-to-the-actual-volume" class="nav-link" data-scroll-target="#volume-in-the-nd-euclidean-plane-compared-to-the-actual-volume">Volume in the ND Euclidean Plane, compared to the actual volume</a>
+  <ul class="collapse">
+  <li><a href="#actual_euclidean_volumes_at_radii" id="toc-actual_euclidean_volumes_at_radii" class="nav-link" data-scroll-target="#actual_euclidean_volumes_at_radii">actual_euclidean_volumes_at_radii</a></li>
+  </ul></li>
+  <li><a href="#does-denoising-reduce-variation-in-volume-measurements" id="toc-does-denoising-reduce-variation-in-volume-measurements" class="nav-link" data-scroll-target="#does-denoising-reduce-variation-in-volume-measurements">Does denoising reduce variation in volume measurements?</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/professorwug/diffusion_curvature/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Volume Estimation with Heat Diffusion</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<blockquote class="blockquote">
+<p>TLDR: The self-diffusion method of volume estimation works reliably in sampled euclidean planes of various dimensions. The volume differs from ground truth by a multiplicative factor, but otherwise grows at the same ratio as analytically expected. Be wary, though, of volumes taken at high diffusion times: they vary wildly between samplings.</p>
+</blockquote>
+<p>In <a href="https://github.com/KrishnaswamyLab/HeatGeo">GitHub - KrishnaswamyLab/HeatGeo: Embedding with the Heat-geodesic dissimilarity</a>, Tong et al use the Chebyshev approximation of the heat equation on the graph to estimate volume, by using Varadhan’s formula:</p>
+<p><span class="math display">\[
+\frac{c(\epsilon)}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{4(1+\epsilon) t}\right) \leq h_t(x, y) \leq \frac{C(\epsilon)}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{4(1-\epsilon) t}\right)
+\]</span></p>
+<p>This suggests that the diagonals of the diffusion matrix (<span class="math inline">\(h_t(x,x)\)</span>) approximate <span class="math inline">\(\frac{1}{V(x,\sqrt{t})}\)</span>. To recover the volume, invert the ‘laziness’ of the diffusion.</p>
+<p>Note that the diffusion times correspond only to the square root of the radius.</p>
+<p>In this notebook, we’ll implement and experiment on this method of volume estimation, by performing it on several manifolds where the volume is known.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.datasets <span class="im">import</span> torus</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.graphs <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X, ks <span class="op">=</span> torus(<span class="dv">2000</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>G_torus <span class="op">=</span> get_alpha_decay_graph(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<section id="volume_via_heat_at_scales" class="level3">
+<h3 class="anchored" data-anchor-id="volume_via_heat_at_scales">volume_via_heat_at_scales</h3>
+<blockquote class="blockquote">
+<pre><code> volume_via_heat_at_scales (G, idx, ts, denoising_scale=5)</code></pre>
+</blockquote>
+<p>Returns a list of volumes of the t-step balls constructed at point i, for each t in ts. If idx=None, returns a matrix where each row is as above.</p>
+<table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Type</strong></th>
+<th><strong>Default</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>G</td>
+<td></td>
+<td></td>
+<td>a pygsp graph</td>
+</tr>
+<tr class="even">
+<td>idx</td>
+<td></td>
+<td></td>
+<td>index of point to grow ball from. If none, returns sequence of volumes for every idx.</td>
+</tr>
+<tr class="odd">
+<td>ts</td>
+<td></td>
+<td></td>
+<td>list of times (or single time).</td>
+</tr>
+<tr class="even">
+<td>denoising_scale</td>
+<td>int</td>
+<td>5</td>
+<td>if nonzero, denoises the heat estimate by replacing with the expected value of heat measured against a diffusion with t=denoising_scale</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>volumes_on_torus <span class="op">=</span> volume_via_heat_at_scales(G_torus,<span class="dv">0</span>,[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>],denoising_scale<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>volumes_on_torus</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>array([15.50544602, 26.22544617, 36.36346207, 46.74038238])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>d_stuff <span class="op">=</span> np.array(heat_diffusion_on_signal(G_torus,np.eye(<span class="bu">len</span>(X)),[<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>d_stuff.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>(3, 967, 967)</code></pre>
+</div>
+</div>
+</section>
+<section id="correcting-for-the-time-delay-of-a-discrete-dirac" class="level1">
+<h1>Correcting for the time-delay of a discrete dirac</h1>
+<p>You’ll notice a peculiar feature of our volume estimation formula. As <span class="math inline">\({} t \to 0\)</span>, our volume estimate <span class="math inline">\({} \frac{1}{h(x,\sqrt{ t })} \to 1 {}\)</span>. This is due to the nature of the dirac we’re diffusing from <span class="math inline">\(x\)</span>.</p>
+<p>In the continuous, analytic case, this dirac places infinite mass at x, but in our discrete approximation (where x is one of a finite number of points), we compromise by putting a mass of <span class="math inline">\(1\)</span> at <span class="math inline">\(x\)</span> when <span class="math inline">\(t\)</span> is 0. The result: the smallest possible volume is <span class="math inline">\(1\)</span>. There’s an offset between <span class="math inline">\(t\)</span> and <span class="math inline">\(r\)</span> which goes beyond multiplicative scaling, and makes quadratic fitting much harder.</p>
+<p>How to overcome this?</p>
+<p>We can model this offset via the equation <span class="math inline">\({} r= a\sqrt{ t } + b {}\)</span>; this simply expresses that t=0 corresponds to some nonzero radius, and one step of time may cover <span class="math inline">\(a\)</span> units of distance. Thus, to find the offset <span class="math inline">\(b\)</span>, we need to figure out what radius corresponds to <span class="math inline">\(t=0\)</span>: when is the analytic volume equal to 1? Solving this gives us <span class="math inline">\(b\)</span>’s value.</p>
+<hr>
+<section id="calculate_radius_offset" class="level3">
+<h3 class="anchored" data-anchor-id="calculate_radius_offset">calculate_radius_offset</h3>
+<blockquote class="blockquote">
+<pre><code> calculate_radius_offset (n)</code></pre>
+</blockquote>
+<p>Using this calculated offset, we can more accurately convert between <span class="math inline">\(t\)</span> and <span class="math inline">\(r\)</span>.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_t_to_r(ts, dim):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt(ts) <span class="op">+</span> calculate_radius_offset(dim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="experiments" class="level1">
+<h1>Experiments</h1>
+<section id="volume-in-the-nd-euclidean-plane-compared-to-the-actual-volume" class="level2">
+<h2 class="anchored" data-anchor-id="volume-in-the-nd-euclidean-plane-compared-to-the-actual-volume">Volume in the ND Euclidean Plane, compared to the actual volume</h2>
+<p>This is the simplest case. We’ll sample euclidean planes of several dimensions, and take volume estimates at various scales. We’ll compare those to the real volumes of balls of radii <span class="math inline">\(\sqrt{t}\)</span>, by plotting one against the other.</p>
+<p>I suspect that there will be some scaling factor which needs to be estimated, as – just from the graph – we don’t know what the density is.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.datasets <span class="im">import</span> plane</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> volumes_of_euclidean_nplane(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        n_points,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        dim,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        ts,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        decay<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        knn<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        anisotropy<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        denoising_scale <span class="op">=</span> <span class="dv">0</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> plane(n_points,dim)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(X, knn<span class="op">=</span>knn, decay<span class="op">=</span>decay, anisotropy<span class="op">=</span>anisotropy)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    vols <span class="op">=</span> volume_via_heat_at_scales(G,<span class="dv">0</span>,ts, denoising_scale<span class="op">=</span>denoising_scale)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> vols</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<section id="actual_euclidean_volumes_at_radii" class="level3">
+<h3 class="anchored" data-anchor-id="actual_euclidean_volumes_at_radii">actual_euclidean_volumes_at_radii</h3>
+<blockquote class="blockquote">
+<pre><code> actual_euclidean_volumes_at_radii (dim, radii)</code></pre>
+</blockquote>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> actual_euclidean_volumes_at_radii(<span class="dv">2</span>,[<span class="dv">4</span>]) <span class="op">==</span> np.pi<span class="op">*</span><span class="dv">4</span><span class="op">**</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> perform_trials(fn,n_trials<span class="op">=</span><span class="dv">10</span>, <span class="op">**</span>kwargs):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    outs <span class="op">=</span> []</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n_trials):</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        outs.append(fn(<span class="op">**</span>kwargs))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> outs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_arrays(estimated, actual, xs<span class="op">=</span><span class="va">None</span>, title<span class="op">=</span><span class="st">""</span>):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"darkgrid"</span>)  <span class="co"># Set the seaborn style</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a figure and axes</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> estimated.shape[<span class="dv">0</span>] <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute the mean and standard deviation for the estimated array</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        mean_estimated <span class="op">=</span> np.mean(estimated, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        std_estimated <span class="op">=</span> np.std(estimated, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Plot estimated as a line with error bars</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        ax.errorbar(x <span class="op">=</span> xs, y <span class="op">=</span> mean_estimated, yerr<span class="op">=</span>std_estimated, label<span class="op">=</span><span class="st">"Estimated"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        ax.plot(xs, estimated[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"Estimated"</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot actual as a line</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    ax.plot(xs, actual, label<span class="op">=</span><span class="st">"Actual"</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set the labels for x-axis and y-axis</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Radius"</span>)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Volume of n-sphere"</span>)</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set the title of the plot</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display the legend</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Show the plot</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">1000</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>knn<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>decay<span class="op">=</span><span class="dv">20</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>anisotropy<span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> convert_t_to_r(ts,dim)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">50</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts, knn<span class="op">=</span>knn, anisotropy<span class="op">=</span>anisotropy, decay<span class="op">=</span>decay, denoising_scale<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,xs<span class="op">=</span>radii,title<span class="op">=</span><span class="st">"Euclidean 2 Plane"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>knn<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>decay<span class="op">=</span><span class="dv">20</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>anisotropy<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">10000</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">50</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts, knn<span class="op">=</span>knn, anisotropy<span class="op">=</span>anisotropy, decay<span class="op">=</span>decay)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,xs <span class="op">=</span> radii, title<span class="op">=</span><span class="ss">f"Euclidean 2 Plane with knn </span><span class="sc">{</span>knn<span class="sc">}</span><span class="ss"> anisotropy </span><span class="sc">{</span>anisotropy<span class="sc">}</span><span class="ss"> and decay </span><span class="sc">{</span>decay<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>knn<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>decay<span class="op">=</span><span class="dv">20</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>anisotropy<span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">10000</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">50</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts, knn<span class="op">=</span>knn, anisotropy<span class="op">=</span>anisotropy, decay<span class="op">=</span>decay)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,xs<span class="op">=</span>radii, title<span class="op">=</span><span class="ss">f"Euclidean 2 Plane with knn </span><span class="sc">{</span>knn<span class="sc">}</span><span class="ss"> anisotropy </span><span class="sc">{</span>anisotropy<span class="sc">}</span><span class="ss"> and decay </span><span class="sc">{</span>decay<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>knn<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>decay<span class="op">=</span><span class="dv">20</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>anisotropy<span class="op">=</span><span class="fl">0.8</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">10000</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">50</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts, knn<span class="op">=</span>knn, anisotropy<span class="op">=</span>anisotropy, decay<span class="op">=</span>decay)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,xs<span class="op">=</span>radii,title<span class="op">=</span><span class="ss">f"Euclidean 2 Plane with knn </span><span class="sc">{</span>knn<span class="sc">}</span><span class="ss"> anisotropy </span><span class="sc">{</span>anisotropy<span class="sc">}</span><span class="ss"> and decay </span><span class="sc">{</span>decay<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This shows a clear pattern: the volume estimated from residual laziness has 1. a lot of variation across samplings, especially with higher t values 2. a consistently higher slope than the ground truth, by a constant multiple.</p>
+<p>The second point is consistent with the hypothesis that the unknown density of the graph/point cloud results in a distortion of the volume by some constant factor. Fortunately, when performing a comparison between the manifold space and analytic euclidean space, this factor becomes a constant, reflected only in the linear term of the quadratic approximation, and not in the quadratic term, where scalar curvature is revealed.</p>
+<p>The first phenomenon, of increasing variation with increasing radius, is odd. One might expect that large-scale diffusions had the <em>least</em> variation between samplings, because it has more time for local fluctuations in density to average out. The opposite appears to be true. At least this supports the use of local approximations.</p>
+<p>Let’s see what the ratio actually is:</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_array(ratios, title<span class="op">=</span><span class="st">""</span>):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"darkgrid"</span>)  <span class="co"># Set the seaborn style</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a figure and axes</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the mean and standard deviation for the estimated array</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    mean_estimated <span class="op">=</span> np.mean(ratios, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    std_estimated <span class="op">=</span> np.std(ratios, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot estimated as a line with error bars</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    ax.errorbar(np.arange(ratios.shape[<span class="dv">1</span>]), mean_estimated, yerr<span class="op">=</span>std_estimated, label<span class="op">=</span><span class="st">"Estimated"</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set the labels for x-axis and y-axis</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"Radius"</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"Volume of n-sphere"</span>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set the title of the plot</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display the legend</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    ax.legend()</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Show the plot</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plot_array(heat_estimates<span class="op">/</span>actual_volumes, <span class="st">"Ratio of Estimate to Actual Volume"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Here’s the same experiment in higher dimensions.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">10000</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">50</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,title<span class="op">=</span><span class="ss">f"Euclidean </span><span class="sc">{</span>dim<span class="sc">}</span><span class="ss"> Plane"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>KeyboardInterrupt: </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">10000</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">50</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,title<span class="op">=</span><span class="ss">f"Euclidean </span><span class="sc">{</span>dim<span class="sc">}</span><span class="ss"> Plane"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Dimensions 3 and 5 behave as expected, displaying the same patterns of growing more unpredictable with age and varying from ground truth by some multiplicative factor.</p>
+<p>With dimension 7, we begin to encounter the curse of dimensionality. 10,000 points is no longer enough; we need something on the order of a million to be able to diffuse for 10-20 steps without hitting edge effects.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">10000</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">10</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,title<span class="op">=</span><span class="ss">f"Euclidean </span><span class="sc">{</span>dim<span class="sc">}</span><span class="ss"> Plane with </span><span class="sc">{</span>n_points<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">50000</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">10</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,title<span class="op">=</span><span class="ss">f"Euclidean </span><span class="sc">{</span>dim<span class="sc">}</span><span class="ss"> Plane with </span><span class="sc">{</span>n_points<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dim <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>n_points<span class="op">=</span><span class="dv">100000</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>heat_estimates <span class="op">=</span> np.array(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">10</span>, n_points<span class="op">=</span>n_points, dim<span class="op">=</span>dim, ts<span class="op">=</span>ts)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>actual_volumes <span class="op">=</span> actual_euclidean_volumes_at_radii(dim,radii)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>plot_arrays(heat_estimates,actual_volumes,title<span class="op">=</span><span class="ss">f"Euclidean </span><span class="sc">{</span>dim<span class="sc">}</span><span class="ss"> Plane with </span><span class="sc">{</span>n_points<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="does-denoising-reduce-variation-in-volume-measurements" class="level2">
+<h2 class="anchored" data-anchor-id="does-denoising-reduce-variation-in-volume-measurements">Does denoising reduce variation in volume measurements?</h2>
+<p>To test this, here’s several plots of the same volume estimate, with different scales of denoising.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>volume_estimates_with_denoising <span class="op">=</span> []</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> denoising_scale <span class="kw">in</span> tqdm([<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">15</span>]):</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    volume_estimates_with_denoising.append({})</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    volume_estimates_with_denoising[<span class="op">-</span><span class="dv">1</span>][<span class="st">'scale'</span>] <span class="op">=</span> denoising_scale</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    volume_estimates_with_denoising[<span class="op">-</span><span class="dv">1</span>][<span class="st">'array'</span>] <span class="op">=</span> np.array(</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        perform_trials(volumes_of_euclidean_nplane, n_trials<span class="op">=</span><span class="dv">50</span>, n_points<span class="op">=</span><span class="dv">5000</span>, dim<span class="op">=</span><span class="dv">2</span>, ts<span class="op">=</span>[<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>], denoising_scale<span class="op">=</span>denoising_scale)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"b6bcadfe060847069fb4c87bab680f8d","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"darkgrid"</span>)  <span class="co"># Set the seaborn style</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>,<span class="dv">20</span>]</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> np.sqrt(ts)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> D <span class="kw">in</span> volume_estimates_with_denoising:</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the mean and standard deviation for the estimated array</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    mean_estimated <span class="op">=</span> np.mean(D[<span class="st">'array'</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    std_estimated <span class="op">=</span> np.std(D[<span class="st">'array'</span>], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot estimated as a line with error bars</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    ax.errorbar(x <span class="op">=</span> xs, y <span class="op">=</span> mean_estimated, yerr<span class="op">=</span>std_estimated, label<span class="op">=</span><span class="ss">f"Denoising = </span><span class="sc">{</span>D[<span class="st">'scale'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"Radius"</span>)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"Volume of n-sphere"</span>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Volumes &amp; Variations at Different Denoising Scales"</span>)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Volume Estimation_files/figure-html/cell-29-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

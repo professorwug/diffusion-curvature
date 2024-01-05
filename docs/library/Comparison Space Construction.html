@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Making graphs flat">
+
+<title>diffusion_curvature - Comparison Space Construction</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="diffusion_curvature - Comparison Space Construction">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://professorwug.github.io/diffusion_curvature/library/Comparison Space Construction_files/figure-html/cell-8-output-1.png">
+<meta property="og:site-name" content="diffusion_curvature">
+<meta property="og:image:height" content="458">
+<meta property="og:image:width" content="578">
+<meta name="twitter:title" content="diffusion_curvature - Comparison Space Construction">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://professorwug.github.io/diffusion_curvature/library/Comparison Space Construction_files/figure-html/cell-8-output-1.png">
+<meta name="twitter:image-height" content="458">
+<meta name="twitter:image-width" content="578">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">diffusion_curvature</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/professorwug/diffusion_curvature" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../library/Comparison Space Construction.html">library</a></li><li class="breadcrumb-item"><a href="../library/Comparison Space Construction.html">Comparison Space Construction</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">documentation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../documentation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Curvature</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">experiments</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a Visual Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a A Visual Battery of Benchmarks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a1 DC of Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a1 Computing the diffusion curvature of the battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a1a DC of LowD High Sample Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a1a Computing the diffusion curvature of the battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a2 Hickok Curvature of Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a2 Hickok Curvature of Battery.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3b Hickok Comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3b Hickok Comparison.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3c Sampling Experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3c Sampling Experiments on Diffusion Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3d Detecting Negative Curvature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3d Detecting Negative Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3d1 Effects of Graph Construction on Negative Curvature Detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3d1 Effects of Graph Construction on Negative Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e Curvature with (Neural) Flattening.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e Curvature Via (Neural) Flattening</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e1 Flattening with Diffusion Models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e1 Flattening with Diffusion Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e2 Neural Flattening with Gromov Wasserstein.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e2 Neural Flattening with Gromov Wasserstein</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Curvature by Quadratic Fitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scalar Curvature by Volume Comparison</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Diffusion Laziness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measurements of Diffusion Laziness</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Explorations in Lazy-first diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explorations in Lazy-first Diffusion Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Neumann Heat Kernel via Chebyshev Approximation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analytic estimation of the heat kernel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">library</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Comparison Space Construction.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Comparison Space Construction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Construct Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a Construct Battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Implementation (PyGSP + JAX)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Curvature Enhanced Spectral Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1d Curvature Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Datasets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Entropy for Optimal t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Entropy for Optimal t.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Laziness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Laziness Estimators</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Ricci Curvature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Ricci Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Graphs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph Creation Utils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Heat Diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heat Diffusion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Kernels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kernels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Manifold Distances.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Manifold Distances</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Mean Flat Entropies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1c1 Mean Entropy of Uniform Flat Spaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Random Surfaces.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random Surfaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Utils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Utils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Volume Estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Volume Estimation with Heat Diffusion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/continuous_normalizing_flows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapping the Data to a Flat Space with Continuous Normalizing Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#euclideancomparisonspace" id="toc-euclideancomparisonspace" class="nav-link active" data-scroll-target="#euclideancomparisonspace">EuclideanComparisonSpace</a></li>
+  <li><a href="#fit_comparison_space_model" id="toc-fit_comparison_space_model" class="nav-link" data-scroll-target="#fit_comparison_space_model">fit_comparison_space_model</a></li>
+  <li><a href="#pointcloud-construction" id="toc-pointcloud-construction" class="nav-link" data-scroll-target="#pointcloud-construction">Pointcloud Construction</a>
+  <ul>
+  <li><a href="#euclidean_comparison_graph" id="toc-euclidean_comparison_graph" class="nav-link" data-scroll-target="#euclidean_comparison_graph">euclidean_comparison_graph</a></li>
+  <li><a href="#get_graph_type" id="toc-get_graph_type" class="nav-link" data-scroll-target="#get_graph_type">get_graph_type</a></li>
+  </ul></li>
+  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments">Experiments</a>
+  <ul>
+  <li><a href="#does-it-produce-the-same-kernel-parameters" id="toc-does-it-produce-the-same-kernel-parameters" class="nav-link" data-scroll-target="#does-it-produce-the-same-kernel-parameters">1. Does it produce the same kernel parameters?</a></li>
+  </ul></li>
+  <li><a href="#grid-construction" id="toc-grid-construction" class="nav-link" data-scroll-target="#grid-construction">Grid Construction</a>
+  <ul>
+  <li><a href="#construct_ndgrid_from_shape" id="toc-construct_ndgrid_from_shape" class="nav-link" data-scroll-target="#construct_ndgrid_from_shape">construct_ndgrid_from_shape</a></li>
+  <li><a href="#construct_ndgrid" id="toc-construct_ndgrid" class="nav-link" data-scroll-target="#construct_ndgrid">construct_ndgrid</a></li>
+  </ul></li>
+  <li><a href="#diffusion-maps-for-graph-comparison-spaces" id="toc-diffusion-maps-for-graph-comparison-spaces" class="nav-link" data-scroll-target="#diffusion-maps-for-graph-comparison-spaces">Diffusion Maps for Graph Comparison Spaces</a>
+  <ul>
+  <li><a href="#diffusion_coordinates" id="toc-diffusion_coordinates" class="nav-link" data-scroll-target="#diffusion_coordinates">diffusion_coordinates</a></li>
+  </ul></li>
+  <li><a href="#mean-entropies-of-flat-spaces" id="toc-mean-entropies-of-flat-spaces" class="nav-link" data-scroll-target="#mean-entropies-of-flat-spaces">Mean Entropies of Flat Spaces</a>
+  <ul>
+  <li><a href="#load_average_entropies" id="toc-load_average_entropies" class="nav-link" data-scroll-target="#load_average_entropies">load_average_entropies</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/professorwug/diffusion_curvature/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Comparison Space Construction</h1>
+</div>
+
+<div>
+  <div class="description">
+    Making graphs flat
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<p>The construction of the comparison space is the most delicate operation diffusion curvature performs. The key to our construction is ensuring that diffusion, at a single scale, behaves equivalently on the manifold and the graph. Recall our connections to Ollivier’s theory: we just need to ensure that the <em>jump</em> of diffusion is the same in both spaces. Curvature emerges from the interactions of diffusion at higher timesteps.</p>
+<p>Our comparisons take pure graphs as input. We don’t change the euclidean comparison space (which we sample uniformly from an nd random distribution). Instead, we tune the parameters of the kernel to minimize the KLD between the target jump and the average jump in our (boundary-excluded) comparison space. Thus, the beating heart of this approach is the differentiable graph constructor which is expressive enough to approximate a wide variety of graphs).</p>
+<p>The most contentious point of this implementation is how to compute the <span class="math inline">\(W_1\)</span> distances. We need a metric for each of the graphs; but how is this to be constructed, given that the graph itself is in flux? We have the geodesic distances for the sampled euclidean points, but those won’t be on the same scale as whatever graph distance we use on the manifold.</p>
+<p>Our solution is to use PHATE distances with <span class="math inline">\(t=1\)</span>. This requires only taking the log of the diffusion matrix, and for a single scale of distances is basically a way of converting affinities back into distances.</p>
+<hr>
+<section id="euclideancomparisonspace" class="level3">
+<h3 class="anchored" data-anchor-id="euclideancomparisonspace">EuclideanComparisonSpace</h3>
+<blockquote class="blockquote">
+<pre><code> EuclideanComparisonSpace (dimension:int, num_points:int,
+                           jump_of_diffusion:jax.Array,
+                           fraction_of_points:float=0.8,
+                           comparison_type:str='entropy', parent:Union[Typ
+                           e[flax.linen.module.Module],flax.core.scope.Sco
+                           pe,Type[flax.linen.module._Sentinel],NoneType]=
+                           &lt;flax.linen.module._Sentinel object at
+                           0x15e364250&gt;, name:Optional[str]=None)</code></pre>
+</blockquote>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import jax.random as random</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># model = EuclideanComparisonSpace(dimension=2, num_points=1000, jump_of_diffusion=0.47)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># key1, key2 = jax.random.split(jax.random.key(0))</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># params = model.init(key2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+<section id="fit_comparison_space_model" class="level3">
+<h3 class="anchored" data-anchor-id="fit_comparison_space_model">fit_comparison_space_model</h3>
+<blockquote class="blockquote">
+<pre><code> fit_comparison_space_model (model, max_epochs=1000, verbose=False,
+                             lr=0.001)</code></pre>
+</blockquote>
+<p>Here’s an example of instantiating and fitting a comparison space.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> EuclideanComparisonSpace(dimension<span class="op">=</span><span class="dv">2</span>, num_points<span class="op">=</span><span class="dv">1000</span>, jump_of_diffusion<span class="op">=</span><span class="fl">0.47</span>, comparison_type<span class="op">=</span><span class="st">"wasserstein"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> fit_comparison_space_model(model, max_epochs<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>euclidean_stuffs <span class="op">=</span> model.<span class="bu">apply</span>(params) <span class="co"># dictionary containing A, P, D</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.diffusion_laziness <span class="im">import</span> wasserstein_spread_of_diffusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>P_euclidean <span class="op">=</span> euclidean_stuffs[<span class="st">'P'</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>D_euclidean <span class="op">=</span> euclidean_stuffs[<span class="st">'D'</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>wass_spreads <span class="op">=</span> wasserstein_spread_of_diffusion(D_euclidean, P_euclidean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.hist(wass_spreads, bins<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Adjust the number of bins as needed</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Value'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Wasserstein Spreads'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Comparison Space Construction_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> EuclideanComparisonSpace(dimension<span class="op">=</span><span class="dv">2</span>, num_points<span class="op">=</span><span class="dv">1000</span>, jump_of_diffusion<span class="op">=</span><span class="fl">0.47</span>, comparison_type<span class="op">=</span><span class="st">"entropy"</span>,)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> fit_comparison_space_model(model, max_epochs<span class="op">=</span><span class="dv">1000</span>, verbose<span class="op">=</span><span class="va">False</span>, lr<span class="op">=</span><span class="fl">0.01</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>euclidean_stuffs <span class="op">=</span> model.<span class="bu">apply</span>(params) <span class="co"># dictionary containing A, P, D</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.diffusion_laziness <span class="im">import</span> entropy_of_diffusion</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>P_euclidean <span class="op">=</span> euclidean_stuffs[<span class="st">'P'</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>entropies <span class="op">=</span> entropy_of_diffusion(P_euclidean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.hist(entropies, bins<span class="op">=</span><span class="dv">10</span>)  <span class="co"># Adjust the number of bins as needed</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Value'</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Entropies of Diffusion'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Comparison Space Construction_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">'params'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>{'kernel bandwidth': Array([nan], dtype=float32)}</code></pre>
+</div>
+</div>
+<p>The fitting has worked, adjusting the kernel until our imaginary wasserstein spread value is achieved pretty uniformly.</p>
+</section>
+<section id="pointcloud-construction" class="level1">
+<h1>Pointcloud Construction</h1>
+<hr>
+<section id="euclidean_comparison_graph" class="level3">
+<h3 class="anchored" data-anchor-id="euclidean_comparison_graph">euclidean_comparison_graph</h3>
+<blockquote class="blockquote">
+<pre><code> euclidean_comparison_graph (G:pygsp.graphs.graph.Graph, dimension)</code></pre>
+</blockquote>
+<p>Constructs a flat graph, hewn from uniform random noise of the supplied dimension. Calculates the powered diffusion matrix on this graph.</p>
+<hr>
+</section>
+<section id="get_graph_type" class="level3">
+<h3 class="anchored" data-anchor-id="get_graph_type">get_graph_type</h3>
+<blockquote class="blockquote">
+<pre><code> get_graph_type (G)</code></pre>
+</blockquote>
+</section>
+</section>
+<section id="experiments" class="level1">
+<h1>Experiments</h1>
+<p>Now that we have automatic comparison space construction, we need to test it. Below, we run experiments to answer each of these questions: 1. Does matching the W1 (or Entropic) jump of diffusion actually produce the same kernel parameters? 2. Does this work even for graphs constructed from manifolds of non flat curvatures, like the plane and sphere? 3. Does it work against more complex kernels, like the alpha-decay kernel, or knn kernel?</p>
+<section id="does-it-produce-the-same-kernel-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="does-it-produce-the-same-kernel-parameters">1. Does it produce the same kernel parameters?</h2>
+<p>Here are two heatmaps of the predicted versus actual kernel parameters in the easiest possible situation. We have two planes of the same dimension and same number of points, and use the same kernel. Can matching the jump of diffusion predict the correct parameters?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.datasets <span class="im">import</span> plane, sphere, paraboloid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the sigma stored against the real sigmas</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">8</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.plot(sigmas, sigma_store[<span class="dv">0</span>], label<span class="op">=</span><span class="st">"Estimated Sigma"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>plt.plot(sigmas, sigmas, label<span class="op">=</span><span class="st">"True Sigma"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"True Sigma"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Estimated Sigma"</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Estimated Sigma vs. True Sigma"</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="Comparison Space Construction_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>How does the jump of diffusion change with these parameters?</p>
+</section>
+</section>
+<section id="grid-construction" class="level1">
+<h1>Grid Construction</h1>
+<hr>
+<section id="construct_ndgrid_from_shape" class="level3">
+<h3 class="anchored" data-anchor-id="construct_ndgrid_from_shape">construct_ndgrid_from_shape</h3>
+<blockquote class="blockquote">
+<pre><code> construct_ndgrid_from_shape (dim, points_per_dim)</code></pre>
+</blockquote>
+<hr>
+</section>
+<section id="construct_ndgrid" class="level3">
+<h3 class="anchored" data-anchor-id="construct_ndgrid">construct_ndgrid</h3>
+<blockquote class="blockquote">
+<pre><code> construct_ndgrid (*args)</code></pre>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.kernels <span class="im">import</span> pygsp_graph_from_points</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.core <span class="im">import</span> DiffusionCurvature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>DC <span class="op">=</span> DiffusionCurvature(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    flattening_method<span class="op">=</span><span class="st">"Fixed"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    points_per_cluster<span class="op">=</span><span class="va">None</span>, <span class="co"># construct separate comparison spaces around each point</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    comparison_space_size_factor<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>gx_curvatures <span class="op">=</span> []</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>rx_curvatures <span class="op">=</span> []</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create n copies of gx and rx</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    gx_copy <span class="op">=</span> construct_ndgrid_from_shape(<span class="dv">3</span>,<span class="dv">10</span>)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    rx_copy <span class="op">=</span> np.concatenate([np.zeros((<span class="dv">1</span>,<span class="dv">3</span>)), np.random.rand(<span class="dv">1000</span>,<span class="dv">3</span>)<span class="op">*</span><span class="dv">2</span><span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create graphs from the copies</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    Gx_copy <span class="op">=</span>  graphtools.Graph(gx_copy, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, decay<span class="op">=</span><span class="va">None</span>).to_pygsp()</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    Rx_copy <span class="op">=</span>  graphtools.Graph(rx_copy, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, decay<span class="op">=</span><span class="va">None</span>).to_pygsp()</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># calculate unsigned curvature of the copies</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    gx_curvature <span class="op">=</span> DC.unsigned_curvature(Gx_copy, t<span class="op">=</span><span class="dv">15</span>)[<span class="dv">0</span>]</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    rx_curvature <span class="op">=</span> DC.unsigned_curvature(Rx_copy, t<span class="op">=</span><span class="dv">15</span>)[<span class="dv">0</span>]</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># append the curvatures to the list</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>    gx_curvatures.append(gx_curvature)</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>    rx_curvatures.append(rx_curvature)</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate mean and standard deviation of the curvatures</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>gx_mean <span class="op">=</span> np.mean(gx_curvatures)</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>gx_std <span class="op">=</span> np.std(gx_curvatures)</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>rx_mean <span class="op">=</span> np.mean(rx_curvatures)</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>rx_std <span class="op">=</span> np.std(rx_curvatures)</span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="co"># print the results</span></span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean unsigned curvature of gx: </span><span class="sc">{</span>gx_mean<span class="sc">:.4f}</span><span class="ss"> +/- </span><span class="sc">{</span>gx_std<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean unsigned curvature of rx: </span><span class="sc">{</span>rx_mean<span class="sc">:.4f}</span><span class="ss"> +/- </span><span class="sc">{</span>rx_std<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mean unsigned curvature of gx: 6.7488 +/- 0.0000
+Mean unsigned curvature of rx: 6.6859 +/- 0.0384</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>gx</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: name 'gx' is not defined</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="diffusion-maps-for-graph-comparison-spaces" class="level1">
+<h1>Diffusion Maps for Graph Comparison Spaces</h1>
+<hr>
+<section id="diffusion_coordinates" class="level3">
+<h3 class="anchored" data-anchor-id="diffusion_coordinates">diffusion_coordinates</h3>
+<blockquote class="blockquote">
+<pre><code> diffusion_coordinates (G, t=1, plot_evals=False)</code></pre>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.datasets <span class="im">import</span> sphere</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> graphtools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>X, ks <span class="op">=</span> sphere(<span class="dv">1000</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> graphtools.Graph(X, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, decay<span class="op">=</span><span class="va">None</span>).to_pygsp()</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>W <span class="op">=</span> jnp.array(G.W.toarray())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dcoords <span class="op">=</span> diffusion_coordinates(G)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>plt.scatter(dcoords[:,<span class="dv">0</span>],dcoords[:,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>&lt;matplotlib.collections.PathCollection at 0x7fce8839bd10&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="Comparison Space Construction_files/figure-html/cell-28-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="mean-entropies-of-flat-spaces" class="level1">
+<h1>Mean Entropies of Flat Spaces</h1>
+<hr>
+<section id="load_average_entropies" class="level3">
+<h3 class="anchored" data-anchor-id="load_average_entropies">load_average_entropies</h3>
+<blockquote class="blockquote">
+<pre><code> load_average_entropies (filename)</code></pre>
+</blockquote>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> load_average_entropies(<span class="st">'../data/entropies_averaged.h5'</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>d</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>{1: {10: {25: 4.1617084}, 15: {25: 4.5504103}, 5: {25: 3.4661007}},
+ 2: {10: {25: 5.775014}, 15: {25: 6.2073145}, 5: {25: 4.912664}},
+ 3: {10: {25: 7.301388}, 15: {25: 7.7671103}, 5: {25: 6.2948627}},
+ 4: {10: {25: 8.641593}, 15: {25: 8.925011}, 5: {25: 7.6750712}},
+ 5: {10: {25: 9.111419}, 15: {25: 9.178771}, 5: {25: 8.638502}},
+ 6: {10: {25: 9.189743}, 15: {25: 9.203704}, 5: {25: 9.015003}}}</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>diffusion_curvature - 3c Sampling Experiments on Diffusion Curvature</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="diffusion_curvature - 3c Sampling Experiments on Diffusion Curvature">
+<meta property="og:description" content="">
+<meta property="og:image" content="https://professorwug.github.io/diffusion_curvature/experiments/3c Sampling Experiments_files/figure-html/cell-5-output-2.png">
+<meta property="og:site-name" content="diffusion_curvature">
+<meta property="og:image:height" content="438">
+<meta property="og:image:width" content="548">
+<meta name="twitter:title" content="diffusion_curvature - 3c Sampling Experiments on Diffusion Curvature">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="https://professorwug.github.io/diffusion_curvature/experiments/3c Sampling Experiments_files/figure-html/cell-5-output-2.png">
+<meta name="twitter:image-height" content="438">
+<meta name="twitter:image-width" content="548">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">diffusion_curvature</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/professorwug/diffusion_curvature" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../experiments/3a Visual Battery.html">experiments</a></li><li class="breadcrumb-item"><a href="../experiments/3c Sampling Experiments.html">3c Sampling Experiments on Diffusion Curvature</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">documentation</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../documentation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Curvature</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">experiments</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a Visual Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a A Visual Battery of Benchmarks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a1 DC of Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a1 Computing the diffusion curvature of the battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a1a DC of LowD High Sample Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a1a Computing the diffusion curvature of the battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3a2 Hickok Curvature of Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a2 Hickok Curvature of Battery.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3b Hickok Comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3b Hickok Comparison.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3c Sampling Experiments.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3c Sampling Experiments on Diffusion Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3d Detecting Negative Curvature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3d Detecting Negative Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3d1 Effects of Graph Construction on Negative Curvature Detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3d1 Effects of Graph Construction on Negative Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e Curvature with (Neural) Flattening.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e Curvature Via (Neural) Flattening</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e1 Flattening with Diffusion Models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e1 Flattening with Diffusion Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/3e2 Neural Flattening with Gromov Wasserstein.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3e2 Neural Flattening with Gromov Wasserstein</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Curvature by Quadratic Fitting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scalar Curvature by Volume Comparison</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Diffusion Laziness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measurements of Diffusion Laziness</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Examples.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Examples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Explorations in Lazy-first diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explorations in Lazy-first Diffusion Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../experiments/Neumann Heat Kernel via Chebyshev Approximation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analytic estimation of the heat kernel</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">library</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Comparison Space Construction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Comparison Space Construction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Construct Battery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3a Construct Battery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Implementation (PyGSP + JAX)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Curvature Enhanced Spectral Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1d Curvature Clustering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Datasets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Datasets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Entropy for Optimal t.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Entropy for Optimal t.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Laziness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Laziness Estimators</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Diffusion Ricci Curvature.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Diffusion Ricci Curvature</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Graphs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph Creation Utils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Heat Diffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Heat Diffusion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Kernels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kernels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Manifold Distances.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Manifold Distances</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Mean Flat Entropies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1c1 Mean Entropy of Uniform Flat Spaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Random Surfaces.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random Surfaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Utils.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Utils</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/Volume Estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Volume Estimation with Heat Diffusion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../library/continuous_normalizing_flows.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mapping the Data to a Flat Space with Continuous Normalizing Flows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#dimensional-analysis-of-planes" id="toc-dimensional-analysis-of-planes" class="nav-link active" data-scroll-target="#dimensional-analysis-of-planes">Dimensional Analysis of Planes</a></li>
+  <li><a href="#planes-under-different-sampling" id="toc-planes-under-different-sampling" class="nav-link" data-scroll-target="#planes-under-different-sampling">Planes under different sampling</a></li>
+  <li><a href="#effects-of-t" id="toc-effects-of-t" class="nav-link" data-scroll-target="#effects-of-t">Effects of <span class="math inline">\(t\)</span></a></li>
+  <li><a href="#samplings-of-curved-surfaces" id="toc-samplings-of-curved-surfaces" class="nav-link" data-scroll-target="#samplings-of-curved-surfaces">Samplings of Curved Surfaces</a>
+  <ul>
+  <li><a href="#pure-resampling-with-no-noise-1000-points" id="toc-pure-resampling-with-no-noise-1000-points" class="nav-link" data-scroll-target="#pure-resampling-with-no-noise-1000-points">Pure Resampling, with no noise, 1000 points</a></li>
+  <li><a href="#with-0.1-noise" id="toc-with-0.1-noise" class="nav-link" data-scroll-target="#with-0.1-noise">With 0.1 Noise</a></li>
+  <li><a href="#with-0.2-noise" id="toc-with-0.2-noise" class="nav-link" data-scroll-target="#with-0.2-noise">With 0.2 Noise</a></li>
+  <li><a href="#with-different-sampling-densities" id="toc-with-different-sampling-densities" class="nav-link" data-scroll-target="#with-different-sampling-densities">With Different Sampling Densities</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/professorwug/diffusion_curvature/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">3c Sampling Experiments on Diffusion Curvature</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="dimensional-analysis-of-planes" class="level2">
+<h2 class="anchored" data-anchor-id="dimensional-analysis-of-planes">Dimensional Analysis of Planes</h2>
+<p>How does it perform with planes of varying dimensions?</p>
+<p>Using clustering within the manifold:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>planes <span class="op">=</span> [plane(<span class="dv">1000</span><span class="op">*</span><span class="dv">2</span><span class="op">**</span>(d<span class="op">-</span><span class="dv">2</span>), d) <span class="cf">for</span> d <span class="kw">in</span> ds]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, d <span class="kw">in</span> <span class="bu">enumerate</span>(ds):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(planes[i], decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="dv">500</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span><span class="dv">8</span>, dim<span class="op">=</span>d, knn<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"dimension"</span>,d,<span class="st">": Curvature of Plane is "</span>,ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"34bcd4e1e3934c308b9b975b2a4134d2","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dimension 3 : Curvature of Plane is  0.22488499
+dimension 4 : Curvature of Plane is  -0.0021333694
+dimension 5 : Curvature of Plane is  -0.1174202
+dimension 6 : Curvature of Plane is  -0.098750114</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"1fee577012df4719a7eecaec804dc417","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"0c9f50ddc9b049dcad55d952ed0aa11e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"31dc38ca3e31490b87a8c2d210240db8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<p>Without clustering</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> [<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>planes <span class="op">=</span> [plane(<span class="dv">1000</span><span class="op">*</span><span class="dv">2</span><span class="op">**</span>(d<span class="op">-</span><span class="dv">2</span>), d) <span class="cf">for</span> d <span class="kw">in</span> ds]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, d <span class="kw">in</span> <span class="bu">enumerate</span>(ds):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(planes[i], decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span><span class="dv">8</span>, dim<span class="op">=</span>d, knn<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"dimension"</span>,d,<span class="st">": Curvature of Plane is "</span>,ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"221c2818acdf431dbbf7843f5a315074","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dimension 3 : Curvature of Plane is  -0.113577366
+dimension 4 : Curvature of Plane is  -0.031496525
+dimension 5 : Curvature of Plane is  -0.05647278
+dimension 6 : Curvature of Plane is  0.07413292</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"336811f85ad94f0badd6f65f40032968","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"a22a038c11804e60b7b2ac5bce5e36c6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"092a978245d84aaa8faff618bfbae9d0","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<p><strong>Conclusion</strong>: when using more points, there’s less variance between dimensions — though still a slightly alarming amount of variance within them. There doesn’t appear to be any pervasive bias induced by dimensionality in either setting. That said, this is the <em>best possible</em> condition, as it is literally comparing a plane to a plane.</p>
+</section>
+<section id="planes-under-different-sampling" class="level2">
+<h2 class="anchored" data-anchor-id="planes-under-different-sampling">Planes under different sampling</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sampled_plane_ks <span class="op">=</span> []</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> trange(<span class="dv">1000</span>):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    X_plane <span class="op">=</span> plane(<span class="dv">1000</span>,<span class="dv">2</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(X_plane, decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span>t, dim<span class="op">=</span><span class="dv">2</span>, knn<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    sampled_plane_ks.append(ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"72af631c9fb647bca6ec4510197770c9","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a histogram of the curvature values</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.hist(sampled_plane_ks, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Ks of Plane, with No Clustering, Subtraction, t=</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Text(0.5, 1.0, 'Ks of Plane, with No Clustering, Subtraction, t=8')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>That’s not looking very good. The randomness of the plane sampling, combined with the randomness of the comparison space has created a lot of variability.</p>
+<p>I see two strategies to address this: using a higher <span class="math inline">\(t\)</span>, and comparing to a grid.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sampled_plane_ks <span class="op">=</span> []</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> trange(<span class="dv">1000</span>):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    X_plane <span class="op">=</span> plane(<span class="dv">1000</span>,<span class="dv">2</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(X_plane, decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>, use_grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span>t, dim<span class="op">=</span><span class="dv">2</span>, knn<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    sampled_plane_ks.append(ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"d3027d8f6fa5453fb9fba7b4fd937abe","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a histogram of the curvature values</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>plt.hist(sampled_plane_ks, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Ks of Plane, with Grid, No Clustering, Subtraction, t=</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Text(0.5, 1.0, 'Ks of Plane, with Grid, No Clustering, Subtraction, t=8')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Now this is odd. It appears the grid <em>biases</em> the results; it must have a higher-than-normal entropy, making everything appear more positive while it, the comparison, looks falsely negative. <em>What’s up with this?</em></p>
+<p>On a more positive note, using a grid did shave off 0.2 variance.</p>
+<p>Hypothesis 1: It’s the kernel we’re using. That darn alpha-decay kernel is somehow changing the shape of the grid. Disabling the decay should remedy the problem. To be doubly sure that’s working, I can construct a kernel with my code.</p>
+<ol type="1">
+<li>Decay=None does nothing – that’s what we were using before.</li>
+<li>But perhaps it has to do with the knn value! In a grid, the 15th nearest neighbor may be further than it is on a uniformly sampled surface, because the points are arranged in squares rather than circles.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sampled_plane_ks <span class="op">=</span> []</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> trange(<span class="dv">1000</span>):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    X_plane <span class="op">=</span> plane(<span class="dv">1000</span>,<span class="dv">2</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(X_plane, decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">10</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>, use_grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span>t, dim<span class="op">=</span><span class="dv">2</span>, knn<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    sampled_plane_ks.append(ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"fa143c26242247c49292c773b10406c6","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a histogram of the curvature values</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.hist(sampled_plane_ks, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Ks of Plane, with Grid, No Clustering, Subtraction, t=</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">, knn=10"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Text(0.5, 1.0, 'Ks of Plane, with Grid, No Clustering, Subtraction, t=8, knn=10')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Support for the knn hypothesis. Changing k from 15 to 10 increased the perceived negativity of the grid’s curvature.</p>
+<p>This would likely be best avoided by <em>not</em> using a knn grid; or using some average of distances, rather than the concrete <em>distance from the kth</em> nearest neighbor.</p>
+<p>It would also, if the hypothesis is shrewd, diminish in effect the higher the k.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sampled_plane_ks <span class="op">=</span> []</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> trange(<span class="dv">1000</span>):</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    X_plane <span class="op">=</span> plane(<span class="dv">1000</span>,<span class="dv">2</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(X_plane, decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">30</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>, use_grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span>t, dim<span class="op">=</span><span class="dv">2</span>, knn<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    sampled_plane_ks.append(ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"34de9b51b6c3412a8d2da7c475383dfb","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a histogram of the curvature values</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.hist(sampled_plane_ks, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Ks of Plane, with Grid, No Clustering, Subtraction, t=</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">, knn=30"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Text(0.5, 1.0, 'Ks of Plane, with Grid, No Clustering, Subtraction, t=8, knn=30')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Indeed, using a larger knn value decreased the descrepency considerably. <em>But it’s still there!</em></p>
+<p>As an ablation, here’s this same experiment on a 5000 point plane.</p>
+<p>Here’s the k=15 version: (With GPU, it jumps to about 10 minutes to run 1000 trials. Not bad. Thank ya, Nvidia!)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sampled_plane_ks <span class="op">=</span> []</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> trange(<span class="dv">1000</span>):</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    X_plane <span class="op">=</span> plane(<span class="dv">5000</span>,<span class="dv">2</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(X_plane, decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>, use_grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span>t, dim<span class="op">=</span><span class="dv">2</span>, knn<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    sampled_plane_ks.append(ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"61cf319df76b475b9cfe44a44306d966","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a histogram of the curvature values</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.hist(sampled_plane_ks, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Ks of Plane, with Grid, No Clustering, Subtraction, t=</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">, knn=15"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Text(0.5, 1.0, 'Ks of Plane, with Grid, No Clustering, Subtraction, t=8')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sampled_plane_ks <span class="op">=</span> []</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> trange(<span class="dv">1000</span>):</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    X_plane <span class="op">=</span> plane(<span class="dv">5000</span>,<span class="dv">2</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(X_plane, decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">30</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>, use_grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span>t, dim<span class="op">=</span><span class="dv">2</span>, knn<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    sampled_plane_ks.append(ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"ecb0483eb0bc48cfb050e37b01267de7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a histogram of the curvature values</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plt.hist(sampled_plane_ks, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Ks of Plane, with Grid, No Clustering, Subtraction, t=</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">, knn=30"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Text(0.5, 1.0, 'Ks of Plane, with Grid, No Clustering, Subtraction, t=8, knn=30')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The grid, if it can be made to work, greatly reduces the variance in reported curvatures. To work with it, I see two immediate options:</p>
+<ol type="1">
+<li>Adopting a non-knn kernel – something more sophisticated – that weighs across the distances of all of the k nearest points, and not merely the kth point. If used simultaneously on real data and the comparison space, this would allow us to use the grid.</li>
+<li>Instead of changing our kernel to match the hyper-uniform sampling of the grid, whose chief advantage is predictability, we could <em>average</em> the results of a large number of uniform samplings. We can take the average entropy over N uniform samplings for a grid of likely pairings between k, t, and d.</li>
+</ol>
+<p>I favor the latter approach, as it would also reduce the runtime of the algorithm, by precomputing the expected uniform samplings. If parameters are chosen outside of the precomputed grid, you can revert to a single sampling, as we presently do it. Additionally, this would allow fast matching of comparison spaces with graphs. At low <span class="math inline">\(t\)</span> values, the diffusion entropy should be approximately equal to the <em>flat</em> entropy, modulo the kernel bandwidth, thus allowing us to estimate that <span class="math inline">\(knn\)</span> parameter.</p>
+<p>The feasibility question is this: how many pairings do we need?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>num_ks <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>num_ts <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>num_ds <span class="op">=</span> <span class="dv">10</span> <span class="co"># anything much higher dimensional is impossible to get enough samples from</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>num_trials <span class="op">=</span> num_ks <span class="op">*</span> num_ts <span class="op">*</span> num_ds</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>num_trials</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>15000</code></pre>
+</div>
+</div>
+<p>Each of those could be done in at most 5 minutes, costing</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(num_trials<span class="op">/</span><span class="dv">12</span><span class="op">/</span><span class="dv">24</span>)[:<span class="dv">4</span>] <span class="op">+</span> <span class="st">" days"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>'52.0 days'</code></pre>
+</div>
+</div>
+<p>Of course, I can parallelize that across Yale’s clusters, cutting it down to just a couple of days. That seems feasible.</p>
+<p>The other feasibility check is whether the number of points in the comparison space changes the entropy. It shouldn’t. Let’s check:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ks_bigs <span class="op">=</span> []</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ks_smalls <span class="op">=</span> []</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    big_plane <span class="op">=</span> plane(<span class="dv">5000</span>,<span class="dv">2</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    small_plane <span class="op">=</span> plane(<span class="dv">500</span>,<span class="dv">2</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>, use_grid<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    G_big_plane <span class="op">=</span> get_alpha_decay_graph(big_plane, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, decay<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    G_small_plane <span class="op">=</span> get_alpha_decay_graph(small_plane, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, decay<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    ks_big <span class="op">=</span> DC.unsigned_curvature(G_big_plane, t<span class="op">=</span><span class="dv">8</span>, idx<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    ks_small <span class="op">=</span> DC.unsigned_curvature(G_small_plane, t<span class="op">=</span><span class="dv">8</span>, idx<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    ks_bigs.append(ks_big) </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    ks_smalls.append(ks_small)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show the mean and standard deviation of ks_bigs and ks_smalls</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mean of ks_bigs:"</span>, np.mean(ks_bigs))</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"mean of ks_smalls:"</span>, np.mean(ks_smalls))</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"std of ks_bigs:"</span>, np.std(ks_bigs))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"std of ks_smalls:"</span>, np.std(ks_smalls))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mean of ks_bigs: 5.059733
+mean of ks_smalls: 5.0795994
+std of ks_bigs: 0.07575969
+std of ks_smalls: 0.0928274</code></pre>
+</div>
+</div>
+<p>So there is a difference arising from the number of points used. Likely this is because the diffusion, though concentrated in the center of our plane, has lots of ‘close to zero’ values that have spread across the manifold.</p>
+<p>I tried changing the entropy calculation to zero out elements below an epsilon threshold (set to 10e-5); this helps some, but for large discrepancies in the number of points there’s still a .02 discrepancy. Perhaps that’s close enough it can be tolerated – it’s certainly less than the variance within different uniform samplings of the plane.</p>
+<p>The next step is to modify the ‘Fixed’ comparison space construction to first load a database of flat entropies (on initialization of the class?), check if the current parameters are within the database, and, if not, average the uniform sampling N times.</p>
+</section>
+<section id="effects-of-t" class="level2">
+<h2 class="anchored" data-anchor-id="effects-of-t">Effects of <span class="math inline">\(t\)</span></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>sampled_plane_ks <span class="op">=</span> []</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> trange(<span class="dv">1000</span>):</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    X_plane <span class="op">=</span> plane(<span class="dv">1000</span>,<span class="dv">2</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> get_alpha_decay_graph(X_plane, decay<span class="op">=</span><span class="va">None</span>, knn<span class="op">=</span><span class="dv">15</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    DC <span class="op">=</span> DiffusionCurvature(laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,points_per_cluster<span class="op">=</span><span class="va">None</span>,comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>, flattening_method<span class="op">=</span><span class="st">"Fixed"</span>, use_grid<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    ks <span class="op">=</span> DC.curvature(G, t<span class="op">=</span>t, dim<span class="op">=</span><span class="dv">2</span>, knn<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    sampled_plane_ks.append(ks[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"4bec51f4e3964b81a8cc958e1514c0cf","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot a histogram of the curvature values</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>plt.hist(sampled_plane_ks, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Ks of Plane, with Grid, No Clustering, Subtraction, t=</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">, knn=15"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Text(0.5, 1.0, 'Ks of Plane, with Grid, No Clustering, Subtraction, t=25, knn=15')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-21-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>np.std(sampled_plane_ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0.054011818</code></pre>
+</div>
+</div>
+</section>
+<section id="samplings-of-curved-surfaces" class="level1">
+<h1>Samplings of Curved Surfaces</h1>
+<p>The plane can only tell us so much, since what’s all-important is <em>how much these variances differ</em> with respect to other curvature values.</p>
+<p>To that end, here’s the experiment: 1. Randomly construct a number (20-50) of surfaace <em>equations</em>, covering a spectum of curvatures. 2. For each surface, randomly sample from it. 3. Measure the the variance in diffusion curvature between samplings in terms of the scalar curvature of samples within that variance.</p>
+<p>Repeat the above for: 1. Different densities of samples (non uniformly changing) 2. Noise added to the samplings.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.random_surfaces <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.core <span class="im">import</span> DiffusionCurvature</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> graphtools</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> curved_sampling_experiment(</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        num_surfaces <span class="op">=</span> <span class="dv">50</span>, <span class="co"># number of random quadric surfaces, preserved between samplings.</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>        num_samplings <span class="op">=</span> <span class="dv">100</span>, <span class="co"># number of samplings to perform on each surface</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>        dim_of_surfaces <span class="op">=</span> <span class="dv">2</span>, <span class="co"># dimension of the surfaces</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>        density_variance <span class="op">=</span> <span class="dv">0</span>, <span class="co"># variance of densities between samplings.</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>        num_points_per_surface <span class="op">=</span> <span class="dv">1000</span>, <span class="co"># number of points per surface</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>        noisiness <span class="op">=</span> <span class="dv">0</span>, <span class="co"># variance of noise added to samples</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> <span class="dv">25</span>, <span class="co"># diffusion time</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    random_surfaces <span class="op">=</span> []</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_surfaces):</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        F, <span class="bu">vars</span> <span class="op">=</span> random_surface(dim_of_surfaces, dim_of_surfaces<span class="op">+</span><span class="dv">1</span>, degree<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>        random_surfaces.append(F)</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sample from the surfaces</span></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>    sampled_surfaces <span class="op">=</span> [[] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_surfaces)]</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>    real_curvatures <span class="op">=</span> np.empty((num_surfaces, num_samplings))</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> trange(num_surfaces, leave<span class="op">=</span><span class="va">False</span>, desc<span class="op">=</span><span class="st">"Sampling surfaces"</span>):</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(num_samplings):</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>            N <span class="op">=</span> <span class="bu">int</span>(num_points_per_surface <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> np.random.normal(<span class="dv">0</span>, density_variance)))</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>            X <span class="op">=</span> rejection_sample_from_surface(</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>                    random_surfaces[i], N</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>            X <span class="op">=</span> X <span class="op">+</span> np.random.normal(<span class="dv">0</span>, noisiness, X.shape)</span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>            sampled_surfaces[i].append(X)</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># compute the scalar curvature</span></span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>            real_curvatures[i][j] <span class="op">=</span> scalar_curvature_at_origin(random_surfaces[i])</span>
+<span id="cb35-32"><a href="#cb35-32" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb35-33"><a href="#cb35-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-34"><a href="#cb35-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute the diffusion curvature</span></span>
+<span id="cb35-35"><a href="#cb35-35" aria-hidden="true" tabindex="-1"></a>    diffusion_curvatures <span class="op">=</span> np.empty((num_surfaces, num_samplings))</span>
+<span id="cb35-36"><a href="#cb35-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> trange(num_surfaces, leave<span class="op">=</span><span class="va">False</span>, desc<span class="op">=</span><span class="st">"Computing diffusion curvature"</span>):</span>
+<span id="cb35-37"><a href="#cb35-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(num_samplings):</span>
+<span id="cb35-38"><a href="#cb35-38" aria-hidden="true" tabindex="-1"></a>            X <span class="op">=</span> sampled_surfaces[i][j]</span>
+<span id="cb35-39"><a href="#cb35-39" aria-hidden="true" tabindex="-1"></a>            G <span class="op">=</span> graphtools.Graph(X, anisotropy<span class="op">=</span><span class="dv">1</span>, knn<span class="op">=</span><span class="dv">15</span>, decay<span class="op">=</span><span class="va">None</span>).to_pygsp()</span>
+<span id="cb35-40"><a href="#cb35-40" aria-hidden="true" tabindex="-1"></a>            DC <span class="op">=</span> DiffusionCurvature(</span>
+<span id="cb35-41"><a href="#cb35-41" aria-hidden="true" tabindex="-1"></a>                laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,</span>
+<span id="cb35-42"><a href="#cb35-42" aria-hidden="true" tabindex="-1"></a>                flattening_method<span class="op">=</span><span class="st">"Mean Fixed"</span>,</span>
+<span id="cb35-43"><a href="#cb35-43" aria-hidden="true" tabindex="-1"></a>                comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>,</span>
+<span id="cb35-44"><a href="#cb35-44" aria-hidden="true" tabindex="-1"></a>                points_per_cluster<span class="op">=</span><span class="va">None</span>, <span class="co"># construct separate comparison spaces around each point</span></span>
+<span id="cb35-45"><a href="#cb35-45" aria-hidden="true" tabindex="-1"></a>                comparison_space_size_factor<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb35-46"><a href="#cb35-46" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb35-47"><a href="#cb35-47" aria-hidden="true" tabindex="-1"></a>            diffusion_curvatures[i][j] <span class="op">=</span> DC.curvature(G, t<span class="op">=</span>t, dim<span class="op">=</span>dim_of_surfaces, knn<span class="op">=</span><span class="dv">15</span>, idx<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb35-48"><a href="#cb35-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> diffusion_curvatures, real_curvatures</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> analyze_sampling_results(diffusion_curvatures, real_curvatures, title <span class="op">=</span> <span class="st">"Sampling Results"</span>):</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    num_surfaces <span class="op">=</span> diffusion_curvatures.shape[<span class="dv">0</span>]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    num_samplings <span class="op">=</span> diffusion_curvatures.shape[<span class="dv">1</span>]</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># generate a color for each surface</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> np.arange(num_surfaces) <span class="op">/</span> num_surfaces</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tile the colors, repeating for every sampling</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> np.tile(colors, (num_samplings,<span class="dv">1</span>)).T</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># flatten the array</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> colors.flatten()</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot results, as a scatterplot of real curvature vs diffusion curvature, in which each distinct surface has a distinct color.</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">6</span>))</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    plt.scatter(real_ks, diffusion_ks, alpha<span class="op">=</span><span class="fl">0.5</span>, c<span class="op">=</span>colors)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Real Curvature"</span>)</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Diffusion Curvature"</span>)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    plt.title(title)</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="pure-resampling-with-no-noise-1000-points" class="level2">
+<h2 class="anchored" data-anchor-id="pure-resampling-with-no-noise-1000-points">Pure Resampling, with no noise, 1000 points</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>diffusion_ks, real_ks <span class="op">=</span> curved_sampling_experiment(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    density_variance<span class="op">=</span><span class="dv">0</span>, noisiness<span class="op">=</span><span class="dv">0</span>, num_samplings<span class="op">=</span><span class="dv">5</span>, num_surfaces<span class="op">=</span><span class="dv">50</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"dfa4571d0d014c248c48a88dd221779c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"3317d037adbf488db7db952b3d3c35db","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>analyze_sampling_results(diffusion_ks, real_ks, <span class="st">"Variance across Samplings, no noise, no density variance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="with-0.1-noise" class="level2">
+<h2 class="anchored" data-anchor-id="with-0.1-noise">With 0.1 Noise</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>diffusion_ks, real_ks <span class="op">=</span> curved_sampling_experiment(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    density_variance<span class="op">=</span><span class="dv">0</span>, noisiness<span class="op">=</span><span class="fl">0.1</span>, num_samplings<span class="op">=</span><span class="dv">5</span>, num_surfaces<span class="op">=</span><span class="dv">50</span>, num_points_per_surface<span class="op">=</span><span class="dv">1000</span>, t <span class="op">=</span> <span class="dv">25</span>, </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"dc4c7ab105f64dfca8aa145edc88648e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"d9dad3c9b942463c94bdb6fc6c2d396e","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>analyze_sampling_results(diffusion_ks, real_ks, title <span class="op">=</span> <span class="st">"Variance across Samplings, no density variance, noise=0.1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-29-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="with-0.2-noise" class="level2">
+<h2 class="anchored" data-anchor-id="with-0.2-noise">With 0.2 Noise</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>diffusion_ks, real_ks <span class="op">=</span> curved_sampling_experiment(</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    density_variance<span class="op">=</span><span class="dv">0</span>, noisiness<span class="op">=</span><span class="fl">0.2</span>, num_samplings<span class="op">=</span><span class="dv">5</span>, num_surfaces<span class="op">=</span><span class="dv">50</span>, num_points_per_surface<span class="op">=</span><span class="dv">1000</span>, t <span class="op">=</span> <span class="dv">25</span>, </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"13352bf5929845dfa4c1ab27a6f36ade","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"11a67aa158934a68b11f93bb9fe0a0e3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>analyze_sampling_results(diffusion_ks, real_ks, title <span class="op">=</span> <span class="st">"Variance across Samplings, no density variance, noise=0.1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-31-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="with-different-sampling-densities" class="level2">
+<h2 class="anchored" data-anchor-id="with-different-sampling-densities">With Different Sampling Densities</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>diffusion_ks, real_ks <span class="op">=</span> curved_sampling_experiment(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    density_variance<span class="op">=</span><span class="fl">0.1</span>, noisiness<span class="op">=</span><span class="dv">0</span>, num_samplings<span class="op">=</span><span class="dv">5</span>, num_surfaces<span class="op">=</span><span class="dv">50</span>, num_points_per_surface<span class="op">=</span><span class="dv">1000</span>, t <span class="op">=</span> <span class="dv">25</span>, </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"72d7d8b96f3a4273bc90c5b244c4c9d7","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"57686d6e146e46e1a7f5d857b08b05d3","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>analyze_sampling_results(diffusion_ks, real_ks, title <span class="op">=</span> <span class="st">"Variance across Samplings, density variance=0.1, no noise"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="3c Sampling Experiments_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
