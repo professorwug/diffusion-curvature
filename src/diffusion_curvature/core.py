@@ -185,8 +185,8 @@ class DiffusionCurvature():
                         else: 
                             fixed_comparison_cache[dimension] = (G, None)
                     G_euclidean, D_euclidean = fixed_comparison_cache[dimension]
-                    print(G_euclidean.W)
-                    print(type(G_euclidean))
+                    # print(type(G_euclidean))
+                    # print(G_euclidean.W)
                     fs = self.unsigned_curvature(G_euclidean,t,idx=0,D=D_euclidean)   
                     if self.verbose: print(f"comparison entropy is {fs}")
                     return fs
@@ -241,7 +241,7 @@ class DiffusionCurvature():
         # Start by estimating the manifold's unsigned curvature, i.e. spreads of diffusion
         manifold_spreads, manifold_spreads_nought, P, Pt, t = self.unsigned_curvature(G,t,idx, _also_return_first_scale=True)
         if self.verbose: print(f"Manifold spreads are {manifold_spreads}")
-        print(manifold_spreads_nought.shape)
+        # print(manifold_spreads_nought.shape)
         n = G.W.shape[0]
         if dim is None: # The dimension wasn't supplied; we'll estimate it pointwise
             print("estimating local dimension of each point... may take a while")
