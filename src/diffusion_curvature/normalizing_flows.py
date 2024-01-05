@@ -4,6 +4,14 @@
 __all__ = ['ManifoldNeighborhoodDataset', 'dataloader_from_manifold_neighborhoods', 'FlowNet', 'NegativeLogLikelihood',
            'NegativeLogLikelihoodQuaUniform', 'GreatFlattener', 'neural_flattener']
 
+# %% ../../nbs/library/continuous_normalizing_flows.ipynb 4
+import torch, torch.nn as nn, torch.utils.data as data, torch.nn.functional as F, torch.optim as optim
+import ot
+from torchdyn.core import NeuralODE
+from torchdyn.datasets import *
+import pytorch_lightning as pl
+from tqdm.autonotebook import tqdm
+
 # %% ../../nbs/library/continuous_normalizing_flows.ipynb 7
 from sklearn.decomposition import PCA
 import torch, torch.nn as nn, torch.utils.data as data, torch.nn.functional as F, torch.optim as optim

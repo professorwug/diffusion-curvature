@@ -25,6 +25,9 @@ docmaker = "nbdev_docs"
 zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels"
 
 
+# Standard Interfaces
+jupyter = "jupyter notebook"
+
 [dependencies]
 # Common & Ubiquitous
 python = "3.11.*"
