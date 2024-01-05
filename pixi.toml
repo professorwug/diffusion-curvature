@@ -3,8 +3,8 @@ name = "diffusion_curvature"
 version = "0.1.0"
 description = "repo_description"
 authors = ["Kincaid MacDonald <dev@riddle.press>"]
-channels = ["conda-forge", "fastai", "pytorch"]
-platforms = ["osx-arm64"]
+channels = ["conda-forge", "fastai", "pytorch", "nvidia"] # add with `pixi project channel add nvidia`
+platforms = ["osx-arm64", "linux-64"] 
 
 [tasks]
 # install the library in editable mode
@@ -45,7 +45,6 @@ fastcore = "1.5.29.*"
 
 # Project Specific
 graphtools = "1.5.3.*"
-jax = "0.4.21.*"
 sympy = "1.12.*"
 rich = "13.7.0.*"
 typer = "0.9.0.*"
@@ -65,3 +64,10 @@ scikit-dimension = "==0.3.*"
 flax = ">=0.7.5"
 tadasets = "*"
 torchdyn = "*"
+
+[target.linux-64.dependencies]
+cuda-nvcc = ">=12.1.105,<12.2"
+jax = ">=0.4.23,<0.5"
+
+[target.osx-arm64.dependencies]
+jax = ">=0.4.23,<0.5"
