@@ -1250,8 +1250,8 @@ package:
   - etils[ecolab] ; extra == 'lazy-imports'
   requires_python: '>=3.10'
   extras:
-  - epath
   - epy
+  - epath
   url: https://files.pythonhosted.org/packages/cf/10/55adb8074b0211f8cfad76e73da86d4306e45567a5e6a905b4444fd7a751/etils-1.6.0-py3-none-any.whl#sha256=3da192b057929f2511f9ef713cee7d9c498e741740f8b2a9c0f6392d787201d4
   hash:
     md5: null
@@ -4614,6 +4614,33 @@ package:
   purls:
   - pkg:pypi/pexpect
 - platform: osx-arm64
+  name: phate
+  version: 1.0.11
+  category: main
+  manager: pypi
+  requires_dist:
+  - numpy >=1.16.0
+  - scipy >=1.1.0
+  - scikit-learn >=0.20.0
+  - future
+  - tasklogger >=1.2
+  - graphtools >=1.5.3
+  - scprep >=0.11.1
+  - Deprecated
+  - s-gd2 >=1.8.1
+  - matplotlib >=3.0
+  - sphinx ; extra == 'doc'
+  - sphinxcontrib-napoleon ; extra == 'doc'
+  - nose2 ; extra == 'test'
+  - anndata ; extra == 'test'
+  - coverage ; extra == 'test'
+  - coveralls ; extra == 'test'
+  - nose ; extra == 'test'
+  url: https://files.pythonhosted.org/packages/04/7e/85ea7d79b1150b08edcf5aac5bc6b601074f2b5cc43e8f3936b10d6e3b0a/phate-1.0.11-py3-none-any.whl#sha256=5b20755a0068b99725c36723cf292ff0674fd679fd24217d95f0b12f86e57642
+  hash:
+    md5: null
+    sha256: 5b20755a0068b99725c36723cf292ff0674fd679fd24217d95f0b12f86e57642
+- platform: osx-arm64
   name: pickleshare
   version: 0.7.5
   category: main
@@ -6059,6 +6086,18 @@ package:
   purls:
   - pkg:pypi/rpds-py
 - platform: osx-arm64
+  name: s-gd2
+  version: 1.8.1
+  category: main
+  manager: pypi
+  requires_dist:
+  - numpy >=1.16
+  - nose2 ; extra == 'test'
+  url: https://files.pythonhosted.org/packages/d0/aa/a60104f113672802d21ec6c25d3c6a72ae7b591c61f89a08e94326fb1175/s_gd2-1.8.1-cp311-cp311-macosx_10_9_universal2.whl#sha256=d97fdc51b4bff34d6c7bd77db56783103f1fbfddbef31a7d99caceb9427f0be0
+  hash:
+    md5: null
+    sha256: d97fdc51b4bff34d6c7bd77db56783103f1fbfddbef31a7d99caceb9427f0be0
+- platform: osx-arm64
   name: s3transfer
   version: 0.10.0
   category: main
@@ -6162,6 +6201,49 @@ package:
   license_family: BSD
   size: 14854215
   timestamp: 1700814446442
+- platform: osx-arm64
+  name: scprep
+  version: 1.1.0
+  category: main
+  manager: pypi
+  requires_dist:
+  - numpy >=1.12.0
+  - scipy >=0.18.1
+  - scikit-learn >=0.19.1
+  - decorator >=4.3.0
+  - pandas >=0.25
+  - packaging
+  - sphinx <2.4, >=2.2 ; extra == 'doc'
+  - sphinxcontrib-napoleon ; extra == 'doc'
+  - ipykernel ; extra == 'doc'
+  - nbsphinx ; extra == 'doc'
+  - autodocsumm ; extra == 'doc'
+  - fcsparser ; extra == 'optional'
+  - tables ; extra == 'optional'
+  - h5py ; extra == 'optional'
+  - anndata ; extra == 'optional'
+  - anndata2ri >=1.0.6 ; extra == 'optional'
+  - nose ; extra == 'test'
+  - nose2 ; extra == 'test'
+  - coverage ; extra == 'test'
+  - coveralls ; extra == 'test'
+  - parameterized ; extra == 'test'
+  - requests ; extra == 'test'
+  - packaging ; extra == 'test'
+  - mock ; extra == 'test'
+  - h5py ; extra == 'test'
+  - matplotlib >=3.0 ; extra == 'test'
+  - rpy2 >=3.0 ; extra == 'test'
+  - black ; extra == 'test'
+  - fcsparser ; extra == 'test'
+  - tables ; extra == 'test'
+  - anndata ; extra == 'test'
+  - anndata2ri >=1.0.6 ; extra == 'test'
+  requires_python: '>=3.6'
+  url: https://files.pythonhosted.org/packages/92/91/dfb35608ffae7eb0f45b565e702d3083d784988200ab6a967fd3f60d833e/scprep-1.1.0-py3-none-any.whl#sha256=338af5565321d3b54a15a7635e5bc5160f84569bb889e1c369d4c3b3afecdc40
+  hash:
+    md5: null
+    sha256: 338af5565321d3b54a15a7635e5bc5160f84569bb889e1c369d4c3b3afecdc40
 - platform: osx-arm64
   name: seaborn
   version: 0.13.0
@@ -6592,17 +6674,17 @@ package:
   - pkg:pypi/tenacity
 - platform: osx-arm64
   name: tensorstore
-  version: 0.1.51
+  version: 0.1.52
   category: main
   manager: pypi
   requires_dist:
   - numpy >=1.16.0
   - ml-dtypes >=0.3.1
   requires_python: '>=3.9'
-  url: https://files.pythonhosted.org/packages/c5/89/fff1b2bd4c37157657c6d9f992b83025344c0627a1ea20a3ea165faa3e7a/tensorstore-0.1.51-cp311-cp311-macosx_11_0_arm64.whl#sha256=03bea83d2dc78599611f32e4c86a2bf9e5b797fd2868a15ee438f0d2596f2230
+  url: https://files.pythonhosted.org/packages/50/12/1e620e3b72c960ee2c3596c63d59c1c90aa9b4ada05ce92bc973f9680b28/tensorstore-0.1.52-cp311-cp311-macosx_11_0_arm64.whl#sha256=cc06bd2b11359299ffaf819300e03a6bd780146c29a5aea8b0b52c92692af90e
   hash:
     md5: null
-    sha256: 03bea83d2dc78599611f32e4c86a2bf9e5b797fd2868a15ee438f0d2596f2230
+    sha256: cc06bd2b11359299ffaf819300e03a6bd780146c29a5aea8b0b52c92692af90e
 - platform: osx-arm64
   name: terminado
   version: 0.18.0
