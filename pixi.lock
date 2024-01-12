@@ -2911,8 +2911,8 @@ package:
   - etils[ecolab] ; extra == 'lazy-imports'
   requires_python: '>=3.10'
   extras:
-  - epy
   - epath
+  - epy
   url: https://files.pythonhosted.org/packages/cf/10/55adb8074b0211f8cfad76e73da86d4306e45567a5e6a905b4444fd7a751/etils-1.6.0-py3-none-any.whl#sha256=3da192b057929f2511f9ef713cee7d9c498e741740f8b2a9c0f6392d787201d4
   hash:
     md5: null
@@ -2989,8 +2989,8 @@ package:
   - etils[ecolab] ; extra == 'lazy-imports'
   requires_python: '>=3.10'
   extras:
-  - epath
   - epy
+  - epath
   url: https://files.pythonhosted.org/packages/cf/10/55adb8074b0211f8cfad76e73da86d4306e45567a5e6a905b4444fd7a751/etils-1.6.0-py3-none-any.whl#sha256=3da192b057929f2511f9ef713cee7d9c498e741740f8b2a9c0f6392d787201d4
   hash:
     md5: null
@@ -10973,6 +10973,55 @@ package:
   purls:
   - pkg:pypi/pexpect
 - platform: linux-64
+  name: phate
+  version: 0.4.5
+  category: main
+  manager: pypi
+  requires_dist:
+  - numpy >=1.14.0
+  - scipy >=1.1.0
+  - scikit-learn >=0.20.0
+  - future
+  - tasklogger >=1.0
+  - graphtools >=1.3.1
+  - scprep >=0.11.1
+  - sphinx ; extra == 'doc'
+  - sphinxcontrib-napoleon ; extra == 'doc'
+  - nose2 ; extra == 'test'
+  - anndata ; extra == 'test'
+  - matplotlib <3.1, >=3.0 ; extra == 'test'
+  url: https://files.pythonhosted.org/packages/00/f0/2dbd89b9540153f1a209111cdf0ba14b77485869be8fb963b033330379ea/phate-0.4.5-py3-none-any.whl#sha256=e1e9e58a32380f5e36dbdfd46ae268b9d56240e5f797efe84b6ff1075b6747c6
+  hash:
+    md5: null
+    sha256: e1e9e58a32380f5e36dbdfd46ae268b9d56240e5f797efe84b6ff1075b6747c6
+- platform: osx-arm64
+  name: phate
+  version: 1.0.11
+  category: main
+  manager: pypi
+  requires_dist:
+  - numpy >=1.16.0
+  - scipy >=1.1.0
+  - scikit-learn >=0.20.0
+  - future
+  - tasklogger >=1.2
+  - graphtools >=1.5.3
+  - scprep >=0.11.1
+  - Deprecated
+  - s-gd2 >=1.8.1
+  - matplotlib >=3.0
+  - sphinx ; extra == 'doc'
+  - sphinxcontrib-napoleon ; extra == 'doc'
+  - nose2 ; extra == 'test'
+  - anndata ; extra == 'test'
+  - coverage ; extra == 'test'
+  - coveralls ; extra == 'test'
+  - nose ; extra == 'test'
+  url: https://files.pythonhosted.org/packages/04/7e/85ea7d79b1150b08edcf5aac5bc6b601074f2b5cc43e8f3936b10d6e3b0a/phate-1.0.11-py3-none-any.whl#sha256=5b20755a0068b99725c36723cf292ff0674fd679fd24217d95f0b12f86e57642
+  hash:
+    md5: null
+    sha256: 5b20755a0068b99725c36723cf292ff0674fd679fd24217d95f0b12f86e57642
+- platform: linux-64
   name: pickleshare
   version: 0.7.5
   category: main
@@ -11739,24 +11788,24 @@ package:
   timestamp: 1702399567048
 - platform: linux-64
   name: protobuf
-  version: 4.25.1
+  version: 4.25.2
   category: main
   manager: pypi
   requires_python: '>=3.8'
-  url: https://files.pythonhosted.org/packages/ae/5b/7ed02a9b8e752c8f7bca8661779c0275b9e3e6a903a3045e6da51f796dda/protobuf-4.25.1-cp37-abi3-manylinux2014_x86_64.whl#sha256=ca37bf6a6d0046272c152eea90d2e4ef34593aaa32e8873fc14c16440f22d4b7
+  url: https://files.pythonhosted.org/packages/81/9e/63501b8d5b4e40c7260049836bd15ec3270c936e83bc57b85e4603cc212c/protobuf-4.25.2-cp37-abi3-manylinux2014_x86_64.whl#sha256=fc381d1dd0516343f1440019cedf08a7405f791cd49eef4ae1ea06520bc1c020
   hash:
     md5: null
-    sha256: ca37bf6a6d0046272c152eea90d2e4ef34593aaa32e8873fc14c16440f22d4b7
+    sha256: fc381d1dd0516343f1440019cedf08a7405f791cd49eef4ae1ea06520bc1c020
 - platform: osx-arm64
   name: protobuf
-  version: 4.25.1
+  version: 4.25.2
   category: main
   manager: pypi
   requires_python: '>=3.8'
-  url: https://files.pythonhosted.org/packages/e6/db/7b2edc72807d45d72f9db42f3eb86ddaf37f9e55d923159b1dbfc9d835bc/protobuf-4.25.1-cp37-abi3-macosx_10_9_universal2.whl#sha256=0bf384e75b92c42830c0a679b0cd4d6e2b36ae0cf3dbb1e1dfdda48a244f4bcd
+  url: https://files.pythonhosted.org/packages/b3/81/0017aefacf23273d4efd1154ef958a27eed9c177c4cc09d2d4ba398fb47f/protobuf-4.25.2-cp37-abi3-macosx_10_9_universal2.whl#sha256=2db9f8fa64fbdcdc93767d3cf81e0f2aef176284071507e3ede160811502fd3d
   hash:
     md5: null
-    sha256: 0bf384e75b92c42830c0a679b0cd4d6e2b36ae0cf3dbb1e1dfdda48a244f4bcd
+    sha256: 2db9f8fa64fbdcdc93767d3cf81e0f2aef176284071507e3ede160811502fd3d
 - platform: linux-64
   name: psutil
   version: 5.9.7
@@ -14003,6 +14052,18 @@ package:
   timestamp: 1703823387374
   purls:
   - pkg:pypi/rpds-py
+- platform: osx-arm64
+  name: s-gd2
+  version: 1.8.1
+  category: main
+  manager: pypi
+  requires_dist:
+  - numpy >=1.16
+  - nose2 ; extra == 'test'
+  url: https://files.pythonhosted.org/packages/d0/aa/a60104f113672802d21ec6c25d3c6a72ae7b591c61f89a08e94326fb1175/s_gd2-1.8.1-cp311-cp311-macosx_10_9_universal2.whl#sha256=d97fdc51b4bff34d6c7bd77db56783103f1fbfddbef31a7d99caceb9427f0be0
+  hash:
+    md5: null
+    sha256: d97fdc51b4bff34d6c7bd77db56783103f1fbfddbef31a7d99caceb9427f0be0
 - platform: linux-64
   name: s3transfer
   version: 0.10.0
@@ -14207,6 +14268,92 @@ package:
   license_family: BSD
   size: 14854215
   timestamp: 1700814446442
+- platform: linux-64
+  name: scprep
+  version: 1.1.0
+  category: main
+  manager: pypi
+  requires_dist:
+  - numpy >=1.12.0
+  - scipy >=0.18.1
+  - scikit-learn >=0.19.1
+  - decorator >=4.3.0
+  - pandas >=0.25
+  - packaging
+  - sphinx <2.4, >=2.2 ; extra == 'doc'
+  - sphinxcontrib-napoleon ; extra == 'doc'
+  - ipykernel ; extra == 'doc'
+  - nbsphinx ; extra == 'doc'
+  - autodocsumm ; extra == 'doc'
+  - fcsparser ; extra == 'optional'
+  - tables ; extra == 'optional'
+  - h5py ; extra == 'optional'
+  - anndata ; extra == 'optional'
+  - anndata2ri >=1.0.6 ; extra == 'optional'
+  - nose ; extra == 'test'
+  - nose2 ; extra == 'test'
+  - coverage ; extra == 'test'
+  - coveralls ; extra == 'test'
+  - parameterized ; extra == 'test'
+  - requests ; extra == 'test'
+  - packaging ; extra == 'test'
+  - mock ; extra == 'test'
+  - h5py ; extra == 'test'
+  - matplotlib >=3.0 ; extra == 'test'
+  - rpy2 >=3.0 ; extra == 'test'
+  - black ; extra == 'test'
+  - fcsparser ; extra == 'test'
+  - tables ; extra == 'test'
+  - anndata ; extra == 'test'
+  - anndata2ri >=1.0.6 ; extra == 'test'
+  requires_python: '>=3.6'
+  url: https://files.pythonhosted.org/packages/92/91/dfb35608ffae7eb0f45b565e702d3083d784988200ab6a967fd3f60d833e/scprep-1.1.0-py3-none-any.whl#sha256=338af5565321d3b54a15a7635e5bc5160f84569bb889e1c369d4c3b3afecdc40
+  hash:
+    md5: null
+    sha256: 338af5565321d3b54a15a7635e5bc5160f84569bb889e1c369d4c3b3afecdc40
+- platform: osx-arm64
+  name: scprep
+  version: 1.1.0
+  category: main
+  manager: pypi
+  requires_dist:
+  - numpy >=1.12.0
+  - scipy >=0.18.1
+  - scikit-learn >=0.19.1
+  - decorator >=4.3.0
+  - pandas >=0.25
+  - packaging
+  - sphinx <2.4, >=2.2 ; extra == 'doc'
+  - sphinxcontrib-napoleon ; extra == 'doc'
+  - ipykernel ; extra == 'doc'
+  - nbsphinx ; extra == 'doc'
+  - autodocsumm ; extra == 'doc'
+  - fcsparser ; extra == 'optional'
+  - tables ; extra == 'optional'
+  - h5py ; extra == 'optional'
+  - anndata ; extra == 'optional'
+  - anndata2ri >=1.0.6 ; extra == 'optional'
+  - nose ; extra == 'test'
+  - nose2 ; extra == 'test'
+  - coverage ; extra == 'test'
+  - coveralls ; extra == 'test'
+  - parameterized ; extra == 'test'
+  - requests ; extra == 'test'
+  - packaging ; extra == 'test'
+  - mock ; extra == 'test'
+  - h5py ; extra == 'test'
+  - matplotlib >=3.0 ; extra == 'test'
+  - rpy2 >=3.0 ; extra == 'test'
+  - black ; extra == 'test'
+  - fcsparser ; extra == 'test'
+  - tables ; extra == 'test'
+  - anndata ; extra == 'test'
+  - anndata2ri >=1.0.6 ; extra == 'test'
+  requires_python: '>=3.6'
+  url: https://files.pythonhosted.org/packages/92/91/dfb35608ffae7eb0f45b565e702d3083d784988200ab6a967fd3f60d833e/scprep-1.1.0-py3-none-any.whl#sha256=338af5565321d3b54a15a7635e5bc5160f84569bb889e1c369d4c3b3afecdc40
+  hash:
+    md5: null
+    sha256: 338af5565321d3b54a15a7635e5bc5160f84569bb889e1c369d4c3b3afecdc40
 - platform: linux-64
   name: seaborn
   version: 0.13.0

@@ -7,7 +7,8 @@ __all__ = ['ode_solve', 'ODEF', 'ODEAdjoint', 'NeuralODE', 'group_extract', 'sam
            'ToyODE', 'Autoencoder', 'ToyModel', 'ToySDEModel', 'make_model', 'DiffusionDistance', 'DiffusionAffinity',
            'old_DiffusionDistance', 'setup_distance', 'train', 'train_ae', 'training_regimen', 'generate_points',
            'generate_trajectories', 'generate_plot_data', 'plot_comparision', 'plot_losses', 'new_plot_comparisions',
-           'construct_diamond', 'make_diamonds']
+           'construct_diamond', 'make_diamonds', 'UniformDensityLoss', 'train_neural_flattener',
+           'training_regimen_neural_flattener']
 
 # %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 6
 import os, math, numpy as np
@@ -2077,3 +2078,466 @@ def make_diamonds(
         df.loc[index, 'samples'] = value
     df.set_index('samples')
     return df
+
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 61
+class UniformDensityLoss(nn.Module):
+    """
+        Penalizes the input points X to be uniformly distributed in the space.
+        The penalty is the variance of the mean distance between the top_k nearest neighbors of each point. 
+        With uniform distribution, the mean distance should be the same for all points, and thus the variance should be 0.
+
+    """
+    def __init__(self):
+        pass
+
+    def __call__(self, X, top_k = 10):
+        # print(source, target)
+        c_dist = torch.cdist(X, X) 
+        vals, inds = torch.topk(c_dist, 10, dim=1, largest=False, sorted=False)
+        loss = torch.var(torch.mean(vals, dim=1))
+        return loss
+
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 66
+import os, sys, json, math, itertools
+import pandas as pd, numpy as np
+import warnings
+
+# from tqdm import tqdm
+from tqdm.notebook import tqdm
+
+import torch
+
+# from MIOFlow.utils import sample, generate_steps
+# from MIOFlow.losses import MMD_loss, OT_loss, Density_loss, Local_density_loss
+
+def train_neural_flattener(
+    model, df, groups, optimizer, n_batches=20, 
+    use_cuda=False,
+
+    sample_size=(100, ),
+    sample_with_replacement=False,
+
+    hold_one_out=False,
+    hold_out='random',
+    apply_losses_in_time=True,
+
+    top_k = 5,
+    hinge_value = 0.01,
+    use_density_loss=True,
+    # use_local_density=False,
+
+    lambda_density = 1.0,
+
+    autoencoder=None, 
+    use_emb=True,
+    use_gae=False,
+
+    use_gaussian:bool=True, 
+    add_noise:bool=False, 
+    noise_scale:float=0.1,
+    
+    logger=None,
+
+    use_penalty=False,
+    lambda_energy=1.0,
+
+    reverse:bool = False
+):
+
+    '''
+    MIOFlow training loop
+    
+    Notes:
+        - The argument `model` must have a method `forward` that accepts two arguments
+            in its function signature:
+                ```python
+                model.forward(x, t)
+                ```
+            where, `x` is the input tensor and `t` is a `torch.Tensor` of time points (float).
+        - The training loop is divided in two parts; local (predict t+1 from t), and global (predict the entire trajectory).
+                        
+    Arguments:
+        model (nn.Module): the initialized pytorch ODE model.
+        
+        df (pd.DataFrame): the DataFrame from which to extract batch data.
+        
+        groups (list): the list of the numerical groups in the data, e.g. 
+            `[1.0, 2.0, 3.0, 4.0, 5.0]`, if the data has five groups.
+    
+        optimizer (torch.optim): an optimizer initilized with the model's parameters.
+        
+        n_batches (int): Default to '20', the number of batches from which to randomly sample each consecutive pair
+            of groups.
+                    
+        use_cuda (bool): Defaults to `False`. Whether or not to send the model and data to cuda. 
+
+        sample_size (tuple): Defaults to `(100, )`
+
+        sample_with_replacement (bool): Defaults to `False`. Whether or not to sample data points with replacement.
+        
+        local_loss (bool): Defaults to `True`. Whether or not to use a local loss in the model.
+            See notes for more detail.
+            
+        global_loss (bool): Defaults to `False`. Whether or not to use a global loss in the model.
+        
+        hold_one_out (bool): Defaults to `False`. Whether or not to randomly hold one time pair
+            e.g. t_1 to t_2 out when computing the global loss.
+
+        hold_out (str | int): Defaults to `"random"`. Which time point to hold out when calculating the
+            global loss.
+            
+        apply_losses_in_time (bool): Defaults to `True`. Applies the losses and does back propegation
+            as soon as a loss is calculated. See notes for more detail.
+
+        top_k (int): Default to '5'. The k for the k-NN used in the density loss.
+
+        hinge_value (float): Defaults to `0.01`. The hinge value for density loss.
+
+        use_density_loss (bool): Defaults to `True`. Whether or not to add density regularization.
+
+        lambda_density (float): Defaults to `1.0`. The weight for density loss.
+
+        autoencoder (NoneType|nn.Module): Default to 'None'. The full geodesic Autoencoder.
+
+        use_emb (bool): Defaults to `True`. Whether or not to use the embedding model.
+        
+        use_gae (bool): Defaults to `False`. Whether or not to use the full Geodesic AutoEncoder.
+
+        use_gaussian (bool): Defaults to `True`. Whether to use random or gaussian noise.
+
+        add_noise (bool): Defaults to `False`. Whether or not to add noise.
+
+        noise_scale (float): Defaults to `0.30`. How much to scale the noise by.
+        
+        logger (NoneType|Logger): Default to 'None'. The logger to record information.
+
+        use_penalty (bool): Defaults to `False`. Whether or not to use $L_e$ during training (norm of the derivative).
+        
+        lambda_energy (float): Default to '1.0'. The weight of the energy penalty.
+
+        reverse (bool): Whether to train time backwards.
+    '''
+    if autoencoder is None and (use_emb or use_gae):
+        use_emb = False
+        use_gae = False
+        warnings.warn('\'autoencoder\' is \'None\', but \'use_emb\' or \'use_gae\' is True, both will be set to False.')
+
+    noise_fn = torch.randn if use_gaussian else torch.rand
+    def noise(data):
+        return noise_fn(*data.shape).cuda() if use_cuda else noise_fn(*data.shape)
+    # Create the indicies for the steps that should be used
+    steps = generate_steps(groups)
+
+    if reverse:
+        groups = groups[::-1]
+        steps = generate_steps(groups)
+
+    
+    # Storage variables for losses
+    batch_losses = []
+    globe_losses = []
+    if hold_one_out and hold_out in groups:
+        groups_ho = [g for g in groups if g != hold_out]
+        local_losses = {f'{t0}:{t1}':[] for (t0, t1) in generate_steps(groups_ho) if hold_out not in [t0, t1]}
+    else:
+        local_losses = {f'{t0}:{t1}':[] for (t0, t1) in steps}
+        
+    density_fn = Density_loss(hinge_value) # if not use_local_density else Local_density_loss()
+    uniform_density_loss = UniformDensityLoss()
+
+    # Send model to cuda and specify it as training mode
+    if use_cuda:
+        model = model.cuda()
+    
+    model.train()
+    
+    for batch in tqdm(range(n_batches)):
+    
+        optimizer.zero_grad()
+        #sampling, predicting, and evaluating the loss.
+
+        # data_ti is a list of sampled tensors from each provided timestep.
+        # In our case, there is only one timestep, so it is a list of one tensor.
+        # sample data from input pointcloud; looks like
+        # [timestep1, timestep2, timestep3, ...]
+        data_ti = [
+            sample(
+                df, group, size=sample_size, replace=sample_with_replacement, 
+                to_torch=True, use_cuda=use_cuda
+            )
+            for group in groups
+        ]
+        # 0 is the input data, 1 is our desired transformation
+        time = torch.Tensor([0,1]).cuda() if use_cuda else torch.Tensor([0,1])
+
+
+        #  Add noise to data_ti and project it into the latent space.
+        if add_noise:
+            data_ti = [
+                data + noise(data) * noise_scale for data in data_ti
+            ]
+        if autoencoder is not None and use_gae:
+            data_ti = [autoencoder.encoder(data) for data in data_ti]
+
+        
+        # prediction: run the first samples through the neural ODE. I believe it returns a list of tensors, one for each time.
+        # In our case, the only timestep is the first one, so it is a list of one tensor.f 
+        data_tp = model(data_ti[0], time, return_whole_sequence=True)
+        if autoencoder is not None and use_emb:  # ???? What's use_emb?
+            data_tp = [autoencoder.encoder(data) for data in data_tp]
+            data_ti = [autoencoder.encoder(data) for data in data_ti]
+
+        #ignoring one time point
+        to_ignore = None #TODO: This assignment of `to_ingnore`, could be moved at the beginning of the function. 
+        if hold_one_out and hold_out == 'random':
+            to_ignore = np.random.choice(groups)
+        elif hold_one_out and hold_out in groups:
+            to_ignore = hold_out
+        elif hold_one_out:
+            raise ValueError('Unknown group to hold out')
+        else:
+            pass
+
+        # This is L_e; we replace this with the uniform density loss
+        loss = uniform_density_loss(data_tp[-1]) 
+        # print('uniform density', loss, type(loss))
+        # loss = sum([
+        #     criterion(data_tp[i], data_ti[i]) # criterion is an input parameter
+        #     for i in range(1, len(groups))
+        #     if groups[i] != to_ignore # nice double nested list comprehension
+        # ])
+
+        # This second density loss 
+        if use_density_loss:                
+            density_loss = density_fn(data_tp[-1], data_ti[0], None, to_ignore, top_k)
+            density_loss = density_loss.to(loss.device)
+            loss += lambda_density * density_loss
+
+        # print('density loss', loss, type(loss))
+
+        # This is L_w, the wasserstein distance traversed by the model flows.
+        if use_penalty:
+            penalty = sum([model.norm[-(i+1)] for i in range(1, len(groups))
+                if groups[i] != to_ignore])
+            loss += lambda_energy * penalty
+        
+        # print('penalty loss', loss, type(loss))
+
+                                    
+        loss.backward()
+        optimizer.step()
+        model.norm=[]
+
+        globe_losses.append(loss.item())
+        
+    print_loss = globe_losses
+    if logger is None:      
+        tqdm.write(f'Train loss: {np.round(np.mean(print_loss), 5)}')
+    else:
+        logger.info(f'Train loss: {np.round(np.mean(print_loss), 5)}')
+
+    # for compatibility with the rest of the code, we need to invent the local_loss and batch_loss
+    local_losses = {f'{t0}:{t1}':[0]*n_batches for (t0, t1) in steps}
+    batch_losses = [0]*n_batches # list of num batches containing 0s
+    return local_losses, batch_losses, globe_losses
+
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 67
+# from MIOFlow.plots import plot_comparision, plot_losses
+# from MIOFlow.eval import generate_plot_data
+
+def training_regimen_neural_flattener(
+    n_local_epochs, n_epochs, n_post_local_epochs,
+    exp_dir, 
+
+    # BEGIN: train params
+    model, df, groups, optimizer, n_batches=20, 
+    criterion=MMD_loss(), use_cuda=False,
+
+
+    hold_one_out=False, hold_out='random', 
+    hinge_value=0.01, use_density_loss=True, 
+
+    top_k = 5, lambda_density = 1.0, 
+    autoencoder=None, use_emb=True, use_gae=False, 
+    sample_size=(100, ), 
+    sample_with_replacement=False, 
+    logger=None, 
+    add_noise=False, noise_scale=0.1, use_gaussian=True,  
+    use_penalty=False, lambda_energy=1.0,
+    # END: train params
+
+
+
+    steps=None, plot_every=None,
+    n_points=100, n_trajectories=100, n_bins=100, 
+    local_losses=None, batch_losses=None, globe_losses=None,
+    reverse_schema=True, reverse_n=4
+):
+    recon = use_gae and not use_emb
+    if steps is None:
+        steps = generate_steps(groups)
+        
+    if local_losses is None:
+        if hold_one_out and hold_out in groups:
+            groups_ho = [g for g in groups if g != hold_out]
+            local_losses = {f'{t0}:{t1}':[] for (t0, t1) in generate_steps(groups_ho) if hold_out not in [t0, t1]}
+            if reverse_schema:
+                local_losses = {
+                    **local_losses, 
+                    **{f'{t0}:{t1}':[] for (t0, t1) in generate_steps(groups_ho[::-1]) if hold_out not in [t0, t1]}
+                }
+        else:
+            local_losses = {f'{t0}:{t1}':[] for (t0, t1) in generate_steps(groups)}
+            if reverse_schema:
+                local_losses = {
+                    **local_losses, 
+                    **{f'{t0}:{t1}':[] for (t0, t1) in generate_steps(groups[::-1])}
+                }
+    if batch_losses is None:
+        batch_losses = []
+    if globe_losses is None:
+        globe_losses = []
+    
+    reverse = False
+    for epoch in tqdm(range(n_local_epochs), desc='Pretraining Epoch'):
+        reverse = True if reverse_schema and epoch % reverse_n == 0 else False
+
+        # l_loss = None,
+        # b_loss = None,
+        l_loss, b_loss, g_loss = train_neural_flattener(
+            model, df, groups, optimizer, n_batches, 
+            use_cuda = use_cuda, apply_losses_in_time=True,
+            hold_one_out=hold_one_out, hold_out=hold_out, 
+            hinge_value=hinge_value,
+            use_density_loss = use_density_loss,    
+            top_k = top_k, lambda_density = lambda_density, 
+            autoencoder = autoencoder, use_emb = use_emb, use_gae = use_gae, sample_size=sample_size, 
+            sample_with_replacement=sample_with_replacement, logger=logger,
+            add_noise=add_noise, noise_scale=noise_scale, use_gaussian=use_gaussian, 
+            use_penalty=use_penalty, lambda_energy=lambda_energy, reverse=reverse
+        )
+        for k, v in l_loss.items():  
+            local_losses[k].extend(v)
+        batch_losses.extend(b_loss)
+        globe_losses.extend(g_loss)
+        if plot_every is not None and epoch % plot_every == 0:
+            generated, trajectories = generate_plot_data(
+                model, df, n_points, n_trajectories, n_bins, 
+                sample_with_replacement=sample_with_replacement, use_cuda=use_cuda, 
+                samples_key='samples', logger=logger,
+                autoencoder=autoencoder, recon=recon
+            )
+            plot_comparision(
+                df, generated, trajectories,
+                palette = 'viridis', df_time_key='samples',
+                save=True, path=exp_dir, 
+                file=f'2d_comparision_local_{epoch}.png',
+                x='d1', y='d2', z='d3', is_3d=False
+            )
+
+    for epoch in tqdm(range(n_epochs), desc='Epoch'):
+        reverse = True if reverse_schema and epoch % reverse_n == 0 else False
+        l_loss, b_loss, g_loss = train_neural_flattener(
+            model, df, groups, optimizer, n_batches, 
+            use_cuda = use_cuda, apply_losses_in_time=True,
+            hold_one_out=hold_one_out, hold_out=hold_out, 
+            hinge_value=hinge_value,
+            use_density_loss = use_density_loss,    
+            top_k = top_k, lambda_density = lambda_density, 
+            autoencoder = autoencoder, use_emb = use_emb, use_gae = use_gae, sample_size=sample_size, 
+            sample_with_replacement=sample_with_replacement, logger=logger,
+            add_noise=add_noise, noise_scale=noise_scale, use_gaussian=use_gaussian, 
+            use_penalty=use_penalty, lambda_energy=lambda_energy, reverse=reverse
+        )
+        for k, v in l_loss.items():  
+            local_losses[k].extend(v)
+        batch_losses.extend(b_loss)
+        globe_losses.extend(g_loss)
+        if plot_every is not None and epoch % plot_every == 0:
+            generated, trajectories = generate_plot_data(
+                model, df, n_points, n_trajectories, n_bins, 
+                sample_with_replacement=sample_with_replacement, use_cuda=use_cuda, 
+                samples_key='samples', logger=logger,
+                autoencoder=autoencoder, recon=recon
+            )
+            plot_comparision(
+                df, generated, trajectories,
+                palette = 'viridis', df_time_key='samples',
+                save=True, path=exp_dir, 
+                file=f'2d_comparision_local_{n_local_epochs}_global_{epoch}.png',
+                x='d1', y='d2', z='d3', is_3d=False
+            )
+        
+    for epoch in tqdm(range(n_post_local_epochs), desc='Posttraining Epoch'):
+        reverse = True if reverse_schema and epoch % reverse_n == 0 else False
+
+        l_loss, b_loss, g_loss = train_neural_flattener(
+            model, df, groups, optimizer, n_batches, 
+            use_cuda = use_cuda, apply_losses_in_time=True,
+            hold_one_out=hold_one_out, hold_out=hold_out, 
+            hinge_value=hinge_value,
+            use_density_loss = use_density_loss,    
+            top_k = top_k, lambda_density = lambda_density, 
+            autoencoder = autoencoder, use_emb = use_emb, use_gae = use_gae, sample_size=sample_size, 
+            sample_with_replacement=sample_with_replacement, logger=logger,
+            add_noise=add_noise, noise_scale=noise_scale, use_gaussian=use_gaussian, 
+            use_penalty=use_penalty, lambda_energy=lambda_energy, reverse=reverse
+        )
+        for k, v in l_loss.items():  
+            local_losses[k].extend(v)
+        batch_losses.extend(b_loss)
+        globe_losses.extend(g_loss)
+        if plot_every is not None and epoch % plot_every == 0:
+            generated, trajectories = generate_plot_data(
+                model, df, n_points, n_trajectories, n_bins, 
+                sample_with_replacement=sample_with_replacement, use_cuda=use_cuda, 
+                samples_key='samples', logger=logger,
+                autoencoder=autoencoder, recon=recon
+            )
+            plot_comparision(
+                df, generated, trajectories,
+                palette = 'viridis', df_time_key='samples',
+                save=True, path=exp_dir, 
+                file=f'2d_comparision_local_{n_local_epochs}_global_{n_epochs}_post_{epoch}.png',
+                x='d1', y='d2', z='d3', is_3d=False
+            )
+
+    if reverse_schema:
+        _temp = {}
+        if hold_one_out:
+            for (t0, t1) in generate_steps([g for g in groups if g != hold_out]):
+                a = f'{t0}:{t1}'
+                b = f'{t1}:{t0}'
+                _temp[a] = []
+                for i, value in enumerate(local_losses[a]):
+
+                    if i % reverse_n == 0:
+                        _temp[a].append(local_losses[b].pop(0))
+                        _temp[a].append(value)
+                    else:
+                        _temp[a].append(value)
+            local_losses = _temp
+        else:
+            for (t0, t1) in generate_steps(groups):
+                a = f'{t0}:{t1}'
+                b = f'{t1}:{t0}'
+                _temp[a] = []
+                for i, value in enumerate(local_losses[a]):
+
+                    if i % reverse_n == 0:
+                        _temp[a].append(local_losses[b].pop(0))
+                        _temp[a].append(value)
+                    else:
+                        _temp[a].append(value)
+            local_losses = _temp
+
+
+
+    if plot_every is not None:
+        plot_losses(
+            local_losses, batch_losses, globe_losses, 
+            save=True, path=exp_dir, 
+            file=f'losses_l{n_local_epochs}_e{n_epochs}_ple{n_post_local_epochs}.png'
+        )
+
+    return local_losses, batch_losses, globe_losses
