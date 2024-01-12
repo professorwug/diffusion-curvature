@@ -8,7 +8,8 @@ __all__ = ['ode_solve', 'ODEF', 'ODEAdjoint', 'NeuralODE', 'group_extract', 'sam
            'old_DiffusionDistance', 'setup_distance', 'train', 'train_ae', 'training_regimen', 'generate_points',
            'generate_trajectories', 'generate_plot_data', 'plot_comparision', 'plot_losses', 'new_plot_comparisions',
            'construct_diamond', 'make_diamonds', 'UniformDensityLoss', 'train_neural_flattener',
-           'training_regimen_neural_flattener']
+           'training_regimen_neural_flattener', 'generate_points_flat', 'generate_trajectories_flat',
+           'generate_plot_data_flat', 'plot_comparison_flat', 'new_plot_comparisons_flat']
 
 # %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 6
 import os, math, numpy as np
@@ -2277,13 +2278,17 @@ def train_neural_flattener(
                 data + noise(data) * noise_scale for data in data_ti
             ]
         if autoencoder is not None and use_gae:
+            print("using autoencoder before neural ode")
             data_ti = [autoencoder.encoder(data) for data in data_ti]
 
+        print("data ti shape", data_ti[0].shape)
         
         # prediction: run the first samples through the neural ODE. I believe it returns a list of tensors, one for each time.
         # In our case, the only timestep is the first one, so it is a list of one tensor.f 
         data_tp = model(data_ti[0], time, return_whole_sequence=True)
+        # Why on earth does it use the autoencoder *after* the neural ODE?
         if autoencoder is not None and use_emb:  # ???? What's use_emb?
+            print("using autoencoder after neural ode")
             data_tp = [autoencoder.encoder(data) for data in data_tp]
             data_ti = [autoencoder.encoder(data) for data in data_ti]
 
@@ -2373,6 +2378,7 @@ def training_regimen_neural_flattener(
     local_losses=None, batch_losses=None, globe_losses=None,
     reverse_schema=True, reverse_n=4
 ):
+    print(model)
     recon = use_gae and not use_emb
     if steps is None:
         steps = generate_steps(groups)
@@ -2541,3 +2547,376 @@ def training_regimen_neural_flattener(
         )
 
     return local_losses, batch_losses, globe_losses
+
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 81
+import torch, numpy as np
+
+def generate_points_flat(
+    model, df, n_points=100, 
+    sample_with_replacement=False, use_cuda=False, 
+    samples_key='samples', sample_time=None, autoencoder=None, recon=False
+):
+    '''
+    Arguments:
+    ----------
+        model (torch.nn.Module): Trained network with the property `ode` corresponding to a `NeuralODE(ODEF())`.
+            See `MIOFlow.ode` for more.
+        df (pd.DataFrame): DataFrame containing a column for the timepoint samples and the rest of the data.
+        n_points (int): Number of points to generate.
+        sample_with_replacement (bool): Defaults to `False`. Whether or not to use replacement when sampling
+            initial timepoint.
+        use_cuda (bool): Defaults to `False`. Whether or not to use cuda.
+        samples_key (str): Defaults to `'samples'`. The column in the `df` which has the timepoint groups.
+        sample_time (list | None): Defaults to `None`. If `None` uses the group numbers in order as the 
+            timepoints as specified in the column `df[samples_key]`.
+        autoencoder (nn.Module|NoneType): Default to None, the trained autoencoder.
+        recon (bool): Default to 'False', whether to use the autoencoder for reconstruction.
+    Returns:
+    ----------
+        generated (float[float[]]): a list with shape `(len(sample_time), n_points, len(df.columns) - 1)`
+            of the generated points.
+    '''
+    to_torch = True #if use_cuda else False
+
+    groups = sorted(df[samples_key].unique())
+    if sample_time is None:
+        sample_time = np.linspace(0, 1, 20)
+    data_t0 = sample(
+        df, np.min(groups), size=(n_points, ), 
+        replace=sample_with_replacement, to_torch=to_torch, use_cuda=use_cuda
+    )
+    if autoencoder is not None:
+        data_t0 = torch.Tensor(data_t0).float()
+        data_t0 = autoencoder.encoder(data_t0)
+    print("initial shape", data_t0.shape)
+        
+    time =  torch.Tensor(sample_time).cuda() if use_cuda else torch.Tensor(sample_time)
+    generated = model(data_t0, time, return_whole_sequence=True)
+    print("point shape", generated.shape)
+    if autoencoder is not None and recon:
+        print("reconstructing points")
+        generated = autoencoder.decoder(generated)
+    return to_np(generated)
+
+def generate_trajectories_flat(
+    model, df, n_trajectories=30, n_bins=100, 
+    sample_with_replacement=False, use_cuda=False, samples_key='samples',autoencoder=None, recon=False
+):
+    '''
+    Arguments:
+    ----------
+        model (torch.nn.Module): Trained network with the property `ode` corresponding to a `NeuralODE(ODEF())`.
+            See `MIOFlow.ode` for more.
+        df (pd.DataFrame): DataFrame containing a column for the timepoint samples and the rest of the data.
+        n_trajectories (int): Number of trajectories to generate.
+        n_bins (int): Number of bins to use for the trajectories. More makes it smoother. Defaults to `100`.
+        sample_with_replacement (bool): Defaults to `False`. Whether or not to use replacement when sampling
+            initial timepoint.
+        use_cuda (bool): Defaults to `False`. Whether or not to use cuda.
+        samples_key (str): Defaults to `'samples'`. The column in the `df` which has the timepoint groups.
+        autoencoder (nn.Module|NoneType): Default to None, the trained autoencoder.
+        recon (bool): Default to 'False', whether to use the autoencoder for reconstruction.
+    Returns:
+    ----------
+        trajectories (float[float[]]): a list with shape `(n_bins, n_points, len(df.columns) - 1)`
+            of the generated trajectories.
+    '''
+    # groups = sorted(df[samples_key].unique())
+    sample_time = np.linspace(0, 1, n_bins)
+    trajectories = generate_points_flat(model, df, n_trajectories, sample_with_replacement, use_cuda, samples_key, sample_time,autoencoder=autoencoder, recon=recon)
+    return trajectories
+    
+def generate_plot_data_flat(
+    model, df, n_points, n_trajectories, n_bins, 
+    sample_with_replacement=False, use_cuda=False, samples_key='samples',
+    logger=None, autoencoder=None, recon=False
+):
+    '''
+    Arguments:
+    ----------
+        model (torch.nn.Module): Trained network with the property `ode` corresponding to a `NeuralODE(ODEF())`.
+            See `MIOFlow.ode` for more.
+        df (pd.DataFrame): DataFrame containing a column for the timepoint samples and the rest of the data.
+        n_points (int): Number of points to generate.
+        n_trajectories (int): Number of trajectories to generate.
+        n_bins (int): Number of bins to use for the trajectories. More makes it smoother. Defaults to `100`.
+        sample_with_replacement (bool): Defaults to `False`. Whether or not to use replacement when sampling
+            initial timepoint.
+        use_cuda (bool): Defaults to `False`. Whether or not to use cuda.
+        samples_key (str): Defaults to `'samples'`. The column in the `df` which has the timepoint groups.
+        autoencoder (nn.Module|NoneType): Default to None, the trained autoencoder.
+        recon (bool): Default to 'False', whether to use the autoencoder for reconstruction.
+    Returns:
+    ----------
+        points (float[float[]]): a list with shape `(len(df[sample_key].unique()), n_points, len(df.columns) - 1)`
+            of the generated points.
+        trajectories (float[float[]]): a list with shape `(n_bins, n_points, len(df.columns) - 1)`
+            of the generated trajectories.
+    '''
+    if logger: logger.info(f'Generating points')
+    points = generate_points_flat(model, df, n_points, sample_with_replacement, use_cuda, samples_key, None, autoencoder=autoencoder, recon=recon)
+    if logger: logger.info(f'Generating trajectories')
+    trajectories = generate_trajectories_flat(model, df, n_trajectories, n_bins, sample_with_replacement, use_cuda, samples_key, autoencoder=autoencoder, recon=recon)
+    return points, trajectories
+
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 82
+import os, math, numpy as np, pandas as pd
+import torch
+import torch.nn as nn
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.color_palette("bright")
+import matplotlib as mpl
+import matplotlib.cm as cm
+from mpl_toolkits.mplot3d import Axes3D
+
+def plot_comparison_flat(
+    df, generated, trajectories,
+    palette = 'viridis', df_time_key='samples',
+    save=False, path="../../results/", file='comparision.png',
+    x='d1', y='d2', z='d3', is_3d=False
+):
+    if not os.path.isdir(path):
+        os.makedirs(path)
+
+    if not is_3d:
+        return new_plot_comparisons_flat(
+            df, generated, trajectories,
+            palette=palette, df_time_key=df_time_key,
+            x=x, y=y, z=z, is_3d=is_3d,            
+            groups=None,
+            save=save, path=path, file=file,
+        )
+
+    s = 1
+    fig = plt.figure(figsize=(12/s, 8/s), dpi=300)
+    if is_3d:
+        ax = fig.add_subplot(1,1,1,projection='3d')
+    else:
+        ax = fig.add_subplot(1,1,1)
+    
+    states = sorted(df[df_time_key].unique())
+    
+    if is_3d:
+        ax.scatter(
+            df[x], df[y], df[z],
+            cmap=palette, alpha=0.3,
+            c=df[df_time_key], 
+            s=df[df_time_key], 
+            marker='X',
+        )
+    else:
+        sns.scatterplot(
+            data=df, x=x, y=y, palette=palette, alpha=0.3,
+            hue=df_time_key, style=df_time_key, size=df_time_key,
+            markers={g: 'X' for g in states},
+            sizes={g: 100 for g in states}, 
+            ax=ax, legend=False
+        )
+    
+
+    if not isinstance(generated, np.ndarray):
+        generated = to_np(generated)
+    points = np.concatenate(generated, axis=0)
+    n_gen = int(points.shape[0] / len(states))
+    colors = [state for state in states for i in range(n_gen)]
+    
+    if is_3d:
+        ax.scatter(
+            points[:, 0], points[:, 1], points[:, 2],
+            cmap=palette,
+            c=colors, 
+        )
+    else:
+        sns.scatterplot(
+            x=points[:, 0], y=points[:, 1], palette=palette,
+            hue=colors, 
+            ax=ax, legend=False
+        )
+    
+    ax.legend(title='Timepoint', loc='upper left', labels=['Ground Truth', 'Predicted'])
+    ax.set_title('ODE Points compared to Ground Truth')
+
+    if is_3d:
+        for trajectory in np.transpose(trajectories, axes=(1,0,2)):
+            plt.plot(trajectory[:, 0], trajectory[:, 1], trajectory[:, 2], alpha=0.1, color='Black');
+    else:
+        for trajectory in np.transpose(trajectories, axes=(1,0,2)):
+            plt.plot(trajectory[:, 0], trajectory[:, 1], alpha=0.1, color='Black');
+        
+    if save:
+        # NOTE: savefig complains image is too large but saves it anyway. 
+        try:
+            fig.savefig(os.path.expanduser(os.path.join(path, file)))
+        except ValueError:
+            pass 
+    plt.close()
+    return fig
+
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 83
+import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
+from matplotlib.lines import Line2D
+from matplotlib import rcParams, cycler
+
+def new_plot_comparisons_flat(
+    df, generated, trajectories,
+    palette = 'viridis',
+    df_time_key='samples',
+    x='d1', y='d2', z='d3', 
+    groups=None,
+    save=False, path=IMGS_DIR, file='comparision.png',
+    is_3d=False
+):
+    if groups is None:
+        groups = sorted(df[df_time_key].unique())
+    cmap = plt.cm.viridis
+    sns.set_palette(palette)
+    plt.rcParams.update({
+        'axes.prop_cycle': plt.cycler(color=cmap(np.linspace(0, 1, len(groups) + 1))),
+        'axes.axisbelow': False,
+        'axes.edgecolor': 'lightgrey',
+        'axes.facecolor': 'None',
+        'axes.grid': False,
+        'axes.labelcolor': 'dimgrey',
+        'axes.spines.right': False,
+        'axes.spines.top': False,
+        'figure.facecolor': 'white',
+        'lines.solid_capstyle': 'round',
+        'patch.edgecolor': 'w',
+        'patch.force_edgecolor': True,
+        'text.color': 'dimgrey',
+        'xtick.bottom': False,
+        'xtick.color': 'dimgrey',
+        'xtick.direction': 'out',
+        'xtick.top': False,
+        'ytick.color': 'dimgrey',
+        'ytick.direction': 'out',
+        'ytick.left': False,
+        'ytick.right': False, 
+        'font.size':12, 
+        'axes.titlesize':10,
+        'axes.labelsize':12
+    })
+
+    n_cols = 1
+    n_rols = 1
+
+    grid_figsize = [12, 8]
+    dpi = 300
+    grid_figsize = (grid_figsize[0] * n_cols, grid_figsize[1] * n_rols)
+    fig = plt.figure(None, grid_figsize, dpi=dpi)
+
+    hspace = 0.3
+    wspace = None
+    gspec = plt.GridSpec(n_rols, n_cols, fig, hspace=hspace, wspace=wspace)
+
+    outline_width = (0.3, 0.05)
+    size = 300
+    bg_width, gap_width = outline_width
+    point = np.sqrt(size)
+
+    gap_size = (point + (point * gap_width) * 2) ** 2
+    bg_size = (np.sqrt(gap_size) + (point * bg_width) * 2) ** 2
+
+    plt.legend(frameon=False)
+
+    is_3d = False
+    
+    # if is_3d:        
+    #     ax = fig.add_subplot(1,1,1,projection='3d')
+    # else:
+    #     ax = fig.add_subplot(1,1,1)
+    
+    axs = []
+    for i, gs in enumerate(gspec):        
+        ax = plt.subplot(gs)
+        
+        
+        n = 0.3   
+        ax.scatter(
+                df[x], df[y],
+                c=df[df_time_key],
+                s=size,
+                alpha=0.7 * n,
+                marker='X',
+                linewidths=0,
+                edgecolors=None,
+                cmap=cmap
+            )
+        
+        for trajectory in np.transpose(trajectories, axes=(1,0,2)):
+                plt.plot(trajectory[:, 0], trajectory[:, 1], alpha=0.3, color='Black');
+        
+        states = np.linspace(0, 1, generated.shape[0]) #sorted(df[df_time_key].unique())
+        points = np.concatenate(generated, axis=0)
+        n_gen = int(points.shape[0] / len(states))
+        colors = [state for state in states for i in range(n_gen)]
+        n = 1
+        o = '.'
+        ax.scatter(
+                points[:, 0], points[:, 1],
+                c='black',
+                s=bg_size,
+                alpha=1 * n,
+                marker=o,
+                linewidths=0,
+                edgecolors=None
+            )
+        ax.scatter(
+                points[:, 0], points[:, 1],
+                c='white',
+                s=gap_size,
+                alpha=1 * n,
+                marker=o,
+                linewidths=0,
+                edgecolors=None
+            )
+        pnts = ax.scatter(
+                points[:, 0], points[:, 1],
+                c=colors,
+                s=size,
+                alpha=0.7 * n,
+                marker=o,
+                linewidths=0,
+                edgecolors=None,
+                cmap=cmap
+            )
+                
+        # cbar = plt.colorbar(pnts, pad=0.05)
+        # cbar.set_label('States')
+        
+        legend_elements = [        
+            Line2D(
+                [0], [0], marker='X', color='w', 
+                label='Ground Truth', markerfacecolor=cmap(0), markersize=15, alpha=0.3
+            ),
+            Line2D([0], [0], marker='o', color='w', label='Predicted', markerfacecolor=cmap(.999), markersize=15),
+            Line2D([0], [0], color='black', lw=2, label='Trajectory')
+            
+        ]
+        leg = plt.legend(handles=legend_elements, loc='upper right')
+        ax.add_artist(leg)
+        
+        ax.set_xlabel("")
+        ax.set_ylabel("")
+        ax.get_xaxis().get_major_formatter().set_scientific(False)
+        ax.get_yaxis().get_major_formatter().set_scientific(False)
+        kwargs = dict(bottom=False, left=False, labelbottom=False, labelleft=False)
+        ax.tick_params(which="both", **kwargs)
+        ax.set_frame_on(False)
+        ax.patch.set_alpha(0)
+        
+
+        axs.append(ax)
+
+    if save:
+        # NOTE: savefig complains image is too large but saves it anyway. 
+        try:
+            fig.savefig(os.path.expanduser(os.path.join(path, file)))
+        except ValueError:
+            pass 
+    plt.close()
+    return fig
