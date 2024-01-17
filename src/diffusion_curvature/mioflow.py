@@ -7,7 +7,7 @@ __all__ = ['ode_solve', 'ODEF', 'ODEAdjoint', 'NeuralODE', 'group_extract', 'sam
            'ToyODE', 'Autoencoder', 'ToyModel', 'ToySDEModel', 'make_model', 'DiffusionDistance', 'DiffusionAffinity',
            'old_DiffusionDistance', 'setup_distance', 'train', 'train_ae', 'training_regimen', 'generate_points',
            'generate_trajectories', 'generate_plot_data', 'plot_comparision', 'plot_losses', 'new_plot_comparisions',
-           'construct_diamond', 'make_diamonds', 'UniformDensityLoss', 'train_neural_flattener',
+           'construct_diamond', 'make_diamonds', 'UniformDensityLoss', 'MMD_loss_to_uniform', 'train_neural_flattener',
            'training_regimen_neural_flattener', 'generate_points_flat', 'generate_trajectories_flat',
            'generate_plot_data_flat', 'plot_comparison_flat', 'new_plot_comparisons_flat']
 
@@ -2098,6 +2098,49 @@ class UniformDensityLoss(nn.Module):
         loss = torch.var(torch.mean(vals, dim=1))
         return loss
 
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 64
+import os, math, numpy as np
+import torch
+import torch.nn as nn
+
+class MMD_loss_to_uniform(nn.Module):
+    '''
+    https://github.com/ZongxianLee/MMD_Loss.Pytorch/blob/master/mmd_loss.py
+    '''
+    def __init__(self, kernel_mul = 2.0, kernel_num = 5):
+        super(MMD_loss_to_uniform, self).__init__()
+        self.kernel_num = kernel_num
+        self.kernel_mul = kernel_mul
+        self.fix_sigma = None
+        self.uniformity = torch.rand(10000,2)
+        return
+    
+    def guassian_kernel(self, source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
+        n_samples = int(source.size()[0])+int(target.size()[0])
+        total = torch.cat([source, target], dim=0)
+        total0 = total.unsqueeze(0).expand(int(total.size(0)), int(total.size(0)), int(total.size(1)))
+        total1 = total.unsqueeze(1).expand(int(total.size(0)), int(total.size(0)), int(total.size(1)))
+        L2_distance = ((total0-total1)**2).sum(2) 
+        if fix_sigma:
+            bandwidth = fix_sigma
+        else:
+            bandwidth = torch.sum(L2_distance.data) / (n_samples**2-n_samples)
+        bandwidth /= kernel_mul ** (kernel_num // 2)
+        bandwidth_list = [bandwidth * (kernel_mul**i) for i in range(kernel_num)]
+        kernel_val = [torch.exp(-L2_distance / bandwidth_temp) for bandwidth_temp in bandwidth_list]
+        return sum(kernel_val)
+
+    def forward(self, source):
+        target = self.uniformity
+        batch_size = int(source.size()[0])
+        kernels = self.guassian_kernel(source, target, kernel_mul=self.kernel_mul, kernel_num=self.kernel_num, fix_sigma=self.fix_sigma)
+        XX = torch.mean(kernels[:batch_size, :batch_size])
+        YY = torch.mean(kernels[batch_size:, batch_size:])
+        XY = torch.mean(kernels[:batch_size, batch_size:])
+        YX = torch.mean(kernels[batch_size:, :batch_size])
+        loss = XX + YY - XY - YX
+        return loss
+
 # %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 66
 import os, sys, json, math, itertools
 import pandas as pd, numpy as np
@@ -2114,6 +2157,8 @@ import torch
 def train_neural_flattener(
     model, df, groups, optimizer, n_batches=20, 
     use_cuda=False,
+
+    criterion = UniformDensityLoss(),
 
     sample_size=(100, ),
     sample_with_replacement=False,
@@ -2278,17 +2323,17 @@ def train_neural_flattener(
                 data + noise(data) * noise_scale for data in data_ti
             ]
         if autoencoder is not None and use_gae:
-            print("using autoencoder before neural ode")
+            # print("using autoencoder before neural ode")
             data_ti = [autoencoder.encoder(data) for data in data_ti]
 
-        print("data ti shape", data_ti[0].shape)
+        # print("data ti shape", data_ti[0].shape)
         
         # prediction: run the first samples through the neural ODE. I believe it returns a list of tensors, one for each time.
         # In our case, the only timestep is the first one, so it is a list of one tensor.f 
         data_tp = model(data_ti[0], time, return_whole_sequence=True)
         # Why on earth does it use the autoencoder *after* the neural ODE?
         if autoencoder is not None and use_emb:  # ???? What's use_emb?
-            print("using autoencoder after neural ode")
+            # print("using autoencoder after neural ode")
             data_tp = [autoencoder.encoder(data) for data in data_tp]
             data_ti = [autoencoder.encoder(data) for data in data_ti]
 
@@ -2304,7 +2349,7 @@ def train_neural_flattener(
             pass
 
         # This is L_e; we replace this with the uniform density loss
-        loss = uniform_density_loss(data_tp[-1]) 
+        loss = criterion(data_tp[-1]) 
         # print('uniform density', loss, type(loss))
         # loss = sum([
         #     criterion(data_tp[i], data_ti[i]) # criterion is an input parameter
@@ -2356,7 +2401,7 @@ def training_regimen_neural_flattener(
 
     # BEGIN: train params
     model, df, groups, optimizer, n_batches=20, 
-    criterion=MMD_loss(), use_cuda=False,
+    criterion=UniformDensityLoss(), use_cuda=False,
 
 
     hold_one_out=False, hold_out='random', 
@@ -2413,6 +2458,7 @@ def training_regimen_neural_flattener(
         l_loss, b_loss, g_loss = train_neural_flattener(
             model, df, groups, optimizer, n_batches, 
             use_cuda = use_cuda, apply_losses_in_time=True,
+            criterion=criterion,
             hold_one_out=hold_one_out, hold_out=hold_out, 
             hinge_value=hinge_value,
             use_density_loss = use_density_loss,    
@@ -2446,6 +2492,7 @@ def training_regimen_neural_flattener(
         l_loss, b_loss, g_loss = train_neural_flattener(
             model, df, groups, optimizer, n_batches, 
             use_cuda = use_cuda, apply_losses_in_time=True,
+            criterion=criterion,
             hold_one_out=hold_one_out, hold_out=hold_out, 
             hinge_value=hinge_value,
             use_density_loss = use_density_loss,    
@@ -2480,6 +2527,7 @@ def training_regimen_neural_flattener(
         l_loss, b_loss, g_loss = train_neural_flattener(
             model, df, groups, optimizer, n_batches, 
             use_cuda = use_cuda, apply_losses_in_time=True,
+            criterion=criterion,
             hold_one_out=hold_one_out, hold_out=hold_out, 
             hinge_value=hinge_value,
             use_density_loss = use_density_loss,    
@@ -2548,7 +2596,7 @@ def training_regimen_neural_flattener(
 
     return local_losses, batch_losses, globe_losses
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 81
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 83
 import torch, numpy as np
 
 def generate_points_flat(
@@ -2659,7 +2707,7 @@ def generate_plot_data_flat(
     trajectories = generate_trajectories_flat(model, df, n_trajectories, n_bins, sample_with_replacement, use_cuda, samples_key, autoencoder=autoencoder, recon=recon)
     return points, trajectories
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 82
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 84
 import os, math, numpy as np, pandas as pd
 import torch
 import torch.nn as nn
@@ -2755,7 +2803,7 @@ def plot_comparison_flat(
     plt.close()
     return fig
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 83
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 85
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D

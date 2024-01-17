@@ -760,6 +760,57 @@ package:
   size: 28178
   timestamp: 1694604071236
 - platform: linux-64
+  name: black
+  version: 23.12.1
+  category: main
+  manager: conda
+  dependencies:
+  - click >=8.0.0
+  - mypy_extensions >=0.4.3
+  - packaging >=22.0
+  - pathspec >=0.9
+  - platformdirs >=2
+  - python >=3.11,<3.12.0a0
+  - python_abi 3.11.* *_cp311
+  url: https://conda.anaconda.org/conda-forge/linux-64/black-23.12.1-py311h38be061_0.conda
+  hash:
+    md5: cb563ab54c59917f004d4faf7a29c610
+    sha256: 90c29112da654aa4f713b03220b884aa4d11a74e642a72bf9d56e872700c7423
+  build: py311h38be061_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  size: 378436
+  timestamp: 1703317664029
+- platform: osx-arm64
+  name: black
+  version: 23.12.1
+  category: main
+  manager: conda
+  dependencies:
+  - click >=8.0.0
+  - mypy_extensions >=0.4.3
+  - packaging >=22.0
+  - pathspec >=0.9
+  - platformdirs >=2
+  - python >=3.11,<3.12.0a0
+  - python >=3.11,<3.12.0a0 *_cpython
+  - python_abi 3.11.* *_cp311
+  url: https://conda.anaconda.org/conda-forge/osx-arm64/black-23.12.1-py311h267d04e_0.conda
+  hash:
+    md5: c4cfd1e85e013c9a0995166897d06b73
+    sha256: b4ebb13643a6d77429f24b3fb3985d8e7eebd4804ea59b0834273ba0de451220
+  build: py311h267d04e_0
+  arch: aarch64
+  subdir: osx-arm64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  size: 379989
+  timestamp: 1703317897071
+- platform: linux-64
   name: bleach
   version: 6.1.0
   category: main
@@ -4402,6 +4453,54 @@ package:
   timestamp: 1701027126206
   purls:
   - pkg:pypi/idna
+- platform: linux-64
+  name: imageio
+  version: 2.33.1
+  category: main
+  manager: conda
+  dependencies:
+  - numpy
+  - pillow >=8.3.2
+  - python >=3
+  url: https://conda.anaconda.org/conda-forge/noarch/imageio-2.33.1-pyh8c1a49c_0.conda
+  hash:
+    md5: 1c34d58ac469a34e7e96832861368bce
+    sha256: 0565f3666de4d02a83c5c8e14b7d878c382720f84318d6ce1ff83b66603c01d7
+  build: pyh8c1a49c_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: BSD-2-Clause
+  license_family: BSD
+  noarch: python
+  size: 291146
+  timestamp: 1702571907152
+  purls:
+  - pkg:pypi/imageio
+- platform: osx-arm64
+  name: imageio
+  version: 2.33.1
+  category: main
+  manager: conda
+  dependencies:
+  - numpy
+  - pillow >=8.3.2
+  - python >=3
+  url: https://conda.anaconda.org/conda-forge/noarch/imageio-2.33.1-pyh8c1a49c_0.conda
+  hash:
+    md5: 1c34d58ac469a34e7e96832861368bce
+    sha256: 0565f3666de4d02a83c5c8e14b7d878c382720f84318d6ce1ff83b66603c01d7
+  build: pyh8c1a49c_0
+  arch: aarch64
+  subdir: osx-arm64
+  build_number: 0
+  license: BSD-2-Clause
+  license_family: BSD
+  noarch: python
+  size: 291146
+  timestamp: 1702571907152
+  purls:
+  - pkg:pypi/imageio
 - platform: linux-64
   name: importlib-metadata
   version: 7.0.1
@@ -8688,6 +8787,111 @@ package:
   size: 321113
   timestamp: 1597681972321
 - platform: linux-64
+  name: marimo
+  version: 0.1.75
+  category: main
+  manager: conda
+  dependencies:
+  - black
+  - click >=8.0,<9
+  - jedi >=0.18.0
+  - markdown >=3.4,<4
+  - pygments >=2.13,<3
+  - pymdown-extensions >=9.0,<11
+  - python >=3.11,<3.12.0a0
+  - python_abi 3.11.* *_cp311
+  - tomlkit >=0.12.0
+  - tornado >=6.1,<7
+  url: https://conda.anaconda.org/conda-forge/linux-64/marimo-0.1.75-py311h38be061_0.conda
+  hash:
+    md5: 6f24322dff762b904c44d5dafe447e05
+    sha256: 313b222c668e0dea77ceb3e0c662ecc05ca8884dd7c8a10b977cb742899d1f38
+  build: py311h38be061_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: Apache-2.0
+  size: 4550191
+  timestamp: 1705037309877
+  purls:
+  - pkg:pypi/marimo
+- platform: osx-arm64
+  name: marimo
+  version: 0.1.75
+  category: main
+  manager: conda
+  dependencies:
+  - black
+  - click >=8.0,<9
+  - jedi >=0.18.0
+  - markdown >=3.4,<4
+  - pygments >=2.13,<3
+  - pymdown-extensions >=9.0,<11
+  - python >=3.11,<3.12.0a0
+  - python >=3.11,<3.12.0a0 *_cpython
+  - python_abi 3.11.* *_cp311
+  - tomlkit >=0.12.0
+  - tornado >=6.1,<7
+  url: https://conda.anaconda.org/conda-forge/osx-arm64/marimo-0.1.75-py311h267d04e_0.conda
+  hash:
+    md5: f510c102ef8a3cc69bf5d59c9e4d3ab5
+    sha256: 46f71ebb9a5a9a15f6831a3fca136f3b7a6c442157c6c8197e2169aa4e765a74
+  build: py311h267d04e_0
+  arch: aarch64
+  subdir: osx-arm64
+  build_number: 0
+  license: Apache-2.0
+  size: 4514550
+  timestamp: 1705037699399
+  purls:
+  - pkg:pypi/marimo
+- platform: linux-64
+  name: markdown
+  version: 3.5.2
+  category: main
+  manager: conda
+  dependencies:
+  - importlib-metadata >=4.4
+  - python >=3.6
+  url: https://conda.anaconda.org/conda-forge/noarch/markdown-3.5.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: db7b48fa4eeb0c21b2f3f5b1f7d9ebcf
+    sha256: fbc70dc01b361fe46e7b4e102e725f99ba60bf9903c2fa86b53ad6b70ded677a
+  build: pyhd8ed1ab_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: BSD-3-Clause
+  license_family: BSD
+  noarch: python
+  size: 77178
+  timestamp: 1704908495733
+  purls:
+  - pkg:pypi/markdown
+- platform: osx-arm64
+  name: markdown
+  version: 3.5.2
+  category: main
+  manager: conda
+  dependencies:
+  - importlib-metadata >=4.4
+  - python >=3.6
+  url: https://conda.anaconda.org/conda-forge/noarch/markdown-3.5.2-pyhd8ed1ab_0.conda
+  hash:
+    md5: db7b48fa4eeb0c21b2f3f5b1f7d9ebcf
+    sha256: fbc70dc01b361fe46e7b4e102e725f99ba60bf9903c2fa86b53ad6b70ded677a
+  build: pyhd8ed1ab_0
+  arch: aarch64
+  subdir: osx-arm64
+  build_number: 0
+  license: BSD-3-Clause
+  license_family: BSD
+  noarch: python
+  size: 77178
+  timestamp: 1704908495733
+  purls:
+  - pkg:pypi/markdown
+- platform: linux-64
   name: markdown-it-py
   version: 3.0.0
   category: main
@@ -9384,6 +9588,50 @@ package:
   noarch: python
   size: 12452
   timestamp: 1600387789153
+- platform: linux-64
+  name: mypy_extensions
+  version: 1.0.0
+  category: main
+  manager: conda
+  dependencies:
+  - python >=3.5
+  url: https://conda.anaconda.org/conda-forge/noarch/mypy_extensions-1.0.0-pyha770c72_0.conda
+  hash:
+    md5: 4eccaeba205f0aed9ac3a9ea58568ca3
+    sha256: f240217476e148e825420c6bc3a0c0efb08c0718b7042fae960400c02af858a3
+  build: pyha770c72_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  noarch: python
+  size: 10492
+  timestamp: 1675543414256
+  purls:
+  - pkg:pypi/mypy-extensions
+- platform: osx-arm64
+  name: mypy_extensions
+  version: 1.0.0
+  category: main
+  manager: conda
+  dependencies:
+  - python >=3.5
+  url: https://conda.anaconda.org/conda-forge/noarch/mypy_extensions-1.0.0-pyha770c72_0.conda
+  hash:
+    md5: 4eccaeba205f0aed9ac3a9ea58568ca3
+    sha256: f240217476e148e825420c6bc3a0c0efb08c0718b7042fae960400c02af858a3
+  build: pyha770c72_0
+  arch: aarch64
+  subdir: osx-arm64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  noarch: python
+  size: 10492
+  timestamp: 1675543414256
+  purls:
+  - pkg:pypi/mypy-extensions
 - platform: linux-64
   name: mysql-common
   version: 8.0.33
@@ -10860,6 +11108,50 @@ package:
     md5: null
     sha256: 4349225fcdf6c2bb34d483e523475de5bb04a5c10ef711263452cb37d7dd4364
 - platform: linux-64
+  name: pathspec
+  version: 0.12.1
+  category: main
+  manager: conda
+  dependencies:
+  - python >=3.7
+  url: https://conda.anaconda.org/conda-forge/noarch/pathspec-0.12.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 17064acba08d3686f1135b5ec1b32b12
+    sha256: 4e534e66bfe8b1e035d2169d0e5b185450546b17e36764272863e22e0370be4d
+  build: pyhd8ed1ab_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: MPL-2.0
+  license_family: MOZILLA
+  noarch: python
+  size: 41173
+  timestamp: 1702250135032
+  purls:
+  - pkg:pypi/pathspec
+- platform: osx-arm64
+  name: pathspec
+  version: 0.12.1
+  category: main
+  manager: conda
+  dependencies:
+  - python >=3.7
+  url: https://conda.anaconda.org/conda-forge/noarch/pathspec-0.12.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 17064acba08d3686f1135b5ec1b32b12
+    sha256: 4e534e66bfe8b1e035d2169d0e5b185450546b17e36764272863e22e0370be4d
+  build: pyhd8ed1ab_0
+  arch: aarch64
+  subdir: osx-arm64
+  build_number: 0
+  license: MPL-2.0
+  license_family: MOZILLA
+  noarch: python
+  size: 41173
+  timestamp: 1702250135032
+  purls:
+  - pkg:pypi/pathspec
+- platform: linux-64
   name: patsy
   version: 0.5.5
   category: main
@@ -12324,6 +12616,50 @@ package:
   timestamp: 1689721740099
   purls:
   - pkg:pypi/pyjwt
+- platform: linux-64
+  name: pymdown-extensions
+  version: '10.7'
+  category: main
+  manager: conda
+  dependencies:
+  - markdown >=3.5
+  - python >=3.7
+  - pyyaml
+  url: https://conda.anaconda.org/conda-forge/noarch/pymdown-extensions-10.7-pyhd8ed1ab_0.conda
+  hash:
+    md5: 164cd3ba52e9c802a3034b39964281ec
+    sha256: a47aafadd17844c3166f47200e146e317f1b729a08557ce40156cc6ac12aaf90
+  build: pyhd8ed1ab_0
+  arch: x86_64
+  subdir: linux-64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  noarch: python
+  size: 158711
+  timestamp: 1703983150106
+- platform: osx-arm64
+  name: pymdown-extensions
+  version: '10.7'
+  category: main
+  manager: conda
+  dependencies:
+  - markdown >=3.5
+  - python >=3.7
+  - pyyaml
+  url: https://conda.anaconda.org/conda-forge/noarch/pymdown-extensions-10.7-pyhd8ed1ab_0.conda
+  hash:
+    md5: 164cd3ba52e9c802a3034b39964281ec
+    sha256: a47aafadd17844c3166f47200e146e317f1b729a08557ce40156cc6ac12aaf90
+  build: pyhd8ed1ab_0
+  arch: aarch64
+  subdir: osx-arm64
+  build_number: 0
+  license: MIT
+  license_family: MIT
+  noarch: python
+  size: 158711
+  timestamp: 1703983150106
 - platform: osx-arm64
   name: pyobjc-core
   version: '10.1'
