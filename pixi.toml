@@ -3,8 +3,9 @@ name = "diffusion_curvature"
 version = "0.1.0"
 description = "repo_description"
 authors = ["Kincaid MacDonald <dev@riddle.press>"]
-channels = ["conda-forge", "fastai", "pytorch", "nvidia"] # add with `pixi project channel add nvidia`
-platforms = ["osx-arm64", "linux-64"] 
+channels = ["nvidia/label/cuda-12.1.0", "nvidia", "conda-forge", "pytorch"] # add with `pixi project channel add nvidia`; searches in left-most channels first and stops when the package is found. Best to order by recency of update, with pytorch at the end.
+# channels = ["conda-forge", "fastai", "pytorch", "nvidia"] 
+platforms = ["linux-64","osx-arm64"] 
 
 [tasks]
 # install the library in editable mode
@@ -23,7 +24,6 @@ docmaker = "nbdev_docs"
 ## Experiments 
 # export experiments to markdown with quarto
 zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels"
-
 
 # Standard Interfaces
 jupyter = "jupyter notebook"
@@ -51,7 +51,6 @@ typer = "0.9.0.*"
 pygsp = "0.5.1.*"
 tqdm = "4.66.1.*"
 plotly = "5.18.0.*"
-pytorch = ">=2.0.0,<2.1"
 lightning = "2.1.2.*"
 seaborn = "0.13.0.*"
 h5py = "3.10.0.*"
@@ -67,11 +66,15 @@ flax = ">=0.7.5"
 tadasets = "*"
 torchdyn = "*"
 phate = "*"
-pykeops = "*"
+# pykeops = "*" # currently a bug in pixi preventing installation - but you can 'pixi shell' then 'pip install'.
 
-[target.linux-64.dependencies]
-cuda-nvcc = ">=12.1.105,<12.2"
+[target.linux-64.dependencies] # assuming linux always has a gpu
+pytorch = {version = "2.1.0", channel="pytorch"}
+cuda = {version = "*", channel="nvidia/label/cuda-12.1.0"}
+libnvjitlink = {version = "12.1.105", channel = "nvidia"} # if not installed before pytorch-cuda, pixi will freak out, probably because of overly strict channel requirements.
+pytorch-cuda = {version = "12.1", channel="pytorch"}
+cuda-nvcc = {version = ">=12.1.105,<12.2", channel="nvidia"}
 jax = ">=0.4.23,<0.5"
 
-[target.osx-arm64.dependencies]
-jax = ">=0.4.23,<0.5"
+# [target.osx-arm64.dependencies]
+# pytorch = {version = "2.0.*", channel="pytorch"}

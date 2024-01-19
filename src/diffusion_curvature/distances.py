@@ -28,6 +28,7 @@ def pairwise_euclidean(x, y):
   # Pairwise euclidean distances in Jax, courtesy of [jakevdp](https://github.com/google/jax/discussions/11841)
   assert x.ndim == y.ndim == 2
   return jnp.sqrt(((x[:, None, :] - y[None, :, :]) ** 2).sum(-1))
+  
 def phate_distances_differentiable(Pt):
     log_Pts = -jnp.log(Pt + 1e-6)
     D = pairwise_euclidean(log_Pts, log_Pts)

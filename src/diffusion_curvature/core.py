@@ -167,6 +167,7 @@ class DiffusionCurvature():
             idx=None, # the index at which to compute curvature. If None, computes for all points.
             dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
             knn = 15, # Number of neighbors used in construction of graph;
+            D = None, # Supply manifold distances yourself to override their computation. Only used with the Wasserstein laziness method.
     ):
         fixed_comparison_cache = {} # if using a fixed comparison space, saves by dimension
         def get_flat_spreads(dimension, jump_of_diffusion, num_points_in_comparison, cluster_idxs, verbose=False):
@@ -239,7 +240,7 @@ class DiffusionCurvature():
                         return self.SGT[dimension][knn][t]    
 
         # Start by estimating the manifold's unsigned curvature, i.e. spreads of diffusion
-        manifold_spreads, manifold_spreads_nought, P, Pt, t = self.unsigned_curvature(G,t,idx, _also_return_first_scale=True)
+        manifold_spreads, manifold_spreads_nought, P, Pt, t = self.unsigned_curvature(G,t,idx, _also_return_first_scale=True, D = D)
         if self.verbose: print(f"Manifold spreads are {manifold_spreads}")
         # print(manifold_spreads_nought.shape)
         n = G.W.shape[0]
