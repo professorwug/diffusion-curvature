@@ -161,5 +161,8 @@ cython_debug/
 token
 .DS_Store
 
+# PyTorch LIghtning
+**/lightning_logs/
+
 # pixi environments
 .pixi/
