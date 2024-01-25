@@ -186,10 +186,12 @@ def sample(data, group, size=(100, ), replace=False, to_torch=False, use_cuda=Fa
     idx = np.arange(sub.shape[0])
     sampled = sub[np.random.choice(idx, size=size, replace=replace)]
     if to_torch:
-        sampled = torch.Tensor(sampled).float()
+        sampled = torch.Tensor(sampled[:-1]).float()
+        radial_dists = torch.Tensor(sampled[-1]).float()
         if use_cuda:
             sampled = sampled.cuda()
-    return sampled
+            radial_dists = radial_dists.cuda()
+    return sampled, radial_dists
 
 def to_np(data):
     return data.detach().cpu().numpy()
@@ -973,7 +975,7 @@ import os, sys, json, math, itertools
 import pandas as pd, numpy as np
 import warnings
 
-# from tqdm import tqdm
+# from tqdm  tqdm
 from tqdm.notebook import tqdm
 
 import torch
@@ -2277,7 +2279,6 @@ def train_neural_flattener(
     if reverse:
         groups = groups[::-1]
         steps = generate_steps(groups)
-
     
     # Storage variables for losses
     batch_losses = []
@@ -2306,13 +2307,21 @@ def train_neural_flattener(
         # In our case, there is only one timestep, so it is a list of one tensor.
         # sample data from input pointcloud; looks like
         # [timestep1, timestep2, timestep3, ...]
-        data_ti = [
-            sample(
+        data_ti = []
+        for group in groups:
+            samples, radial_dists = sample(
                 df, group, size=sample_size, replace=sample_with_replacement, 
                 to_torch=True, use_cuda=use_cuda
             )
-            for group in groups
-        ]
+            data_ti.append(samples)
+            
+        # data_ti = [
+        #     sample(
+        #         df, group, size=sample_size, replace=sample_with_replacement, 
+        #         to_torch=True, use_cuda=use_cuda
+        #     )
+        #     for group in groups
+        # ]
         # 0 is the input data, 1 is our desired transformation
         time = torch.Tensor([0,1]).cuda() if use_cuda else torch.Tensor([0,1])
 
@@ -2373,7 +2382,16 @@ def train_neural_flattener(
         
         # print('penalty loss', loss, type(loss))
 
-                                    
+
+
+        # This is the radial distance preservation loss;
+        # At the final timestep, we want the radial distances from our center point
+        # to match the supplied radial distances
+        if use_radial_distance_loss:
+            embedding_distances = torch.cdist(data_tp[-1], data_tp[-1][None,:]) # torch.sqrt(torch.sum((x_embedded - x_embedded[0])**2, axis=-1)) # TODO: How will this play with batching?
+            # print(embedding_distances)
+            loss += nn.MSELoss()(embedding_distances, radial_dists)
+               
         loss.backward()
         optimizer.step()
         model.norm=[]
@@ -2596,7 +2614,7 @@ def training_regimen_neural_flattener(
 
     return local_losses, batch_losses, globe_losses
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 83
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 85
 import torch, numpy as np
 
 def generate_points_flat(
@@ -2707,7 +2725,7 @@ def generate_plot_data_flat(
     trajectories = generate_trajectories_flat(model, df, n_trajectories, n_bins, sample_with_replacement, use_cuda, samples_key, autoencoder=autoencoder, recon=recon)
     return points, trajectories
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 84
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 86
 import os, math, numpy as np, pandas as pd
 import torch
 import torch.nn as nn
@@ -2803,7 +2821,7 @@ def plot_comparison_flat(
     plt.close()
     return fig
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 85
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 87
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
@@ -2935,7 +2953,6 @@ def new_plot_comparisons_flat(
                 
         # cbar = plt.colorbar(pnts, pad=0.05)
         # cbar.set_label('States')
-        
         legend_elements = [        
             Line2D(
                 [0], [0], marker='X', color='w', 
@@ -2943,8 +2960,8 @@ def new_plot_comparisons_flat(
             ),
             Line2D([0], [0], marker='o', color='w', label='Predicted', markerfacecolor=cmap(.999), markersize=15),
             Line2D([0], [0], color='black', lw=2, label='Trajectory')
-            
         ]
+        
         leg = plt.legend(handles=legend_elements, loc='upper right')
         ax.add_artist(leg)
         
