@@ -1,5 +1,47 @@
 # 3d Detecting Negative Curvature
 
+::: {.cell 0=‘d’ 1=‘e’ 2=‘f’ 3=‘a’ 4=‘u’ 5=‘l’ 6=‘t’ 7=‘*’ 8=’e’ 9=’x’
+10=’p’ 11=’ ’ 12=’3’ 13=’c’ 14=’*’ 15=‘e’ 16=‘x’ 17=‘p’ 18=‘e’ 19=‘r’
+20=‘i’ 21=‘m’ 22=‘e’ 23=‘n’ 24=‘t’ 25=‘s’ 26=’ ’ 27=‘h’ 28=‘i’ 29=‘d’
+30=‘e’}
+
+``` python
+## Standard libraries
+import os
+import math
+import numpy as np
+import time
+# Configure environment
+os.environ['XLA_PYTHON_CLIENT_PREALLOCATE']='false' # Tells Jax not to hog all of the memory to this process.
+
+## Imports for plotting
+import matplotlib.pyplot as plt
+%matplotlib inline
+from matplotlib.colors import to_rgba
+import seaborn as sns
+sns.set()
+
+## Progress bar
+from tqdm.notebook import tqdm, trange
+
+## project specifics
+import diffusion_curvature
+from diffusion_curvature.datasets import *
+from diffusion_curvature.graphs import *
+from diffusion_curvature.core import *
+from diffusion_curvature.utils import plot_3d
+import jax
+import jax.numpy as jnp
+jax.devices()
+
+%load_ext autoreload
+%autoreload 2
+```
+
+:::
+
+> Experiments from the edge of the possible…
+
 One puzzling fact brought to light by our “curvature colosseum” is that
 all methods struggle mightily to label high-dimensional datasets with
 any negative curvature. The Pearson correlation with the scalar
@@ -45,7 +87,7 @@ plot_3d(X,ks, colorbar=True, title = f"Diffusion Curvature of Saddle with {k=}")
 print("Curvature of center point = ",ks[0])
 ```
 
-![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-3-output-1.png)
+![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-4-output-1.png)
 
     Curvature of center point =  -0.1267333
 
@@ -89,7 +131,7 @@ plt.ylabel("Diffusion Curvature")
 
     Text(0, 0.5, 'Diffusion Curvature')
 
-![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-6-output-3.png)
+![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-7-output-3.png)
 
 There’s a troubling amount of variance between samplings of the
 saddling.
@@ -122,7 +164,7 @@ plt.ylabel("Diffusion Curvature")
 
     Text(0, 0.5, 'Diffusion Curvature')
 
-![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-7-output-3.png)
+![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-8-output-3.png)
 
 ``` python
 ks_dc = []
@@ -152,7 +194,7 @@ plt.ylabel("Diffusion Curvature")
 
     Text(0, 0.5, 'Diffusion Curvature')
 
-![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-8-output-3.png)
+![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-9-output-3.png)
 
 So it *is* possible to pick up negative diffusion curvature in higher
 dimensions – but it takes a *lot* of points!
@@ -193,7 +235,7 @@ plt.hist(ks_dc, bins=20)
             -1.01599741]),
      <BarContainer object of 20 artists>)
 
-![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-9-output-3.png)
+![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-10-output-3.png)
 
 # Visual Investigations of the Saddle
 
@@ -209,7 +251,7 @@ signal[0] = 1
 plot_3d(degenerate_X, signal, title = "A difficult-to-graph saddle", use_plotly=True)
 ```
 
-![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-11-output-1.png)
+![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-12-output-1.png)
 
 ``` python
 degenerate_X = Xs_sorted[1]
@@ -218,16 +260,17 @@ signal[0] = 1
 plot_3d(degenerate_X, signal, title = "Another difficult-to-graph saddle", use_plotly=True)
 ```
 
-![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-12-output-1.png)
+![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-13-output-1.png)
 
 ``` python
+
 degenerate_X = Xs_sorted[2]
 signal = np.zeros(degenerate_X.shape[0])
 signal[0] = 1
 plot_3d(degenerate_X, signal, title = "Yet another difficult-to-graph saddle", use_plotly=True)
 ```
 
-![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-13-output-1.png)
+![](3d%20Detecting%20Negative%20Curvature_files/figure-commonmark/cell-14-output-1.png)
 
 These ancdata confirm a suspicion: the graphs of these mis-diagnosed
 saddles are deranged because they have these big holes close to the
@@ -270,6 +313,7 @@ def phate_denoised_graph(
     # construct graph
     G = graphtools.Graph(D, anisotropy=1, knn=5, decay=20, precomputed="distance").to_pygsp()
     return G
+
 ```
 
 ``` python
