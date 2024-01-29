@@ -77,7 +77,7 @@ class RadialFlatteningAutoencoder(pl.LightningModule):
         self.reconstruction_weight = reconstruction_weight
         self.distance_weight = distance_weight
         self.affinity_weight = affinity_weight
-        self.KLD = nn.KLDivLoss(reduction="mean")
+        self.KLD = nn.KLDivLoss(reduction="batchmean")
         self.encoder = nn.Sequential(
             nn.Linear(in_features=input_dim, out_features=256),
             nn.ReLU(),
@@ -168,13 +168,15 @@ def radially_flatten_with_ae(
     learning_rate = 1e-5,
     intrinsic_dim = 2,
     return_model = False,
+    central_idx = 0,
+    max_epochs = 100,
 ):
-    if not D:
+    if D is None:
         emb_op = HeatGeo(knn=5)
         emb = emb_op.fit_transform(X)
         D = emb_op.dist
         
-    trainloader = dataloader_for_local_neighborhood_flattening(X, D, central_idx=0, batch_size=64)
+    trainloader = dataloader_for_local_neighborhood_flattening(X, D, central_idx=central_idx, batch_size=64)
     train_sample = next(iter(trainloader))
     
     # Initialize model and trainer
@@ -188,7 +190,7 @@ def radially_flatten_with_ae(
         )
 
     trainer = Trainer(
-        max_epochs=100, 
+        max_epochs=max_epochs, 
         accelerator='cuda',
         use_distributed_sampler=False,
         enable_progress_bar=False, enable_model_summary=False,
