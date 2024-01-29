@@ -9,7 +9,7 @@ __all__ = ['ode_solve', 'ODEF', 'ODEAdjoint', 'NeuralODE', 'group_extract', 'sam
            'generate_trajectories', 'generate_plot_data', 'plot_comparision', 'plot_losses', 'new_plot_comparisions',
            'construct_diamond', 'make_diamonds', 'UniformDensityLoss', 'MMD_loss_to_uniform', 'train_neural_flattener',
            'training_regimen_neural_flattener', 'generate_points_flat', 'generate_trajectories_flat',
-           'generate_plot_data_flat', 'plot_comparison_flat', 'new_plot_comparisons_flat']
+           'generate_plot_data_flat', 'plot_comparison_flat', 'new_plot_comparisons_flat', 'flatten_with_mioflow']
 
 # %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 6
 import os, math, numpy as np
@@ -185,9 +185,11 @@ def sample(data, group, size=(100, ), replace=False, to_torch=False, use_cuda=Fa
     sub = group_extract(data, group)
     idx = np.arange(sub.shape[0])
     sampled = sub[np.random.choice(idx, size=size, replace=replace)]
+    points = sampled[:-1]
+    radial_dists = sampled[-1]
     if to_torch:
-        sampled = torch.Tensor(sampled[:-1]).float()
-        radial_dists = torch.Tensor(sampled[-1]).float()
+        sampled = torch.Tensor(points).float()
+        radial_dists = torch.Tensor(radial_dists).float()
         if use_cuda:
             sampled = sampled.cuda()
             radial_dists = radial_dists.cuda()
@@ -763,7 +765,6 @@ def make_model(
         model = ToySDEModel(
             ode, method, noise_type, sde_type,
             in_features=in_features, out_features=out_features, gunc=gunc
-            
         )
     else:
         model = ToyGeo(feature_dims, layers, output_dims, activation)
@@ -2614,7 +2615,7 @@ def training_regimen_neural_flattener(
 
     return local_losses, batch_losses, globe_losses
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 85
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 76
 import torch, numpy as np
 
 def generate_points_flat(
@@ -2725,7 +2726,7 @@ def generate_plot_data_flat(
     trajectories = generate_trajectories_flat(model, df, n_trajectories, n_bins, sample_with_replacement, use_cuda, samples_key, autoencoder=autoencoder, recon=recon)
     return points, trajectories
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 86
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 77
 import os, math, numpy as np, pandas as pd
 import torch
 import torch.nn as nn
@@ -2821,7 +2822,7 @@ def plot_comparison_flat(
     plt.close()
     return fig
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 87
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 78
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
@@ -2985,3 +2986,163 @@ def new_plot_comparisons_flat(
             pass 
     plt.close()
     return fig
+
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 86
+from heatgeo.embedding import HeatGeo
+from .radial_flattening_ae import radially_flatten_with_ae
+
+def flatten_with_mioflow(
+    X, # Pointcloud in question
+    intrinsic_dim, # X's manifold dimension
+    D = None, # Geodesic Distance matrix of X; if not supplied will compute with HeatGeo
+    central_idx = 0, # Will flatten with respect to this point
+    return_trajectories = False, # by default only returns flattened data; can optionally also return each timestep and the trajectories between them
+    use_cuda = torch.cuda.is_available(),
+    trained_autoencoder = None,
+):
+    # Put pointcloud into dictionary
+    data = {'samples': [0] * len(X)} # all at time 0
+    for i in range(X.shape[1]):
+        data[f'd{i+1}'] = X[:, i]
+
+    if D is None:
+        emb_op = HeatGeo(knn=5)
+        emb = emb_op.fit_transform(X)
+        D = emb_op.dist
+    
+    # Create the dataframe
+    df = pd.DataFrame(data)
+    df['radial_dists'] = D[central_idx]
+
+    #### Train Autoencoder #####
+    if trained_autoencoder is None: 
+        flattened_X, trained_autoencoder = radially_flatten_with_ae(X, D, intrinsic_dim = intrinsic_dim)
+    n_epochs_emb = 1000
+    samples_size_emb = (30, )
+    distance_type = 'gaussian'
+    rbf_length_scale=0.1
+    dist = setup_distance(distance_type, rbf_length_scale=rbf_length_scale)
+
+    ##### Train MIOFLOW #####
+    
+    set_seeds(10)
+    #Directory where results are saved
+    exp_name = 'test'
+    # density loss knn
+    use_density_loss = False
+    # Weight of density (not percentage of total loss)
+    lambda_density = 35
+    # For petal=LeakyReLU / dyngen=CELU
+    activation = 'LeakyReLU'
+    
+    criterion = MMD_loss_to_uniform()
+
+    groups = [0]
+    # Can change but we never really do, mostly depends on the dataset.
+    layers = [16,32,16]
+    # Scale of the noise in the trajectories. Either len(groups)*[float] or None. Should be None if using an adaptative ODE solver.
+    sde_scales = 1*[0.1] 
+    model_features = intrinsic_dim
+    model = make_model(
+        model_features, layers, 
+        activation=activation, scales=sde_scales, use_cuda=use_cuda
+    ) 
+    # Basically "batch size"
+    sample_size=(60, )
+    # Training specification
+    n_local_epochs = 40
+    n_epochs = 10
+    n_post_local_epochs = 0
+    # Using the reverse trajectories to train
+    reverse_schema = False
+    # each reverse_n epoch
+    reverse_n = 2
+    # criterion_name = 'ot'
+    # criterion = config_criterion(criterion_name)
+    optimizer = torch.optim.AdamW(model.parameters())
+    
+    # Bookkeeping variables
+    batch_losses = []
+    globe_losses = []
+    # if hold_one_out and hold_out in groups:
+    #     local_losses = {f'{t0}:{t1}':[] for (t0, t1) in generate_steps(groups) if hold_out not in [t0, t1]}
+    # else:
+    local_losses = {f'{t0}:{t1}':[] for (t0, t1) in generate_steps(groups)}
+    
+    # For creating output.
+    n_points = 100
+    n_trajectories = 100
+    n_bins = 100
+    opts = {
+        'phate_dims': 3,
+        'use_cuda': use_cuda,
+        'model_features': model_features,
+        'exp_name': exp_name,
+        'groups': groups,
+        'sample_size': sample_size,
+        'use_emb': True,
+        'n_local_epochs': n_local_epochs,
+        'n_epochs': n_epochs,
+        'n_post_local_epochs': n_post_local_epochs,
+        'criterion_name': 'MMD',
+        'hold_one_out': False,
+        'use_density_loss': use_density_loss,
+        'n_points': n_points,
+        'n_trajectories': n_trajectories,
+        'n_bins': n_bins,
+        'autoencoder': trained_autoencoder,
+        'activation_ode': activation,
+        'layer': layers,
+        'lambda_density':lambda_density,
+        'use_gae': False,
+        'sde_scales': sde_scales,
+        'hold_out':10,
+        'encoder_layers': [X.shape[1],5,5,intrinsic_dim],
+        'n_epochs_emb': n_epochs_emb,
+        'samples_size_emb': samples_size_emb,
+        'recon': False,
+        'distance_type':distance_type,
+        'rbf_length_scale':rbf_length_scale,
+        'reverse_schema': reverse_schema,
+        'reverse_n': reverse_n
+    } 
+    start_time = time.time()
+    local_losses, batch_losses, globe_losses = training_regimen_neural_flattener(
+        # local, global, local train structure
+        n_local_epochs=n_local_epochs,
+        n_epochs=n_epochs, 
+        n_post_local_epochs=n_post_local_epochs,
+        criterion=criterion,
+        # where results are stored
+        exp_dir="../../results/", 
+    
+        # BEGIN: train params
+        model=model, df=df, groups=groups, optimizer=optimizer, 
+        use_cuda=use_cuda,
+        
+        hold_one_out=False, hold_out=None,
+        
+        use_density_loss=use_density_loss, 
+        lambda_density=lambda_density,
+        
+        autoencoder=trained_autoencoder, use_emb=True, use_gae=False, 
+        
+        sample_size=sample_size, logger=None,
+        reverse_schema=reverse_schema, reverse_n=reverse_n,
+        use_penalty=True, lambda_energy=0.001,
+        # END: train params
+    
+        plot_every=None,
+        n_points=n_points, n_trajectories=n_trajectories, n_bins=n_bins, 
+        #local_losses=local_losses, batch_losses=batch_losses, globe_losses=globe_losses
+    )
+    run_time = time.time() - start_time + run_time_geo if use_emb or use_gae else time.time() - start_time
+
+    generated, trajectories = generate_plot_data_flat(
+        model, df, 1000, n_trajectories, 100, use_cuda=use_cuda, samples_key='samples', logger=None,
+        autoencoder=autoencoder, recon=False
+    )
+    if return_trajectories:
+        return generated, trajectories, model
+    else:
+        return generated[-1]
