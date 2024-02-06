@@ -1377,8 +1377,8 @@ def train_ae(
             loss_recon = criterion(recon_dt,data_ti)
             loss = loss_recon
             
-            if epoch%50==0:
-                tqdm.write(f'Train loss recon: {np.round(np.mean(loss_recon.item()), 5)}')
+            # if epoch%50==0:
+                # tqdm.write(f'Train loss recon: {np.round(np.mean(loss_recon.item()), 5)}')
         
         if dist is not None:
             dist_geo = dist.fit(data_ti.cpu().numpy())
@@ -1387,8 +1387,8 @@ def train_ae(
             loss_dist = criterion(dist_emb,dist_geo)
             loss = loss_recon + loss_dist if recon else loss_dist
             
-            if epoch%50==0:
-                tqdm.write(f'Train loss dist: {np.round(np.mean(loss_dist.item()), 5)}')
+            # if epoch%50==0:
+            #     tqdm.write(f'Train loss dist: {np.round(np.mean(loss_dist.item()), 5)}')
                 
         loss.backward()
         optimizer.step()
@@ -2131,12 +2131,13 @@ class MMD_loss_to_uniform(nn.Module):
     '''
     https://github.com/ZongxianLee/MMD_Loss.Pytorch/blob/master/mmd_loss.py
     '''
-    def __init__(self, kernel_mul = 2.0, kernel_num = 5, use_cuda=torch.cuda.is_available()):
+    def __init__(self, kernel_mul = 2.0, kernel_num = 5,embedding_dim = 2, use_cuda=torch.cuda.is_available()):
         super(MMD_loss_to_uniform, self).__init__()
         self.kernel_num = kernel_num
         self.kernel_mul = kernel_mul
         self.fix_sigma = None
-        self.uniformity = torch.rand(10000,2,device='cuda') if use_cuda else torch.rand(10000,2)
+        self.embedding_dim = embedding_dim
+        self.uniformity = torch.rand(10000,embedding_dim,device='cuda') if use_cuda else torch.rand(10000,2)
         return
     
     def gaussian_kernel(self, source, target, kernel_mul=2.0, kernel_num=5, fix_sigma=None):
@@ -2155,6 +2156,13 @@ class MMD_loss_to_uniform(nn.Module):
         return sum(kernel_val)
 
     def forward(self, source):
+        # check that the source and target are in the same dimension
+        assert source.shape[1] == self.embedding_dim
+        # scale the source points to lie in the unit cube
+        source_max = torch.max(source)
+        source_min = torch.min(source)
+        source = (source - source_min) / (source_max - source_min)
+        # perform MMD loss between target and uniform points
         target = self.uniformity
         batch_size = int(source.size()[0])
         kernels = self.gaussian_kernel(source, target, kernel_mul=self.kernel_mul, kernel_num=self.kernel_num, fix_sigma=self.fix_sigma)
@@ -2165,7 +2173,7 @@ class MMD_loss_to_uniform(nn.Module):
         loss = XX + YY - XY - YX
         return loss
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 69
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 75
 import os, sys, json, math, itertools
 import pandas as pd, numpy as np
 import warnings
@@ -2321,7 +2329,7 @@ def train_neural_flattener(
     
     model.train()
     
-    for batch in tqdm(range(n_batches)):
+    for batch in range(n_batches):
     
         optimizer.zero_grad()
         #sampling, predicting, and evaluating the loss.
@@ -2426,8 +2434,9 @@ def train_neural_flattener(
         globe_losses.append(loss.item())
         
     print_loss = globe_losses
-    if logger is None:      
-        tqdm.write(f'Train loss: {np.round(np.mean(print_loss), 5)}')
+    if logger is None:  
+        pass    
+        # tqdm.write(f'Train loss: {np.round(np.mean(print_loss), 5)}')
     else:
         logger.info(f'Train loss: {np.round(np.mean(print_loss), 5)}')
 
@@ -2436,7 +2445,7 @@ def train_neural_flattener(
     batch_losses = [0]*n_batches # list of num batches containing 0s
     return local_losses, batch_losses, globe_losses
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 70
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 76
 # from MIOFlow.plots import plot_comparision, plot_losses
 # from MIOFlow.eval import generate_plot_data
 
@@ -2641,7 +2650,7 @@ def training_regimen_neural_flattener(
 
     return local_losses, batch_losses, globe_losses
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 79
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 85
 import torch, numpy as np
 
 def generate_points_flat(
@@ -2752,7 +2761,7 @@ def generate_plot_data_flat(
     trajectories = generate_trajectories_flat(model, df, n_trajectories, n_bins, sample_with_replacement, use_cuda, samples_key, autoencoder=autoencoder, recon=recon)
     return points, trajectories
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 80
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 86
 import os, math, numpy as np, pandas as pd
 import torch
 import torch.nn as nn
@@ -2848,7 +2857,7 @@ def plot_comparison_flat(
     plt.close()
     return fig
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 81
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 87
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
@@ -3013,7 +3022,7 @@ def new_plot_comparisons_flat(
     plt.close()
     return fig
 
-# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 89
+# %% ../../nbs/library/MIOFlow for Neural Flattening.ipynb 95
 from heatgeo.embedding import HeatGeo
 from .radial_flattening_ae import radially_flatten_with_ae
 
