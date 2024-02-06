@@ -1,80 +1,81 @@
 [project]
 name = "diffusion_curvature"
 version = "0.1.0"
-description = "repo_description"
+description = "Fast differentiable graph curvature"
 authors = ["Kincaid MacDonald <dev@riddle.press>"]
-channels = ["nvidia/label/cuda-12.1.0", "nvidia", "conda-forge", "pytorch"] # add with `pixi project channel add nvidia`; searches in left-most channels first and stops when the package is found. Best to order by recency of update, with pytorch at the end.
-# channels = ["conda-forge", "fastai", "pytorch", "nvidia"] 
-platforms = ["linux-64","osx-arm64"] 
+# channels = ["nvidia/label/cuda-12.1.0", "nvidia", "conda-forge", "pytorch"] 
+# add with `pixi project channel add nvidia`; searches in left-most channels first and stops when the package is found. Best to order by recency of update, with pytorch at the end.
+channels = ["conda-forge", "fastai", "pytorch"] 
+platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
 
 [tasks]
 # install the library in editable mode
-install = "pip install --no-build-isolation --no-deps --disable-pip-version-check --editable src"
+postinstall = "pip install --no-build-isolation --no-deps --disable-pip-version-check --editable src"
 # test the installation
-import = "python -c 'import diffusion_curvature'"
-
-## NBDev shorthands
-# export code from notebooks into the library
-nbsync = "nbdev_export"
-# sync changes from library to notebooks
-pysync = "nbdev_update"
-# build docs
-docmaker = "nbdev_docs"
-
-## Experiments 
-# export experiments to markdown with quarto
-zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels"
-
-# Standard Interfaces
+test_import = "python -c 'import diffusion_curvature'"
+# NBDev shorthands
+nbsync = "nbdev_export" # export code from notebooks into the library
+pysync = "nbdev_update" # sync changes from library to notebooks
+docmaker = "nbdev_docs" # build docs
+zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels" # export experiments to markdown with quarto
 jupyter = "jupyter notebook"
 
 [dependencies]
-# Common & Ubiquitous
 python = "3.11.*"
-numpy = "1.26.2.*"
-matplotlib = "3.8.2.*"
-notebook = "7.0.6.*"
-scipy = "1.11.4.*"
-ipykernel = "6.26.0.*"
-jupyter = "1.0.0.*"
-nbformat = "5.9.2.*"
-pandas = "2.1.3.*"
+
+# # Common & Ubiquitous
+pytorch = {version = ">=2.0.1", channel = "pytorch"}
+torchvision = {version = ">=0.15", channel = "pytorch"}
+polars = ">=0.20,<0.21"
+matplotlib-base = ">=3.8.2,<3.9"
+ipykernel = ">=6.28.0,<6.29"
+numpy = ">=1.26.4,<1.27"
+notebook = ">=7.0.7,<7.1"
+nbformat = ">=5.9.2,<5.10"
+seaborn = ">=0.13.2,<0.14"
+scipy = ">=1.12.0,<1.13"
+pandas = ">=2.2.0,<2.3"
+matplotlib = ">=3.8.2,<3.9"
+jupyter = ">=1.0.0,<1.1"
+rich = ">=13.7.0,<13.8"
+typer = ">=0.9.0,<0.10"
+sympy = ">=1.12,<2"
+plotly = ">=5.18.0,<5.19"
+tqdm = ">=4.66.1,<4.67"
+
 # Literate Programming
 nbdev = "2.2.10.*"
 fastcore = "1.5.29.*"
 
 # Project Specific
-graphtools = "1.5.3.*"
-sympy = "1.12.*"
-rich = "13.7.0.*"
-typer = "0.9.0.*"
-pygsp = "0.5.1.*"
-tqdm = "4.66.1.*"
-plotly = "5.18.0.*"
-lightning = "2.1.2.*"
-seaborn = "0.13.0.*"
-h5py = "3.10.0.*"
-deepdish = ">=0.3.7,<0.4"
-tabulate = ">=0.9.0,<0.10"
-pot = ">=0.9.2,<0.10"
-imageio = ">=2.33.1,<2.34"
-marimo = ">=0.1.75,<0.2"
+pygsp = ">=0.5.1,<0.6"
 
-[pypi-dependencies]
-scikit-dimension = "==0.3.*"
-flax = ">=0.7.5"
-tadasets = "*"
-torchdyn = "*"
-phate = "*"
+
+# [pypi-dependencies]
+# scikit-dimension = "==0.3.*"
+# tadasets = "*"
+# phate = "*"
 # pykeops = "*" # currently a bug in pixi preventing installation - but you can 'pixi shell' then 'pip install'.
 
-[target.linux-64.dependencies] # assuming linux always has a gpu
-pytorch = {version = "2.1.0", channel="pytorch"}
-cuda = {version = "*", channel="nvidia/label/cuda-12.1.0"}
-libnvjitlink = {version = "12.1.105", channel = "nvidia"} # if not installed before pytorch-cuda, pixi will freak out, probably because of overly strict channel requirements.
-pytorch-cuda = {version = "12.1", channel="pytorch"}
-cuda-nvcc = {version = ">=12.1.105,<12.2", channel="nvidia"}
-jax = ">=0.4.23,<0.5"
+# Pixi Features allow sets of packages to be installed on systems that meet requirements
+[feature.cuda]
+platforms = ["win-64", "linux-64"]
+channels = ["nvidia", {channel = "pytorch", priority = -1}]
+system-requirements = {cuda = "12.1"}
+[feature.cuda.dependencies]
+pytorch-cuda = {version = "12.1.*", channel = "pytorch"}
+# [feature.cuda.tasks]
+# train = "python train.py --cuda"
+# test = "python test.py --cuda"
 
-# [target.osx-arm64.dependencies]
-# pytorch = {version = "2.0.*", channel="pytorch"}
+[feature.mlx]
+platforms = ["osx-arm64"]
+system-requirements = {macos = "13.3"}
+[feature.mlx.dependencies]
+mlx = "*"
+
+# To install with an environment, run `pixi install -e env_name`
+# These environments let us specify which features to include
+[environments]
+cuda = ["cuda"]
+mlx = ["mlx"]
