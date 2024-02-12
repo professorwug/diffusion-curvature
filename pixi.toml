@@ -15,10 +15,11 @@ postinstall = "pip install --no-build-isolation --no-deps --disable-pip-version-
 test_import = "python -c 'import diffusion_curvature'"
 # NBDev shorthands
 nbsync = "nbdev_export" # export code from notebooks into the library
+nbclean = "nbdev_clean" # remove extraneous notebook metadata to reduce git conflicts
 pysync = "nbdev_update" # sync changes from library to notebooks
 docmaker = "nbdev_docs" # build docs
 zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels" # export experiments to markdown with quarto
-jupyter = "jupyter notebook"
+notebooks = "jupyter lab --ip=0.0.0.0"
 
 [dependencies]
 python = "3.11.*"
@@ -64,8 +65,8 @@ channels = ["nvidia", {channel = "pytorch", priority = -1}]
 system-requirements = {cuda = "12.1"}
 [feature.cuda.dependencies]
 pytorch-cuda = {version = "12.1.*", channel = "pytorch"}
-# [feature.cuda.tasks]
-# train = "python train.py --cuda"
+[feature.cuda.tasks]
+jupyter = "jupyter notebook"
 # test = "python test.py --cuda"
 
 [feature.mlx]
@@ -73,6 +74,8 @@ platforms = ["osx-arm64"]
 system-requirements = {macos = "13.3"}
 [feature.mlx.dependencies]
 mlx = "*"
+[feature.mlx.tasks]
+jupyter = "jupyter notebook"
 
 # To install with an environment, run `pixi install -e env_name`
 # These environments let us specify which features to include
