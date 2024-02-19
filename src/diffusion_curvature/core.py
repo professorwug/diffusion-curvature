@@ -20,26 +20,28 @@ from tqdm.auto import trange, tqdm
 
 from jax.experimental import sparse
 
+# Graph operations, laziness, measures
 from .graphs import diff_aff, diff_op, diffusion_matrix_from_affinities
 from .heat_diffusion import heat_diffusion_on_signal, kronecker_delta, jax_power_matrix, heat_diffusion_from_dirac
 from .diffusion_laziness import wasserstein_spread_of_diffusion, entropy_of_diffusion
-from .distances import phate_distances_differentiable
+from .distances import phate_distances
+
+# Comparison space construction
 from .comparison_space import EuclideanComparisonSpace, fit_comparison_space_model, euclidean_comparison_graph, construct_ndgrid_from_shape, diffusion_coordinates, load_average_entropies
-from .clustering import enhanced_spectral_clustering
 from .normalizing_flows import neural_flattener
+from .flattening.mioflow_quicktrain import MIOFlowStandard
+
+# Algorithmic niceties
+from .clustering import enhanced_spectral_clustering
 from .vne import optimal_t_via_vne
 from .utils import random_jnparray
+
 import diffusion_curvature
 
 import torch
 
 # import deepdish
 import h5py
-
-_DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
-_LAZINESS_METHOD = Literal['Wasserstein','Entropic', 'Laziness']
-_FLATTENING_METHOD = Literal['Neural', 'Fixed', 'Mean Fixed']
-_COMPARISON_METHOD = Literal['Ollivier', 'Subtraction']
 
 def graphtools_graph_from_data(X):
     return graphtools.Graph(X, anisotropy=1, knn=15, decay=None).to_pygsp()
@@ -61,12 +63,17 @@ def get_adaptive_graph(X, k=10, alpha = 0):
     G = pygsp.graphs.Graph(W)
     return G
 
+_DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
+_LAZINESS_METHOD = Literal['Wasserstein','Entropic', 'Laziness']
+_FLATTENING_METHOD = Literal['Neural', 'Fixed', 'Mean Fixed', 'MIOFlow']
+_COMPARISON_METHOD = Literal['Ollivier', 'Subtraction']
+
 class DiffusionCurvature():
     def __init__(
             self,
             diffusion_type:_DIFFUSION_TYPES = 'diffusion matrix', # Either ['diffusion matrix','heat kernel']
             laziness_method: _LAZINESS_METHOD = 'Entropic', # Either ['Wasserstein','Entropic', 'Laziness']
-            flattening_method: _FLATTENING_METHOD = 'Fixed', # Either ['Neural', 'Fixed', 'Mean Fixed']
+            flattening_method: _FLATTENING_METHOD = 'Fixed', # Either ['Neural', 'Fixed', 'Mean Fixed', 'MIOFlow']
             comparison_method: _COMPARISON_METHOD = 'Subtraction', # Either ['Ollivier', 'Subtraction']
             graph_former = get_adaptive_graph,
             dimest = None, # Dimension estimator to use. If none, defaults to kNN.
@@ -126,7 +133,9 @@ class DiffusionCurvature():
                 raise ValueError(f"Diffusion Type {self.diffusion_type} not in {_DIFFUSION_TYPES}")
         match self.laziness_method:
             case "Wasserstein":
-                if D is None: D = phate_distances_differentiable(self.Pt) #TODO: Could be more efficient here if there's an idx
+                if D is None: 
+                    # raise NotImplementedError("If using Wasserstein-style diffusion curvature, you must pass in precomputed manifold distances with the 'D = ' parameter. If you don't want to compute those, we recommend setting the laziness type to 'Entropic'")
+                    D = phate_distances(self.Pt) #TODO: Could be more efficient here if there's an idx
                 laziness = wasserstein_spread_of_diffusion(D,self.Pt) if idx is None else wasserstein_spread_of_diffusion(D[idx],self.Pt[idx])
                 if _also_return_first_scale: laziness_nought = wasserstein_spread_of_diffusion(D,self.P)
             case "Entropic":
@@ -168,6 +177,7 @@ class DiffusionCurvature():
             dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
             knn = 15, # Number of neighbors used in construction of graph;
             D = None, # Supply manifold distances yourself to override their computation. Only used with the Wasserstein laziness method.
+            X = None, # if using a flattening method that requires a point cloud, supply it here.
     ):
         fixed_comparison_cache = {} # if using a fixed comparison space, saves by dimension
         def get_flat_spreads(dimension, jump_of_diffusion, num_points_in_comparison, cluster_idxs, verbose=False):
@@ -188,7 +198,19 @@ class DiffusionCurvature():
                     G_euclidean, D_euclidean = fixed_comparison_cache[dimension]
                     # print(type(G_euclidean))
                     # print(G_euclidean.W)
-                    fs = self.unsigned_curvature(G_euclidean,t,idx=0,D=D_euclidean)   
+                    # scale the euclidean distances to preserve the maximum radial distance from the center
+                    if D is not None:
+                        # find idx of closest points; get distances between these
+                        cluster_dists_to_center = D[cluster_idxs][:,cluster_idxs][0]
+                        print(cluster_dists_to_center.shape)
+                        manifold_neighb_dists = jnp.sort(cluster_dists_to_center)[:knn]
+                        euclidean_neighb_dists = jnp.sort(D_euclidean[0])[:knn]
+                        # scale average euclidean dist to match average manifold dist to closest neighborhoods
+                        # TODO: this assumes that the distances increase linearly... Not true for, e.g. diffusion distances.
+                        scaling_factor = jnp.mean(manifold_neighb_dists)/jnp.mean(euclidean_neighb_dists)
+                        # scaling_factor = jnp.max(D[cluster_idxs][0])/jnp.max(D_euclidean[0])
+                        D_euclidean = D_euclidean * scaling_factor
+                    fs = self.unsigned_curvature(G_euclidean,t,idx=0) #,D=D_euclidean)   
                     if self.verbose: print(f"comparison entropy is {fs}")
                     return fs
                 case "Kernel Matching":
@@ -217,7 +239,8 @@ class DiffusionCurvature():
                         torch.tensor(diff_coords_of_comparison_space.tolist())
                     )
                     # construct graph out of these flattened coordinates
-                    G_euclidean = graphtools.Graph(flattened_diff_coords, knn=15, decay=None, anisotropy=1).to_pygsp()
+                    G_euclidean = self.graph_former(flattened_diff_coords)
+                    # graphtools.Graph(flattened_diff_coords, knn=15, decay=None, anisotropy=1).to_pygsp()
                     fs = self.unsigned_curvature(G_euclidean, t, idx=0)
                     return fs
                     # return G_euclidean, None # TODO: compute diffusion distances
@@ -238,6 +261,17 @@ class DiffusionCurvature():
                             )
                     else:
                         return self.SGT[dimension][knn][t]    
+                case "MIOFlow":
+                    self.NeuralFlattener = MIOFlowStandard(
+                            embedding_dimension = dimension,
+                            autoencoder_type = "RFAE", # Use the radial flattening autoencoder
+                        )
+                    flattened_points = self.NeuralFlattener.fit_transform(X[cluster_idxs])
+                    G_euclidean = self.graph_former(flattened_points)
+                    fs = self.unsigned_curvature(G_euclidean, t, idx=0)
+                    return fs
+
+                    
 
         # Start by estimating the manifold's unsigned curvature, i.e. spreads of diffusion
         manifold_spreads, manifold_spreads_nought, P, Pt, t = self.unsigned_curvature(G,t,idx, _also_return_first_scale=True, D = D)
