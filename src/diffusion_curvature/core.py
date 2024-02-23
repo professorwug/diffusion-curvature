@@ -52,7 +52,7 @@ from dataclasses import dataclass
 @dataclass
 class SimpleGraph:
     W: np.ndarray
-    
+
 def get_adaptive_graph(X, k=10, alpha = 0):
     W = gaussian_kernel(
         X,
@@ -60,7 +60,7 @@ def get_adaptive_graph(X, k=10, alpha = 0):
         k = k,
         anisotropic_density_normalization = alpha,
     )
-    G = pygsp.graphs.Graph(W)
+    G = SimpleGraph(W)
     return G
 
 _DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
