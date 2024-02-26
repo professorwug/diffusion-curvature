@@ -5,7 +5,7 @@ __all__ = ['metric', 'SadSpheres']
 
 # %% ../../nbs/library/datasets/saddle-sphere-ablations.ipynb 5
 from .core import get_adaptive_graph
-from .datasets import rejection_sample_from_saddle, sphere
+from .datasets import rejection_sample_from_saddle, sphere, plane
 from fastcore.all import *
 import xarray as xr
 import inspect
@@ -26,25 +26,31 @@ class SadSpheres():
                  num_pointclouds = 100, # num pointclouds to make in total
                  num_points = 2000, # num points per pointclouds
                  noise_level = 0, # from 0 to 1. 1 is all noise.
+                 include_planes = False, # if True, includes randomly sampled planes as a sanity check.
                 ):
         store_attr()
         self.DS = xr.Dataset()
         self.idx = -1
-        for i in range(num_pointclouds//2):
+        self.dnum = 3 if self.include_planes else 2
+        for i in range(num_pointclouds//self.dnum):
             X_saddle, ks_saddle = rejection_sample_from_saddle(self.num_points, self.dimension)
-            self.DS[2*i] = xr.DataArray(X_saddle, dims=['n', 'd'], attrs={'ks':ks_saddle})
+            self.DS[self.dnum*i] = xr.DataArray(X_saddle, dims=['n', 'd'], attrs={'ks':ks_saddle, 'name':'Saddle'})
             X_sphere, ks_sphere = sphere(self.num_points, self.dimension)
-            self.DS[2*i+1] = xr.DataArray(X_sphere, dims=['n', 'd'], attrs={'ks':ks_sphere[0]})
+            self.DS[self.dnum*i+1] = xr.DataArray(X_sphere, dims=['n', 'd'], attrs={'ks':ks_sphere[0], 'name':'Sphere'})
+            if self.include_planes:
+                X_plane = plane(self.num_points, self.dimension) 
+                X_plane = np.hstack([X_plane, np.zeros(self.num_points)[:,None]])
+                self.DS[self.dnum*i + 2] = xr.DataArray(X_plane, dims=['n', 'd'], attrs = {'ks':0, 'name':'Plane'})
     
     def __iter__(self):
         return self
 
     def __len__(self):
-        return self.num_pointclouds
+        return len(self.DS)
 
     def __next__(self):
         self.idx += 1
-        if self.idx >= self.num_pointclouds:
+        if self.idx >= self.__len__():
             raise StopIteration
         result = self.DS[self.idx].to_numpy()
         return result
@@ -73,18 +79,23 @@ class SadSpheres():
     
 
     def _aggregate_labels(self):
-        self.method_names = self.DS.data_vars[0].attrs.keys()
+        self.method_names = list(self.DS.data_vars[0].attrs.keys())
+        self.method_names.remove('name')
         self.labels = {}
         for m in self.method_names:
-            self.labels[m] = np.array([self.DS.data_vars[i].attrs[m] for i in range(self.num_pointclouds)])
+            self.labels[m] = np.array([self.DS.data_vars[i].attrs[m] for i in range(self.__len__())])
 
     def plot(self, title = ""):
         # for each computed method on this dataset, we plot the histogram of saddles vs spheres
         self._aggregate_labels()
+        # get the idxs for each type of dataset
+        dataset_names = [self.DS.data_vars[i].attrs['name'] for i in range(len(self.DS))]
+        unique_names = list(set(dataset_names))
+        idxs_by_name = {n: [i for i, name in enumerate(dataset_names) if name == n] for n in unique_names}        
         for m in self.method_names: 
-            if m != 'ks':
-                plt.hist(self.labels[m][0::2], bins=50, color='orange', label = 'Saddles')
-                plt.hist(self.labels[m][1::2], bins=50, color='green', label = 'Spheres')
+            if m != 'ks' and m != 'name':
+                for dname in unique_names:
+                    plt.hist(self.labels[m][idxs_by_name[dname]], bins=50, label = dname, edgecolor='none', linewidth=5)
                 plt.legend()
                 plt.xlabel(m)
                 plt.title(f"In dimension {self.dimension}")

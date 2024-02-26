@@ -2,8 +2,8 @@
 
 # %% auto 0
 __all__ = ['rejection_sample_for_torus', 'torus', 'rejection_sample_for_hyperboloid', 'hyperboloid',
-           'rejection_sample_for_ellipsoid', 'ellipsoid', 'sphere', 'rejection_sample_for_saddle', 'paraboloid',
-           'rejection_sample_from_saddle', 'plane']
+           'rejection_sample_for_ellipsoid', 'ellipsoid', 'ellispoid', 'sphere', 'rejection_sample_for_saddle',
+           'paraboloid', 'rejection_sample_from_saddle', 'plane']
 
 # %% ../../nbs/library/datasets/toy-datasets.ipynb 2
 import numpy as np
@@ -157,7 +157,28 @@ def ellipsoid(n=2000,a=3,b=2,c=1, seed=None, noise=None):
     
     return data, ks
 
-# %% ../../nbs/library/datasets/toy-datasets.ipynb 35
+# %% ../../nbs/library/datasets/toy-datasets.ipynb 34
+import sympy as sym
+from .random_surfaces import rejection_sample_from_surface
+def ellispoid(n, noise=0, a=3, b=2, c=1):
+    theta = sym.Symbol("theta")
+    phi = sym.Symbol("phi")
+    f = sym.Matrix(
+        [a*sym.cos(theta)*sym.sin(phi),b*sym.sin(theta)*sym.sin(phi),c*sym.cos(phi)]
+    )
+    X = rejection_sample_from_surface(f, n, bounds=[0,2*np.pi])
+    # compute curvature of sampled torus (gaussian curvature)
+    phi = np.arccos(X[:,2]/c)
+    theta = np.arccos(X[:,0]*(1/a)*(1/np.sin(phi)))
+    ks = 2* (a**2 * b**2 * c**2) / (a**2 * b**2 * np.cos(phi)**2 + c**2 * (b**2 * np.cos(theta)**2 + a**2 * np.sin(theta)**2)*np.sin(phi)**2)**2
+    
+    # add noise to data, if needed
+    if noise:
+        noise = np.random.randn(len(X),3)*noise
+        X = X + noise
+    return X, ks
+
+# %% ../../nbs/library/datasets/toy-datasets.ipynb 37
 import tadasets
 def sphere(n, d=2, radius = 1, use_guide_points = False):
     if use_guide_points:
@@ -176,7 +197,7 @@ def sphere(n, d=2, radius = 1, use_guide_points = False):
         X = np.vstack([np.array([0,0,1]),X])
     return X, ks
 
-# %% ../../nbs/library/datasets/toy-datasets.ipynb 42
+# %% ../../nbs/library/datasets/toy-datasets.ipynb 44
 def rejection_sample_for_saddle(n,a,b):
     x = np.random.random(n)*2 - 1 # random values in -1, 1
     y = np.random.random(n)*2 - 1
@@ -223,7 +244,7 @@ def paraboloid(n=2000,a=1,b=-1, seed=None, use_guide_points = False):
     
     return data, ks
 
-# %% ../../nbs/library/datasets/toy-datasets.ipynb 47
+# %% ../../nbs/library/datasets/toy-datasets.ipynb 49
 import sympy as sp
 from .random_surfaces import rejection_sample_from_surface, scalar_curvature_at_origin
 def rejection_sample_from_saddle(n_samples=1000, intrinsic_dim = 2, verbose=False, intensity=1):
@@ -236,8 +257,8 @@ def rejection_sample_from_saddle(n_samples=1000, intrinsic_dim = 2, verbose=Fals
     k = scalar_curvature_at_origin(saddle)
     return rejection_sample_from_surface(saddle, n_samples), k
 
-# %% ../../nbs/library/datasets/toy-datasets.ipynb 50
+# %% ../../nbs/library/datasets/toy-datasets.ipynb 52
 def plane(n, dim=2):
-    coords_2d = np.random.rand(n,dim)*2-1
+    coords_2d = np.random.rand(n-1,dim)*2-1
     coords_2d = np.vstack([np.zeros(dim),coords_2d])
     return coords_2d

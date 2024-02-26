@@ -10,7 +10,7 @@ platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
 
 [tasks]
 # install the library in editable mode
-postinstall = "pip install --no-build-isolation --no-deps --disable-pip-version-check --editable src"
+postinstall = "pip install --no-build-isolation --no-deps --disable-pip-version-check --editable src && python -m ipykernel install --user --name diffusion_curvature-pixi"
 # test the installation
 test_import = "python -c 'import diffusion_curvature'"
 # NBDev shorthands
