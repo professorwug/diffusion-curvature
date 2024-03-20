@@ -63,7 +63,6 @@ class EuclideanComparisonSpace(nn.Module):
                 spreads_near_center = W1[:-self.num_useful_points]
             case "entropy":
                 # print(P)
-
                 H = entropy_of_diffusion(P)
                 spreads_near_center = H[:-self.num_useful_points]
         
@@ -97,7 +96,7 @@ def fit_comparison_space_model(model, max_epochs = 1000, verbose=False, lr = 1e-
     if verbose: print("ending with loss value", loss_val)
     return params
 
-# %% ../../nbs/library/core-jax/Comparison-Space-Construction.ipynb 20
+# %% ../../nbs/library/core-jax/Comparison-Space-Construction.ipynb 21
 import pygsp
 import numpy as np
 import graphtools
@@ -146,7 +145,7 @@ def euclidean_comparison_graph(G:pygsp.graphs.Graph, dimension):
         )
         return G_flat.to_pygsp()
 
-# %% ../../nbs/library/core-jax/Comparison-Space-Construction.ipynb 30
+# %% ../../nbs/library/core-jax/Comparison-Space-Construction.ipynb 31
 import numpy as np
 def construct_ndgrid(*args):
     # Construct an ndgrid of points
@@ -163,7 +162,7 @@ def construct_ndgrid_from_shape(dim, points_per_dim):
     points = points[sorting_idxs]
     return points
 
-# %% ../../nbs/library/core-jax/Comparison-Space-Construction.ipynb 35
+# %% ../../nbs/library/core-jax/Comparison-Space-Construction.ipynb 36
 import jax.numpy as jnp
 from .graphs import diff_aff
 
@@ -199,7 +198,7 @@ def diffusion_coordinates(G, t = 1, plot_evals = False):
     return diff_map
 
 
-# %% ../../nbs/library/core-jax/Comparison-Space-Construction.ipynb 41
+# %% ../../nbs/library/core-jax/Comparison-Space-Construction.ipynb 42
 import h5py
 def load_average_entropies(filename):
     d = {}

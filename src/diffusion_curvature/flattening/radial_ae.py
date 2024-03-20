@@ -178,8 +178,9 @@ def radially_flatten_with_ae(
     return_model = False,
     affinity_weight=1,
     central_idx = 0,
-    max_epochs = 100,
+    max_epochs = 20,
     sigma=0.5,
+    device='cpu',
 ):
     if D is None:
         emb_op = HeatGeo(knn=5)
@@ -193,7 +194,7 @@ def radially_flatten_with_ae(
     model = RadialFlatteningAutoencoder(
         input_dim = train_sample['x'].shape[1],
         intrinsic_dim = intrinsic_dim,
-        reconstruction_weight = 1,
+        reconstruction_weight = 0,
         distance_weight = 1,
         affinity_weight = affinity_weight,
         learning_rate = learning_rate,
@@ -202,7 +203,7 @@ def radially_flatten_with_ae(
 
     trainer = Trainer(
         max_epochs=max_epochs, 
-        accelerator='cuda',
+        accelerator=device,
         use_distributed_sampler=False,
         enable_progress_bar=True, enable_model_summary=False,
         )

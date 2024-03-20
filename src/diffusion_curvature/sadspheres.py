@@ -85,7 +85,8 @@ class SadSpheres():
         for m in self.method_names:
             self.labels[m] = np.array([self.DS.data_vars[i].attrs[m] for i in range(self.__len__())])
 
-    def plot(self, title = ""):
+    def plot(self, title = None):
+        if title is None: title = f"In dimension {self.dimension}"
         # for each computed method on this dataset, we plot the histogram of saddles vs spheres
         self._aggregate_labels()
         # get the idxs for each type of dataset
@@ -98,7 +99,7 @@ class SadSpheres():
                     plt.hist(self.labels[m][idxs_by_name[dname]], bins=50, label = dname, edgecolor='none', linewidth=5)
                 plt.legend()
                 plt.xlabel(m)
-                plt.title(f"In dimension {self.dimension}")
+                plt.title(title)
                 plt.show()
 
     def table(self):

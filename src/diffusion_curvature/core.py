@@ -60,11 +60,11 @@ def get_adaptive_graph(X, k=10, alpha = 0):
         k = k,
         anisotropic_density_normalization = alpha,
     )
-    G = SimpleGraph(W)
+    G = pygsp.graphs.Graph(W)
     return G
 
 _DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
-_LAZINESS_METHOD = Literal['Wasserstein','Entropic', 'Laziness']
+_LAZINESS_METHOD = Literal['Wasserstein','Entropic', 'Laziness', 'Wasserstein Normalized']
 _FLATTENING_METHOD = Literal['Neural', 'Fixed', 'Mean Fixed', 'MIOFlow']
 _COMPARISON_METHOD = Literal['Ollivier', 'Subtraction']
 
@@ -72,7 +72,7 @@ class DiffusionCurvature():
     def __init__(
             self,
             diffusion_type:_DIFFUSION_TYPES = 'diffusion matrix', # Either ['diffusion matrix','heat kernel']
-            laziness_method: _LAZINESS_METHOD = 'Entropic', # Either ['Wasserstein','Entropic', 'Laziness']
+            laziness_method: _LAZINESS_METHOD = 'Wasserstein', # Either ['Wasserstein','Entropic', 'Laziness']
             flattening_method: _FLATTENING_METHOD = 'Fixed', # Either ['Neural', 'Fixed', 'Mean Fixed', 'MIOFlow']
             comparison_method: _COMPARISON_METHOD = 'Subtraction', # Either ['Ollivier', 'Subtraction']
             graph_former = get_adaptive_graph,
@@ -83,6 +83,7 @@ class DiffusionCurvature():
             max_flattening_epochs=50,     
             aperture = 20, # if using Laziness flattening, this controls the size of neighborhood over which the return probability is averaged.
             smoothing=1,
+            distance_t = None,
             comparison_space_file = "../data/entropies_averaged.h5",
             verbose = False,
     ):
@@ -95,6 +96,7 @@ class DiffusionCurvature():
             self.SGT = load_average_entropies(comparison_space_file)
             # deepdish.io.load("../data/sgt_peppers_averaged_flat_entropies.h5") # dict of dim x knn x ts containing precomputed flat entropies.
 
+        
     def unsigned_curvature(
             self,
             G:pygsp.graphs.Graph, # PyGSP input Graph
@@ -117,27 +119,45 @@ class DiffusionCurvature():
                 self.P = jnp.array(P)
                 if t is None: t = optimal_t_via_vne(P)
                 self.Pt = jax_power_matrix(self.P,t)
+                if self.distance_t is not None:
+                    self.P_dist = jax_power_matrix(self.P,self.distance_t)
+                else:
+                    self.P_dist = jax_power_matrix(self.P, t)
             case 'heat kernel':
+                if self.distance_t is None:
+                    self.distance_t = t
                 if t is None: 
                     normal_P = normalize(G.W, norm="l1", axis=1)
                     if type(normal_P) == scipy.sparse._csr.csr_matrix:
                         normal_P = normal_P.todense()
                     normal_P = jnp.array(normal_P)
                     t = optimal_t_via_vne(normal_P)
-                Ps = heat_diffusion_from_dirac(G, idx=idx, t=[1,t])
+                Ps = heat_diffusion_from_dirac(G, idx=idx, t=[1,self.distance_t, t])
                 # signal = jnp.eye(n) if idx is not None else kronecker_delta(n,idx=idx)
                 # Ps = heat_diffusion_on_signal(G, signal, [1,t])
                 self.P = Ps[0]
-                self.Pt = Ps[1]
+                self.P_dist = Ps[1]
+                self.Pt = Ps[2]
             case _:
                 raise ValueError(f"Diffusion Type {self.diffusion_type} not in {_DIFFUSION_TYPES}")
         match self.laziness_method:
             case "Wasserstein":
                 if D is None: 
                     # raise NotImplementedError("If using Wasserstein-style diffusion curvature, you must pass in precomputed manifold distances with the 'D = ' parameter. If you don't want to compute those, we recommend setting the laziness type to 'Entropic'")
-                    D = phate_distances(self.Pt) #TODO: Could be more efficient here if there's an idx
+                    D = phate_distances(self.P_dist) #TODO: Could be more efficient here if there's an idx
                 laziness = wasserstein_spread_of_diffusion(D,self.Pt) if idx is None else wasserstein_spread_of_diffusion(D[idx],self.Pt[idx])
                 if _also_return_first_scale: laziness_nought = wasserstein_spread_of_diffusion(D,self.P)
+            case "Wasserstein Normalized":
+                if D is None: 
+                    if self.distance_t is not None:
+                        self.P_dist = jax_power_matrix(self.P,self.distance_t)
+                    else:
+                        self.P_dist = jax_power_matrix(self.P, t)
+                    # raise NotImplementedError("If using Wasserstein-style diffusion curvature, you must pass in precomputed manifold distances with the 'D = ' parameter. If you don't want to compute those, we recommend setting the laziness type to 'Entropic'")
+                    D = phate_distances(self.P_dist) #TODO: Could be more efficient here if there's an idx
+                laziness = wasserstein_spread_of_diffusion(D,self.Pt) if idx is None else wasserstein_spread_of_diffusion(D[idx],self.Pt[idx])
+                laziness_nought = wasserstein_spread_of_diffusion(D,self.P) if idx is None else wasserstein_spread_of_diffusion(D[idx],self.P[idx])
+                laziness = laziness / (laziness_nought @ jax_power_matrix(self.P, self.smoothing))
             case "Entropic":
                 laziness = entropy_of_diffusion(self.Pt) if idx is None else entropy_of_diffusion(self.Pt[idx])
                 # laziness = entropy_of_diffusion(self.P) / entropy_of_diffusion(self.Pt)
@@ -218,12 +238,9 @@ class DiffusionCurvature():
                     params = fit_comparison_space_model(model, max_epochs=1000)
                     if verbose: print(params)
                     euclidean_stuffs = model.apply(params) # dictionary containing A, P, D
-                    W = fill_diagonal(euclidean_stuffs['A'],0)
-                    G_euclidean = pygsp.graphs.Graph(
-                        W = W,
-                        lap_type = G.lap_type, # type of laplacian; we'll use the same as inputted.
-                        )
-                    fs = self.unsigned_curvature(G_euclidean,t,idx=0, D=euclidean_stuffs['D'])
+                    # W = fill_diagonal(euclidean_stuffs['A'],0)
+                    G_euclidean = SimpleGraph(euclidean_stuffs['A'])
+                    fs = self.unsigned_curvature(G_euclidean,t,idx=0)
                     return fs
                 case "Neural":
                     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -337,6 +354,35 @@ class DiffusionCurvature():
                 raise ValueError(f'Comparison method must be in {_COMPARISON_METHOD}')    
         if idx is not None: ks = ks[idx]
         return ks #, flat_spreads, manifold_spreads, P, Pt
+
+    def fit(
+            self,
+            G:pygsp.graphs.Graph, # Input Graph
+            t:int, # Scale; if none, finds the knee-point of the spectral entropy curve of the diffusion operator
+            idx=None, # the index at which to compute curvature. If None, computes for all points.
+            dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
+            knn = 15, # Number of neighbors used in construction of graph;
+            D = None, # Supply manifold distances yourself to override their computation. Only used with the Wasserstein laziness method.
+            X = None, # if using a flattening method that requires a point cloud, supply it here.
+    ):
+        self.G = G
+        self.X = X
+        self.D = D
+        self.ks = self.curvature(G = G, t=t, idx=idx, dim=dim, knn=knn, D=D, X=X)
+
+    def fit_transform(
+            self,
+            G:pygsp.graphs.Graph, # Input Graph
+            t:int, # Scale; if none, finds the knee-point of the spectral entropy curve of the diffusion operator
+            idx=None, # the index at which to compute curvature. If None, computes for all points.
+            dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
+            knn = 15, # Number of neighbors used in construction of graph;
+            D = None, # Supply manifold distances yourself to override their computation. Only used with the Wasserstein laziness method.
+            X = None, # if using a flattening method that requires a point cloud, supply it here.
+    ):
+        self.fit(G = G, t=t, idx=idx, dim=dim, knn=knn, D=D, X=X)
+        return self.ks
+    
     
 def fill_diagonal(a, val):
   assert a.ndim >= 2

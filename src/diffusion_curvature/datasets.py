@@ -257,7 +257,7 @@ def rejection_sample_from_saddle(n_samples=1000, intrinsic_dim = 2, verbose=Fals
     k = scalar_curvature_at_origin(saddle)
     return rejection_sample_from_surface(saddle, n_samples), k
 
-# %% ../../nbs/library/datasets/toy-datasets.ipynb 52
+# %% ../../nbs/library/datasets/toy-datasets.ipynb 56
 def plane(n, dim=2):
     coords_2d = np.random.rand(n-1,dim)*2-1
     coords_2d = np.vstack([np.zeros(dim),coords_2d])
