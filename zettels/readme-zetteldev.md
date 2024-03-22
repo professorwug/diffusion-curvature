@@ -8,6 +8,14 @@ Here you’ll find a brief overview of how to use this framework. Besides being 
 
 This is a highly idiosyncratic tool made to scratch the itch of a perhaps rather idiosyncratic person. Nonetheless, that person is pleased to report that *zetteldev* scratches his itch marvelously well – and perhaps it may also scratch yours.
 
+Below, you'll find more detailed instructions (and some philosophical wax). Here's the quickstart version:
+
+1. Install pixi from [https://pixi.sh](https://pixi.sh)
+2. `pixi install` to install the environment
+3. `pixi run postinstall` to set up the project: installing it as a python package, creating a jupyter kernel, and setting up git hooks to keep notebooks clean & conflict free
+4. `pixi run nbsync` to sync cells with `#|export` from a notebook to the python file specified in `#|default_exp` , and pixi run pysync to sync edits in a python file back to a notebook. Since it’s a bidirectional sync, you can edit wherever you prefer.
+5. If you use VSCode, consider installing the fastai/nbdev-vscode extension!
+
 ## Declarative Package Management
 
 Zetteldev uses [pixi](https://pixi.sh), a cargo-like package manager for Python, developed by the team behind Mamba. Think of pixi as mamba/conda, but with a poetry-like project dependencies file and accompanying lock file that supports both conda and pip packages. 

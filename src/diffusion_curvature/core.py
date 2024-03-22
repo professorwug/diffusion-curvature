@@ -25,11 +25,13 @@ from .graphs import diff_aff, diff_op, diffusion_matrix_from_affinities
 from .heat_diffusion import heat_diffusion_on_signal, kronecker_delta, jax_power_matrix, heat_diffusion_from_dirac
 from .diffusion_laziness import wasserstein_spread_of_diffusion, entropy_of_diffusion
 from .distances import phate_distances
+from .datasets import plane
 
 # Comparison space construction
 from .comparison_space import EuclideanComparisonSpace, fit_comparison_space_model, euclidean_comparison_graph, construct_ndgrid_from_shape, diffusion_coordinates, load_average_entropies
 from .normalizing_flows import neural_flattener
 from .flattening.mioflow_quicktrain import MIOFlowStandard
+from .flattening.radial_ae import radially_flatten_with_ae
 
 # Algorithmic niceties
 from .clustering import enhanced_spectral_clustering
@@ -53,7 +55,7 @@ from dataclasses import dataclass
 class SimpleGraph:
     W: np.ndarray
 
-def get_adaptive_graph(X, k=10, alpha = 0):
+def get_adaptive_graph(X, k=10, alpha = -1):
     W = gaussian_kernel(
         X,
         kernel_type='adaptive',
@@ -65,7 +67,7 @@ def get_adaptive_graph(X, k=10, alpha = 0):
 
 _DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
 _LAZINESS_METHOD = Literal['Wasserstein','Entropic', 'Laziness', 'Wasserstein Normalized']
-_FLATTENING_METHOD = Literal['Neural', 'Fixed', 'Mean Fixed', 'MIOFlow']
+_FLATTENING_METHOD = Literal['Neural', 'Fixed', 'Mean Fixed', 'MIOFlow', 'Radial Flattener']
 _COMPARISON_METHOD = Literal['Ollivier', 'Subtraction']
 
 class DiffusionCurvature():
@@ -203,33 +205,36 @@ class DiffusionCurvature():
         def get_flat_spreads(dimension, jump_of_diffusion, num_points_in_comparison, cluster_idxs, verbose=False):
             match self.flattening_method:
                 case "Fixed":
-                    if dimension not in fixed_comparison_cache.keys():
-                        if self.use_grid:
-                            Rn = construct_ndgrid_from_shape(dimension, int(num_points_in_comparison**(1/dimension)))
-                        else:
-                            Rn = jnp.concatenate([jnp.zeros((1,dim)), 2*random_jnparray(num_points_in_comparison-1, dim)-1])
-                        # construct a lattice in dim dimensions of num_points_in_comparison points
-                        G = self.graph_former(Rn)
-                        # G = graphtools.Graph(Rn, anisotropy=1, knn=knn, decay=None,).to_pygsp()
-                        if self.laziness_method == "Wasserstein": 
-                            fixed_comparison_cache[dimension] = (G, scipy.spatial.distance_matrix(Rn,Rn))
-                        else: 
-                            fixed_comparison_cache[dimension] = (G, None)
-                    G_euclidean, D_euclidean = fixed_comparison_cache[dimension]
+                    if self.verbose: print(f"{num_points_in_comparison=}")
+                    Rn = plane(n = int(num_points_in_comparison), dim=dimension)
+                    G_euclidean = self.graph_former(Rn)
+                    # if dimension not in fixed_comparison_cache.keys():
+                    #     if self.use_grid:
+                    #         Rn = construct_ndgrid_from_shape(dimension, int(num_points_in_comparison**(1/dimension)))
+                    #     else:
+                    #         Rn = jnp.concatenate([jnp.zeros((1,dim)), 2*random_jnparray(num_points_in_comparison-1, dim)-1])
+                    #     # construct a lattice in dim dimensions of num_points_in_comparison points
+                    #     G = self.graph_former(Rn)
+                    #     # G = graphtools.Graph(Rn, anisotropy=1, knn=knn, decay=None,).to_pygsp()
+                    #     if self.laziness_method == "Wasserstein": 
+                    #         fixed_comparison_cache[dimension] = (G, scipy.spatial.distance_matrix(Rn,Rn))
+                    #     else: 
+                    #         fixed_comparison_cache[dimension] = (G, None)
+                    # G_euclidean, D_euclidean = fixed_comparison_cache[dimension]
                     # print(type(G_euclidean))
                     # print(G_euclidean.W)
                     # scale the euclidean distances to preserve the maximum radial distance from the center
-                    if D is not None:
-                        # find idx of closest points; get distances between these
-                        cluster_dists_to_center = D[cluster_idxs][:,cluster_idxs][0]
-                        print(cluster_dists_to_center.shape)
-                        manifold_neighb_dists = jnp.sort(cluster_dists_to_center)[:knn]
-                        euclidean_neighb_dists = jnp.sort(D_euclidean[0])[:knn]
-                        # scale average euclidean dist to match average manifold dist to closest neighborhoods
-                        # TODO: this assumes that the distances increase linearly... Not true for, e.g. diffusion distances.
-                        scaling_factor = jnp.mean(manifold_neighb_dists)/jnp.mean(euclidean_neighb_dists)
-                        # scaling_factor = jnp.max(D[cluster_idxs][0])/jnp.max(D_euclidean[0])
-                        D_euclidean = D_euclidean * scaling_factor
+                    # if D is not None:
+                    #     # find idx of closest points; get distances between these
+                    #     cluster_dists_to_center = D[cluster_idxs][:,cluster_idxs][0]
+                    #     print(cluster_dists_to_center.shape)
+                    #     manifold_neighb_dists = jnp.sort(cluster_dists_to_center)[:knn]
+                    #     euclidean_neighb_dists = jnp.sort(D_euclidean[0])[:knn]
+                    #     # scale average euclidean dist to match average manifold dist to closest neighborhoods
+                    #     # TODO: this assumes that the distances increase linearly... Not true for, e.g. diffusion distances.
+                    #     scaling_factor = jnp.mean(manifold_neighb_dists)/jnp.mean(euclidean_neighb_dists)
+                    #     # scaling_factor = jnp.max(D[cluster_idxs][0])/jnp.max(D_euclidean[0])
+                    #     D_euclidean = D_euclidean * scaling_factor
                     fs = self.unsigned_curvature(G_euclidean,t,idx=0) #,D=D_euclidean)   
                     if self.verbose: print(f"comparison entropy is {fs}")
                     return fs
@@ -285,6 +290,11 @@ class DiffusionCurvature():
                         )
                     flattened_points = self.NeuralFlattener.fit_transform(X[cluster_idxs])
                     G_euclidean = self.graph_former(flattened_points)
+                    fs = self.unsigned_curvature(G_euclidean, t, idx=0)
+                    return fs
+                case "Radial Flattener":
+                    X_flattened = radially_flatten_with_ae(intrinsic_dim=dimension, X = X[cluster_idxs])
+                    G_euclidean = self.graph_former(X_flattened)
                     fs = self.unsigned_curvature(G_euclidean, t, idx=0)
                     return fs
 
