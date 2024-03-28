@@ -7,7 +7,7 @@ __all__ = ['get_adaptive_graph', 'diff_op', 'kernel_degree', 'diff_aff', 'get_kn
 # %% ../../nbs/library/core-jax/Graphs.ipynb 2
 import pygsp
 from .kernels import gaussian_kernel
-def get_adaptive_graph(X, k=10, alpha = -1):
+def get_adaptive_graph(X, k = 5, alpha = 1):
     W = gaussian_kernel(
         X,
         kernel_type='adaptive',

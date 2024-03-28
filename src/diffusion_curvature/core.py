@@ -55,7 +55,7 @@ from dataclasses import dataclass
 class SimpleGraph:
     W: np.ndarray
 
-def get_adaptive_graph(X, k=10, alpha = -1):
+def get_adaptive_graph(X, k = 5, alpha = 1):
     W = gaussian_kernel(
         X,
         kernel_type='adaptive',
