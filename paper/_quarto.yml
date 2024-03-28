@@ -13,5 +13,5 @@ format:
   jats: default
   agu-pdf: default
 
-
+jupyter: diffusion_curvature-pixi
 

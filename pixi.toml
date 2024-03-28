@@ -1,6 +1,3 @@
-feature.cuda.platforms = ["win-64", "linux-64"]
-feature.cuda.channels = ["nvidia", {channel = "pytorch", priority = -1}]
-feature.cuda.system-requirements = {cuda = "12.1"}
 [project]
 name = "diffusion_curvature"
 version = "0.1.0"
@@ -9,7 +6,7 @@ authors = ["Kincaid MacDonald <dev@riddle.press>"]
 # channels = ["nvidia/label/cuda-12.1.0", "nvidia", "conda-forge", "pytorch"] 
 # add with `pixi project channel add nvidia`; searches in left-most channels first and stops when the package is found. Best to order by recency of update, with pytorch at the end.
 channels = ["nvidia", "conda-forge", "fastai", "pytorch"] 
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-arm64"]
 
 [tasks]
 # install the library in editable mode
@@ -72,10 +69,12 @@ h5py = "*"
 torchdyn = "*"
 heatgeo = "*"
 
-
+[feature.cuda]
+platforms = ["win-64", "linux-64"]
+channels = ["nvidia", {channel = "pytorch", priority = -1}]
+system-requirements = {cuda = "12.1"}
 [feature.cuda.dependencies]
 pytorch-cuda = {version = "12.1.*", channel = "pytorch"}
-
 [feature.cuda.tasks]
 jupyter = "jupyter notebook"
 # test = "python test.py --cuda"

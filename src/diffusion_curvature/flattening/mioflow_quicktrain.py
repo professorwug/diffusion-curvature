@@ -15,10 +15,10 @@ from imageio import imread, mimwrite
 from IPython.display import Image
 import os
 import torch
-from heatgeo.embedding import HeatGeo
 import pandas as pd
 import base64
 from IPython import display
+from ..distances import phate_distances_from_pointcloud
 
 class MIOFlowStandard():
     def __init__(
@@ -54,9 +54,7 @@ class MIOFlowStandard():
             data[f'd{i+1}'] = X[:, i]
 
         if D is None:
-            emb_op = HeatGeo(knn=5)
-            emb = emb_op.fit_transform(X)
-            D = emb_op.dist
+            D = phate_distances_from_pointcloud(X)
         
         # Create the dataframe
         df = pd.DataFrame(data)

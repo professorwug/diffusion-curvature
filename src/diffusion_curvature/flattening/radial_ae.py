@@ -166,9 +166,9 @@ class RadialFlatteningAutoencoder(pl.LightningModule):
 
 
 # %% ../../../nbs/library/flattening/Radial Flattening Autoencoder.ipynb 12
-from heatgeo.embedding import HeatGeo
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import EarlyStopping
+from ..distances import phate_distances_from_pointcloud
 
 def radially_flatten_with_ae(
     X,
@@ -183,9 +183,7 @@ def radially_flatten_with_ae(
     device='cpu',
 ):
     if D is None:
-        emb_op = HeatGeo(knn=5)
-        emb = emb_op.fit_transform(X)
-        D = emb_op.dist
+        D = phate_distances_from_pointcloud(X)
         
     trainloader = dataloader_for_local_neighborhood_flattening(X, D, central_idx=central_idx, batch_size=64)
     train_sample = next(iter(trainloader))

@@ -3032,7 +3032,7 @@ def new_plot_comparisons_flat(
     return fig
 
 # %% ../../../nbs/library/flattening/MIOFlow for Neural Flattening.ipynb 102
-from heatgeo.embedding import HeatGeo
+from ..distances import phate_distances_from_pointcloud
 from .radial_ae import radially_flatten_with_ae
 
 def flatten_with_mioflow(
@@ -3050,9 +3050,7 @@ def flatten_with_mioflow(
         data[f'd{i+1}'] = X[:, i]
 
     if D is None:
-        emb_op = HeatGeo(knn=5)
-        emb = emb_op.fit_transform(X)
-        D = emb_op.dist
+        D = phate_distances_from_pointcloud(X)
     
     # Create the dataframe
     df = pd.DataFrame(data)
