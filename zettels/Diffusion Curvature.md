@@ -14,18 +14,12 @@ $$
 
 Where $p_X^t$ is the t-step random walk over $X$, and $p_{\Phi(X)}^t$ is the same over the flattened points $\Phi(X)$. In both cases, the $W_1$ distance is taken with respect to manifold distances.
 
-
-
-
-
 ```tasks
 not done
 (tags includes #projects/DiffusionCurvature) OR (heading includes #projects/DiffusionCurvature)
 ```
 
 | [ClickUp](https://app.clickup.com/9013032587/v/li/901300236665)  | [Diffusion Curvature](omnifocus:///folder/dVHuiaIwheP) | 
-
-
 
 # Flow Model for Neural Flattening
 
@@ -42,8 +36,6 @@ not done
 [ClickUp](https://app.clickup.com/t/86a1wx0c4)
 
 [[2024-02-07#A Uniform Density Loss for MIOFlattener]]
-
-
 
 ## Radial Flattening Autoencoder
 
@@ -120,3 +112,11 @@ Next steps here:
 ## Klein Bottle Image Data
 
 Used by [[@sritharan2021ComputingRiemannianCurvature]]. This is a dataset of known negative curvature.
+
+# Using Curvature to enhance Graph Learning
+
+Here’s an interesting experiment. The hypothesis is that graphs, because they are ‘ripped from context’, are the form of data which benefits *most* from geometric priors. Diffusion curvature can be pitched as such a geometric prior.
+
+To test this, take a dataset of 3d objects (e.g. ShapeNet) and train varieties of GNNs on it, with different supplemental features, including diffusion curvature.
+
+# Can GNNs predict curvature?

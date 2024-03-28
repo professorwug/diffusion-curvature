@@ -1,5 +1,5 @@
 ---
-title: Diffusion Curvature
+title: A Heat Diffusion-based Ricci Curvature and Applications to GNNs
 author:
   - name: Kincaid MacDonald
     orcid: 0000-0002-0760-5497
@@ -53,8 +53,6 @@ number-sections: true
 ## Introduction
 
 Recent years have seen a growing appreciation that black-box machine learning methods can understand data better if equipped with geometric priors, both globally [cite TDA methods] and locally [cite heat & wave, energy]. This is especially true for graph-structured data. The usefulness of graphs as a general data representation comes at a cost: that data is “ripped from its context”. To take an example, when point cloud data becomes a graph, the *extrinsic* geometric perspective afforded by a bird’s eye view of the points is reduced to an *intrinsic* perspective – the ‘ant’s eye’ view. 
-
-
 
 Outline:
 - 

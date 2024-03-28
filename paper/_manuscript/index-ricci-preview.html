@@ -13,7 +13,7 @@
     <meta name="dcterms.date" content="2024-03-24">
     <meta name="keywords" content="Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds">
 
-    <title>Diffusion Curvature</title>
+    <title>A Heat Diffusion-based Ricci Curvature and Applications to GNNs</title>
     <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -191,36 +191,21 @@
     document.body.classList.add('hypothesis-enabled');
   });
 </script>  
-      <meta name="citation_title" content="Diffusion Curvature">
-<meta name="citation_abstract" content="For a number of years now work has been proceeding in order to bring to perfection the crudely conceived idea of a machine that would not only supply inverse reactive current for use in unilateral phase detractors, but would also be capable of automatically synchronizing cardinal grammeters. Such a machine is the &amp;amp;quot;Turbo-Encabulator.&quot;">
-<meta name="citation_keywords" content="Manifold Learning,Geometric Deep Learning,Graph Curvature,Point Clouds">
-<meta name="citation_author" content="Kincaid MacDonald">
-<meta name="citation_author" content="Dhananjay Bhaskar">
-<meta name="citation_author" content="Kaly Zhang">
-<meta name="citation_author" content="Ian Adelstein">
-<meta name="citation_author" content="Smita Krishnaswamy">
-<meta name="citation_publication_date" content="2024-03-24">
-<meta name="citation_cover_date" content="2024-03-24">
-<meta name="citation_year" content="2024">
-<meta name="citation_online_date" content="2024-03-24">
-<meta name="citation_language" content="en">
-<meta name="citation_journal_title" content="IEEE TPAMI">
-<meta name="citation_reference" content="citation_title=Strategies for the development of volcanic hazard maps in monogenetic volcanic fields: The example of La Palma (Canary Islands);,citation_author=José Marrero;,citation_author=Alicia García;,citation_author=Manuel Berrocoso;,citation_author=Ángeles Llinares;,citation_author=Antonio Rodríguez-Losada;,citation_author=R. Ortiz;,citation_publication_date=2019-07;,citation_cover_date=2019-07;,citation_year=2019;,citation_doi=10.1186/s13617-019-0085-5;,citation_volume=8;,citation_journal_title=Journal of Applied Volcanology;">
-</head>
+      </head>
 
   <body class="quarto-notebook">
     <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
       
       <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link" href=""><i class="bi bi-caret-left"></i> Back to Article</a>
-      <h6><i class="bi bi-journal-code"></i> Article Notebook</h6>
+      <h6><i class="bi bi-journal-code"></i> A Heat Diffusion-based Ricci Curvature and Applications to GNNs</h6>
 
-            <a href="./index.qmd" class="btn btn-primary quarto-download-embed" download="index.qmd">Download Source</a>
+            <a href="./index-ricci.qmd" class="btn btn-primary quarto-download-embed" download="index-ricci.qmd">Download Source</a>
           </div>
 
      <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Diffusion Curvature</h1>
+      <h1 class="title">A Heat Diffusion-based Ricci Curvature and Applications to GNNs</h1>
           </div>
 
     
@@ -316,16 +301,16 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-     <div id="cd6df5f0" class="cell markdown">
-<section id="introduction" class="level2" data-number="0.1">
-<h2 data-number="0.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">0.1</span> Introduction</h2>
+     <div id="4d7cc505" class="cell markdown">
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Recent years have seen a growing appreciation that black-box machine learning methods can understand data better if equipped with geometric priors, both globally [cite TDA methods] and locally [cite heat &amp; wave, energy]. This is especially true for graph-structured data. The usefulness of graphs as a general data representation comes at a cost: that data is “ripped from its context”. To take an example, when point cloud data becomes a graph, the <em>extrinsic</em> geometric perspective afforded by a bird’s eye view of the points is reduced to an <em>intrinsic</em> perspective – the ‘ant’s eye’ view.</p>
 </section>
-<section id="outline" class="level2" data-number="0.2">
-<h2 data-number="0.2" class="anchored" data-anchor-id="outline"><span class="header-section-number">0.2</span> Outline:</h2>
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline:</h2>
 </section>
-<section id="diffusion-ricci-curvature" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Diffusion Ricci Curvature</h1>
+<section id="diffusion-ricci-curvature" class="level1">
+<h1>Diffusion Ricci Curvature</h1>
 <div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2c3-are-kernels-zeitgeibers.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-spread-of-diffusion-2d">
 <div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-spread-of-diffusion-2d" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>show_curvature_curves(DC_saddle, DC_plane, DC_sphere, num_ts<span class="op">=</span><span class="dv">50</span>, title <span class="op">=</span> <span class="st">"Spread of Diffusion in 2 Manifolds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -333,46 +318,49 @@
 <div id="fig-spread-of-diffusion-2d" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Three lines,e sloping upwards with varying sharpness, represent the 'spread' of diffusion on three manifolds. The saddle is sharpest, the sphere the least so.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-spread-of-diffusion-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="index_files/figure-html/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-1.png" class="img-fluid figure-img" alt="Three lines,e sloping upwards with varying sharpness, represent the 'spread' of diffusion on three manifolds. The saddle is sharpest, the sphere the least so."></a>
+<a href="index-ricci_files/figure-html/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="index-ricci_files/figure-html/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-1.png" class="img-fluid figure-img" alt="Three lines,e sloping upwards with varying sharpness, represent the 'spread' of diffusion on three manifolds. The saddle is sharpest, the sphere the least so."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spread-of-diffusion-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Spread of Diffusion in 2 Manifolds
+Spread of Diffusion in 2 Manifolds
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
 </div>
-<section id="sec-data-methods" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="sec-data-methods"><span class="header-section-number">1.1</span> Data &amp; Methods</h2>
+<section id="sec-data-methods" class="level2">
+<h2 class="anchored" data-anchor-id="sec-data-methods">Data &amp; Methods</h2>
 </section>
 </section>
 </div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-torus" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.utils <span class="im">import</span> plot_3d</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.datasets <span class="im">import</span> torus</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.core <span class="im">import</span> DiffusionCurvature, get_adaptive_graph</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>X_torus, ks_torus <span class="op">=</span> torus(<span class="dv">2000</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>DC <span class="op">=</span> DiffusionCurvature()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>G_torus <span class="op">=</span> get_adaptive_graph(X_torus, k <span class="op">=</span> <span class="dv">5</span>, alpha <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ks_computed <span class="op">=</span> DC.curvature(G_torus, dim<span class="op">=</span><span class="dv">2</span>, t <span class="op">=</span> <span class="dv">25</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plot_3d(X_torus, ks_computed, colorbar<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>#| label: torus
+#| fig-cap: Diffusion Curvature vs Gaussian Curvature of the Torus
+#| fig-alt: The diffusion curvature corresponds closely to the gaussian curvature of the torus
+from diffusion_curvature.utils import plot_3d
+from diffusion_curvature.datasets import torus
+from diffusion_curvature.core import DiffusionCurvature, get_adaptive_graph
+X_torus, ks_torus = torus(2000)
+DC = DiffusionCurvature()
+G_torus = get_adaptive_graph(X_torus, k = 5, alpha = 1)
+ks_computed = DC.curvature(G_torus, dim=2, t = 25)
+plot_3d(X_torus, ks_computed, colorbar=True)</code></pre>
 <div class="cell-output cell-output-stderr">
-<pre><code>2024-03-24 17:42:03,075:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-03-24 17:42:05,185:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!</code></pre>
+<pre><code>2024-03-24 17:44:47,324:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-03-24 17:44:48,727:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p class=""><a href="index_files/figure-html/torus-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="Diffusion Curvature vs Gaussian Curvature of the Torus"><img src="index_files/figure-html/torus-output-2.png" alt="The diffusion curvature corresponds closely to the gaussian curvature of the torus" width="715" height="758" class="figure-img"></a></p>
+<p class=""><a href="index-ricci_files/figure-html/torus-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="Diffusion Curvature vs Gaussian Curvature of the Torus"><img src="index-ricci_files/figure-html/torus-output-2.png" alt="The diffusion curvature corresponds closely to the gaussian curvature of the torus" width="715" height="758" class="figure-img"></a></p>
 <figcaption>Diffusion Curvature vs Gaussian Curvature of the Torus</figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div id="57285e5f" class="cell markdown">
-<section id="conclusion" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">1.2</span> Conclusion</h2>
+<div id="800a516d" class="cell markdown">
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 </section>
 <section id="references" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
@@ -382,7 +370,7 @@ Figure&nbsp;1: Spread of Diffusion in 2 Manifolds
 </section>
 </div>
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Spread of Diffusion in 2 Manifolds</span>
+<span class="glightbox-desc lightbox-desc-1">Spread of Diffusion in 2 Manifolds</span>
 <span class="glightbox-desc lightbox-desc-2">Diffusion Curvature vs Gaussian Curvature of the Torus</span>
 </div>
      </main>
@@ -794,7 +782,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
