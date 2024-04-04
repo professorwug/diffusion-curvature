@@ -6,13 +6,21 @@ authors = ["Kincaid MacDonald <dev@riddle.press>"]
 # channels = ["nvidia/label/cuda-12.1.0", "nvidia", "conda-forge", "pytorch"] 
 # add with `pixi project channel add nvidia`; searches in left-most channels first and stops when the package is found. Best to order by recency of update, with pytorch at the end.
 channels = ["nvidia", "conda-forge", "fastai", "pytorch"] 
-platforms = ["linux-64", "osx-arm64"]
+platforms = ["linux-64"]
 
 [tasks]
 # install the library in editable mode
 postinstall = "pip install --no-build-isolation --no-deps --disable-pip-version-check --editable src && python -m ipykernel install --user --name diffusion_curvature-pixi && nbdev_install_hooks"
 # test the installation
 test_import = "python -c 'import diffusion_curvature'"
+
+# Adding and creating experiments
+new_experiment = "bash .zetteldev/new_experiment.sh"
+
+# Jupyter cache shorthands
+run_experiments = "jcache project execute --executor local-parallel"
+
+
 # NBDev shorthands
 nbsync = "nbdev_export" # export code from notebooks into the library
 nbclean = "nbdev_clean" # remove extraneous notebook metadata to reduce git conflicts
@@ -59,6 +67,7 @@ flax = ">=0.8.2,<0.9"
 pot = ">=0.9.3,<0.10"
 networkx = "==2.8.6"
 imageio = ">=2.34.0,<2.35"
+jupyter-cache = ">=1.0.0,<1.1"
 
 
 [pypi-dependencies]
@@ -66,8 +75,8 @@ graphtools = "*"
 tadasets = "*"
 scikit-dimension = "*"
 h5py = "*"
-torchdyn = "*"
 heatgeo = "*"
+torchdyn = "*"
 
 [feature.cuda]
 platforms = ["win-64", "linux-64"]

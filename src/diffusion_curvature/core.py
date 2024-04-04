@@ -91,6 +91,7 @@ class DiffusionCurvature():
     ):
         store_attr()
         self.D = None
+        self.laziness = None
         self.graph_former = graph_former
         if self.dimest is None:
             self.dimest = skdim.id.KNN()
@@ -147,6 +148,7 @@ class DiffusionCurvature():
                 if D is None: 
                     # raise NotImplementedError("If using Wasserstein-style diffusion curvature, you must pass in precomputed manifold distances with the 'D = ' parameter. If you don't want to compute those, we recommend setting the laziness type to 'Entropic'")
                     D = phate_distances(self.P_dist) #TODO: Could be more efficient here if there's an idx
+                self.D = D
                 laziness = wasserstein_spread_of_diffusion(D,self.Pt) if idx is None else wasserstein_spread_of_diffusion(D[idx],self.Pt[idx])
                 if _also_return_first_scale: laziness_nought = wasserstein_spread_of_diffusion(D,self.P)
             case "Wasserstein Normalized":
@@ -186,6 +188,7 @@ class DiffusionCurvature():
                 if _also_return_first_scale: laziness_nought = jnp.sum(self.P * P_thresholded,axis=1)
             case _:
                 raise ValueError(f"Laziness Method {self.laziness_method} not in {_LAZINESS_METHOD}")
+        self.laziness = laziness
         if _also_return_first_scale: 
             return laziness, laziness_nought, self.P, self.Pt, t
         else:

@@ -166,3 +166,6 @@ token
 
 # pixi environments
 .pixi/
+
+# Jupyter cache - storing notebook state to avoid unneeded re-executions
+.jupyter_cache
