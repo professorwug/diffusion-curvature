@@ -107,7 +107,6 @@ This is similar to applying a low-pass filter to the graph. As $t$ increases, th
 
 This is a remarkable feature of the diffusion matrix: the ability to “denoise” itself by iterating the random walk over larger time scales. Intuitively, the paths through the data most robustly trafficked by random walkers are those supported by multiple high-probability connections from independent starting points.
 
-
 ## Related Work
 
 ### Foreman Ricci Curvature
@@ -195,17 +194,20 @@ Although diffusion curvature was designed for sampled manifolds, it extends natu
 
 Ollivier Ricci curvature is based in optimal transport, formalizing the classical intuition that in spaces of positive curvature, “spheres are closer than their centers” [cite ollivier]. In place of spheres, Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1 distance with the shortest-path metric. Given points $x,y$ in the metric space, with 1-step diffusions $m_{x}$ and $m_{y}$, the Ollivier Ricci curvature of the edge between $x$ and $y$ is:
 $$\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}$$
+
 Local curvature always involves some comparison. Here, the comparison is between the manifold’s optimal transport distance (the numerator), and the Euclidean optimal transport distance (which, helpfully, is just the distance in the denominator. You’ll notice the similarity to diffusion curvature, which replaces the $W_{1}$ distance between two diffused distributions with the $W_{1}$ distance between a point and its $t$-step diffusion. We do this for both the manifold (in the numerator) and a Euclidean comparison space (in the denominator).
 
 $$
 k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
 $$
+
 The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by $W_{1}(\delta_{x},m_{x}^t)$. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:
 
 **Proposition 1.** Let $(X,d,m)$ be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some $k$ such that $\kappa(x,y) \geq k$ for all $x,y \in X$. The Wasserstein Spread of Diffusion of a $t$ step diffusion in $X$ is bounded above by
 $$
 W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
 $$
+
 In particular, if $k>0$ then $W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}$, and if $k=0$, then $W_{1}(\delta_{x},m_{x}^t) \leq tW_1\left(\delta_x,m_x\right)$.
 
 *Proof*. First, we bound $W_{1}(m_{x}^t,m_{x}^{t+1})$ using Ollivier’s Proposition 20 [citation needed] on concentration of measure. The proposition states that a lower bound on curvature, such as we have, implies that
@@ -218,10 +220,12 @@ where here $\mu,\mu'$ are two probability distributions and $m$ is a random walk
 $$
 W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
 $$
+
 *Proof.* We proceed by induction. For $t=0$, the above is true, as $W_{1}(m_{x}^0, m_{x}^{1}) =W_{1}(\delta_x, m_{x}^{1}) = W_1\left(\delta_x,m_x\right)$. Suppose it holds for $t-1$, e.g.
 $$
 W_1\left(m_x^{t-1}, m_x^{t}\right) \leq(1-k)^{t-1} W_1\left(\delta_x,m_x\right)
 $$
+
 Consider $W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right)$, the application of another step of diffusion. By Ollivier’s Proposition 20, this distance is bounded above by
 $$
 W_1\left(\mu_1 \star m, \mu_2 \star m\right) \leq(1-k) W_1\left(\mu_1, \mu_2\right)
@@ -230,6 +234,7 @@ So
 $$
 W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right) \leq  (1-k)W_1\left(m_x^{t-1}, m_x^{t}\right)
 $$
+
 which, since the statement holds for $t-1$, yields
 $$
 W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
@@ -239,14 +244,17 @@ To use this lemma, we can decompose our $t-$step diffusion into a sum of single 
 $$
 W_{1}(\delta_{x},m_{x}^t) \leq W_1\left(\delta_x,m_x\right) + W_{1}(m_{x},m_{x}^2) + \dots + W_{1}(m_{x}^{t-1}, m_{x}^t)
 $$
+
 By Lemma 1,
 $$
 \leq W_1\left(\delta_x,m_x\right)\left(1+(1-k)+(1-k)^2+\ldots+(1-k)^{t-1}\right)
 $$
+
 This truncated series is equal to $\frac{1-(1-k)^t}{1-(1-k)} = \frac{(1-(1-k)^t)}{k}$. If $k>0$, then as $t \to \infty$, the infinite sum $\sum_{i=0}^t (1-k)^i$ converges to the geometric series $\frac{1}{1-(1-k)} = \frac{1}{k}$. Because the sum is monotonically increasing with $t$, the partial sum is upper bounded by the infinite sum. It follows that
 $$
 W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
 $$
+
 If $k=0$, then obviously $\sum_{i}^t (1-k)^i = t$.
 
 The above asserts that the “spread” of diffusion is bounded from above by the Ollivier Ricci curvature of the region. To turn this measurement of spread into a signed curvature, we have only to introduce a comparison: the dimensional constant of the Euclidean spread of diffusion, $W_{1}^E(\delta_{x},m_{x}^t)$. Using Proposition 1, we can directly bound $k_{D}$ in terms of the Ollivier Ricci curvature:
