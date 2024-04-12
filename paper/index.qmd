@@ -272,15 +272,15 @@ $$
 
 ## Results
 
-{{< embed ../nbs/experiments/2c3-are-kernels-zeitgeibers.ipynb#fig-spread-of-diffusion-2d >}}
-
 ### Toy Manifolds
 
-#### Sanity Check: 2d surfaces
+#### 2 Manifolds
+
+{{< embed ../nbs/experiments/2a-Toy-Manifolds.ipynb#fig-2-manifolds >}}
 
 #### Saddle sphere sign-differentiation test
 
-#### Curvature Colosseum
+#### Noise Resilience
 
 ### Loss Landscapes
 

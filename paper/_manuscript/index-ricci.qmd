@@ -20,6 +20,12 @@ author:
     roles: []
     affiliations: 
     - MILA
+  - name: Xingzhi Sun
+    orcid: 0000-0002-7859-8394
+    corresponding: false
+    roles: []
+    affiliations: 
+    - Yale
   - name: Ian Adelstein
     orcid: 0000-0002-7859-8394
     corresponding: false
@@ -52,10 +58,17 @@ number-sections: true
 
 ## Introduction
 
+Recent years have seen a growing appreciation that black-box machine learning methods can understand data better if equipped with geometric priors, both globally [cite TDA methods] and locally [cite heat & wave, energy]. This is especially true for graph-structured data. The graph manages to be the most general data structure only by ripping itself from the extrinsic context in which geometric measures like curvature are most easily derived. While pointclouds within ambient space can be viewed *extrinsically*, like an astronaut’s view of the Earth, the graph’s view of itself is solely *intrinsic*, like Poincare’s ant on a sphere.
+
+Though there exist purely intrinsic measures of geometry, they are (as intuition would suggest) more specialized and arcane then extrinsic measures, involving complex constructs like optimal transport and geodesics. The result: while point cloud-based neural networks (feedforward, CNNs, diffusion models) can easily by themselves infer geometry through their extrinsic view, GNNs are left with a much harder problem: deriving the complex machinery of, e.g., geodesics and Wasserstein distances from scratch.
+
+Here we present an alternative: a differentiable, scale-invariant, noise-resistant module that equips GNNs with graph curvatures.
+<!-- 
+
 Recent years have seen a growing appreciation that black-box machine learning methods can understand data better if equipped with geometric priors, both globally [cite TDA methods] and locally [cite heat & wave, energy]. This is especially true for graph-structured data. The usefulness of graphs as a general data representation comes at a cost: that data is “ripped from its context”. To take an example, when point cloud data becomes a graph, the *extrinsic* geometric perspective afforded by a bird’s eye view of the points is reduced to an *intrinsic* perspective – the ‘ant’s eye’ view. 
 
 Outline:
-- 
+-  -->
 
 
 # Diffusion Ricci Curvature

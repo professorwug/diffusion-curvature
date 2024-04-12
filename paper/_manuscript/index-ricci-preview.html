@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
     <meta charset="utf-8">
-    <meta name="generator" content="quarto-1.4.551">
+    <meta name="generator" content="quarto-1.4.550">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
     <meta name="author" content="Kincaid MacDonald">
     <meta name="author" content="Dhananjay Bhaskar">
     <meta name="author" content="Kaly Zhang">
+    <meta name="author" content="Xingzhi Sun">
     <meta name="author" content="Ian Adelstein">
     <meta name="author" content="Smita Krishnaswamy">
-    <meta name="dcterms.date" content="2024-03-24">
+    <meta name="dcterms.date" content="2024-03-29">
     <meta name="keywords" content="Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds">
 
     <title>A Heat Diffusion-based Ricci Curvature and Applications to GNNs</title>
@@ -131,7 +132,7 @@
       }      
     </style>
 
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script>
     window.document.addEventListener("DOMContentLoaded", function () {
 
       var header = window.document.querySelector("#quarto-embed-header");
@@ -190,7 +191,10 @@
   window.document.addEventListener("DOMContentLoaded", function (_event) {
     document.body.classList.add('hypothesis-enabled');
   });
-</script>  
+</script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>  
       </head>
 
   <body class="quarto-notebook">
@@ -240,6 +244,14 @@
                       </p>
                   </div>
                       <div class="quarto-title-meta-contents">
+            <p class="author">Xingzhi Sun <a href="https://orcid.org/0000-0002-7859-8394" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        Yale
+                      </p>
+                  </div>
+                      <div class="quarto-title-meta-contents">
             <p class="author">Ian Adelstein <a href="https://orcid.org/0000-0002-7859-8394" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
           </div>
                 <div class="quarto-title-meta-contents">
@@ -266,7 +278,7 @@
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">March 24, 2024</p>
+              <p class="date">March 29, 2024</p>
             </div>
           </div>
           
@@ -295,44 +307,97 @@
     </div>  </div>
 </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
 <div id="quarto-sidebar-toc-left" class="sidebar toc-left">
-  
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#diffusion-ricci-curvature" id="toc-diffusion-ricci-curvature" class="nav-link" data-scroll-target="#diffusion-ricci-curvature">Diffusion Ricci Curvature</a>
+  <ul class="collapse">
+  <li><a href="#sec-data-methods" id="toc-sec-data-methods" class="nav-link" data-scroll-target="#sec-data-methods">Data &amp; Methods</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+</nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-     <div id="4d7cc505" class="cell markdown">
-<section id="introduction" class="level2">
+       <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Recent years have seen a growing appreciation that black-box machine learning methods can understand data better if equipped with geometric priors, both globally [cite TDA methods] and locally [cite heat &amp; wave, energy]. This is especially true for graph-structured data. The usefulness of graphs as a general data representation comes at a cost: that data is “ripped from its context”. To take an example, when point cloud data becomes a graph, the <em>extrinsic</em> geometric perspective afforded by a bird’s eye view of the points is reduced to an <em>intrinsic</em> perspective – the ‘ant’s eye’ view.</p>
-</section>
-<section id="outline" class="level2">
-<h2 class="anchored" data-anchor-id="outline">Outline:</h2>
+<p>Recent years have seen a growing appreciation that black-box machine learning methods can understand data better if equipped with geometric priors, both globally [cite TDA methods] and locally [cite heat &amp; wave, energy]. This is especially true for graph-structured data. The graph manages to be the most general data structure only by ripping itself from the extrinsic context in which geometric measures like curvature are most easily derived. While pointclouds within ambient space can be viewed <em>extrinsically</em>, like an astronaut’s view of the Earth, the graph’s view of itself is solely <em>intrinsic</em>, like Poincare’s ant on a sphere.</p>
+<p>Though there exist purely intrinsic measures of geometry, they are (as intuition would suggest) more specialized and arcane then extrinsic measures, involving complex constructs like optimal transport and geodesics. The result: while point cloud-based neural networks (feedforward, CNNs, diffusion models) can easily by themselves infer geometry through their extrinsic view, GNNs are left with a much harder problem: deriving the complex machinery of, e.g., geodesics and Wasserstein distances from scratch.</p>
+<p>Here we present an alternative: a differentiable, scale-invariant, noise-resistant module that equips GNNs with graph curvatures. <!-- 
+
+Recent years have seen a growing appreciation that black-box machine learning methods can understand data better if equipped with geometric priors, both globally [cite TDA methods] and locally [cite heat & wave, energy]. This is especially true for graph-structured data. The usefulness of graphs as a general data representation comes at a cost: that data is “ripped from its context”. To take an example, when point cloud data becomes a graph, the *extrinsic* geometric perspective afforded by a bird’s eye view of the points is reduced to an *intrinsic* perspective – the ‘ant’s eye’ view. 
+
+Outline:
+-  --></p>
 </section>
 <section id="diffusion-ricci-curvature" class="level1">
 <h1>Diffusion Ricci Curvature</h1>
-<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2c3-are-kernels-zeitgeibers.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-spread-of-diffusion-2d">
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-spread-of-diffusion-2d" class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>show_curvature_curves(DC_saddle, DC_plane, DC_sphere, num_ts<span class="op">=</span><span class="dv">50</span>, title <span class="op">=</span> <span class="st">"Spread of Diffusion in 2 Manifolds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div id="fig-spread-of-diffusion-2d" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Three lines,e sloping upwards with varying sharpness, represent the 'spread' of diffusion on three manifolds. The saddle is sharpest, the sphere the least so.">
+<div class="quarto-embed-nb-cell" data-notebook="/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2c3-are-kernels-zeitgeibers.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-spread-of-diffusion-2d">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
+
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class=""><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>show_curvature_curves(DC_saddle, DC_plane, DC_sphere, num_ts<span class="op">=</span><span class="dv">50</span>, title <span class="op">=</span> <span class="st">"Spread of Diffusion in 2 Manifolds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div><div id="fig-spread-of-diffusion-2d" class="cell quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-spread-of-diffusion-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index-ricci_files/figure-html/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="index-ricci_files/figure-html/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-1.png" class="img-fluid figure-img" alt="Three lines,e sloping upwards with varying sharpness, represent the 'spread' of diffusion on three manifolds. The saddle is sharpest, the sphere the least so."></a>
+<div id="fig-spread-of-diffusion-2d-1" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spread-of-diffusion-2d-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"3d906f191131462198e6c9b50e7e4696","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spread-of-diffusion-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spread-of-diffusion-2d-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Spread of Diffusion in 2 Manifolds
 </figcaption>
 </figure>
 </div>
+<div id="fig-spread-of-diffusion-2d-2" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spread-of-diffusion-2d-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"76894230a93740d6b035d8d6c00bd2ae","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
 </div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spread-of-diffusion-2d-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+<div id="fig-spread-of-diffusion-2d-3" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spread-of-diffusion-2d-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"dbb785701ebc4d09894e83b91ecd8099","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spread-of-diffusion-2d-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-spread-of-diffusion-2d-4" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Three lines,e sloping upwards with varying sharpness, represent the 'spread' of diffusion on three manifolds. The saddle is sharpest, the sphere the least so.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spread-of-diffusion-2d-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index-ricci_files/figure-html/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-4.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index-ricci_files/figure-html/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-4.png" id="fig-spread-of-diffusion-2d-4" class="img-fluid figure-img" alt="Three lines,e sloping upwards with varying sharpness, represent the 'spread' of diffusion on three manifolds. The saddle is sharpest, the sphere the least so."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spread-of-diffusion-2d-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spread-of-diffusion-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div></div></div>
 </div></div>
 </div>
 <section id="sec-data-methods" class="level2">
 <h2 class="anchored" data-anchor-id="sec-data-methods">Data &amp; Methods</h2>
-</section>
-</section>
-</div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-torus" class="cell" data-execution_count="1">
 <pre><code>#| label: torus
 #| fig-cap: Diffusion Curvature vs Gaussian Curvature of the Torus
@@ -346,19 +411,20 @@ G_torus = get_adaptive_graph(X_torus, k = 5, alpha = 1)
 ks_computed = DC.curvature(G_torus, dim=2, t = 25)
 plot_3d(X_torus, ks_computed, colorbar=True)</code></pre>
 <div class="cell-output cell-output-stderr">
-<pre><code>2024-03-24 17:44:47,324:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-03-24 17:44:48,727:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!</code></pre>
+<pre><code>2024-03-29 11:19:48,865:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2024-03-29 11:19:50,095:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p class=""><a href="index-ricci_files/figure-html/torus-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2" title="Diffusion Curvature vs Gaussian Curvature of the Torus"><img src="index-ricci_files/figure-html/torus-output-2.png" alt="The diffusion curvature corresponds closely to the gaussian curvature of the torus" width="715" height="758" class="figure-img"></a></p>
+<p class=""><a href="index-ricci_files/figure-html/torus-output-2.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2" title="Diffusion Curvature vs Gaussian Curvature of the Torus"><img src="index-ricci_files/figure-html/torus-output-2.png" alt="The diffusion curvature corresponds closely to the gaussian curvature of the torus" width="715" height="758" class="figure-img"></a></p>
 <figcaption>Diffusion Curvature vs Gaussian Curvature of the Torus</figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div id="800a516d" class="cell markdown">
+</section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 </section>
@@ -367,12 +433,12 @@ plot_3d(X_torus, ks_computed, colorbar=True)</code></pre>
 <div id="refs" role="list">
 
 </div>
-</section>
-</div>
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Spread of Diffusion in 2 Manifolds</span>
+<span class="glightbox-desc lightbox-desc-1"></span>
 <span class="glightbox-desc lightbox-desc-2">Diffusion Curvature vs Gaussian Curvature of the Torus</span>
 </div>
+</section>
+</section>
      </main>
 <!-- /main column -->  <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -453,24 +519,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -505,11 +553,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -782,7 +826,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom","descPosition":"bottom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
