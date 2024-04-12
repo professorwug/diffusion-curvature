@@ -130,8 +130,8 @@ class DiffusionCurvature():
         match self.diffusion_type:
             case 'diffusion matrix':
                 # if W has no self loops, i.e. zeros on the diagonal, then we must add ones to the diagonal
-                if np.all(G.W.diagonal() == 0):
-                    G.W.setdiag(1)
+                # if np.all(G.W.diagonal() == 0):
+                #     G.W.setdiag(1)
                 P = normalize(G.W, norm="l1", axis=1)
                 if type(P) == scipy.sparse._csr.csr_matrix:
                     P = P.todense()

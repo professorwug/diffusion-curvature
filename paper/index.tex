@@ -204,7 +204,7 @@ pointwise curvature for graphs and point clouds.
 
 
 
-\section{Introduction}\label{introduction}
+\subsection{Introduction}\label{introduction}
 
 One of the most ubiquitous subjects of analysis in data science is the
 humble point cloud. The points, by themselves, are high dimensional and
@@ -266,12 +266,14 @@ curvature. We now present a refined definition which produces
 Curvature to coarse Ricci Curvature. We demonstrate Diffusion
 Curvature's robustness to noise and sampling artifacts, and position our
 technique as an adaptation of coarse Ricci curvature particularly
-suitable for point cloud data. \#\# Background
+suitable for point cloud data.
 
-\subsection{Curvature in the Continuous
+\subsection{Background}\label{background}
+
+\subsubsection{Curvature in the Continuous
 Setting}\label{curvature-in-the-continuous-setting}
 
-\subsection{The Discrete Setting}\label{the-discrete-setting}
+\subsubsection{The Discrete Setting}\label{the-discrete-setting}
 
 Within the ambient setting of points \(x_{i} \in \mathbb{R}^D\), the
 Euclidean distances between the points in our point cloud are not very
@@ -314,7 +316,7 @@ challenge is now to reassemble this information of local connectivity to
 recover the features of \(\mathcal{M}\). Graph diffusion does precisely
 this.
 
-\subsection{Graph Diffusion}\label{graph-diffusion}
+\subsubsection{Graph Diffusion}\label{graph-diffusion}
 
 The graph diffusion matrix \(P\) is a commonly-used method of
 ``integrating'' the local connectivity of the graph \(A\) into global
@@ -342,12 +344,21 @@ straightforward: you simply row-normalize \(A\), with an optional step
 to normalizing by density.
 
 Here is the algorithm presented in Coifman and Lafon
-(\textbf{coifman2006DiffusionMaps?}): 1. (Optional) Compute an
-\emph{anisotropic density normalization} on \(A\), obtaining the
-anisotropic adjacency matrix \(A_{\star}\). 3. Construct the degree
-matrix \(D\), whose diagonal entries are the rowsums of \(A\),
-i.e.~\(D_{ii} = \sum_{j}A_{ij}\).. The other entries are zeros. 4.
-Define \(P = D^{-1} A\), the graph diffusion matrix.
+(\textbf{coifman2006DiffusionMaps?}):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  (Optional) Compute an \emph{anisotropic density normalization} on
+  \(A\), obtaining the anisotropic adjacency matrix \(A_{\star}\).
+\item
+  Construct the degree matrix \(D\), whose diagonal entries are the
+  rowsums of \(A\), i.e.~\(D_{ii} = \sum_{j}A_{ij}\).. The other entries
+  are zeros.
+\item
+  Define \(P = D^{-1} A\), the graph diffusion matrix.
+\end{enumerate}
 
 \begin{itemize}
 \tightlist
@@ -381,13 +392,15 @@ This is a remarkable feature of the diffusion matrix: the ability to
 ``denoise'' itself by iterating the random walk over larger time scales.
 Intuitively, the paths through the data most robustly trafficked by
 random walkers are those supported by multiple high-probability
-connections from independent starting points. \#\# Related Work
+connections from independent starting points.
 
-\subsection{Foreman Ricci Curvature}\label{foreman-ricci-curvature}
+\subsection{Related Work}\label{related-work}
 
-\subsection{Hickock's Curvature}\label{hickocks-curvature}
+\subsubsection{Foreman Ricci Curvature}\label{foreman-ricci-curvature}
 
-\subsection{Ollivier-Ricci Curvature}\label{ollivier-ricci-curvature}
+\subsubsection{Hickock's Curvature}\label{hickocks-curvature}
+
+\subsubsection{Ollivier-Ricci Curvature}\label{ollivier-ricci-curvature}
 
 Developed by Yann Ollivier in 2007, \emph{Coarse Ricci Curvature} (or
 sometimes, ``Ollivier Ricci Curvature'') is a direct translation of
@@ -510,9 +523,9 @@ W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
  \mu \star m := \int_{{x \in X}} d\mu(x)m_{x} \, dx
 \]
 
-\section{Theory \& Methods}\label{theory-methods}
+\subsection{Theory \& Methods}\label{theory-methods}
 
-\subsection{Definition}\label{definition}
+\subsubsection{Definition}\label{definition}
 
 Given samples \(X \subseteq M\) and a flattening map
 \(\Phi: X \rightarrow \mathbb{R}^d\),
@@ -526,35 +539,175 @@ Where \(p_X^t\) is the t-step random walk over \(X\), and
 both cases, the \(W_1\) distance is taken with respect to manifold
 distances.
 
-\subsection{Separating Geometry from Sampling: Neural
+\subsubsection{Separating Geometry from Sampling: Neural
 Flattening}\label{separating-geometry-from-sampling-neural-flattening}
 
-\subsection{Connections to Ollivier-Ricci
+\subsubsection{Connections to Ollivier-Ricci
 Curvature}\label{connections-to-ollivier-ricci-curvature}
 
-\section{Results}\label{results}
+Although diffusion curvature was designed for sampled manifolds, it
+extends naturally to the realm of more general graphs. Indeed, diffusion
+curvature can be seen as an node-wise adaptation of Ollivier Ricci
+curvature, the theoretically richest and highest performing edge-wise
+graph curvature {[}citations to Bastian's paper on ORC expressivity{]}.
+Here we review the definitions of Ollivier-Ricci curvature and present
+theoretical connections between it and diffusion curvature. These
+motivate the use of diffusion curvature as substitute for Ollivier Ricci
+curvature on large, or noisy graphs where the latter method stumbles.
+{[}Present some of these in experiments{]}
+
+Ollivier Ricci curvature is based in optimal transport, formalizing the
+classical intuition that in spaces of positive curvature, ``spheres are
+closer than their centers'' {[}cite ollivier{]}. In place of spheres,
+Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1
+distance with the shortest-path metric. Given points \(x,y\) in the
+metric space, with 1-step diffusions \(m_{x}\) and \(m_{y}\), the
+Ollivier Ricci curvature of the edge between \(x\) and \(y\) is:
+\[\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}\]
+
+Local curvature always involves some comparison. Here, the comparison is
+between the manifold's optimal transport distance (the numerator), and
+the Euclidean optimal transport distance (which, helpfully, is just the
+distance in the denominator. You'll notice the similarity to diffusion
+curvature, which replaces the \(W_{1}\) distance between two diffused
+distributions with the \(W_{1}\) distance between a point and its
+\(t\)-step diffusion. We do this for both the manifold (in the
+numerator) and a Euclidean comparison space (in the denominator).
+
+\[
+k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
+\]
+
+The basis of diffusion curvature's comparison is the ``spread'' of
+diffusion as measured by \(W_{1}(\delta_{x},m_{x}^t)\). Intuitively, in
+regions of positive curvature, diffusion spreads less; neighborhoods
+with higher interconnectivity make random walks lazier. We can formalize
+this with reference to Ollivier Ricci curvature:
+
+\textbf{Proposition 1.} Let \((X,d,m)\) be a metric space equipped with
+a random walk, with coarse Ricci curvature bounded from below by some
+\(k\) such that \(\kappa(x,y) \geq k\) for all \(x,y \in X\). The
+Wasserstein Spread of Diffusion of a \(t\) step diffusion in \(X\) is
+bounded above by \[
+W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
+\]
+
+In particular, if \(k>0\) then
+\(W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}\),
+and if \(k=0\), then
+\(W_{1}(\delta_{x},m_{x}^t) \leq tW_1\left(\delta_x,m_x\right)\).
+
+\emph{Proof}. First, we bound \(W_{1}(m_{x}^t,m_{x}^{t+1})\) using
+Ollivier's Proposition 20 {[}citation needed{]} on concentration of
+measure. The proposition states that a lower bound on curvature, such as
+we have, implies that \[
+W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
+\] where here \(\mu,\mu'\) are two probability distributions and \(m\)
+is a random walk. This provides an easy lemma:
+
+\textbf{Lemma 1.} Let \((X,d,m)\) be a metric space with a random walk.
+Suppose there is some \(k \in \mathbb{R}\) such that the coarse Ricci
+curvature \(\kappa(x,y) \geq k\) for all \(x,y \in X\). Then: \[
+W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
+\]
+
+\emph{Proof.} We proceed by induction. For \(t=0\), the above is true,
+as
+\(W_{1}(m_{x}^0, m_{x}^{1}) =W_{1}(\delta_x, m_{x}^{1}) = W_1\left(\delta_x,m_x\right)\).
+Suppose it holds for \(t-1\), e.g. \[
+W_1\left(m_x^{t-1}, m_x^{t}\right) \leq(1-k)^{t-1} W_1\left(\delta_x,m_x\right)
+\]
+
+Consider \(W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right)\), the
+application of another step of diffusion. By Ollivier's Proposition 20,
+this distance is bounded above by \[
+W_1\left(\mu_1 \star m, \mu_2 \star m\right) \leq(1-k) W_1\left(\mu_1, \mu_2\right)
+\] So \[
+W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right) \leq  (1-k)W_1\left(m_x^{t-1}, m_x^{t}\right)
+\]
+
+which, since the statement holds for \(t-1\), yields \[
+W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
+\]
+
+To use this lemma, we can decompose our \(t-\)step diffusion into a sum
+of single step diffusions. By the triangle inequality, \[
+W_{1}(\delta_{x},m_{x}^t) \leq W_1\left(\delta_x,m_x\right) + W_{1}(m_{x},m_{x}^2) + \dots + W_{1}(m_{x}^{t-1}, m_{x}^t)
+\]
+
+By Lemma 1, \[
+\leq W_1\left(\delta_x,m_x\right)\left(1+(1-k)+(1-k)^2+\ldots+(1-k)^{t-1}\right)
+\]
+
+This truncated series is equal to
+\(\frac{1-(1-k)^t}{1-(1-k)} = \frac{(1-(1-k)^t)}{k}\). If \(k>0\), then
+as \(t \to \infty\), the infinite sum \(\sum_{i=0}^t (1-k)^i\) converges
+to the geometric series \(\frac{1}{1-(1-k)} = \frac{1}{k}\). Because the
+sum is monotonically increasing with \(t\), the partial sum is upper
+bounded by the infinite sum. It follows that \[
+W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
+\]
+
+If \(k=0\), then obviously \(\sum_{i}^t (1-k)^i = t\).
+
+The above asserts that the ``spread'' of diffusion is bounded from above
+by the Ollivier Ricci curvature of the region. To turn this measurement
+of spread into a signed curvature, we have only to introduce a
+comparison: the dimensional constant of the Euclidean spread of
+diffusion, \(W_{1}^E(\delta_{x},m_{x}^t)\). Using Proposition 1, we can
+directly bound \(k_{D}\) in terms of the Ollivier Ricci curvature:
+
+\[
+1 - \frac{W^M_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}}{W_{1}^E(\delta_{x},m_{x}^t)} \leq k_{D}
+\] A simple approximation of \(W_{1}^E(\delta_{x},m_{x}^t)\) is obtained
+by scaling the spread of a single-step diffusion by a factor of t,
+i.e.~\(tW_{1}^E(\delta_{x},m_{x})\). Using this, and noting that
+\(W_{1}^E(\delta_{x},m_{x}) \approx W_{1}^M(\delta_{x},m_{x})\),
+
+\[
+1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
+\] \textbf{Note: this analysis sidesteps the reality that tJ is a
+(possibly egregious) \emph{overestimate} of the euclidean WSD. We can't
+actually just plug it in without pushing some indeterminate space
+inbetween the sides of the inequality}
+
+\subsection{Results}\label{results}
+
+\subsubsection{Toy Manifolds}\label{toy-manifolds}
+
+\paragraph{2 Manifolds}\label{manifolds}
 
 \begin{figure}[H]
 
 \centering{
 
-\includegraphics{index_files/figure-latex/..-nbs-experiments-2c3-are-kernels-zeitgeibers-fig-spread-of-diffusion-2d-output-1.png}
+\includegraphics{index_files/figure-latex/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png}
 
 }
 
-\caption{\label{fig-spread-of-diffusion-2d}Spread of Diffusion in 2
-Manifolds}
+\caption{\label{fig-2-manifolds}Diffusion Curvature vs Gaussian
+Curvature on 2-Manifolds.}
 
 \end{figure}%
 
 \textsubscript{Source:
-\href{https://professorwug.github.io/diffusion-curvature//Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2c3-are-kernels-zeitgeibers.ipynb.html\#cell-fig-spread-of-diffusion-2d}{Standard
+\href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a-Toy-Manifolds.ipynb.html\#cell-fig-2-manifolds}{Standard
 libraries}}
 
-\section{Conclusion}\label{conclusion}
+\paragraph{Saddle sphere sign-differentiation
+test}\label{saddle-sphere-sign-differentiation-test}
 
-\section*{References}\label{references}
-\addcontentsline{toc}{section}{References}
+\paragraph{Noise Resilience}\label{noise-resilience}
+
+\subsubsection{Loss Landscapes}\label{loss-landscapes}
+
+\subsubsection{Curvature as a TDA
+Filtration}\label{curvature-as-a-tda-filtration}
+
+\subsection{Conclusion}\label{conclusion}
+
+\subsection*{References}\label{references}
+\addcontentsline{toc}{subsection}{References}
 
 \phantomsection\label{refs}
 \begin{CSLReferences}{0}{1}

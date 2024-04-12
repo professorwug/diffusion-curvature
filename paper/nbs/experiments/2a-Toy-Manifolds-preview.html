@@ -229,7 +229,7 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-0" class="cell" data-execution_count="1">
+       <div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-0" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Standard libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -273,7 +273,7 @@
 <p>2 Manifolds, colored by curvature, neatly compared</p>
 </blockquote>
 <p>Here is the curvature equivalent of the “sniff test”: does our technique appropriately color the most basic 2 manifolds? This notebook implements this comparison, making it easy to swap in and out curvature methods and rerun them on every baseline.</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [117]:</pre></div><div id="cell-3" class="cell" data-execution_count="117">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-3" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Establish Datasets</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>n_points <span class="op">=</span> <span class="dv">5000</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Xs <span class="op">=</span> {}</span>
@@ -286,7 +286,7 @@
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>Xs[<span class="st">'Ellipsoid'</span>], Ks[<span class="st">'Ellipsoid'</span>] <span class="op">=</span> ellispoid(n_points)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>Xs[<span class="st">'hyperboloid'</span>], Ks[<span class="st">'hyperboloid'</span>] <span class="op">=</span> hyperboloid(n_points)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [118]:</pre></div><div id="cell-4" class="cell" data-execution_count="118">
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-4" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.kernels <span class="im">import</span> gaussian_kernel</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fixed_median_heuristic_graph_former(X, alpha):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> gaussian_kernel(</span>
@@ -301,7 +301,7 @@
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> pygsp.graphs.Graph(W)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> G</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [119]:</pre></div><div id="cell-5" class="cell" data-execution_count="119">
+<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-5" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># graph_former = partial(fixed_graph_former, sigma = 0.05, alpha = 1)</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>graph_former <span class="op">=</span> partial(get_adaptive_graph, k<span class="op">=</span><span class="dv">5</span>, alpha<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># graph_former = partial(fixed_median_heuristic_graph_former,alpha=1)</span></span>
@@ -310,35 +310,36 @@
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    flattening_method<span class="op">=</span><span class="st">"Fixed"</span>,</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>,</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    graph_former <span class="op">=</span> graph_former,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    smoothing<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section>
 <section id="run-on-toy-datasets" class="level1">
 <h1>Run on Toy Datasets</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [120]:</pre></div><div id="cell-7" class="cell" data-execution_count="120">
+<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-7" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>diffusion_ks <span class="op">=</span> {}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [121]:</pre></div><div id="cell-8" class="cell" data-execution_count="121">
+<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-8" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dname <span class="kw">in</span> Xs.keys():</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> Xs[dname]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> graph_former(X)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    ks_computed <span class="op">=</span> DC.curvature(G, dim<span class="op">=</span><span class="dv">2</span>, t<span class="op">=</span><span class="dv">25</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    diffusion_ks[dname] <span class="op">=</span> ks_computed</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    plot_3d(X, ks_computed, title <span class="op">=</span> <span class="st">"Diffusion Curvature"</span>, colorbar<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    plot_3d(X, Ks[dname], title <span class="op">=</span> <span class="st">"Gaussian Curvature"</span>, colorbar<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot_3d(X, Ks[dname], title = "Gaussian Curvature", colorbar=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2024-04-12 10:53:41,282:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:53:51,273:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:54:03,309:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:54:12,610:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:54:22,230:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:54:31,418:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:54:40,908:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:54:50,145:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:55:00,136:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:55:09,989:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:55:19,357:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
-2024-04-12 10:55:27,957:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!</code></pre>
+<pre><code>2024-04-12 11:54:04,234:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:08,208:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:12,443:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:16,344:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:20,281:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:24,238:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:28,233:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:32,350:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:36,215:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:40,146:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:44,309:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-04-12 11:54:48,292:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -382,53 +383,11 @@
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="2a-Toy-Manifolds_files/figure-html/cell-7-output-8.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="2a-Toy-Manifolds_files/figure-html/cell-7-output-8.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="2a-Toy-Manifolds_files/figure-html/cell-7-output-9.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="2a-Toy-Manifolds_files/figure-html/cell-7-output-9.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="2a-Toy-Manifolds_files/figure-html/cell-7-output-10.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="2a-Toy-Manifolds_files/figure-html/cell-7-output-10.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="2a-Toy-Manifolds_files/figure-html/cell-7-output-11.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="2a-Toy-Manifolds_files/figure-html/cell-7-output-11.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="2a-Toy-Manifolds_files/figure-html/cell-7-output-12.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="2a-Toy-Manifolds_files/figure-html/cell-7-output-12.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="2a-Toy-Manifolds_files/figure-html/cell-7-output-13.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="2a-Toy-Manifolds_files/figure-html/cell-7-output-13.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
-</div>
 </div></div>
 </section>
 <section id="figure" class="level1">
 <h1>Figure</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [138]:</pre></div><div id="cell-fig-2-manifolds" class="cell" data-execution_count="138">
+<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-fig-2-manifolds" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -482,7 +441,7 @@
 <div id="fig-2-manifolds" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="2a-Toy-Manifolds_files/figure-html/fig-2-manifolds-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" data-glightbox="description: .lightbox-desc-13"><img src="2a-Toy-Manifolds_files/figure-html/fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+<a href="2a-Toy-Manifolds_files/figure-html/fig-2-manifolds-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7"><img src="2a-Toy-Manifolds_files/figure-html/fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
@@ -519,7 +478,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-10-output-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="2a-Toy-Manifolds_files/figure-html/cell-10-output-2.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-10-output-2.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="2a-Toy-Manifolds_files/figure-html/cell-10-output-2.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -576,7 +535,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-13-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="2a-Toy-Manifolds_files/figure-html/cell-13-output-1.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-13-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="2a-Toy-Manifolds_files/figure-html/cell-13-output-1.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -614,7 +573,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-15-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="2a-Toy-Manifolds_files/figure-html/cell-15-output-1.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-15-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="2a-Toy-Manifolds_files/figure-html/cell-15-output-1.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -634,7 +593,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-16-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="2a-Toy-Manifolds_files/figure-html/cell-16-output-1.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-16-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="2a-Toy-Manifolds_files/figure-html/cell-16-output-1.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -664,7 +623,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-17-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="2a-Toy-Manifolds_files/figure-html/cell-17-output-1.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-17-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="2a-Toy-Manifolds_files/figure-html/cell-17-output-1.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -710,7 +669,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-18-output-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="2a-Toy-Manifolds_files/figure-html/cell-18-output-3.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-18-output-3.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="2a-Toy-Manifolds_files/figure-html/cell-18-output-3.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -735,7 +694,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-19-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="2a-Toy-Manifolds_files/figure-html/cell-19-output-1.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-19-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="2a-Toy-Manifolds_files/figure-html/cell-19-output-1.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -771,7 +730,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-20-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="2a-Toy-Manifolds_files/figure-html/cell-20-output-1.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-20-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="2a-Toy-Manifolds_files/figure-html/cell-20-output-1.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -804,7 +763,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-21-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="2a-Toy-Manifolds_files/figure-html/cell-21-output-1.svg" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-21-output-1.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="2a-Toy-Manifolds_files/figure-html/cell-21-output-1.svg" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -820,13 +779,13 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div class="cell-output cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-23-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="2a-Toy-Manifolds_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></a></p>
+<p class=""><a href="2a-Toy-Manifolds_files/figure-html/cell-23-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="2a-Toy-Manifolds_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
 </div></div>
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-13">Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-7">Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
 </div>
 </section>
 </section>
@@ -1218,7 +1177,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
