@@ -5,6 +5,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps: 
+      - run: ls
       - uses: prefix-dev/setup-pixi@v0.6.0 # install pixi to set up package
         with:
           pixi-version: v0.19.1
