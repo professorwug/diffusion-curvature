@@ -430,6 +430,9 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.17.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zlib-1.2.13-hd590300_5.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.5-hfc55251_0.conda
+      - pypi: https://files.pythonhosted.org/packages/66/31/1da3877139d75e392f5fd0cbdc3b718ae726f5308ed792d385250c43167c/keopscore-2.2.3.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/26/55/e776489172f576b782e616f58273e1f3de56a91004b0d20504169dd345af/pybind11-2.12.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/f9/64/2c7b49954aeac6b10e1fd553e190aef8e4737d48506aae60aa6f2b035809/pykeops-2.2.3.tar.gz
       - pypi: .
   default:
     channels:
@@ -859,6 +862,9 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.17.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zlib-1.2.13-hd590300_5.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.5-hfc55251_0.conda
+      - pypi: https://files.pythonhosted.org/packages/66/31/1da3877139d75e392f5fd0cbdc3b718ae726f5308ed792d385250c43167c/keopscore-2.2.3.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/26/55/e776489172f576b782e616f58273e1f3de56a91004b0d20504169dd345af/pybind11-2.12.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/f9/64/2c7b49954aeac6b10e1fd553e190aef8e4737d48506aae60aa6f2b035809/pykeops-2.2.3.tar.gz
       - pypi: .
 packages:
 - kind: conda
@@ -2536,7 +2542,7 @@ packages:
   name: diffusion-curvature
   version: 0.1.1
   path: .
-  sha256: c7f5b00d22e82dd1dc6da30f2be052b1e537358b66c807381b0f2d638e2db422
+  sha256: f4b414b45fe8d1b321d999ad6f2a761a19268146372118887ad75d8bf06c6325
   requires_python: '>=3.11'
   editable: true
 - kind: conda
@@ -4527,6 +4533,12 @@ packages:
   - pkg:pypi/jupyterlab-widgets
   size: 187135
   timestamp: 1707422097508
+- kind: pypi
+  name: keopscore
+  version: 2.2.3
+  url: https://files.pythonhosted.org/packages/66/31/1da3877139d75e392f5fd0cbdc3b718ae726f5308ed792d385250c43167c/keopscore-2.2.3.tar.gz
+  sha256: 64d5dad1e8c806d7070cdc60e48fd5bbf006f2bf1afd39ad3fa5e9fb213517d2
+  requires_python: '>=3.8'
 - kind: conda
   name: keyutils
   version: 1.6.1
@@ -8373,6 +8385,14 @@ packages:
   - pkg:pypi/pyarrow-hotfix
   size: 13567
   timestamp: 1700596511761
+- kind: pypi
+  name: pybind11
+  version: 2.12.0
+  url: https://files.pythonhosted.org/packages/26/55/e776489172f576b782e616f58273e1f3de56a91004b0d20504169dd345af/pybind11-2.12.0-py3-none-any.whl
+  sha256: df8d60b94f9e714d81013db233393d430ebf9f3551642b82291cf1b14d1afdbd
+  requires_dist:
+  - pybind11-global ==2.12.0 ; extra == 'global'
+  requires_python: '>=3.6'
 - kind: conda
   name: pybind11-abi
   version: '4'
@@ -8439,6 +8459,36 @@ packages:
   purls:
   - pkg:pypi/pygsp
   size: 1811565
+- kind: pypi
+  name: pykeops
+  version: 2.2.3
+  url: https://files.pythonhosted.org/packages/f9/64/2c7b49954aeac6b10e1fd553e190aef8e4737d48506aae60aa6f2b035809/pykeops-2.2.3.tar.gz
+  sha256: 2e2cba1de5e05c35559957a14f41cb5165dc667cc51b3b2118d7e0027eb435a1
+  requires_dist:
+  - numpy
+  - pybind11
+  - keopscore ==2.2.3
+  - sphinx ; extra == 'full'
+  - sphinx-gallery ; extra == 'full'
+  - recommonmark ; extra == 'full'
+  - sphinxcontrib-httpdomain ; extra == 'full'
+  - sphinx-rtd-theme ; extra == 'full'
+  - sphinx-prompt ; extra == 'full'
+  - breathe ; extra == 'full'
+  - matplotlib ; extra == 'full'
+  - imageio ; extra == 'full'
+  - torch ; extra == 'full'
+  - gpytorch ; extra == 'full'
+  - scikit-learn ; extra == 'full'
+  - multiprocess ; extra == 'full'
+  - faiss ; extra == 'full'
+  - h5py ; extra == 'full'
+  - jaxlib ; extra == 'full'
+  - jax ; extra == 'full'
+  - pytest ; extra == 'test'
+  - numpy ; extra == 'test'
+  - torch ; extra == 'test'
+  requires_python: '>=3.8'
 - kind: conda
   name: pyparsing
   version: 3.1.1

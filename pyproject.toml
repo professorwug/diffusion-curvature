@@ -2,6 +2,7 @@
 name = "diffusion_curvature"
 version = "0.1.1"
 requires-python = ">=3.11"
+dependencies = []
 
 [tool.pixi.project]
 channels = ["nvidia", "conda-forge", "fastai", "pytorch"] 
@@ -44,6 +45,7 @@ imageio = ">=2.34.0,<2.35"
 jupyter-cache = ">=1.0.0,<1.1"
 
 [tool.pixi.pypi-dependencies]
+pykeops = ""
 # editable install of project itself
 diffusion_curvature = { path = ".", editable = true }
 
