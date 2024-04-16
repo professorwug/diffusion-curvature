@@ -10,6 +10,7 @@ jobs:
           pixi-version: v0.19.1
           cache: true
           auth-host: prefix.dev
+          auth-token: ${{ secrets.PREFIX_DEV_TOKEN }}
       - run: pixi run test
       - uses: fastai/workflows/nbdev-ci@master
         with:
