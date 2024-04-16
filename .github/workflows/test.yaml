@@ -11,5 +11,11 @@ jobs:
           cache: true
           auth-host: prefix.dev
       - run: pixi run test
-    [uses: fastai/workflows/nbdev-ci@master]
+      - uses: fastai/workflows/nbdev-ci@master
+        with:
+          python-version: 3.11
+          pre: false
+          skip_test: false
+          flags: ""
+          torch_cpu: true
       
