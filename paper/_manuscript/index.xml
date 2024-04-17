@@ -169,16 +169,16 @@ grammeters. Such a machine is the “Turbo-Encabulator.”
       <p>In this paper, we develop Diffusion Curvature, a fast curvature
   estimate derived solely from the graph diffusion matrix. We first
   introduced the ideas behind Diffusion Curvature in
-  (<xref alt="bhaskarDiffusionCurvatureEstimating2022?" rid="ref-bhaskarDiffusionCurvatureEstimating2022" ref-type="bibr"><bold>bhaskarDiffusionCurvatureEstimating2022?</bold></xref>),
-  in which we demonstrated its ability to produce an unsigned magnitude
-  of curvature estimation for toy datasets and single-cell data, and
-  proved a correspondence between the ratios of scalar curvature and
-  diffusion curvature. We now present a refined definition which
-  produces <italic>signed</italic> curvature values and prove bounds
-  relating Diffusion Curvature to coarse Ricci Curvature. We demonstrate
-  Diffusion Curvature’s robustness to noise and sampling artifacts, and
-  position our technique as an adaptation of coarse Ricci curvature
-  particularly suitable for point cloud data.</p>
+  (<xref alt="Bhaskar et al. 2022" rid="ref-bhaskarDiffusionCurvatureEstimating2022" ref-type="bibr">Bhaskar
+  et al. 2022</xref>), in which we demonstrated its ability to produce
+  an unsigned magnitude of curvature estimation for toy datasets and
+  single-cell data, and proved a correspondence between the ratios of
+  scalar curvature and diffusion curvature. We now present a refined
+  definition which produces <italic>signed</italic> curvature values and
+  prove bounds relating Diffusion Curvature to coarse Ricci Curvature.
+  We demonstrate Diffusion Curvature’s robustness to noise and sampling
+  artifacts, and position our technique as an adaptation of coarse Ricci
+  curvature particularly suitable for point cloud data.</p>
     </sec>
     <sec id="background">
       <title>2 Background</title>
@@ -899,12 +899,58 @@ grammeters. Such a machine is the “Turbo-Encabulator.”
     <sec id="conclusion">
       <title>6 Conclusion</title>
     </sec>
-    <sec id="references">
-      <title>References</title>
-    </sec>
   </body>
   <back>
-</back>
+    <ref-list>
+      <title>References</title>
+      <ref id="ref-bhaskarDiffusionCurvatureEstimating2022">
+        <element-citation publication-type="article-journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bhaskar</surname>
+              <given-names>Dhananjay</given-names>
+            </name>
+            <name>
+              <surname>MacDonald</surname>
+              <given-names>Kincaid</given-names>
+            </name>
+            <name>
+              <surname>Fasina</surname>
+              <given-names>Oluwadamilola</given-names>
+            </name>
+            <name>
+              <surname>Thomas</surname>
+              <given-names>Dawson</given-names>
+            </name>
+            <name>
+              <surname>Rieck</surname>
+              <given-names>Bastian</given-names>
+            </name>
+            <name>
+              <surname>Adelstein</surname>
+              <given-names>Ian</given-names>
+            </name>
+            <name>
+              <surname>Krishnaswamy</surname>
+              <given-names>Smita</given-names>
+            </name>
+          </person-group>
+          <article-title>Diffusion curvature for estimating local curvature in high dimensional data</article-title>
+          <source>Advances in Neural Information Processing Systems</source>
+          <year iso-8601-date="2022">2022</year>
+          <date-in-citation content-type="access-date">
+            <year iso-8601-date="2023-12-01">2023</year>
+            <month>12</month>
+            <day>01</day>
+          </date-in-citation>
+          <volume>35</volume>
+          <uri>https://proceedings.neurips.cc/paper_files/paper/2022/hash/88438dc62fc5c8777e2b5f1b4f6d37a2-Abstract-Conference.html</uri>
+          <fpage>21738</fpage>
+          <lpage>21749</lpage>
+        </element-citation>
+      </ref>
+    </ref-list>
+  </back>
   <!-- (F2ED4C6E)[nb-1]:/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/paper/index-ricci.qmd -->
   <!-- (F2ED4C6E)[nb-2]:/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/paper/readme-paper.md -->
 </article>
