@@ -2542,7 +2542,7 @@ packages:
   name: diffusion-curvature
   version: 0.1.1
   path: .
-  sha256: f4b414b45fe8d1b321d999ad6f2a761a19268146372118887ad75d8bf06c6325
+  sha256: 8d61b64a934cfdfaab5ac4ced121b09bc6c9ad6997944d7778a50fda4a537106
   requires_python: '>=3.11'
   editable: true
 - kind: conda

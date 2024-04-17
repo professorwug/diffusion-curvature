@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Archiving
+and Interchange DTD v1.2 20190208//EN" "JATS-archivearticle1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="1.2" article-type="other">
+  <front>
+    <journal-meta>
+      <journal-id/>
+      <journal-title-group>
+        <journal-title>IEEE TPAMI</journal-title>
+      </journal-title-group>
+      <issn/>
+      <publisher>
+        <publisher-name/>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <title-group>
+        <article-title>Diffusion Curvature for Fast, Point-wise, Noise-Resistant
+Geometric Featurization of Graphs and Pointclouds</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" corresp="yes">
+          <contrib-id contrib-id-type="orcid">0009-0006-4686-7488</contrib-id>
+          <name>
+            <surname>MacDonald</surname>
+            <given-names>Kincaid</given-names>
+          </name>
+          <string-name>Kincaid MacDonald</string-name>
+          <email>kincaid@aya.yale.edu</email>
+          <xref ref-type="aff" rid="aff-1">a</xref>
+          <xref ref-type="corresp" rid="cor-1">*</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid">0000-0002-7859-8394</contrib-id>
+          <name>
+            <surname>Bhaskar</surname>
+            <given-names>Dhananjay</given-names>
+          </name>
+          <string-name>Dhananjay Bhaskar</string-name>
+          <xref ref-type="aff" rid="aff-2">b</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid">0000-0002-7859-8394</contrib-id>
+          <name>
+            <surname>Zhang</surname>
+            <given-names>Kaly</given-names>
+          </name>
+          <string-name>Kaly Zhang</string-name>
+          <xref ref-type="aff" rid="aff-2">b</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid">0000-0002-7859-8394</contrib-id>
+          <name>
+            <surname>Adelstein</surname>
+            <given-names>Ian</given-names>
+          </name>
+          <string-name>Ian Adelstein</string-name>
+          <xref ref-type="aff" rid="aff-3">c</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid">0000-0002-7859-8394</contrib-id>
+          <name>
+            <surname>Krishnaswamy</surname>
+            <given-names>Smita</given-names>
+          </name>
+          <string-name>Smita Krishnaswamy</string-name>
+          <xref ref-type="aff" rid="aff-4">d</xref>
+          <xref ref-type="aff" rid="aff-5">e</xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff-1">
+        <institution-wrap>
+          <institution>Yale</institution>
+        </institution-wrap>
+      </aff>
+      <aff id="aff-2">
+        <institution-wrap>
+          <institution>MILA</institution>
+        </institution-wrap>
+      </aff>
+      <aff id="aff-3">
+        <institution-wrap>
+          <institution>Yale Department of Math</institution>
+        </institution-wrap>
+      </aff>
+      <aff id="aff-4">
+        <institution-wrap>
+          <institution>Yale Department of Applied Math</institution>
+        </institution-wrap>
+      </aff>
+      <aff id="aff-5">
+        <institution-wrap>
+          <institution>Yale School of Medicine</institution>
+        </institution-wrap>
+      </aff>
+      <author-notes>
+        <corresp id="cor-1">kincaid@aya.yale.edu</corresp>
+      </author-notes>
+      <pub-date date-type="pub" publication-format="electronic" iso-8601-date="2024-04-17">
+        <year>2024</year>
+        <month>4</month>
+        <day>17</day>
+      </pub-date>
+      <history/>
+      <abstract>
+For a number of years now work has been proceeding in order to bring to
+perfection the crudely conceived idea of a machine that would not only
+supply inverse reactive current for use in unilateral phase detractors,
+but would also be capable of automatically synchronizing cardinal
+grammeters. Such a machine is the “Turbo-Encabulator.”
+</abstract>
+      <kwd-group kwd-group-type="author">
+        <kwd>Manifold Learning</kwd>
+        <kwd>Geometric Deep Learning</kwd>
+        <kwd>Graph Curvature</kwd>
+        <kwd>Point Clouds</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="introduction">
+      <title>1 Introduction</title>
+      <p>One of the most ubiquitous subjects of analysis in data science is
+  the humble point cloud. The points, by themselves, are high
+  dimensional and noisy; it is up to the data scientist to wring sense
+  out of them. Per the Manifold Hypothesis, we assume the points were
+  sampled on or near the surface of a low-dimensional manifold embedded
+  in high-dimensional Euclidean space. Manifold learning methods, like
+  t-SNE, PHATE, and Diffusion Maps
+  [(<xref alt="maaten2008VisualizingDataUsing?" rid="ref-maaten2008VisualizingDataUsing" ref-type="bibr"><bold>maaten2008VisualizingDataUsing?</bold></xref>)](<xref alt="moon2019VisualizingStructureTransitions?" rid="ref-moon2019VisualizingStructureTransitions" ref-type="bibr"><bold>moon2019VisualizingStructureTransitions?</bold></xref>)(<xref alt="coifman2006DiffusionMaps?" rid="ref-coifman2006DiffusionMaps" ref-type="bibr"><bold>coifman2006DiffusionMaps?</bold></xref>),
+  endeavor to recover salient features of the underlying manifold, like
+  geodesic distances, population clusterings, and dimension, from its
+  high-dimensional noisy sampling.</p>
+      <p>Curvature is a particularly troublesome geometric property to
+  translate into the discrete, sampled realm. In smooth Riemannian
+  manifolds, curvature is a <italic>local</italic> phenomenon. It can be
+  obtained by fitting osculating circles of radius limiting to zero, or
+  computed from the manifold’s Hessian, using the Second Fundamental
+  Form. None of these translate into the discrete realm. In a sampled
+  manifold, taking a local limit is impossible – one can’t “zoom in”
+  past the sampling of points – and we don’t have access to the
+  parametrization of the manifold or its tangent bundle, without
+  computationally costly and potentially error-prone estimation.
+  Moreover, as our sampling is likely noisy, the curvature can only be
+  recovered over a sufficiently large neighborhood of points to counter
+  the spurious geometric artifacts created noisy sampling. Thus, in the
+  discrete realm, curvature becomes a “semi-local” phenomenon, in which
+  neither the smallest nor larger scales can be trusted.</p>
+      <p>There are elegant generalizations of classical curvature to
+  discrete spaces that overcome many of these roadblocks. Ollivier’s
+  <italic>Coarse Ricci Curvature</italic> (CRC) employs optimal
+  transport theory to relate the behavior of a discrete neighborhood to
+  its smooth counterpart
+  (<xref alt="ollivier2009RicciCurvatureMarkov?" rid="ref-ollivier2009RicciCurvatureMarkov" ref-type="bibr"><bold>ollivier2009RicciCurvatureMarkov?</bold></xref>).
+  Sturm’s <italic>displacement convexity of entropy</italic> (DCE)
+  measures the proliferation of midpoints in positive curvature
+  (<xref alt="sturm2006GeometryMetricMeasure?" rid="ref-sturm2006GeometryMetricMeasure" ref-type="bibr"><bold>sturm2006GeometryMetricMeasure?</bold></xref>).
+  Both methods use optimal transport as the basis of their “semi-local”
+  measurement. Rather than trying to zoom in on a point, they define
+  curvature between pairs of points, approximating, at a coarse scale, a
+  Ricci tangent vector.</p>
+      <p>Although these techniques are theoretically elegant, general, and
+  applicable to any metric measure space, the setting of noisily sampled
+  point clouds is practically challenging for CRC and DCE. Both methods
+  rely on the graph’s shortest-path lengths as an approximation of the
+  manifold’s ground distance - a perilous assumption when dealing with
+  noisy data. And for large datasets, optimal transport calculations can
+  be computationally prohibitive.</p>
+      <p>In this paper, we develop Diffusion Curvature, a fast curvature
+  estimate derived solely from the graph diffusion matrix. We first
+  introduced the ideas behind Diffusion Curvature in
+  (<xref alt="bhaskarDiffusionCurvatureEstimating2022?" rid="ref-bhaskarDiffusionCurvatureEstimating2022" ref-type="bibr"><bold>bhaskarDiffusionCurvatureEstimating2022?</bold></xref>),
+  in which we demonstrated its ability to produce an unsigned magnitude
+  of curvature estimation for toy datasets and single-cell data, and
+  proved a correspondence between the ratios of scalar curvature and
+  diffusion curvature. We now present a refined definition which
+  produces <italic>signed</italic> curvature values and prove bounds
+  relating Diffusion Curvature to coarse Ricci Curvature. We demonstrate
+  Diffusion Curvature’s robustness to noise and sampling artifacts, and
+  position our technique as an adaptation of coarse Ricci curvature
+  particularly suitable for point cloud data.</p>
+    </sec>
+    <sec id="background">
+      <title>2 Background</title>
+      <sec id="curvature-in-the-continuous-setting">
+        <title>2.1 Curvature in the Continuous Setting</title>
+      </sec>
+      <sec id="the-discrete-setting">
+        <title>2.2 The Discrete Setting</title>
+        <p>Within the ambient setting of points
+    <inline-formula><alternatives><tex-math><![CDATA[x_{i} \in \mathbb{R}^D]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>∈</mml:mo><mml:msup><mml:mi>ℝ</mml:mi><mml:mi>D</mml:mi></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>,
+    the Euclidean distances between the points in our point cloud are
+    not very useful. To perform geometric analysis, we want the
+    manifold’s <italic>geodesic</italic> distances between
+    <inline-formula><alternatives><tex-math><![CDATA[x_{i}, x_{j \in \mathcal{M}}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>j</mml:mi><mml:mo>∈</mml:mo><mml:mi>ℳ</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>,.
+    However, manifolds are locally euclidean, so within a sufficiently
+    small neighborhood of <inline-formula><alternatives><tex-math><![CDATA[x_{i} \in \mathcal{M}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>∈</mml:mo><mml:mi>ℳ</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    , the euclidean distances are accurate. This is the basis of graph
+    construction: retain only the trustworthy local distances, discard
+    the rest, and then “integrate” over the local neighborhoods to
+    recover features of the global geometry.</p>
+        <p>A graph <inline-formula><alternatives><tex-math><![CDATA[G = (V, E)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>G</mml:mi><mml:mo>=</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>V</mml:mi><mml:mo>,</mml:mo><mml:mi>E</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    is a collection of <inline-formula><alternatives><tex-math><![CDATA[n]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>n</mml:mi></mml:math></alternatives></inline-formula>
+    vertices <inline-formula><alternatives><tex-math><![CDATA[v_{i} \in V]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>v</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>∈</mml:mo><mml:mi>V</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    connected by (possibly weighted) edges
+    <inline-formula><alternatives><tex-math><![CDATA[e_{ij} \in E]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>e</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>∈</mml:mo><mml:mi>E</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    . It is efficiently represented by a single
+    <italic>adjacency</italic> (or <italic>affinity</italic>) matrix
+    <inline-formula><alternatives><tex-math><![CDATA[A \in \mathbb{R}^{n \times n}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>A</mml:mi><mml:mo>∈</mml:mo><mml:msup><mml:mi>ℝ</mml:mi><mml:mrow><mml:mi>n</mml:mi><mml:mo>×</mml:mo><mml:mi>n</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>,
+    where <inline-formula><alternatives><tex-math><![CDATA[A_{ij}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:math></alternatives></inline-formula>
+    expresses the degree of connection between the vertices
+    <inline-formula><alternatives><tex-math><![CDATA[v_{i}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>v</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives><tex-math><![CDATA[v_{j}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>v</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:math></alternatives></inline-formula>.
+    In a binary adjacency matrix, <inline-formula><alternatives><tex-math><![CDATA[A_{ij}=1]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>
+    iff there is an edge between <inline-formula><alternatives><tex-math><![CDATA[v_{i}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>v</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives><tex-math><![CDATA[v_{j}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>v</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:math></alternatives></inline-formula>.
+    In a weighted affinity matrix, <inline-formula><alternatives><tex-math><![CDATA[0<A_{ij}<1]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mn>0</mml:mn><mml:mo>&lt;</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>&lt;</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>
+    with a higher affinity indicating a closer connection between the
+    nodes.</p>
+        <p>One can construct an affinity matrix from a point cloud with the
+    following algorithm: 1. Compute the matrix
+    <inline-formula><alternatives><tex-math><![CDATA[D]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>D</mml:mi></mml:math></alternatives></inline-formula>
+    of pairwise euclidean distances between points, so that
+    <inline-formula><alternatives><tex-math><![CDATA[D_{ij}=\|x_{i}-x_{j}\|_{2}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>D</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mo stretchy="false" form="postfix">∥</mml:mo><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>x</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:msub><mml:mo stretchy="false" form="postfix">∥</mml:mo><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>.
+    2. Apply a kernel <inline-formula><alternatives><tex-math><![CDATA[\kappa]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>κ</mml:mi></mml:math></alternatives></inline-formula>
+    to the distances to construct the affinity matrix, where
+    <inline-formula><alternatives><tex-math><![CDATA[A_{ij} = \kappa(D_{ij})]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mi>κ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>D</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>.
+    This is typically the gaussian kernel: <disp-formula><alternatives><tex-math><![CDATA[
+    k(y) = \frac{1}{\sqrt{ 2\pi }\sigma}\exp\left( -\frac{y}{\sigma^2} \right)
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:mi>k</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:msqrt><mml:mrow><mml:mn>2</mml:mn><mml:mi>π</mml:mi></mml:mrow></mml:msqrt><mml:mi>σ</mml:mi></mml:mrow></mml:mfrac><mml:mo>exp</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mo>−</mml:mo><mml:mfrac><mml:mi>y</mml:mi><mml:msup><mml:mi>σ</mml:mi><mml:mn>2</mml:mn></mml:msup></mml:mfrac><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula>
+    There are a variety of heuristics for selecting an appropriate
+    kernel bandwidth <inline-formula><alternatives><tex-math><![CDATA[\sigma]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>σ</mml:mi></mml:math></alternatives></inline-formula>.
+    In this paper, we use an adaptive kernel bandwidth, in which, when
+    computing <inline-formula><alternatives><tex-math><![CDATA[k(D_{ij})]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>k</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>D</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>,
+    <inline-formula><alternatives><tex-math><![CDATA[\sigma]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>σ</mml:mi></mml:math></alternatives></inline-formula>
+    is set to the mean distance from the points
+    <inline-formula><alternatives><tex-math><![CDATA[x_{i}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives><tex-math><![CDATA[x_{j}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>x</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    to their <inline-formula><alternatives><tex-math><![CDATA[k]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>k</mml:mi></mml:math></alternatives></inline-formula>-th
+    nearest neighbor.</p>
+        <p>After building our graph affinity matrix
+    <inline-formula><alternatives><tex-math><![CDATA[A]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>A</mml:mi></mml:math></alternatives></inline-formula>,
+    we created a new representation of the point cloud
+    <inline-formula><alternatives><tex-math><![CDATA[X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>X</mml:mi></mml:math></alternatives></inline-formula>
+    – turning it from an <inline-formula><alternatives><tex-math><![CDATA[n \times D]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>n</mml:mi><mml:mo>×</mml:mo><mml:mi>D</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    matrix of unwieldy ambient coordinates into an
+    <inline-formula><alternatives><tex-math><![CDATA[n \times n]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>n</mml:mi><mml:mo>×</mml:mo><mml:mi>n</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    matrix of pairwise connections between points. The challenge is now
+    to reassemble this information of local connectivity to recover the
+    features of <inline-formula><alternatives><tex-math><![CDATA[\mathcal{M}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>ℳ</mml:mi></mml:math></alternatives></inline-formula>.
+    Graph diffusion does precisely this.</p>
+      </sec>
+      <sec id="graph-diffusion">
+        <title>2.3 Graph Diffusion</title>
+        <p>The graph diffusion matrix <inline-formula><alternatives><tex-math><![CDATA[P]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>P</mml:mi></mml:math></alternatives></inline-formula>
+    is a commonly-used method of “integrating” the local connectivity of
+    the graph <inline-formula><alternatives><tex-math><![CDATA[A]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>A</mml:mi></mml:math></alternatives></inline-formula>
+    into global geometric descriptors of <inline-formula><alternatives><tex-math><![CDATA[\mathcal{M}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>ℳ</mml:mi></mml:math></alternatives></inline-formula>.
+    Coifman and Lafon (WAWA YEAR) proved a correspondence between
+    iterated graph diffusion <inline-formula><alternatives><tex-math><![CDATA[P^t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msup><mml:mi>P</mml:mi><mml:mi>t</mml:mi></mml:msup></mml:math></alternatives></inline-formula>
+    and the Neumann heat kernel on <inline-formula><alternatives><tex-math><![CDATA[\mathcal{M}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>ℳ</mml:mi></mml:math></alternatives></inline-formula>.
+    Their technique, <italic>Diffusion Maps</italic>, uses the euclidean
+    distances between eigencoordinates of <inline-formula><alternatives><tex-math><![CDATA[P]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>P</mml:mi></mml:math></alternatives></inline-formula>
+    to approximate the geodesic distances on
+    <inline-formula><alternatives><tex-math><![CDATA[\mathcal{M}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>ℳ</mml:mi></mml:math></alternatives></inline-formula>.
+    The visualization technique <inline-formula><alternatives><tex-math><![CDATA[PHATE]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>P</mml:mi><mml:mi>H</mml:mi><mml:mi>A</mml:mi><mml:mi>T</mml:mi><mml:mi>E</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    (<xref alt="moon2019VisualizingStructureTransitions?" rid="ref-moon2019VisualizingStructureTransitions" ref-type="bibr"><bold>moon2019VisualizingStructureTransitions?</bold></xref>)
+    constructs a low-dimensional embedding of a point cloud
+    <inline-formula><alternatives><tex-math><![CDATA[X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>X</mml:mi></mml:math></alternatives></inline-formula>
+    such that a distance between the transition probabilities
+    <inline-formula><alternatives><tex-math><![CDATA[P]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>P</mml:mi></mml:math></alternatives></inline-formula>
+    of <inline-formula><alternatives><tex-math><![CDATA[X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>X</mml:mi></mml:math></alternatives></inline-formula>
+    is preserved in the embedding. (More on properties of phate,
+    trajectory preservation.) <italic>Diffusion Earth Mover’s
+    Distance</italic>
+    (<xref alt="tongDiffusionEarthMover2021?" rid="ref-tongDiffusionEarthMover2021" ref-type="bibr"><bold>tongDiffusionEarthMover2021?</bold></xref>)
+    efficiently approximates the transportation distance between
+    distributions on a graph using multi-scale wavelet transform
+    obtained by applying different scales of diffusion.
+    <italic>LEGSNet</italic>‘s “learnable geometric scattering” computes
+    tunable scales of diffusion with a graph neural network and achieves
+    state of the art performance on biochemistry graph classification
+    (<xref alt="tong2020DataDrivenLearningGeometric?" rid="ref-tong2020DataDrivenLearningGeometric" ref-type="bibr"><bold>tong2020DataDrivenLearningGeometric?</bold></xref>).
+    These are but a few of the many manifold learning techniques based
+    in diffusion.</p>
+        <p>Constructing the diffusion matrix from the affinity matrix
+    <inline-formula><alternatives><tex-math><![CDATA[A]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>A</mml:mi></mml:math></alternatives></inline-formula>
+    is straightforward: you simply row-normalize
+    <inline-formula><alternatives><tex-math><![CDATA[A]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>A</mml:mi></mml:math></alternatives></inline-formula>,
+    with an optional step to normalizing by density.</p>
+        <p>Here is the algorithm presented in Coifman and Lafon
+    (<xref alt="coifman2006DiffusionMaps?" rid="ref-coifman2006DiffusionMaps" ref-type="bibr"><bold>coifman2006DiffusionMaps?</bold></xref>):</p>
+        <list list-type="order">
+          <list-item>
+            <p>(Optional) Compute an <italic>anisotropic density
+        normalization</italic> on <inline-formula><alternatives><tex-math><![CDATA[A]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>A</mml:mi></mml:math></alternatives></inline-formula>,
+        obtaining the anisotropic adjacency matrix
+        <inline-formula><alternatives><tex-math><![CDATA[A_{\star}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>A</mml:mi><mml:mo>⋆</mml:mo></mml:msub></mml:math></alternatives></inline-formula>.</p>
+          </list-item>
+          <list-item>
+            <p>Construct the degree matrix <inline-formula><alternatives><tex-math><![CDATA[D]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>D</mml:mi></mml:math></alternatives></inline-formula>,
+        whose diagonal entries are the rowsums of
+        <inline-formula><alternatives><tex-math><![CDATA[A]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>A</mml:mi></mml:math></alternatives></inline-formula>,
+        i.e. <inline-formula><alternatives><tex-math><![CDATA[D_{ii} = \sum_{j}A_{ij}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>D</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mo>∑</mml:mo><mml:mi>j</mml:mi></mml:msub><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>..
+        The other entries are zeros.</p>
+          </list-item>
+          <list-item>
+            <p>Define <inline-formula><alternatives><tex-math><![CDATA[P = D^{-1} A]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>P</mml:mi><mml:mo>=</mml:mo><mml:msup><mml:mi>D</mml:mi><mml:mrow><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msup><mml:mi>A</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>,
+        the graph diffusion matrix.</p>
+          </list-item>
+        </list>
+        <list list-type="bullet">
+          <list-item>
+            <p>☐ Clean this up: get anisotropic equation, and clarify the
+        role of the self affinity. When is it removed? When is laziness
+        added?</p>
+          </list-item>
+        </list>
+        <p><inline-formula><alternatives><tex-math><![CDATA[P]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>P</mml:mi></mml:math></alternatives></inline-formula>
+    has several nice properties. The rows <inline-formula><alternatives><tex-math><![CDATA[P[i]]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">[</mml:mo><mml:mi>i</mml:mi><mml:mo stretchy="true" form="postfix">]</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    give the transition probabilities of a single step random walk
+    starting at point <inline-formula><alternatives><tex-math><![CDATA[x_{i}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>;
+    each row <inline-formula><alternatives><tex-math><![CDATA[P[i]]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">[</mml:mo><mml:mi>i</mml:mi><mml:mo stretchy="true" form="postfix">]</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    can be viewed as a probability distribution centered at
+    <inline-formula><alternatives><tex-math><![CDATA[x_{i}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>.
+    This is preserved under powers of the matrix. The rows of
+    <inline-formula><alternatives><tex-math><![CDATA[P^t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msup><mml:mi>P</mml:mi><mml:mi>t</mml:mi></mml:msup></mml:math></alternatives></inline-formula>
+    still sum to 1, and <inline-formula><alternatives><tex-math><![CDATA[P^t[i]]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msup><mml:mi>P</mml:mi><mml:mi>t</mml:mi></mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">[</mml:mo><mml:mi>i</mml:mi><mml:mo stretchy="true" form="postfix">]</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    now gives the probability distribution of a
+    <inline-formula><alternatives><tex-math><![CDATA[t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>t</mml:mi></mml:math></alternatives></inline-formula>-step
+    random walk starting at <inline-formula><alternatives><tex-math><![CDATA[x_{i}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>.</p>
+        <p>Although <inline-formula><alternatives><tex-math><![CDATA[P]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>P</mml:mi></mml:math></alternatives></inline-formula>
+    is not symmetric, it is conjugate to a symmetric matrix, via
+    <inline-formula><alternatives><tex-math><![CDATA[D^{0.5}PD^{-0.5} = D^{-0.5}AD^{-0.5}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msup><mml:mi>D</mml:mi><mml:mn>0.5</mml:mn></mml:msup><mml:mi>P</mml:mi><mml:msup><mml:mi>D</mml:mi><mml:mrow><mml:mo>−</mml:mo><mml:mn>0.5</mml:mn></mml:mrow></mml:msup><mml:mo>=</mml:mo><mml:msup><mml:mi>D</mml:mi><mml:mrow><mml:mo>−</mml:mo><mml:mn>0.5</mml:mn></mml:mrow></mml:msup><mml:mi>A</mml:mi><mml:msup><mml:mi>D</mml:mi><mml:mrow><mml:mo>−</mml:mo><mml:mn>0.5</mml:mn></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>,
+    granting it a full basis of real-valued eigenvectors and
+    eigenvalues. These eigenvectors are shared with the normalized graph
+    Laplacian <inline-formula><alternatives><tex-math><![CDATA[L = I - D^{-0.5}AD^{-0.5}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>L</mml:mi><mml:mo>=</mml:mo><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:msup><mml:mi>D</mml:mi><mml:mrow><mml:mo>−</mml:mo><mml:mn>0.5</mml:mn></mml:mrow></mml:msup><mml:mi>A</mml:mi><mml:msup><mml:mi>D</mml:mi><mml:mrow><mml:mo>−</mml:mo><mml:mn>0.5</mml:mn></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>.
+    The eigenvalues of <inline-formula><alternatives><tex-math><![CDATA[P]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>P</mml:mi></mml:math></alternatives></inline-formula>
+    lie between 0 and 1. Powering the matrix
+    <inline-formula><alternatives><tex-math><![CDATA[P^t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msup><mml:mi>P</mml:mi><mml:mi>t</mml:mi></mml:msup></mml:math></alternatives></inline-formula>
+    thus corresponds to powering the eigenvalues
+    <inline-formula><alternatives><tex-math><![CDATA[\lambda_{i}^t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msubsup><mml:mi>λ</mml:mi><mml:mi>i</mml:mi><mml:mi>t</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula>
+    of <inline-formula><alternatives><tex-math><![CDATA[P]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>P</mml:mi></mml:math></alternatives></inline-formula>,
+    via diagonalization <disp-formula><alternatives><tex-math><![CDATA[
+    P^t = \Psi \Lambda^t \Psi^T
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msup><mml:mi>P</mml:mi><mml:mi>t</mml:mi></mml:msup><mml:mo>=</mml:mo><mml:mi>Ψ</mml:mi><mml:msup><mml:mi>Λ</mml:mi><mml:mi>t</mml:mi></mml:msup><mml:msup><mml:mi>Ψ</mml:mi><mml:mi>T</mml:mi></mml:msup></mml:mrow></mml:math></alternatives></disp-formula>
+    This is similar to applying a low-pass filter to the graph. As
+    <inline-formula><alternatives><tex-math><![CDATA[t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>t</mml:mi></mml:math></alternatives></inline-formula>
+    increases, the smallest eigenvalues decay fastest under repeated
+    powering, and their corresponding eigenvector vanishes from the
+    eigenbasis – leaving only the largest <inline-formula><alternatives><tex-math><![CDATA[\lambda_{i}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>λ</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
+    whose eigenvectors trace global geometric features.</p>
+        <p>This is a remarkable feature of the diffusion matrix: the ability
+    to “denoise” itself by iterating the random walk over larger time
+    scales. Intuitively, the paths through the data most robustly
+    trafficked by random walkers are those supported by multiple
+    high-probability connections from independent starting points.</p>
+      </sec>
+    </sec>
+    <sec id="related-work">
+      <title>3 Related Work</title>
+      <sec id="foreman-ricci-curvature">
+        <title>3.1 Foreman Ricci Curvature</title>
+      </sec>
+      <sec id="hickocks-curvature">
+        <title>3.2 Hickock’s Curvature</title>
+      </sec>
+      <sec id="ollivier-ricci-curvature">
+        <title>3.3 Ollivier-Ricci Curvature</title>
+        <p>Developed by Yann Ollivier in 2007, <italic>Coarse Ricci
+    Curvature</italic> (or sometimes, “Ollivier Ricci Curvature”) is a
+    direct translation of Ricci curvature to discrete metric spaces like
+    graphs
+    (<xref alt="ollivier2009RicciCurvatureMarkov?" rid="ref-ollivier2009RicciCurvatureMarkov" ref-type="bibr"><bold>ollivier2009RicciCurvatureMarkov?</bold></xref>).
+    Several classical properties of Ricci curvature can be extended to
+    the graph setting using Coarse Ricci Curvature. Ollivier has, for
+    instance, proven versions of concentration inequalities, Bonnet
+    Myers (more). Coarse Ricci Curvature has, in this way, become
+    something of a bridge between continuous and coarse geometry. The
+    basis of this bridge is optimal transport, and specifically, the
+    1-Wasserstein distance.</p>
+        <p>In the Riemannian setting, Ricci curvature captures the
+    phenomenon that, in positive curvature, “small spheres are closer
+    (in transportation distance) than their centers are” (CITE 43 in ORC
+    Paper). On the sphere, for instance, imagine two circles placed at
+    the north and south poles: every point is closer to the
+    corresponding point on the opposite pole than the centers. In
+    negatively curved spaces, the discrepancy reverses, while in a flat
+    space, the average distance between the points of the circles is the
+    distance between the centers.</p>
+        <p>Coarse Ricci Curvature captures a similar phenomenon on graphs.
+    Instead of spheres, it uses locally-centered probability
+    distributions defined by random walks. And to measure the distance
+    between these walks, it uses the 1-Wasserstein (or Earth Mover’s)
+    distance. We’ll briefly define each.</p>
+        <p>The 1-Wasserstein distance is a measure of the distance between
+    probability distributions. Given distributions
+    <inline-formula><alternatives><tex-math><![CDATA[\mu_{x}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives><tex-math><![CDATA[\mu_{y}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>μ</mml:mi><mml:mi>y</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    over some shared space <inline-formula><alternatives><tex-math><![CDATA[X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>X</mml:mi></mml:math></alternatives></inline-formula>,
+    the Wasserstein distance quantifies the smallest amount of “work”
+    needed to transform one distribution into another, by transporting
+    probability “mass” between pairs of points over the ground metric
+    <inline-formula><alternatives><tex-math><![CDATA[d(x,y)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>:</p>
+        <disp-quote>
+          <p>[!Info] Definition The 1-Wasserstein distance between
+      distributions <inline-formula><alternatives><tex-math><![CDATA[\mu_{x}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+      and <inline-formula><alternatives><tex-math><![CDATA[\mu_{y}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>μ</mml:mi><mml:mi>y</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+      is <disp-formula><alternatives><tex-math><![CDATA[ W_{1}(\mu_{x},\mu_{y}) := \inf_{\xi \in \Pi(\mu_{x},\mu_{u})} \int \int d(x,y) \, d\xi(x,y) ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>y</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>:=</mml:mo><mml:munder><mml:mo>inf</mml:mo><mml:mrow><mml:mi>ξ</mml:mi><mml:mo>∈</mml:mo><mml:mi>Π</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>u</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:munder><mml:mo>∫</mml:mo><mml:mo>∫</mml:mo><mml:mi>d</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mspace width="0.167em"/><mml:mi>d</mml:mi><mml:mi>ξ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula>
+      where the “transportation plan” <inline-formula><alternatives><tex-math><![CDATA[\xi]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>ξ</mml:mi></mml:math></alternatives></inline-formula>
+      is drawn from the space <inline-formula><alternatives><tex-math><![CDATA[\Pi(\mu_{x},\mu_{y})]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>Π</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>y</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+      of joint probability distributions over
+      <inline-formula><alternatives><tex-math><![CDATA[X \times X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>X</mml:mi><mml:mo>×</mml:mo><mml:mi>X</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+      which project onto <inline-formula><alternatives><tex-math><![CDATA[\mu_{x}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+      and <inline-formula><alternatives><tex-math><![CDATA[\mu_{y}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>μ</mml:mi><mml:mi>y</mml:mi></mml:msub></mml:math></alternatives></inline-formula>.</p>
+          <p>In the discrete setting, this translates naturally into an
+      infimum over a summation.</p>
+          <p>
+            <disp-formula>
+              <alternatives>
+                <tex-math><![CDATA[W_{1}(\mu_{x},\mu_{y}) := \inf_{\xi \in \Pi(\mu_{x},\mu_{y})} \sum_{x \in X} \sum_{y \in X} d(x,y) \xi(x,y)]]></tex-math>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block">
+                  <mml:mrow>
+                    <mml:msub>
+                      <mml:mi>W</mml:mi>
+                      <mml:mn>1</mml:mn>
+                    </mml:msub>
+                    <mml:mrow>
+                      <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                      <mml:msub>
+                        <mml:mi>μ</mml:mi>
+                        <mml:mi>x</mml:mi>
+                      </mml:msub>
+                      <mml:mo>,</mml:mo>
+                      <mml:msub>
+                        <mml:mi>μ</mml:mi>
+                        <mml:mi>y</mml:mi>
+                      </mml:msub>
+                      <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                    </mml:mrow>
+                    <mml:mo>:=</mml:mo>
+                    <mml:munder>
+                      <mml:mo>inf</mml:mo>
+                      <mml:mrow>
+                        <mml:mi>ξ</mml:mi>
+                        <mml:mo>∈</mml:mo>
+                        <mml:mi>Π</mml:mi>
+                        <mml:mrow>
+                          <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                          <mml:msub>
+                            <mml:mi>μ</mml:mi>
+                            <mml:mi>x</mml:mi>
+                          </mml:msub>
+                          <mml:mo>,</mml:mo>
+                          <mml:msub>
+                            <mml:mi>μ</mml:mi>
+                            <mml:mi>y</mml:mi>
+                          </mml:msub>
+                          <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                        </mml:mrow>
+                      </mml:mrow>
+                    </mml:munder>
+                    <mml:munder>
+                      <mml:mo>∑</mml:mo>
+                      <mml:mrow>
+                        <mml:mi>x</mml:mi>
+                        <mml:mo>∈</mml:mo>
+                        <mml:mi>X</mml:mi>
+                      </mml:mrow>
+                    </mml:munder>
+                    <mml:munder>
+                      <mml:mo>∑</mml:mo>
+                      <mml:mrow>
+                        <mml:mi>y</mml:mi>
+                        <mml:mo>∈</mml:mo>
+                        <mml:mi>X</mml:mi>
+                      </mml:mrow>
+                    </mml:munder>
+                    <mml:mi>d</mml:mi>
+                    <mml:mrow>
+                      <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                      <mml:mi>x</mml:mi>
+                      <mml:mo>,</mml:mo>
+                      <mml:mi>y</mml:mi>
+                      <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                    </mml:mrow>
+                    <mml:mi>ξ</mml:mi>
+                    <mml:mrow>
+                      <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                      <mml:mi>x</mml:mi>
+                      <mml:mo>,</mml:mo>
+                      <mml:mi>y</mml:mi>
+                      <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                    </mml:mrow>
+                  </mml:mrow>
+                </mml:math>
+              </alternatives>
+            </disp-formula>
+          </p>
+        </disp-quote>
+        <p>What is the analog on a graph of a “small sphere” around a point?
+    Ollivier replaces spheres with a family of measures
+    <inline-formula><alternatives><tex-math><![CDATA[m_{x}(\cdot)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mo>⋅</mml:mo><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    defined for each point <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>,
+    where 1. Each <inline-formula><alternatives><tex-math><![CDATA[\mu_{x}(\cdot)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mo>⋅</mml:mo><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    depends measurably on <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>,
+    i.e. the map <inline-formula><alternatives><tex-math><![CDATA[x \to \mu_{x}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>x</mml:mi><mml:mo>→</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>
+    is measurable. 2. Each <inline-formula><alternatives><tex-math><![CDATA[\mu_{x}(\cdot)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mo>⋅</mml:mo><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    has finite first moment, or <italic>Jump</italic>, i.e. for some
+    <inline-formula><alternatives><tex-math><![CDATA[o \in X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>o</mml:mi><mml:mo>∈</mml:mo><mml:mi>X</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    <inline-formula><alternatives><tex-math><![CDATA[\int d(o,y) \mu_{x}(y) \, dx < \infty]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mo>∫</mml:mo><mml:mi>d</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>o</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mspace width="0.167em"/><mml:mi>d</mml:mi><mml:mi>x</mml:mi><mml:mo>&lt;</mml:mo><mml:mi>∞</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+        <p>The <italic>Jump</italic> <inline-formula><alternatives><tex-math><![CDATA[J(\mu_{x})]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>J</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    of a measure, a measure of its concentration around a central point,
+    is a concept to which we’ll return. <disp-formula><alternatives><tex-math><![CDATA[
+    J(\mu_{x}) = \int_{y \in X} d(x, y) \mu_{x}(y) \, dx 
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:mi>J</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:msub><mml:mo>∫</mml:mo><mml:mrow><mml:mi>y</mml:mi><mml:mo>∈</mml:mo><mml:mi>X</mml:mi></mml:mrow></mml:msub><mml:mi>d</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mspace width="0.167em"/><mml:mi>d</mml:mi><mml:mi>x</mml:mi></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>In graphs, Ollivier defines these <inline-formula><alternatives><tex-math><![CDATA[\mu_x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    as the probability distributions created by a single-step random
+    walk from the point <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>.
+    With a transition probability <inline-formula><alternatives><tex-math><![CDATA[\alpha]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>α</mml:mi></mml:math></alternatives></inline-formula>,
+    and equal probability of moving to each of
+    <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>’s
+    neighbors on the graph, <inline-formula><alternatives><tex-math><![CDATA[\mu_{x}(x) = (1-\alpha)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>μ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>α</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives><tex-math><![CDATA[m_{x}(y) = \alpha]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mi>α</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    if <inline-formula><alternatives><tex-math><![CDATA[y \in N(x)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>y</mml:mi><mml:mo>∈</mml:mo><mml:mi>N</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    or <inline-formula><alternatives><tex-math><![CDATA[0]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mn>0</mml:mn></mml:math></alternatives></inline-formula>
+    otherwise. This is analogous to defining
+    <inline-formula><alternatives><tex-math><![CDATA[m_{x} = P e_{x}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mi>P</mml:mi><mml:msub><mml:mi>e</mml:mi><mml:mi>x</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>,
+    if <inline-formula><alternatives><tex-math><![CDATA[P]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>P</mml:mi></mml:math></alternatives></inline-formula>
+    is the diffusion matrix created from a binary adjacency matrix.
+    Note, however, that there is nothing limiting us to binary adjacency
+    matrices, or even single steps of diffusion; the two conditions
+    above are equally satisfied by weighted adjacency matrices and
+    <inline-formula><alternatives><tex-math><![CDATA[t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>t</mml:mi></mml:math></alternatives></inline-formula>-step
+    diffusions, and in sparse or noisy graphs, this may be
+    desirable.</p>
+        <p>Definition</p>
+        <p>The <italic>Coarse Ricci Curvature</italic> between
+    <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives><tex-math><![CDATA[y]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>y</mml:mi></mml:math></alternatives></inline-formula>
+    is <disp-formula><alternatives><tex-math><![CDATA[\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:mi>κ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>:=</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>y</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>There are a number of provisos attached to this definition, which
+    tries to approximate a continuous phenomenon within discrete
+    constraints. These constraints, and the relationship between Ricci
+    and Ollivier’s coarse Ricci curvature are illustrated Ollivier’s
+    Example 2.6
+    (<xref alt="ollivier2009RicciCurvatureMarkov?" rid="ref-ollivier2009RicciCurvatureMarkov" ref-type="bibr"><bold>ollivier2009RicciCurvatureMarkov?</bold></xref>):</p>
+        <p>Let <inline-formula><alternatives><tex-math><![CDATA[(X,d)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>X</mml:mi><mml:mo>,</mml:mo><mml:mi>d</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
+    be a smooth Riemannian manifold of dimension
+    <inline-formula><alternatives><tex-math><![CDATA[d]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>d</mml:mi></mml:math></alternatives></inline-formula>
+    and let <inline-formula><alternatives><tex-math><![CDATA[\text{vol}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mtext mathvariant="normal">vol</mml:mtext></mml:math></alternatives></inline-formula>
+    be the Riemannian volume measure. Let <inline-formula><alternatives><tex-math><![CDATA[\epsilon>0]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>ϵ</mml:mi><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>
+    small enough and consider the ball of radius
+    <inline-formula><alternatives><tex-math><![CDATA[\epsilon]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>ϵ</mml:mi></mml:math></alternatives></inline-formula>
+    around each point <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>.
+    Let <inline-formula><alternatives><tex-math><![CDATA[x,y \in X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo>∈</mml:mo><mml:mi>X</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    be two sufficiently close points. Let <inline-formula><alternatives><tex-math><![CDATA[v]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>v</mml:mi></mml:math></alternatives></inline-formula>
+    be the unit tangent vector at <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>
+    directed towards <inline-formula><alternatives><tex-math><![CDATA[y]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>y</mml:mi></mml:math></alternatives></inline-formula>.
+    The coarse Ricci curvature along <inline-formula><alternatives><tex-math><![CDATA[v]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>v</mml:mi></mml:math></alternatives></inline-formula>
+    is then <disp-formula><alternatives><tex-math><![CDATA[\kappa(x,y) = \frac{\epsilon^2 \text{Ric}(v,v)}{2(d+2)}+o(\epsilon^3 + \epsilon^2d(x,y))]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:mi>κ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msup><mml:mi>ϵ</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mtext mathvariant="normal">Ric</mml:mtext><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>v</mml:mi><mml:mo>,</mml:mo><mml:mi>v</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mn>2</mml:mn><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>d</mml:mi><mml:mo>+</mml:mo><mml:mn>2</mml:mn><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mi>o</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msup><mml:mi>ϵ</mml:mi><mml:mn>3</mml:mn></mml:msup><mml:mo>+</mml:mo><mml:msup><mml:mi>ϵ</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mi>d</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>Hence the coarse Ricci curvature applied to a manifold recovers
+    the Ricci curvature, up to a scaling factor contingent on dimension,
+    and plus an error term that grows with the radius of ball and
+    distance between points.</p>
+        <p>Ollivier’s choice not to scale <inline-formula><alternatives><tex-math><![CDATA[\kappa(x,y)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>κ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    by dimension is interesting, and likely motivated by his application
+    of coarse Ricci curvature to graph-like spaces for which dimension
+    isn’t clearly defined, like social networks. Within our domain of
+    point-cloud data, incorporating dimension may be desirable; without
+    it, spaces of high dimension can be conflated with spaces of low
+    negative curvature but high dimension.</p>
+        <p>A result on coarse Ricci curvature which will prove useful
+    concerns the <italic>contraction (or expansion) of measure</italic>
+    that occurs under diffusion in spaces of positive (or negative)
+    curvature.</p>
+        <p>Proposition 20
+    (<xref alt="ollivier2009RicciCurvatureMarkov?" rid="ref-ollivier2009RicciCurvatureMarkov" ref-type="bibr"><bold>ollivier2009RicciCurvatureMarkov?</bold></xref>)</p>
+        <p>Let <inline-formula><alternatives><tex-math><![CDATA[(X,d,m)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>X</mml:mi><mml:mo>,</mml:mo><mml:mi>d</mml:mi><mml:mo>,</mml:mo><mml:mi>m</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
+    be a metric space with a random walk. Let
+    <inline-formula><alternatives><tex-math><![CDATA[\kappa \in \mathbb{R}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>κ</mml:mi><mml:mo>∈</mml:mo><mml:mi>ℝ</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>.
+    Then we have <inline-formula><alternatives><tex-math><![CDATA[\kappa(x,y) \geq \kappa]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>κ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≥</mml:mo><mml:mi>κ</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    for all <inline-formula><alternatives><tex-math><![CDATA[x,y \in X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo>∈</mml:mo><mml:mi>X</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    iff for any two probability distributions
+    <inline-formula><alternatives><tex-math><![CDATA[\mu, \mu' \in \mathcal{P}(X)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>μ</mml:mi><mml:mo>,</mml:mo><mml:mi>μ</mml:mi><mml:mi>′</mml:mi><mml:mo>∈</mml:mo><mml:mi>𝒫</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>X</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    one has</p>
+        <p><disp-formula><alternatives><tex-math><![CDATA[
+    W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>μ</mml:mi><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo>,</mml:mo><mml:mi>μ</mml:mi><mml:mi>′</mml:mi><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>μ</mml:mi><mml:mo>,</mml:mo><mml:mi>μ</mml:mi><mml:mi>′</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula>
+    Where <disp-formula><alternatives><tex-math><![CDATA[
+     \mu \star m := \int_{{x \in X}} d\mu(x)m_{x} \, dx
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:mi>μ</mml:mi><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo>:=</mml:mo><mml:msub><mml:mo>∫</mml:mo><mml:mrow><mml:mi>x</mml:mi><mml:mo>∈</mml:mo><mml:mi>X</mml:mi></mml:mrow></mml:msub><mml:mi>d</mml:mi><mml:mi>μ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mspace width="0.167em"/><mml:mi>d</mml:mi><mml:mi>x</mml:mi></mml:mrow></mml:math></alternatives></disp-formula></p>
+      </sec>
+    </sec>
+    <sec id="theory-methods">
+      <title>4 Theory &amp; Methods</title>
+      <sec id="definition">
+        <title>4.1 Definition</title>
+        <p>Given samples <inline-formula><alternatives><tex-math><![CDATA[X \subseteq M]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>X</mml:mi><mml:mo>⊆</mml:mo><mml:mi>M</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    and a flattening map <inline-formula><alternatives><tex-math><![CDATA[\Phi: X \rightarrow \mathbb{R}^d]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>Φ</mml:mi><mml:mo>:</mml:mo><mml:mi>X</mml:mi><mml:mo>→</mml:mo><mml:msup><mml:mi>ℝ</mml:mi><mml:mi>d</mml:mi></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>,</p>
+        <p>The <inline-formula><alternatives><tex-math><![CDATA[t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>t</mml:mi></mml:math></alternatives></inline-formula>-step
+    <italic>Diffusion Curvature</italic> of
+    <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>
+    is <disp-formula><alternatives><tex-math><![CDATA[
+    k_t(x)=1-\frac{W_1\left(\delta_x, p_X^t(x)\right)}{W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right)}
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>k</mml:mi><mml:mi>t</mml:mi></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>p</mml:mi><mml:mi>X</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>p</mml:mi><mml:mrow><mml:mi>Φ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow><mml:mi>t</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula>{eq-definition}</p>
+        <p>Where <inline-formula><alternatives><tex-math><![CDATA[p_X^t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msubsup><mml:mi>p</mml:mi><mml:mi>X</mml:mi><mml:mi>t</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula>
+    is the t-step random walk over <inline-formula><alternatives><tex-math><![CDATA[X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>X</mml:mi></mml:math></alternatives></inline-formula>,
+    and <inline-formula><alternatives><tex-math><![CDATA[p_{\Phi(X)}^t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msubsup><mml:mi>p</mml:mi><mml:mrow><mml:mi>Φ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>X</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow><mml:mi>t</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula>
+    is the same over the flattened points <inline-formula><alternatives><tex-math><![CDATA[\Phi(X)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>Φ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>X</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>.
+    In both cases, the <inline-formula><alternatives><tex-math><![CDATA[W_1]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
+    distance is taken with respect to manifold distances.</p>
+      </sec>
+      <sec id="separating-geometry-from-sampling-neural-flattening">
+        <title>4.2 Separating Geometry from Sampling: Neural
+    Flattening</title>
+      </sec>
+      <sec id="connections-to-ollivier-ricci-curvature">
+        <title>4.3 Connections to Ollivier-Ricci Curvature</title>
+        <p>Although diffusion curvature was designed for sampled manifolds,
+    it extends naturally to the realm of more general graphs. Indeed,
+    diffusion curvature can be seen as an node-wise adaptation of
+    Ollivier Ricci curvature, the theoretically richest and highest
+    performing edge-wise graph curvature [citations to Bastian’s paper
+    on ORC expressivity]. Here we review the definitions of
+    Ollivier-Ricci curvature and present theoretical connections between
+    it and diffusion curvature. These motivate the use of diffusion
+    curvature as substitute for Ollivier Ricci curvature on large, or
+    noisy graphs where the latter method stumbles. [Present some of
+    these in experiments]</p>
+        <p>Ollivier Ricci curvature is based in optimal transport,
+    formalizing the classical intuition that in spaces of positive
+    curvature, “spheres are closer than their centers” [cite ollivier].
+    In place of spheres, Ollivier uses diffused diracs; for distance, he
+    uses the Wasserstein-1 distance with the shortest-path metric. Given
+    points <inline-formula><alternatives><tex-math><![CDATA[x,y]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    in the metric space, with 1-step diffusions
+    <inline-formula><alternatives><tex-math><![CDATA[m_{x}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives><tex-math><![CDATA[m_{y}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>m</mml:mi><mml:mi>y</mml:mi></mml:msub></mml:math></alternatives></inline-formula>,
+    the Ollivier Ricci curvature of the edge between
+    <inline-formula><alternatives><tex-math><![CDATA[x]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>x</mml:mi></mml:math></alternatives></inline-formula>
+    and <inline-formula><alternatives><tex-math><![CDATA[y]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>y</mml:mi></mml:math></alternatives></inline-formula>
+    is: <disp-formula><alternatives><tex-math><![CDATA[\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:mi>κ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>:=</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>y</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>Local curvature always involves some comparison. Here, the
+    comparison is between the manifold’s optimal transport distance (the
+    numerator), and the Euclidean optimal transport distance (which,
+    helpfully, is just the distance in the denominator. You’ll notice
+    the similarity to diffusion curvature, which replaces the
+    <inline-formula><alternatives><tex-math><![CDATA[W_{1}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
+    distance between two diffused distributions with the
+    <inline-formula><alternatives><tex-math><![CDATA[W_{1}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub></mml:math></alternatives></inline-formula>
+    distance between a point and its <inline-formula><alternatives><tex-math><![CDATA[t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>t</mml:mi></mml:math></alternatives></inline-formula>-step
+    diffusion. We do this for both the manifold (in the numerator) and a
+    Euclidean comparison space (in the denominator).</p>
+        <p>
+          <disp-formula>
+            <alternatives>
+              <tex-math><![CDATA[
+    k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
+    ]]></tex-math>
+              <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block">
+                <mml:mrow>
+                  <mml:msub>
+                    <mml:mi>k</mml:mi>
+                    <mml:mi>d</mml:mi>
+                  </mml:msub>
+                  <mml:mrow>
+                    <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                    <mml:mi>x</mml:mi>
+                    <mml:mo>,</mml:mo>
+                    <mml:mi>y</mml:mi>
+                    <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                  </mml:mrow>
+                  <mml:mo>=</mml:mo>
+                  <mml:mn>1</mml:mn>
+                  <mml:mo>−</mml:mo>
+                  <mml:mfrac>
+                    <mml:mrow>
+                      <mml:msubsup>
+                        <mml:mi>W</mml:mi>
+                        <mml:mn>1</mml:mn>
+                        <mml:mi>M</mml:mi>
+                      </mml:msubsup>
+                      <mml:mrow>
+                        <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                        <mml:msub>
+                          <mml:mi>δ</mml:mi>
+                          <mml:mi>x</mml:mi>
+                        </mml:msub>
+                        <mml:mo>,</mml:mo>
+                        <mml:msubsup>
+                          <mml:mi>m</mml:mi>
+                          <mml:mi>x</mml:mi>
+                          <mml:mi>t</mml:mi>
+                        </mml:msubsup>
+                        <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                      </mml:mrow>
+                    </mml:mrow>
+                    <mml:mrow>
+                      <mml:msubsup>
+                        <mml:mi>W</mml:mi>
+                        <mml:mn>1</mml:mn>
+                        <mml:mi>E</mml:mi>
+                      </mml:msubsup>
+                      <mml:mrow>
+                        <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                        <mml:msub>
+                          <mml:mi>δ</mml:mi>
+                          <mml:mi>x</mml:mi>
+                        </mml:msub>
+                        <mml:mo>,</mml:mo>
+                        <mml:msubsup>
+                          <mml:mi>m</mml:mi>
+                          <mml:mi>x</mml:mi>
+                          <mml:mi>t</mml:mi>
+                        </mml:msubsup>
+                        <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                      </mml:mrow>
+                    </mml:mrow>
+                  </mml:mfrac>
+                </mml:mrow>
+              </mml:math>
+            </alternatives>
+          </disp-formula>
+        </p>
+        <p>The basis of diffusion curvature’s comparison is the “spread” of
+    diffusion as measured by <inline-formula><alternatives><tex-math><![CDATA[W_{1}(\delta_{x},m_{x}^t)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>.
+    Intuitively, in regions of positive curvature, diffusion spreads
+    less; neighborhoods with higher interconnectivity make random walks
+    lazier. We can formalize this with reference to Ollivier Ricci
+    curvature:</p>
+        <p><bold>Proposition 1.</bold> Let <inline-formula><alternatives><tex-math><![CDATA[(X,d,m)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>X</mml:mi><mml:mo>,</mml:mo><mml:mi>d</mml:mi><mml:mo>,</mml:mo><mml:mi>m</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
+    be a metric space equipped with a random walk, with coarse Ricci
+    curvature bounded from below by some <inline-formula><alternatives><tex-math><![CDATA[k]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>k</mml:mi></mml:math></alternatives></inline-formula>
+    such that <inline-formula><alternatives><tex-math><![CDATA[\kappa(x,y) \geq k]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>κ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≥</mml:mo><mml:mi>k</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    for all <inline-formula><alternatives><tex-math><![CDATA[x,y \in X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo>∈</mml:mo><mml:mi>X</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>.
+    The Wasserstein Spread of Diffusion of a
+    <inline-formula><alternatives><tex-math><![CDATA[t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>t</mml:mi></mml:math></alternatives></inline-formula>
+    step diffusion in <inline-formula><alternatives><tex-math><![CDATA[X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>X</mml:mi></mml:math></alternatives></inline-formula>
+    is bounded above by <disp-formula><alternatives><tex-math><![CDATA[
+    W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mfrac><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>t</mml:mi></mml:msup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>k</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>In particular, if <inline-formula><alternatives><tex-math><![CDATA[k>0]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>k</mml:mi><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>
+    then <inline-formula><alternatives><tex-math><![CDATA[W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow><mml:mi>k</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>,
+    and if <inline-formula><alternatives><tex-math><![CDATA[k=0]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>k</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>,
+    then <inline-formula><alternatives><tex-math><![CDATA[W_{1}(\delta_{x},m_{x}^t) \leq tW_1\left(\delta_x,m_x\right)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:mi>t</mml:mi><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+        <p><italic>Proof</italic>. First, we bound
+    <inline-formula><alternatives><tex-math><![CDATA[W_{1}(m_{x}^t,m_{x}^{t+1})]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    using Ollivier’s Proposition 20 [citation needed] on concentration
+    of measure. The proposition states that a lower bound on curvature,
+    such as we have, implies that <disp-formula><alternatives><tex-math><![CDATA[
+    W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>μ</mml:mi><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo>,</mml:mo><mml:mi>μ</mml:mi><mml:mi>′</mml:mi><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>μ</mml:mi><mml:mo>,</mml:mo><mml:mi>μ</mml:mi><mml:mi>′</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula>
+    where here <inline-formula><alternatives><tex-math><![CDATA[\mu,\mu']]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>μ</mml:mi><mml:mo>,</mml:mo><mml:mi>μ</mml:mi><mml:mi>′</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    are two probability distributions and <inline-formula><alternatives><tex-math><![CDATA[m]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>m</mml:mi></mml:math></alternatives></inline-formula>
+    is a random walk. This provides an easy lemma:</p>
+        <p><bold>Lemma 1.</bold> Let <inline-formula><alternatives><tex-math><![CDATA[(X,d,m)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>X</mml:mi><mml:mo>,</mml:mo><mml:mi>d</mml:mi><mml:mo>,</mml:mo><mml:mi>m</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>
+    be a metric space with a random walk. Suppose there is some
+    <inline-formula><alternatives><tex-math><![CDATA[k \in \mathbb{R}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>k</mml:mi><mml:mo>∈</mml:mo><mml:mi>ℝ</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    such that the coarse Ricci curvature <inline-formula><alternatives><tex-math><![CDATA[\kappa(x,y) \geq k]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>κ</mml:mi><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≥</mml:mo><mml:mi>k</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>
+    for all <inline-formula><alternatives><tex-math><![CDATA[x,y \in X]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>x</mml:mi><mml:mo>,</mml:mo><mml:mi>y</mml:mi><mml:mo>∈</mml:mo><mml:mi>X</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>.
+    Then: <disp-formula><alternatives><tex-math><![CDATA[
+    W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>t</mml:mi></mml:msup><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p><italic>Proof.</italic> We proceed by induction. For
+    <inline-formula><alternatives><tex-math><![CDATA[t=0]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>t</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>,
+    the above is true, as <inline-formula><alternatives><tex-math><![CDATA[W_{1}(m_{x}^0, m_{x}^{1}) =W_{1}(\delta_x, m_{x}^{1}) = W_1\left(\delta_x,m_x\right)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mn>0</mml:mn></mml:msubsup><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mn>1</mml:mn></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mn>1</mml:mn></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>.
+    Suppose it holds for <inline-formula><alternatives><tex-math><![CDATA[t-1]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>,
+    e.g. <disp-formula><alternatives><tex-math><![CDATA[
+    W_1\left(m_x^{t-1}, m_x^{t}\right) \leq(1-k)^{t-1} W_1\left(\delta_x,m_x\right)
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msup><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>Consider <inline-formula><alternatives><tex-math><![CDATA[W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>,
+    the application of another step of diffusion. By Ollivier’s
+    Proposition 20, this distance is bounded above by
+    <disp-formula><alternatives><tex-math><![CDATA[
+    W_1\left(\mu_1 \star m, \mu_2 \star m\right) \leq(1-k) W_1\left(\mu_1, \mu_2\right)
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo>,</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula>
+    So <disp-formula><alternatives><tex-math><![CDATA[
+    W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right) \leq  (1-k)W_1\left(m_x^{t-1}, m_x^{t}\right)
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo>⋆</mml:mo><mml:mi>m</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>which, since the statement holds for
+    <inline-formula><alternatives><tex-math><![CDATA[t-1]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>,
+    yields <disp-formula><alternatives><tex-math><![CDATA[
+    W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>t</mml:mi></mml:msup><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>To use this lemma, we can decompose our
+    <inline-formula><alternatives><tex-math><![CDATA[t-]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo></mml:mrow></mml:math></alternatives></inline-formula>step
+    diffusion into a sum of single step diffusions. By the triangle
+    inequality, <disp-formula><alternatives><tex-math><![CDATA[
+    W_{1}(\delta_{x},m_{x}^t) \leq W_1\left(\delta_x,m_x\right) + W_{1}(m_{x},m_{x}^2) + \dots + W_{1}(m_{x}^{t-1}, m_{x}^t)
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mn>2</mml:mn></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mi>…</mml:mi><mml:mo>+</mml:mo><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msubsup><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>By Lemma 1, <disp-formula><alternatives><tex-math><![CDATA[
+    \leq W_1\left(\delta_x,m_x\right)\left(1+(1-k)+(1-k)^2+\ldots+(1-k)^{t-1}\right)
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:mo>≤</mml:mo><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>+</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:mo>+</mml:mo><mml:mi>…</mml:mi><mml:mo>+</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mrow><mml:mi>t</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>This truncated series is equal to <inline-formula><alternatives><tex-math><![CDATA[\frac{1-(1-k)^t}{1-(1-k)} = \frac{(1-(1-k)^t)}{k}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mfrac><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>t</mml:mi></mml:msup></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>t</mml:mi></mml:msup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>k</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>.
+    If <inline-formula><alternatives><tex-math><![CDATA[k>0]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>k</mml:mi><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>,
+    then as <inline-formula><alternatives><tex-math><![CDATA[t \to \infty]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>t</mml:mi><mml:mo>→</mml:mo><mml:mi>∞</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>,
+    the infinite sum <inline-formula><alternatives><tex-math><![CDATA[\sum_{i=0}^t (1-k)^i]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msubsup><mml:mo>∑</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn></mml:mrow><mml:mi>t</mml:mi></mml:msubsup><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>i</mml:mi></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>
+    converges to the geometric series <inline-formula><alternatives><tex-math><![CDATA[\frac{1}{1-(1-k)} = \frac{1}{k}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mfrac><mml:mn>1</mml:mn><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>k</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>.
+    Because the sum is monotonically increasing with
+    <inline-formula><alternatives><tex-math><![CDATA[t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi>t</mml:mi></mml:math></alternatives></inline-formula>,
+    the partial sum is upper bounded by the infinite sum. It follows
+    that <disp-formula><alternatives><tex-math><![CDATA[
+    W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≤</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>W</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow><mml:mi>k</mml:mi></mml:mfrac></mml:mrow></mml:math></alternatives></disp-formula></p>
+        <p>If <inline-formula><alternatives><tex-math><![CDATA[k=0]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>k</mml:mi><mml:mo>=</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>,
+    then obviously <inline-formula><alternatives><tex-math><![CDATA[\sum_{i}^t (1-k)^i = t]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msubsup><mml:mo>∑</mml:mo><mml:mi>i</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>i</mml:mi></mml:msup><mml:mo>=</mml:mo><mml:mi>t</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+        <p>The above asserts that the “spread” of diffusion is bounded from
+    above by the Ollivier Ricci curvature of the region. To turn this
+    measurement of spread into a signed curvature, we have only to
+    introduce a comparison: the dimensional constant of the Euclidean
+    spread of diffusion, <inline-formula><alternatives><tex-math><![CDATA[W_{1}^E(\delta_{x},m_{x}^t)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msubsup><mml:mi>W</mml:mi><mml:mn>1</mml:mn><mml:mi>E</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>.
+    Using Proposition 1, we can directly bound
+    <inline-formula><alternatives><tex-math><![CDATA[k_{D}]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:msub><mml:mi>k</mml:mi><mml:mi>D</mml:mi></mml:msub></mml:math></alternatives></inline-formula>
+    in terms of the Ollivier Ricci curvature:</p>
+        <p><disp-formula><alternatives><tex-math><![CDATA[
+    1 - \frac{W^M_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}}{W_{1}^E(\delta_{x},m_{x}^t)} \leq k_{D}
+    ]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block"><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:msubsup><mml:mi>W</mml:mi><mml:mn>1</mml:mn><mml:mi>M</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mfrac><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:msup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>k</mml:mi><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>t</mml:mi></mml:msup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mi>k</mml:mi></mml:mfrac></mml:mrow><mml:mrow><mml:msubsup><mml:mi>W</mml:mi><mml:mn>1</mml:mn><mml:mi>E</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>≤</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>D</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></disp-formula>
+    A simple approximation of <inline-formula><alternatives><tex-math><![CDATA[W_{1}^E(\delta_{x},m_{x}^t)]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msubsup><mml:mi>W</mml:mi><mml:mn>1</mml:mn><mml:mi>E</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msubsup><mml:mi>m</mml:mi><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msubsup><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>
+    is obtained by scaling the spread of a single-step diffusion by a
+    factor of t, i.e. <inline-formula><alternatives><tex-math><![CDATA[tW_{1}^E(\delta_{x},m_{x})]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:mi>t</mml:mi><mml:msubsup><mml:mi>W</mml:mi><mml:mn>1</mml:mn><mml:mi>E</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>.
+    Using this, and noting that <inline-formula><alternatives><tex-math><![CDATA[W_{1}^E(\delta_{x},m_{x}) \approx W_{1}^M(\delta_{x},m_{x})]]></tex-math><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mrow><mml:msubsup><mml:mi>W</mml:mi><mml:mn>1</mml:mn><mml:mi>E</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow><mml:mo>≈</mml:mo><mml:msubsup><mml:mi>W</mml:mi><mml:mn>1</mml:mn><mml:mi>M</mml:mi></mml:msubsup><mml:mrow><mml:mo stretchy="true" form="prefix">(</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>m</mml:mi><mml:mi>x</mml:mi></mml:msub><mml:mo stretchy="true" form="postfix">)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>,</p>
+        <p>
+          <disp-formula>
+            <alternatives>
+              <tex-math><![CDATA[
+    1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
+    ]]></tex-math>
+              <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block">
+                <mml:mrow>
+                  <mml:mn>1</mml:mn>
+                  <mml:mo>−</mml:mo>
+                  <mml:mfrac>
+                    <mml:mrow>
+                      <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                      <mml:mn>1</mml:mn>
+                      <mml:mo>−</mml:mo>
+                      <mml:msup>
+                        <mml:mrow>
+                          <mml:mo stretchy="true" form="prefix">(</mml:mo>
+                          <mml:mn>1</mml:mn>
+                          <mml:mo>−</mml:mo>
+                          <mml:mi>k</mml:mi>
+                          <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                        </mml:mrow>
+                        <mml:mi>t</mml:mi>
+                      </mml:msup>
+                      <mml:mo stretchy="true" form="postfix">)</mml:mo>
+                    </mml:mrow>
+                    <mml:mrow>
+                      <mml:mi>t</mml:mi>
+                      <mml:mi>k</mml:mi>
+                    </mml:mrow>
+                  </mml:mfrac>
+                  <mml:mo>≤</mml:mo>
+                  <mml:msub>
+                    <mml:mi>k</mml:mi>
+                    <mml:mi>D</mml:mi>
+                  </mml:msub>
+                </mml:mrow>
+              </mml:math>
+            </alternatives>
+          </disp-formula>
+          <bold>Note: this analysis sidesteps the reality that tJ is a
+    (possibly egregious) <italic>overestimate</italic> of the euclidean
+    WSD. We can’t actually just plug it in without pushing some
+    indeterminate space inbetween the sides of the inequality</bold>
+        </p>
+      </sec>
+    </sec>
+    <sec id="results">
+      <title>5 Results</title>
+      <sec id="toy-manifolds">
+        <title>5.1 Toy Manifolds</title>
+        <sec id="manifolds">
+          <title>5.1.1 2 Manifolds</title>
+          <fig id="fig-2-manifolds">
+            <caption>
+              <p>Figure 1: Diffusion Curvature vs Gaussian Curvature
+        on 2-Manifolds.</p>
+            </caption>
+            <graphic mimetype="image" mime-subtype="png" xlink:href="index_files/figure-jats/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png"/>
+          </fig>
+        </sec>
+        <sec id="saddle-sphere-sign-differentiation-test">
+          <title>5.1.2 Saddle sphere sign-differentiation test</title>
+        </sec>
+        <sec id="noise-resilience">
+          <title>5.1.3 Noise Resilience</title>
+        </sec>
+      </sec>
+      <sec id="loss-landscapes">
+        <title>5.2 Loss Landscapes</title>
+      </sec>
+      <sec id="curvature-as-a-tda-filtration">
+        <title>5.3 Curvature as a TDA Filtration</title>
+      </sec>
+    </sec>
+    <sec id="conclusion">
+      <title>6 Conclusion</title>
+    </sec>
+    <sec id="references">
+      <title>References</title>
+    </sec>
+  </body>
+  <back>
+</back>
+  <!-- (F2ED4C6E)[nb-1]:/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/paper/index-ricci.qmd -->
+  <!-- (F2ED4C6E)[nb-2]:/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/paper/readme-paper.md -->
+</article>
