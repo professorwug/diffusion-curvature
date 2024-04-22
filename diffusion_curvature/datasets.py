@@ -180,10 +180,11 @@ def ellispoid(n, noise=0, a=3, b=2, c=1):
 
 # %% ../nbs/library/datasets/toy-datasets.ipynb 37
 # import tadasets
+import numpy as np
 def sphere(n, d=2, radius = 1, use_guide_points = False):
     if use_guide_points:
         n = n - 1
-    X = np.randn(n,d)
+    X = np.random.randn(n,d+1)
     norm = np.linalg.norm(X,axis=1)
     X = X/norm[:,None]
     # u = np.random.normal(0,1,size=(n))
@@ -194,7 +195,7 @@ def sphere(n, d=2, radius = 1, use_guide_points = False):
     # X = np.column_stack([x,y,z])
     # Use tadasets implementation
     # X = tadasets.dsphere(n, d=d)*radius
-    # ks = np.ones(n)*(2/radius**2)
+    ks = np.ones(n)*(2/radius**2)
     # Compile guidepoints if needed
     if use_guide_points:
         X = np.vstack([np.array([0,0,1]),X])
