@@ -48,8 +48,8 @@ def gaussian_kernel(
         # compute the gaussian kernel with an adaptive bandwidth
         W = (1/(2*np.sqrt(2*np.pi)))*(np.exp(-D**2/(2*div1**2))/div1 + np.exp(-D**2/(2*div2**2))/div2)
     elif kernel_type == "curvature agnostic":
-        scaled_neighbor_dists = np.partition(D,k)[:,:k] * neighbor_scale # TODO is multiplication best here?
-        sigma = np.mean(scaled_neighbor_dists)
+        scaled_neighbor_dists = np.partition(D,k)[:,k]  # TODO is multiplication best here?
+        sigma = np.mean(scaled_neighbor_dists) * neighbor_scale
         W = np.exp((-D**2)/sigma**2)
         # div1 = np.ones(len(D))[:,None] @ scaled_neighbor_dists[None,:]
         # div2 = scaled_neighbor_dists[:,None] @ np.ones(len(D))[None,:]
