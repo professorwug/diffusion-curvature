@@ -176,7 +176,7 @@ def ellipsoid(n, noise=0, a=3, b=2, c=1, seed=None):
     f = sym.Matrix(
         [a*sym.cos(theta)*sym.sin(phi),b*sym.sin(theta)*sym.sin(phi),c*sym.cos(phi)]
     )
-    X = rejection_sample_from_surface(f, n+1, bounds=[0,2*np.pi], )[1:]
+    X = rejection_sample_from_surface(f, n+1, bounds=[0,2*np.pi], seed=seed)[1:]
     # compute curvature of sampled torus (gaussian curvature)
     phi = np.arccos(X[:,2]/c)
     theta = np.arccos(X[:,0]*(1/a)*(1/np.sin(phi)))

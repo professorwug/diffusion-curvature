@@ -18,7 +18,7 @@ from sklearn.metrics import mean_squared_error
 def epsilon_and_tau(point_cloud, query):
     ratio_all = []
     nbrs = NearestNeighbors(n_neighbors=2500, algorithm='ball_tree').fit(point_cloud)
-    for i in range(1, 150):
+    for i in range(1, 200):
         epsilon_PCA = 0.01 * i 
         ep_dist, ep_idx = nbrs.radius_neighbors(query, epsilon_PCA, return_distance=True, sort_results = True)
 
@@ -54,6 +54,7 @@ def Gaussian_Curvature_2d(point_cloud, query_point,  intrin_dim = 2, epsilon_PCA
         
 
     nbrs = NearestNeighbors(n_neighbors=k, algorithm='ball_tree').fit(point_cloud)
+    
     ep_dist, ep_idx = nbrs.radius_neighbors(query_point, epsilon_PCA, return_distance=True, sort_results = True)
     
     tau_dist, tau_idx = nbrs.radius_neighbors(query_point, tau_radius, return_distance=True, sort_results = True)
@@ -63,9 +64,12 @@ def Gaussian_Curvature_2d(point_cloud, query_point,  intrin_dim = 2, epsilon_PCA
     pca_nbrs = point_cloud[ep_idx[0]]
     Xi = pca_nbrs - query_point
     Di = np.diag(np.sqrt(np.exp(- np.array(ep_dist[0]) ** 2 / epsilon_PCA)))
+    # print("di", Di.shape, "ep dist", ep_dist)
     Bi = Xi.T @ Di
-    
+
+    # print("Bi", Bi.shape)
     U, S, VT = np.linalg.svd(Bi.T, full_matrices = False)
+    # print("vt", VT.shape)
     O = VT
     
     tau_nbrs_new = tau_nbrs[1:]
@@ -88,9 +92,11 @@ def Gaussian_Curvature_2d(point_cloud, query_point,  intrin_dim = 2, epsilon_PCA
     
     max_cur_weight = np.sqrt(np.exp(-1 * np.array(tau_dist_new[max_indices]) ** 2 / np.sqrt(tau_radius)))
     min_cur_weight = np.sqrt(np.exp(-1 * np.array(tau_dist_new[min_indices]) ** 2 / np.sqrt(tau_radius)))
-    
-    principal_cur1 = sum(max_cur_weight * max_cur)/sum(max_cur_weight)
-    principal_cur2 = sum(min_cur_weight * min_cur)/sum(min_cur_weight)
+
+    stability_epsilon = 0
+    if sum(max_cur_weight) == 0 or sum(min_cur_weight) == 0: stability_epsilon = 1e-8
+    principal_cur1 = sum(max_cur_weight * max_cur)/(sum(max_cur_weight) + stability_epsilon)
+    principal_cur2 = sum(min_cur_weight * min_cur)/(sum(min_cur_weight) + stability_epsilon)
       
     return principal_cur1 * principal_cur2
     

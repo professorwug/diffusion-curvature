@@ -73,7 +73,9 @@ def rejection_sample_from_surface(
         bounds=[-1,1], # bounds for each variable
         batch_size=1024, # number of points to test sampling at a time
         verbose=False,
+        seed = None,
 ):
+    np.random.seed(seed)
     if verbose: print("Hey, just woke up")
     vars = list(F.free_symbols)
     f = manifold_density(F, vars)
@@ -109,7 +111,7 @@ def rejection_sample_from_surface(
         points = points[:n_points]
     return np.squeeze(np.array(points))
 
-# %% ../nbs/library/datasets/Random-Surfaces.ipynb 25
+# %% ../nbs/library/datasets/Random-Surfaces.ipynb 27
 def second_fundamental_form(F):
     vars = list(F.free_symbols)
     d = len(vars)
@@ -120,7 +122,7 @@ def second_fundamental_form(F):
             H[j,i] = np.squeeze(sp.diff((sp.diff(F, x1)),x2).subs([(v,0) for v in vars]))[-(N-d):] # evaluate at the origin
     return H
 
-# %% ../nbs/library/datasets/Random-Surfaces.ipynb 27
+# %% ../nbs/library/datasets/Random-Surfaces.ipynb 29
 def riemannian_curvature_tensor(F):
     H = second_fundamental_form(F)
     # print(H)
@@ -158,7 +160,7 @@ def riemannian_curvature_tensor(F):
     
     return R
 
-# %% ../nbs/library/datasets/Random-Surfaces.ipynb 28
+# %% ../nbs/library/datasets/Random-Surfaces.ipynb 30
 def scalar_curvature_at_origin(F):
     R = riemannian_curvature_tensor(F)
     Ricc = sum([R[:,i,:,i] for i in range(R.shape[-1])])
@@ -169,7 +171,7 @@ def scalar_curvature_at_origin(F):
     #         S += R[i,j,i,j]
     return S
 
-# %% ../nbs/library/datasets/Random-Surfaces.ipynb 31
+# %% ../nbs/library/datasets/Random-Surfaces.ipynb 33
 def samples_from_random_surface(
         n_samples, # number of samples to generate
         d, # intrinsic dimension
