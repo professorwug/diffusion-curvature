@@ -4,7 +4,7 @@
 __all__ = ['default_fixed_graph_former', 'graphtools_graph_from_data', 'SimpleGraph', 'get_adaptive_graph', 'get_fixed_graph',
            'DiffusionCurvature', 'fill_diagonal']
 
-# %% ../nbs/library/core-jax/Core.ipynb 10
+# %% ../nbs/library/core-jax/Core.ipynb 8
 import pygsp
 import jax
 import jax.numpy as jnp
@@ -89,9 +89,9 @@ class DiffusionCurvature():
     def __init__(
             self,
             diffusion_type:_DIFFUSION_TYPES = 'diffusion matrix', # Either ['diffusion matrix','heat kernel']
-            laziness_method: _LAZINESS_METHOD = 'Wasserstein', # Either ['Wasserstein','Entropic', 'Laziness']
+            laziness_method: _LAZINESS_METHOD = 'Entropic', # Either ['Wasserstein','Entropic', 'Laziness']
             flattening_method: _FLATTENING_METHOD = 'Fixed', # Either ['Neural', 'Fixed', 'Mean Fixed', 'MIOFlow']
-            comparison_method: _COMPARISON_METHOD = 'Ollivier', # Either ['Ollivier', 'Subtraction']
+            comparison_method: _COMPARISON_METHOD = 'Subtraction', # Either ['Ollivier', 'Subtraction']
             graph_former = default_fixed_graph_former,
             dimest = None, # Dimension estimator to use. If none, defaults to kNN.
             points_per_cluster = None, # Number of points to use in each cluster when constructing comparison spaces. Each comparison space takes about 20sec to construct, and has different sampling and dimension. If 1, constructs a different comparison space for each point; if None, constructs just one comparison space.
@@ -387,6 +387,14 @@ class DiffusionCurvature():
         if idx is not None: ks = ks[idx]
         return ks #, flat_spreads, manifold_spreads, P, Pt
 
+    def spectral_transform(self, G, signal):
+        A = jnp.array(G_torus.W.todense())
+        e, v = jnp.linalg.eigh(A)
+        loadings = v.T
+        transformed_signal = loadings @ signal
+        return transformed_signal, e
+        
+
     def fit(
             self,
             G:pygsp.graphs.Graph, # Input Graph
@@ -419,6 +427,8 @@ class DiffusionCurvature():
     ):
         self.fit(G = G, t=t, idx=idx, dim=dim, knn=knn, D=D, X=X, unsigned=unsigned)
         return self.ks
+
+
     
     
 def fill_diagonal(a, val):

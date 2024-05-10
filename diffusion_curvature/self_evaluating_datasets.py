@@ -8,11 +8,13 @@ from fastcore.all import *
 import inspect
 import pandas as pd
 from typing import List
+import os
 
 import sklearn
 import scipy.stats
 import numpy as np
 import matplotlib.pyplot as plt
+import joblib
 
 def metric(func):
     setattr(func, 'tag', 'metric')
@@ -28,6 +30,7 @@ class SelfEvaluatingDataset():
                  datalist:List, # list of objects to be evaluated in the dataset. Usually includes multiple examples, e.g. a torus, sphere, saddle; multiple images, multiple validation datasets.
                  names:List, # names of the datasets in datalist.
                  result_names:List, # quantities to be computed (e.g. curvature, predictions). Usually just one per dataset.
+                 save_directory:str = ".self-evaluating-datasets", 
                 ):
         store_attr()
 
@@ -39,6 +42,16 @@ class SelfEvaluatingDataset():
             # aggregate ground truth values
             for rn in self.result_names:
                 self._store_truth(rn, i)
+
+        # create the save directory if needed
+        # Check if the directory exists
+        if not os.path.exists(save_directory):
+            # Create the directory
+            os.makedirs(save_directory)
+            self.imported_methods = []
+        else:
+            # try loading previous runs
+            self.load_from_disk()
 
     
     def __iter__(self):
@@ -53,9 +66,35 @@ class SelfEvaluatingDataset():
     def get_item(self, idx):
         return self.DS[idx]
 
+    def save_results(self):
+        # saves DS to the save_directory using joblib dump
+        child_name = type(self).__name__
+        filename = os.path.join(self.save_directory, child_name + '.joblib_dump')
+        joblib.dump(self.DS, filename)
+
+    def load_from_disk(self):
+        # loads saved DS from dict using joblib
+        child_name = type(self).__name__
+        filename = os.path.join(self.save_directory, child_name + '.joblib_dump')
+        if os.path.exists(filename):
+            self.DS = joblib.load(filename)
+            r = self.DS[0].results
+            self.imported_methods = list(r[list(r.keys())[0]].keys())
+            print(f"Loaded evaluations on methods {self.imported_methods}")
+        else:
+            self.imported_methods = []
+            print("No previously saved evaluations. Starting from 0.")
+            
+    def delete_saved_method(self, method_name):
+        for i in range(len(self.DS)):
+            for rn in self.result_names:
+                self.DS[i].results[rn].pop(method_name)
+        print("Deleted method from saved results")
+        
     def __next__(self):
         self.idx += 1
         if self.idx >= self.__len__():
+            self.save_results()
             raise StopIteration
         result = self.get_item(self.idx)
         return result
@@ -88,20 +127,20 @@ class SelfEvaluatingDataset():
         )
 
 
-    def compute_metrics(self, filter = None):
-        self._aggregate_labels()
+    def compute_metrics(self, labels, filter = None):
         metrics = self._get_metrics()
-        self.metric_tables = {rn : {} for rn in self.result_names}
+        metric_tables = {rn : {} for rn in self.result_names}
         for rn in self.result_names:
             for metric in metrics:
-                self.metric_tables[rn][metric.__name__] = {}
+                metric_tables[rn][metric.__name__] = {}
                 for method_name in self.method_names:
-                    self.metric_tables[rn][metric.__name__][method_name] = self.compute(metric=metric, method_name=method_name, result_name=rn, filter = None)
-            self.metric_tables[rn] = pd.DataFrame(self.metric_tables[rn])
+                    metric_tables[rn][metric.__name__][method_name] = self.compute(metric=metric, method_name=method_name, result_name=rn, labels = labels, filter = None)
+            metric_tables[rn] = pd.DataFrame(metric_tables[rn])
+        return metric_tables
             
-    def compute(self, metric, result_name, method_name, filter=None):
+    def compute(self, metric, result_name, method_name, labels, filter=None):
         # Overwrite this class with your logic. It implements the computation of a single metric for a single method
-        return metric(self.labels[result_name][method_name], self.labels[result_name]['ground truth'])
+        return metric(labels[result_name][method_name], labels[result_name]['ground truth'], result_name = result_name)
     
 
     def _aggregate_labels(self):
@@ -120,7 +159,7 @@ class SelfEvaluatingDataset():
         # for each computed method on this dataset, we plot the histogram of saddles vs spheres
         self._aggregate_labels()
         # get the idxs for each type of dataset
-        dataset_names = [self.DS.data_vars[i].attrs['name'] for i in range(len(self.DS))]
+        dataset_names = self.names
         unique_names = list(set(dataset_names))
         idxs_by_name = {n: [i for i, name in enumerate(dataset_names) if name == n] for n in unique_names}        
         for m in self.method_names: 
@@ -133,7 +172,8 @@ class SelfEvaluatingDataset():
                 plt.show()
 
     def table(self, filter=None):
-        self.compute_metrics(filter=filter)
+        self._aggregate_labels()
+        self.metric_tables = self.compute_metrics(filter=filter, labels = self.labels)
         for k in self.metric_tables.keys():
             print(k)
             print(self.metric_tables[k])
