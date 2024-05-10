@@ -1,70 +1,27 @@
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. IEEE's font choices can trigger bugs that do  ***
-% *** not appear when using other class files.                            ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
-
-
-%%*************************************************************************
-%% Legal Notice:
-%% This code is offered as-is without any warranty either expressed or
-%% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE!
-%% User assumes all risk.
-%% In no event shall IEEE or any contributor to this code be liable for
-%% any damages or losses, including, but not limited to, incidental,
-%% consequential, or any other damages, resulting from the use or misuse
-%% of any information contained here.
-%%
-%% All comments are the opinions of their respective authors and are not
-%% necessarily endorsed by the IEEE.
-%%
-%% This work is distributed under the LaTeX Project Public License (LPPL)
-%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
-%% distributed and modified. A copy of the LPPL, version 1.3, is included
-%% in the base LaTeX documentation of all distributions of LaTeX released
-%% 2003/12/01 or later.
-%% Retain all contribution notices and credits.
-%% ** Modified files should be clearly indicated as such, including  **
-%% ** renaming them and changing author support contact information. **
-%%
-%% File list of work: IEEEtran.cls, New_IEEEtran_how-to.pdf, bare_jrnl_new_sample4.tex,
-%%*************************************************************************
+% Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
-% Note that the a4paper option is mainly intended so that authors in
-% countries using A4 can easily print to A4 and see how their papers will
-% look in print - the typesetting of the document will not typically be
-% affected with changes in paper size (but the bottom and side margins will).
-% Use the testflow package mentioned above to verify correct handling of
-% both paper sizes by the user's LaTeX system.
-%
-% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
-% should be used if it is desired that the figures are to be displayed in
-% draft mode.
 %
 \documentclass[
-  journal,
-]{IEEEtran}%
-% If IEEEtran.cls has not been installed into the LaTeX system files,
-% manually specify the path to it like:
-% \documentclass[journal]{../sty/IEEEtran}
-\usepackage[cmex10]{amsmath}
-\usepackage{amssymb}
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
+  \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-%\usepackage{lmodern}
-\ifPDFTeX\else
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -73,14 +30,17 @@
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \makeatletter
-\parindent    1.0em
-\ifCLASSOPTIONcompsoc
-  \parindent    1.5em
-\fi
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
-
 \setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
 \ifx\paragraph\undefined\else
@@ -151,11 +111,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-\usepackage{physics}
-\usepackage[version=3]{mhchem}
-\usepackage{orcidlink}
-\usepackage{float}
-\floatplacement{table}{htb}
+\KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -175,9 +131,9 @@
   \newcommand\listtablename{List of Tables}
 \fi
 \ifdefined\figurename
-  \renewcommand*\figurename{Fig.}
+  \renewcommand*\figurename{Figure}
 \else
-  \newcommand\figurename{Fig.}
+  \newcommand\figurename{Figure}
 \fi
 \ifdefined\tablename
   \renewcommand*\tablename{Table}
@@ -197,22 +153,11 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-\usepackage[skip=2pt,font=footnotesize]{caption}
-%\captionsetup{format=myformat}
-\makeatletter
-%\setlength{\cslhangindent}{0pt plus .5pt}
-\providecommand{\bibfont}{\footnotesize}
-\let\CSLReferences@rig=\CSLReferences
-\renewcommand{\CSLReferences}[2]{
-\bibfont\settowidth\csllabelwidth{[999]}
-\CSLReferences@rig{#1}{#2}
-\vskip 0.3\baselineskip plus 0.1\baselineskip minus 0.1\baselineskip%
-}
-\makeatother
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
+
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
@@ -227,61 +172,14 @@ Curvature, Point Clouds},
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-% *** Do not adjust lengths that control margins, column widths, etc. ***
-% *** Do not use packages that alter fonts (such as pslatex).         ***
-% There should be no need to do such things with IEEEtran.cls V1.6 and later.
-% (Unless specifically asked to do so by the journal or conference you plan
-% to submit to, of course. )
-
-
-% correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
-
-%
-% paper title
-% can use linebreaks \\ within to get better formatting as desired
-% Do not put math or special symbols in the title.
-% paper title
-% can use linebreaks \\ within to get better formatting as desired
-% Do not put math or special symbols in the title.
 \title{Diffusion Curvature for Fast, Point-wise, Noise-Resistant
 Geometric Featurization of Graphs and Pointclouds}
+\author{Kincaid MacDonald \and Dhananjay Bhaskar \and Kaly
+Zhang \and Ian Adelstein \and Smita Krishnaswamy}
+\date{2024-05-09}
 
-\author{
-Kincaid MacDonald\orcidlink{0009-0006-4686-7488},~Dhananjay
-Bhaskar\orcidlink{0000-0002-7859-8394},~Kaly
-Zhang\orcidlink{0000-0002-7859-8394},~Ian
-Adelstein\orcidlink{0000-0002-7859-8394}
-and~Smita Krishnaswamy\orcidlink{0000-0002-7859-8394}%
-\thanks{Kincaid MacDonald is with Yale%
-  Corresponding author: kincaid@aya.yale.edu
-}
-%by-author.affiliations
-\thanks{Dhananjay Bhaskar is with MILA%
-}
-%by-author.affiliations
-\thanks{Kaly Zhang is with MILA%
-}
-%by-author.affiliations
-\thanks{Ian Adelstein is with Yale Department of Math%
-}
-%by-author.affiliations
-\thanks{Smita Krishnaswamy is with Yale Department of Applied Math%
-}
-\thanks{Yale School of Medicine}
-%by-author.affiliations
-}
 \begin{document}
-
-% The paper headers
-
-% use for special paper notices
-
-% make the title area
 \maketitle
-
-% As a general rule, do not put math, special symbols or citations
-% in the abstract or keywords.
 \begin{abstract}
 For a number of years now work has been proceeding in order to bring to
 perfection the crudely conceived idea of a machine that would not only
@@ -289,22 +187,6 @@ supply inverse reactive current for use in unilateral phase detractors,
 but would also be capable of automatically synchronizing cardinal
 grammeters. Such a machine is the ``Turbo-Encabulator.''
 \end{abstract}
-% Note that keywords are not normally used for peerreview papers.
-\begin{IEEEkeywords}
-Manifold Learning, Geometric Deep Learning, Graph Curvature, Point
-Clouds
-\end{IEEEkeywords}
-
-% For peer review papers, you can put extra information on the cover
-% page as needed:
-% \ifCLASSOPTIONpeerreview
-% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
-% \fi
-%
-% For peerreview papers, this IEEEtran command inserts a page break and
-% creates the second title. It will be ignored for other modes.
-% \IEEEpeerreviewmaketitle
-
 
 \subsection{Introduction}\label{introduction}
 
@@ -315,7 +197,7 @@ the Manifold Hypothesis, we assume the points were sampled on or near
 the surface of a low-dimensional manifold embedded in high-dimensional
 Euclidean space. Manifold learning methods, like t-SNE, PHATE, and
 Diffusion Maps
-{[}\citeproc{ref-maaten2008VisualizingDataUsing}{\textbf{maaten2008VisualizingDataUsing?}}{]}\citeproc{ref-moon2019VisualizingStructureTransitions}{\textbf{moon2019VisualizingStructureTransitions?}}\citeproc{ref-coifman2006DiffusionMaps}{\textbf{coifman2006DiffusionMaps?}},
+{[}(\textbf{maaten2008VisualizingDataUsing?}){]}(\textbf{moon2019VisualizingStructureTransitions?})(\textbf{coifman2006DiffusionMaps?}),
 endeavor to recover salient features of the underlying manifold, like
 geodesic distances, population clusterings, and dimension, from its
 high-dimensional noisy sampling.
@@ -340,11 +222,10 @@ There are elegant generalizations of classical curvature to discrete
 spaces that overcome many of these roadblocks. Ollivier's \emph{Coarse
 Ricci Curvature} (CRC) employs optimal transport theory to relate the
 behavior of a discrete neighborhood to its smooth counterpart
-\citeproc{ref-ollivier2009RicciCurvatureMarkov}{\textbf{ollivier2009RicciCurvatureMarkov?}}.
-Sturm's \emph{displacement convexity of entropy} (DCE) measures the
-proliferation of midpoints in positive curvature
-\citeproc{ref-sturm2006GeometryMetricMeasure}{\textbf{sturm2006GeometryMetricMeasure?}}.
-Both methods use optimal transport as the basis of their ``semi-local''
+(\textbf{ollivier2009RicciCurvatureMarkov?}). Sturm's \emph{displacement
+convexity of entropy} (DCE) measures the proliferation of midpoints in
+positive curvature (\textbf{sturm2006GeometryMetricMeasure?}). Both
+methods use optimal transport as the basis of their ``semi-local''
 measurement. Rather than trying to zoom in on a point, they define
 curvature between pairs of points, approximating, at a coarse scale, a
 Ricci tangent vector.
@@ -359,14 +240,13 @@ be computationally prohibitive.
 
 In this paper, we develop Diffusion Curvature, a fast curvature estimate
 derived solely from the graph diffusion matrix. We first introduced the
-ideas behind Diffusion Curvature in
-\citeproc{ref-bhaskarDiffusionCurvatureEstimating2022}{{[}1{]}}, in
-which we demonstrated its ability to produce an unsigned magnitude of
-curvature estimation for toy datasets and single-cell data, and proved a
+ideas behind Diffusion Curvature in (Bhaskar et al. 2022), in which we
+demonstrated its ability to produce an unsigned magnitude of curvature
+estimation for toy datasets and single-cell data, and proved a
 correspondence between the ratios of scalar curvature and diffusion
 curvature. We now present a refined definition which produces
 \emph{signed} curvature values and prove bounds relating Diffusion
-Curvature to coarse Ricci Curvature. We demonstrate Diffusion
+Curvature to Ollivier's coarse Ricci Curvature. We demonstrate Diffusion
 Curvature's robustness to noise and sampling artifacts, and position our
 technique as an adaptation of coarse Ricci curvature particularly
 suitable for point cloud data.
@@ -428,29 +308,26 @@ proved a correspondence between iterated graph diffusion \(P^t\) and the
 Neumann heat kernel on \(\mathcal{M}\). Their technique, \emph{Diffusion
 Maps}, uses the euclidean distances between eigencoordinates of \(P\) to
 approximate the geodesic distances on \(\mathcal{M}\). The visualization
-technique \(PHATE\)
-\citeproc{ref-moon2019VisualizingStructureTransitions}{\textbf{moon2019VisualizingStructureTransitions?}}
+technique \(PHATE\) (\textbf{moon2019VisualizingStructureTransitions?})
 constructs a low-dimensional embedding of a point cloud \(X\) such that
 a distance between the transition probabilities \(P\) of \(X\) is
 preserved in the embedding. (More on properties of phate, trajectory
 preservation.) \emph{Diffusion Earth Mover's Distance}
-\citeproc{ref-tongDiffusionEarthMover2021}{\textbf{tongDiffusionEarthMover2021?}}
-efficiently approximates the transportation distance between
-distributions on a graph using multi-scale wavelet transform obtained by
-applying different scales of diffusion. \emph{LEGSNet}`s ``learnable
-geometric scattering'' computes tunable scales of diffusion with a graph
-neural network and achieves state of the art performance on biochemistry
-graph classification
-\citeproc{ref-tong2020DataDrivenLearningGeometric}{\textbf{tong2020DataDrivenLearningGeometric?}}.
-These are but a few of the many manifold learning techniques based in
-diffusion.
+(\textbf{tongDiffusionEarthMover2021?}) efficiently approximates the
+transportation distance between distributions on a graph using
+multi-scale wavelet transform obtained by applying different scales of
+diffusion. \emph{LEGSNet}`s ``learnable geometric scattering'' computes
+tunable scales of diffusion with a graph neural network and achieves
+state of the art performance on biochemistry graph classification
+(\textbf{tong2020DataDrivenLearningGeometric?}). These are but a few of
+the many manifold learning techniques based in diffusion.
 
 Constructing the diffusion matrix from the affinity matrix \(A\) is
 straightforward: you simply row-normalize \(A\), with an optional step
 to normalizing by density.
 
 Here is the algorithm presented in Coifman and Lafon
-\citeproc{ref-coifman2006DiffusionMaps}{\textbf{coifman2006DiffusionMaps?}}:
+(\textbf{coifman2006DiffusionMaps?}):
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -511,13 +388,13 @@ connections from independent starting points.
 Developed by Yann Ollivier in 2007, \emph{Coarse Ricci Curvature} (or
 sometimes, ``Ollivier Ricci Curvature'') is a direct translation of
 Ricci curvature to discrete metric spaces like graphs
-\citeproc{ref-ollivier2009RicciCurvatureMarkov}{\textbf{ollivier2009RicciCurvatureMarkov?}}.
-Several classical properties of Ricci curvature can be extended to the
-graph setting using Coarse Ricci Curvature. Ollivier has, for instance,
-proven versions of concentration inequalities, Bonnet Myers (more).
-Coarse Ricci Curvature has, in this way, become something of a bridge
-between continuous and coarse geometry. The basis of this bridge is
-optimal transport, and specifically, the 1-Wasserstein distance.
+(\textbf{ollivier2009RicciCurvatureMarkov?}). Several classical
+properties of Ricci curvature can be extended to the graph setting using
+Coarse Ricci Curvature. Ollivier has, for instance, proven versions of
+concentration inequalities, Bonnet Myers (more). Coarse Ricci Curvature
+has, in this way, become something of a bridge between continuous and
+coarse geometry. The basis of this bridge is optimal transport, and
+specifically, the 1-Wasserstein distance.
 
 In the Riemannian setting, Ricci curvature captures the phenomenon that,
 in positive curvature, ``small spheres are closer (in transportation
@@ -589,7 +466,7 @@ There are a number of provisos attached to this definition, which tries
 to approximate a continuous phenomenon within discrete constraints.
 These constraints, and the relationship between Ricci and Ollivier's
 coarse Ricci curvature are illustrated Ollivier's Example 2.6
-\citeproc{ref-ollivier2009RicciCurvatureMarkov}{\textbf{ollivier2009RicciCurvatureMarkov?}}:
+(\textbf{ollivier2009RicciCurvatureMarkov?}):
 
 Let \((X,d)\) be a smooth Riemannian manifold of dimension \(d\) and let
 \(\text{vol}\) be the Riemannian volume measure. Let \(\epsilon>0\)
@@ -616,8 +493,7 @@ A result on coarse Ricci curvature which will prove useful concerns the
 \emph{contraction (or expansion) of measure} that occurs under diffusion
 in spaces of positive (or negative) curvature.
 
-Proposition 20
-\citeproc{ref-ollivier2009RicciCurvatureMarkov}{\textbf{ollivier2009RicciCurvatureMarkov?}}
+Proposition 20 (\textbf{ollivier2009RicciCurvatureMarkov?})
 
 Let \((X,d,m)\) be a metric space with a random walk. Let
 \(\kappa \in \mathbb{R}\). Then we have \(\kappa(x,y) \geq \kappa\) for
@@ -630,7 +506,7 @@ W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
  \mu \star m := \int_{{x \in X}} d\mu(x)m_{x} \, dx
 \]
 
-\subsection{Theory \& Methods}\label{theory-methods}
+\subsection{Methods}\label{methods}
 
 \subsubsection{Definition}\label{definition}
 
@@ -780,9 +656,23 @@ inbetween the sides of the inequality}
 
 \subsection{Results}\label{results}
 
-\subsubsection{Toy Manifolds}\label{toy-manifolds}
+Curvature is an easy quantity to find -- indeed, at least two of the
+many recent curvature methods were defined \emph{accidentally} {[}cite
+Steinerberger, myself{]}! The challenge is to make one's definition
+robust to the bogeyman of real-world data, especially 1) noise and 2)
+high dimensions. Our benchmarks of existing methods, including Hickok \&
+Blumberg's, Ollivier Ricci Curvature, Adal-PCA {[}and Sritharan{]},
+{[}citations{]} reveal that all deteriorate quickly under noise, and
+most \emph{fail entirely} in high-dimensional data. The
+dimension-independent, noise-resilient properties of the diffusion
+operator endow diffusion curvature with good performance on both of
+these axes.
 
-\paragraph{2 Manifolds}\label{manifolds}
+But first, a sanity check. Does diffusion curvature recover the Gaussian
+curvature of basic 2-manifolds? Figure WAWA shows the diffusion
+curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot
+correlating diffusion curvature and Gaussian curvature. Figure WAWA2
+places this in the context of existing methods.
 
 \begin{figure}[H]
 
@@ -801,10 +691,67 @@ Curvature on 2-Manifolds.}
 \href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a-Toy-Manifolds.ipynb.html\#cell-fig-2-manifolds}{Standard
 libraries}}
 
-\paragraph{Saddle sphere sign-differentiation
-test}\label{saddle-sphere-sign-differentiation-test}
+Though the correlation is strong -- passing the `sniff test' -- this
+low-dimensional validation highlights two subtleties of our method.
+First, diffusion curvature, being an intrinsic, graph-based measurement,
+is susceptible to edge effects to a greater degree than extrinsic
+methods. When diffusion hits the edges of the saddle, it rebounds,
+creating the false appearance of positive curvature.
 
-\paragraph{Noise Resilience}\label{noise-resilience}
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics{index_files/figure-latex/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png}
+
+}
+
+\caption{\label{fig-2-manifolds-visual-comparison}Diffusion Curvature vs
+Gaussian Curvature on 2-Manifolds.}
+
+\end{figure}%
+
+\textsubscript{Source:
+\href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb.html\#cell-fig-2-manifolds-visual-comparison}{Standard
+libraries}}
+
+The second subtly emerges in the context of related methods. Everything
+pictured does an excellent job of coloring the toy manifolds. But
+looking beyond this, \emph{what matters?} Most methods don't care about
+the precise magnitude -- or even exactly matching the correlations, as
+in the ellipsoid\ldots{} \%\% mean vs gaussian curvature, and uniqueness
+of definitions\%\%
+
+All of these methods in Fig WAWA2 perform well on well-sampled noiseless
+toy manifolds. In Table WAWA3, we see the results of adding Gaussian
+noise to each manifold.
+
+!{[}{[}CleanShot 2024-04-28 at 23.30.38\_147B95A7.png{]}{]}
+
+\subsubsection{Differentiating Sign in High
+Dimensions}\label{differentiating-sign-in-high-dimensions}
+
+Most existing methods only quantify their performance in high dimensions
+on one or two test cases.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics{index_files/figure-latex/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png}
+
+}
+
+\caption{\label{fig-sadspheres}Predicted curvatures of Saddles and
+Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes
+between the signs of the data, even in high dimensions, and with
+relative sparsity.}
+
+\end{figure}%
+
+\textsubscript{Source:
+\href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2f-sign-prediction-tests.ipynb.html\#cell-fig-sadspheres}{Standard
+libraries}}
 
 \subsubsection{Loss Landscapes}\label{loss-landscapes}
 
@@ -817,37 +764,17 @@ Filtration}\label{curvature-as-a-tda-filtration}
 \addcontentsline{toc}{subsection}{References}
 
 \phantomsection\label{refs}
-\begin{CSLReferences}{0}{0}
+\begin{CSLReferences}{1}{0}
 \bibitem[\citeproctext]{ref-bhaskarDiffusionCurvatureEstimating2022}
-\CSLLeftMargin{{[}1{]} }%
-\CSLRightInline{D. Bhaskar \emph{et al.}, {``Diffusion curvature for
-estimating local curvature in high dimensional data,''} \emph{Advances
-in Neural Information Processing Systems}, vol. 35, pp. 21738--21749,
-2022 {[}Online{]}. Available:
+Bhaskar, Dhananjay, Kincaid MacDonald, Oluwadamilola Fasina, Dawson
+Thomas, Bastian Rieck, Ian Adelstein, and Smita Krishnaswamy. 2022.
+{``Diffusion Curvature for Estimating Local Curvature in High
+Dimensional Data.''} \emph{Advances in Neural Information Processing
+Systems} 35: 21738--49.
 \url{https://proceedings.neurips.cc/paper_files/paper/2022/hash/88438dc62fc5c8777e2b5f1b4f6d37a2-Abstract-Conference.html}.
-{[}Accessed: 01-Dec-2023{]}}
 
 \end{CSLReferences}
 
 
-% Can use something like this to put references on a page
-% by themselves when using endfloat and the captionsoff option.
-\ifCLASSOPTIONcaptionsoff
-  \newpage
-\fi
 
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
-
-% Uncomment when use biblatex with style=ieee
-%\renewcommand{\bibfont}{\footnotesize} % for IEEE bibfont size
-
-\pagebreak[3]
-% that's all folks
 \end{document}
-
