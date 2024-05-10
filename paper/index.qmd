@@ -61,7 +61,7 @@ There are elegant generalizations of classical curvature to discrete spaces that
 
 Although these techniques are theoretically elegant, general, and applicable to any metric measure space, the setting of noisily sampled point clouds is practically challenging for CRC and DCE. Both methods rely on the graph’s shortest-path lengths as an approximation of the manifold’s ground distance - a perilous assumption when dealing with noisy data. And for large datasets, optimal transport calculations can be computationally prohibitive.
 
-In this paper, we develop Diffusion Curvature, a fast curvature estimate derived solely from the graph diffusion matrix. We first introduced the ideas behind Diffusion Curvature in [@bhaskarDiffusionCurvatureEstimating2022], in which we demonstrated its ability to produce an unsigned magnitude of curvature estimation for toy datasets and single-cell data, and proved a correspondence between the ratios of scalar curvature and diffusion curvature. We now present a refined definition which produces *signed* curvature values and prove bounds relating Diffusion Curvature to coarse Ricci Curvature. We demonstrate Diffusion Curvature’s robustness to noise and sampling artifacts, and position our technique as an adaptation of coarse Ricci curvature particularly suitable for point cloud data.
+In this paper, we develop Diffusion Curvature, a fast curvature estimate derived solely from the graph diffusion matrix. We first introduced the ideas behind Diffusion Curvature in [@bhaskarDiffusionCurvatureEstimating2022], in which we demonstrated its ability to produce an unsigned magnitude of curvature estimation for toy datasets and single-cell data, and proved a correspondence between the ratios of scalar curvature and diffusion curvature. We now present a refined definition which produces *signed* curvature values and prove bounds relating Diffusion Curvature to Ollivier's coarse Ricci Curvature. We demonstrate Diffusion Curvature’s robustness to noise and sampling artifacts, and position our technique as an adaptation of coarse Ricci curvature particularly suitable for point cloud data.
 
 ## Background
 
@@ -115,7 +115,7 @@ This is a remarkable feature of the diffusion matrix: the ability to “denoise�
 
 ### Ollivier-Ricci Curvature
 
-Developed by Yann Ollivier in 2007, *Coarse Ricci Curvature* (or sometimes, “Ollivier Ricci Curvature”) is a direct translation of Ricci curvature to discrete metric spaces like graphs [@ollivier2009RicciCurvatureMarkov]. Several classical properties of Ricci curvature can be extended to the graph setting using Coarse Ricci Curvature. Ollivier has, for instance, proven versions of concentration inequalities, Bonnet Myers (more). <mark style="background: #FF5582A6;">Coarse Ricci Curvature has, in this way, become something of a bridge between continuous and coarse geometry. The basis of this bridge is optimal transport, and specifically, the 1-Wasserstein distance.</mark>
+Developed by Yann Ollivier in 2007, *Coarse Ricci Curvature* (or sometimes, “Ollivier Ricci Curvature”) is a direct translation of Ricci curvature to discrete metric spaces like graphs [@ollivier2009RicciCurvatureMarkov]. Several classical properties of Ricci curvature can be extended to the graph setting using Coarse Ricci Curvature. Ollivier has, for instance, proven versions of concentration inequalities, Bonnet Myers (more). Coarse Ricci Curvature has, in this way, become something of a bridge between continuous and coarse geometry. The basis of this bridge is optimal transport, and specifically, the 1-Wasserstein distance.
 
 In the Riemannian setting, Ricci curvature captures the phenomenon that, in positive curvature, “small spheres are closer (in transportation distance) than their centers are” (CITE 43 in ORC Paper). On the sphere, for instance, imagine two circles placed at the north and south poles: every point is closer to the corresponding point on the opposite pole than the centers. In negatively curved spaces, the discrepancy reverses, while in a flat space, the average distance between the points of the circles is the distance between the centers.
 
@@ -172,7 +172,10 @@ $$
 $$
 
 
-## Theory & Methods
+## Methods
+
+
+
 
 ### Definition
 
@@ -272,17 +275,31 @@ $$
 
 ## Results
 
-### Toy Manifolds
+Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined *accidentally* [cite Steinerberger, myself]! The challenge is to make one's definition robust to the bogeyman of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok & Blumberg's, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most *fail entirely* in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.
 
-#### 2 Manifolds
+But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? Figure WAWA shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. Figure WAWA2 places this in the context of existing methods.
 
 {{< embed ../nbs/experiments/2a-Toy-Manifolds.ipynb#fig-2-manifolds >}}
 
-#### Saddle sphere sign-differentiation test
+Though the correlation is strong – passing the 'sniff test' – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature. 
 
-#### Noise Resilience
+{{< embed ../nbs/experiments/2a2-toy-manifolds-comparison.ipynb#fig-2-manifolds-visual-comparison >}}
+
+The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, *what matters?* Most methods don't care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid... %% mean vs gaussian curvature, and uniqueness of definitions%%
+
+All of these methods in Fig WAWA2 perform well on well-sampled noiseless toy manifolds. In Table WAWA3, we see the results of adding Gaussian noise to each manifold.
+
+![[CleanShot 2024-04-28 at 23.30.38_147B95A7.png]]
+
+### Differentiating Sign in High Dimensions
+
+Most existing methods only quantify their performance in high dimensions on one or two test cases.
+
+{{< embed ../nbs/experiments/2f-sign-prediction-tests.ipynb#fig-sadspheres >}}
+
 
 ### Loss Landscapes
+
 
 ### Curvature as a TDA Filtration
 
