@@ -220,7 +220,7 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <p>::: {#cell-0 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’ execution_count=1}</p>
+       <p>::: {#cell-0 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’ execution_count=16}</p>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Standard libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -266,8 +266,9 @@
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>jax.devices()</span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>jax.default_device <span class="op">=</span> jax.devices(<span class="st">"cpu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>2024-05-09 20:29:59.635525: W external/xla/xla/service/platform_util.cc:198] unable to create StreamExecutor for CUDA:0: failed initializing StreamExecutor for CUDA device ordinal 0: INTERNAL: failed call to cuDevicePrimaryCtxRetain: CUDA_ERROR_OUT_OF_MEMORY: out of memory; total memory reported: 25363087360</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload</code></pre>
 </div>
 <p>:::</p>
 <section id="sign-prediction-tests" class="level1">
@@ -279,11 +280,11 @@
 </section>
 <section id="machinery" class="level1">
 <h1>Machinery</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-4" class="cell" data-execution_count="2">
+<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div id="cell-4" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dims <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>num_pointclouds <span class="op">=</span> <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-5" class="cell" data-execution_count="3">
+<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-5" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SS1 <span class="op">=</span> SadSpheres(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    dimension <span class="op">=</span> dims, <span class="co"># Dimension of saddles and spheres</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    num_pointclouds <span class="op">=</span> num_pointclouds, <span class="co"># num pointclouds to make in total</span></span>
@@ -292,21 +293,22 @@
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    include_planes<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Loaded evaluations on methods ['ground truth', 'Diffusion Curvature (Entropic)', 'Diffusion Curvature (Wasserstein)']</code></pre>
+<pre><code>Loaded evaluations on methods ['ground truth', 'Diffusion Curvature (Entropic)', 'Diffusion Curvature (Wasserstein)', 'Hickok &amp; Blumberg']</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-6" class="cell" data-execution_count="4">
+<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-6" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>SS1.imported_methods</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>['ground truth',
  'Diffusion Curvature (Entropic)',
- 'Diffusion Curvature (Wasserstein)']</code></pre>
+ 'Diffusion Curvature (Wasserstein)',
+ 'Hickok &amp; Blumberg']</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-7" class="cell" data-execution_count="9">
+<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-7" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>SS1.save_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-8" class="cell" data-execution_count="5">
+<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-8" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># graph_former = partial(get_curvature_agnostic_graph, k = dim*2, )</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>graph_former <span class="op">=</span> partial(get_fixed_graph, sigma <span class="op">=</span> <span class="fl">0.2</span>, alpha <span class="op">=</span> <span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> X <span class="kw">in</span> tqdm(SS1):</span>
@@ -336,34 +338,36 @@
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        SS1.update(ks[<span class="dv">0</span>], method_name<span class="op">=</span><span class="st">"Diffusion Curvature (Wasserstein)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"ab36c3cc062a49c1bd60fd221099c945","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"e4e077402f8246b0a6b6e93fc1190893","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-9" class="cell" data-execution_count="6">
+<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-9" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>SS1.table()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ks
                                    pearson_r  sign_score
 ground truth                        1.000000       1.000
 Diffusion Curvature (Entropic)      0.736951       1.000
-Diffusion Curvature (Wasserstein)  -0.516870       0.395</code></pre>
+Diffusion Curvature (Wasserstein)  -0.516870       0.395
+Hickok &amp; Blumberg                   0.031123       0.600</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>{'ks':                                    pearson_r  sign_score
  ground truth                        1.000000       1.000
  Diffusion Curvature (Entropic)      0.736951       1.000
- Diffusion Curvature (Wasserstein)  -0.516870       0.395}</code></pre>
+ Diffusion Curvature (Wasserstein)  -0.516870       0.395
+ Hickok &amp; Blumberg                   0.031123       0.600}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-sadspheres" class="cell" data-execution_count="7">
+<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-fig-sadspheres" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SS1._aggregate_labels()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SS1.plot_by_dimension()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sadspheres" class="quarto-figure quarto-figure-center quarto-float anchored" alt="...">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
+<a href="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
@@ -766,7 +770,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

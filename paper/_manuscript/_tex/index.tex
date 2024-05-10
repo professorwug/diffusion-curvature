@@ -176,7 +176,7 @@ Curvature, Point Clouds},
 Geometric Featurization of Graphs and Pointclouds}
 \author{Kincaid MacDonald \and Dhananjay Bhaskar \and Kaly
 Zhang \and Ian Adelstein \and Smita Krishnaswamy}
-\date{2024-05-09}
+\date{2024-05-10}
 
 \begin{document}
 \maketitle
@@ -508,25 +508,197 @@ W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
 
 \subsection{Methods}\label{methods}
 
-\subsubsection{Definition}\label{definition}
+The Coarse Ricci Curvature and Displacement Convexity of Entropy are
+both based on an invariant property of flat spaces, the deviation from
+which allows for a measure of curvature even without a clear definition
+of factors which normally interfere with curvature, like dimension.
+However, the elegance of these invariance-based definitions comes at a
+computational cost. Both methods require optimal transport calculations
+for (a subset) of each pair of edges, a complexity growing with
+\(O(n^2)\). Additionally, the transport distance based on the graph
+shortest-path distance is highly susceptible to noise.
+
+This motivates our formulation of graph curvature, which uses a
+\emph{comparison} between spaces in lieu of an invariant. This gives
+\emph{Diffusion Curvature} a number of nice properties:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Point-wise, instead of edge-wise}. In many applications,
+  knowledge of the Ricci curvatures is unnecessarily detailed. Diffusion
+  curvature answers the question: \emph{is the region around this point
+  positively or negatively curved, and in what magnitude, relative to
+  other points on the manifold?}
+\item
+  \textbf{Diffusion-based denoising}. When edges may be spurious, and
+  random sampling creates deceptive pockets of density, Diffusion
+  Curvature inherits the denoising obtained by powering the diffusion
+  operator.
+\item
+  \textbf{Extremely fast}. Designed for point clouds with millions of
+  points, the pointwise Diffusion Curvature of the entire dataset can be
+  calculated with a handful of sparse matrix multiplications. In
+  addition, Diffusion Curvature can be \emph{GPU accelerated}. This
+  combination allows computing in minutes what takes existing methods
+  hours.
+\item
+  \textbf{Differentiable}. Diffusion Curvature natively supports
+  backpropogation, and can easily be incorporated into a loss function
+  for a neural network, e.g.~to regularize a latent space to have low
+  (or high) curvature. We provide a PyTorch implementation of the
+  algorithm for this purpose. {[}LINK TO GITHUB{]}
+\end{enumerate}
+
+The core intuition of Diffusion Curvature is that the \emph{laziness} of
+random walks on a graph is a proxy for the curvature of the underlying
+manifold. Picture a ``random walker'' drunkenly traversing a sphere. If
+he manages, over the course of several steps, to wander to the opposite
+pole, he has many ways of getting back to where he started. By contrast,
+if he begins on the top of a (negatively curved) saddle and wanders down
+one side, any path aside from exactly retracing his steps incurs a steep
+distance penalty. On the sphere, the random walker is more likely to
+find his way home: his walks are ``lazier''.
+
+Our previous paper (Bhaskar et al. 2022) measured this laziness
+directly, as the return probability within a k-neighborhood of the
+starting point. This required tuning the parameter \(k\), and neglected
+the information provided by the random walk probabilities outside of
+this k-neighborhood. We now refine this definition in two ways.
+
+First, we refine our previous definition of diffusion laziness using the
+Wasserstein distance between a dirac \(\delta_{x}\) and its \(t\) step
+diffusion \(p_{X}^t(x)\), \[
+- W_1\left(\delta_x, p_X^t(x)\right)
+\] \{eq-laziness\} This provides a more sensitive and parameter-free
+measure of the `spread' of diffusion.
+
+Second, by comparing the laziness of diffusion between two manifolds --
+one of known curvature -- we make our method signed.
 
 Given samples \(X \subseteq M\) and a flattening map
-\(\Phi: X \rightarrow \mathbb{R}^d\),
-
-The \(t\)-step \emph{Diffusion Curvature} of \(x\) is \[
-k_t(x)=1-\frac{W_1\left(\delta_x, p_X^t(x)\right)}{W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right)}
+\(\Phi: X \rightarrow \mathbb{R}^d\), The \(t\)-step \emph{Diffusion
+Curvature} of \(x\) is \[
+k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
 \]\{eq-definition\}
 
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  Use an arbitrary distance? Or a p-Wasserstein?
+\end{itemize}
+
 Where \(p_X^t\) is the t-step random walk over \(X\), and
-\(p_{\Phi(X)}^t\) is the same over the flattened points \(\Phi(X)\). In
-both cases, the \(W_1\) distance is taken with respect to manifold
-distances.
+\(p_{\Phi(X)}^t\) is the same over the flattened points \(\Phi(X)\).
+Depending on the ground distance used for the Wasserstein-1 transport
+distance, and the definition of flattening map employed, one obtains any
+of a family of diffusion curvatures.
 
-\subsubsection{Separating Geometry from Sampling: Neural
-Flattening}\label{separating-geometry-from-sampling-neural-flattening}
+Our best results come a very simple formulation of both, where the
+ground distance is chosen such that \(W_{1}\) becomes the Shannon
+Entropy, and our flattening map simply uniformly samples points from the
+Euclidean space \(\mathbb{R}^d\) of the same dimension as \(M\). This
+produces what we'll call the \emph{Entropic Diffusion Curvature},
 
-\subsubsection{Connections to Ollivier-Ricci
-Curvature}\label{connections-to-ollivier-ricci-curvature}
+\[
+\kappa e_{t}(x_{i}) = H(P^t[i]) - H(P_{E}^t[i])
+\] \{eq-entropic-definition\} which evokes the use of entropy to measure
+heat diffusion.
+
+This definition rests on two claims: that the laziness of diffusion
+reveals the (unsigned) magnitude of curvature, and that by comparing
+diffusion across manifolds, we can convert this into a signed curvature.
+The next two sections will analyze this first claim. We provide a
+motivating example recovering a Bishop-Gromov type volume comparison
+from our entropic definition. We then analyze diffusion laziness within
+Ollivier's framework of metric measure theory, and bound the diffusion
+laziness from above by the Ollivier-Ricci curvature.
+
+\subsubsection{A Motivating Example: Entropic Diffusion Curvature
+Recovers a Bishop-Gromov Volume
+Comparison}\label{a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison}
+
+Among the most obvious manifestations of curvature is differences in
+volume: the higher the curvature, the smaller the volume of geodesic
+balls of the same radius. This is formalized by Bishop-Gromov's Volume
+Comparison Theorem.
+
+THEOREM!
+
+One route to discrete curvature is thus estimating volumes {[}cite
+Hickok{]}. However, standard methods of estimating volumes in discrete,
+sampled spaces like point clouds or graphs rely on more complex
+geometric quantities, like density estimation or approximated geodesic
+distances, which are not only susceptible to noise, but often themselves
+dependent on the curvature!\footnote{Consider kernel density estimation,
+  where one places gaussians on each data point and sums up the
+  probability assigned to each area. The higher the curvature, the
+  higher the reported density, since at the end of an ellipsoid the
+  gaussians have greater overlap with each other than in its center --
+  even though the intrinsic density of the surface is uniform.} One
+wonders: can we use the tools of diffusion geometry to robustly estimate
+volume?
+
+Indeed, this is one way to interpret diffusion laziness: as an inverse
+volume measurement. {[}Cite Huguet Heat Geo{]} motivates this with a
+result from Saloff Costes et al. (\textbf{saloff-costeHeatKernelIts?}).
+For manifold satisfying the Parabolic Harnock Inequality (e.g.~all
+manifolds of positive curvature), heat diffusion \(m_{x}^t\) on the
+manifold is bounded by
+
+\[
+\frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
+\]
+
+In other words, heat diffusion on non-Euclidean manifolds behaves
+approximately like Euclidean heat diffusion scaled by the local volume.
+
+Powering the diffusion matrix approximates heat diffusion {[}cite
+Coifman{]}. We can thus relate our measure of the `spread' or `laziness'
+of this diffusion to the manifold's volume.
+
+The Shannon entropy of the diffusion \(m_{x}\) over the bounded
+neighborhood of \(X\) with non-zero diffusion mass, can be written \[
+H\left(m_x^t\right)=-\int_{y_\epsilon x} m_x^t(y) \ln \left(m_x^t(y)\right)
+\] Here we use Shannon's differential entropy.Though this formulation
+encounters pathologies on unbounded domains, it approximates the entropy
+a signal on a sampled region as the number of samples goes to infinity.
+
+We'll simplify the notation by combining the integral and distribution
+into an expected value over \(m_{x}^t\) \[
+=-\mathbb{E}_{m_x} \ln \left(m_x(y)\right) d y
+\] Recalling the above result, there are constants \(c_{1}\dots c_{4}\)
+such that
+
+\[
+\frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
+\] hence we can approximate \(H(m_{x}^t)\) by
+
+\[
+=-\mathbb{E}_{m_{x}^t} \ln \left(\frac{1}{V(y, \sqrt{t})} \exp \left(\frac{-d(x, y)^2}{4 t}\right)\right)
+\] \[
+=-\mathbb{E}_{m_x^t} \ln \left(\frac{1}{V(y, \sqrt{6})}\right)-\frac{d(x, y)^2}{4 t}
+\] \[
+=\mathbb{E}_{m_x^t} \ln (V(y, \sqrt{t}))+\mathbb{E}_{m_{x}^t} \frac{d(x, y)^2}{4 t}
+\]
+
+By assumption, the volumes \(V(y,\sqrt{ t })\) equal some constant
+\(V_{m}(\sqrt{ t })\) over the support of \(m_{x}^t\). Also note that
+the right hand term is precisely
+\(\frac{1}{4t}W_{2}(\delta_{x}, m_{x}^t)\), so \[
+H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
+\] The Diffusion Curvature is then \[
+\frac{1}{t}(H(m_{E}^t) - H(m_{x}^t)) \simeq \frac{1}{t}\ln(V_{E}(\sqrt{ t })) - \frac{1}{t}\ln(V_{m}(\sqrt{ t })) + \frac{1}{4t^2}( W_{2}(d_{x},m_{E}^t) - W_{2}(d_{x},m_{x}^t))
+\] This presents us with two comparisons: one between the average volume
+within \(N_{t}(x)\) both in Euclidean space and on the manifold, and one
+between the Wasserstein spread of diffusion in Euclidean space and on
+the manifold. Note that both exhibit the same inverse relationship to
+curvature. If the curvature of \(m\) is greater than in euclidean space
+(e.g.~positive), the volume of a ball is smaller -- just as the spread
+of diffusion is diminished. In negative curvature, we have the opposite.
+
+\subsubsection{Bounding diffusion laziness by Ollivier-Ricci
+curvature}\label{bounding-diffusion-laziness-by-ollivier-ricci-curvature}
 
 Although diffusion curvature was designed for sampled manifolds, it
 extends naturally to the realm of more general graphs. Indeed, diffusion
@@ -653,6 +825,43 @@ i.e.~\(tW_{1}^E(\delta_{x},m_{x})\). Using this, and noting that
 (possibly egregious) \emph{overestimate} of the euclidean WSD. We can't
 actually just plug it in without pushing some indeterminate space
 inbetween the sides of the inequality}
+
+\subsubsection{Comparing Diffusion Across
+Manifolds}\label{comparing-diffusion-across-manifolds}
+
+For a single graph, the laziness of diffusion is linked to graph volume,
+and theoretically bounded by curvature: within that graph, the higher
+the curvature, the higher the diffusion laziness. In analogy to
+Bishop-Gromov, we can convert this unsigned magnitude-of-curvature
+estimation to a signed curvature with a comparison between spaces. In
+the continuous realm, this is easy: volume on one surface has the same
+units as volume on another. But in the point cloud setting, there is no
+common scale; it is \emph{assumed} that the scale differs between and
+possibly even \emph{within} a point cloud. Moreover, differences in
+graph construction can make diffusion spread faster independently from
+the local geometry -- much as changing the `size' of one's `measuring
+stick' could give the appearance of larger volumes. Diabolically, common
+techniques for constructing graphs from variably-sampled data interfere
+with the speed \emph{most} in areas with high negative or positive
+curvature, obscuring the geometric information in the diffusion
+operator.
+
+Our challenge is to construct graphs to allow comparison of their
+diffusions.
+
+\paragraph{Standard methods of graph construction obscure geometric
+information}\label{standard-methods-of-graph-construction-obscure-geometric-information}
+
+To turn a point cloud into a graph, one places a kernel (e.g.~a
+gaussian) at each point, and assigns edges to surrounding points with
+weight given by the kernel. The main parameter is the bandwidth of each
+kernel: make it too high, and everything is connected; too low, and
+points are isolated. Moreover, the distances between a point and its
+neighbors may vary. Where the points are sparse, one wants a higher
+bandwidth. Where dense, a lower bandwidth.
+
+\paragraph{The Curvature Agnostic
+Kernel}\label{the-curvature-agnostic-kernel}
 
 \subsection{Results}\label{results}
 
