@@ -234,7 +234,7 @@ $$
 \frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
 $$
 
-In other words, heat diffusion on non-Euclidean manifolds behaves approximately like Euclidean heat diffusion, scaled by the volume. 
+In other words, heat diffusion on non-Euclidean manifolds behaves approximately like Euclidean heat diffusion scaled by the local volume.
 
 Powering the diffusion matrix approximates heat diffusion [cite Coifman]. We can thus relate our measure of the 'spread' or 'laziness' of this diffusion to the manifold's volume.
 
@@ -248,7 +248,7 @@ We’ll simplify the notation by combining the integral and distribution into an
 $$
 =-\mathbb{E}_{m_x} \ln \left(m_x(y)\right) d y
 $$
-By result 3 in [@saloff-costeHeatKernelIts], there are constants $c_{1}\dots c_{4}$ such that
+Recalling the above result, there are constants $c_{1}\dots c_{4}$ such that
 
 $$
 \frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
@@ -358,13 +358,15 @@ $$
 
 ### Comparing Diffusion Across Manifolds
 
+For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature with a comparison between spaces. In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is *assumed* that the scale differs between and possibly even *within* a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the 'size' of one's 'measuring stick' could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed *most* in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.
 
+Our challenge is to construct graphs to allow comparison of their diffusions.
 
 #### Standard methods of graph construction obscure geometric information
 
+To turn a point cloud into a graph, one places a kernel (e.g. a gaussian) at each point, and assigns edges to surrounding points with weight given by the kernel. The main parameter is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.
 
-
-#### 
+#### The Curvature Agnostic Kernel
 
 
 
