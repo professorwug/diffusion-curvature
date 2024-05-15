@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
     <meta charset="utf-8">
-    <meta name="generator" content="quarto-1.4.550">
+    <meta name="generator" content="quarto-1.4.551">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -210,8 +210,7 @@
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sign-prediction-tests" id="toc-sign-prediction-tests" class="nav-link active" data-scroll-target="#sign-prediction-tests">Sign Prediction Tests</a></li>
-  <li><a href="#machinery" id="toc-machinery" class="nav-link" data-scroll-target="#machinery">Machinery</a></li>
+  <li><a href="#machinery" id="toc-machinery" class="nav-link active" data-scroll-target="#machinery">Machinery</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
@@ -220,7 +219,7 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <p>::: {#cell-0 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’ execution_count=16}</p>
+       <p>::: {#cell-1 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’}</p>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Standard libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -271,20 +270,17 @@
   %reload_ext autoreload</code></pre>
 </div>
 <p>:::</p>
-<section id="sign-prediction-tests" class="level1">
-<h1>Sign Prediction Tests</h1>
 <blockquote class="blockquote">
 <p>Comparisons between Diffusion Curvature and the Competition</p>
 </blockquote>
 <p>Here we employ saddles and spheres of increasing dimension to test our model’s ability to detect sign.</p>
-</section>
 <section id="machinery" class="level1">
 <h1>Machinery</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div id="cell-4" class="cell" data-execution_count="17">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-5" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dims <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>num_pointclouds <span class="op">=</span> <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-5" class="cell" data-execution_count="18">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-6" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SS1 <span class="op">=</span> SadSpheres(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    dimension <span class="op">=</span> dims, <span class="co"># Dimension of saddles and spheres</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    num_pointclouds <span class="op">=</span> num_pointclouds, <span class="co"># num pointclouds to make in total</span></span>
@@ -296,19 +292,19 @@
 <pre><code>Loaded evaluations on methods ['ground truth', 'Diffusion Curvature (Entropic)', 'Diffusion Curvature (Wasserstein)', 'Hickok &amp; Blumberg']</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-6" class="cell" data-execution_count="19">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-7" class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>SS1.imported_methods</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display">
 <pre><code>['ground truth',
  'Diffusion Curvature (Entropic)',
  'Diffusion Curvature (Wasserstein)',
  'Hickok &amp; Blumberg']</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-7" class="cell" data-execution_count="20">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-8" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>SS1.save_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-8" class="cell" data-execution_count="21">
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-9" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># graph_former = partial(get_curvature_agnostic_graph, k = dim*2, )</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>graph_former <span class="op">=</span> partial(get_fixed_graph, sigma <span class="op">=</span> <span class="fl">0.2</span>, alpha <span class="op">=</span> <span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> X <span class="kw">in</span> tqdm(SS1):</span>
@@ -342,7 +338,7 @@
 </script>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-9" class="cell" data-execution_count="22">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-10" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>SS1.table()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ks
@@ -352,7 +348,7 @@ Diffusion Curvature (Entropic)      0.736951       1.000
 Diffusion Curvature (Wasserstein)  -0.516870       0.395
 Hickok &amp; Blumberg                   0.031123       0.600</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="22">
+<div class="cell-output cell-output-display">
 <pre><code>{'ks':                                    pearson_r  sign_score
  ground truth                        1.000000       1.000
  Diffusion Curvature (Entropic)      0.736951       1.000
@@ -360,14 +356,14 @@ Hickok &amp; Blumberg                   0.031123       0.600</code></pre>
  Hickok &amp; Blumberg                   0.031123       0.600}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-fig-sadspheres" class="cell" data-execution_count="23">
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-sadspheres" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SS1._aggregate_labels()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SS1.plot_by_dimension()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sadspheres" class="quarto-figure quarto-figure-center quarto-float anchored" alt="...">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
+<a href="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
@@ -463,6 +459,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -497,7 +511,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -770,7 +788,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

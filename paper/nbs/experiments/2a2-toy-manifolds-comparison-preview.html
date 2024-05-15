@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
     <meta charset="utf-8">
-    <meta name="generator" content="quarto-1.4.550">
+    <meta name="generator" content="quarto-1.4.551">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -207,8 +207,7 @@
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#a2-comparing-curvatures-on-toy-manifolds" id="toc-a2-comparing-curvatures-on-toy-manifolds" class="nav-link active" data-scroll-target="#a2-comparing-curvatures-on-toy-manifolds">2a2 Comparing Curvatures on Toy Manifolds</a></li>
-  <li><a href="#machinery" id="toc-machinery" class="nav-link" data-scroll-target="#machinery">Machinery</a></li>
+  <li><a href="#machinery" id="toc-machinery" class="nav-link active" data-scroll-target="#machinery">Machinery</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table">Table</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
@@ -219,7 +218,7 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <p>::: {#cell-0 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’ execution_count=9}</p>
+       <p>::: {#cell-1 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’}</p>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Standard libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -263,10 +262,10 @@
   %reload_ext autoreload</code></pre>
 </div>
 <p>:::</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-1" class="cell" data-execution_count="10">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-2" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X, ks <span class="op">=</span> ellipsoid(<span class="dv">2000</span>, seed<span class="op">=</span><span class="dv">19323</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display">
 <pre><code>array([[ 2.00397824, -0.41691384,  0.71437483],
        [ 1.27475224, -0.11175413,  0.90350592],
        [-1.91620722,  0.99866728,  0.58539095],
@@ -276,17 +275,14 @@
        [-0.5358212 , -1.86937732, -0.30733797]])</code></pre>
 </div>
 </div></div>
-<section id="a2-comparing-curvatures-on-toy-manifolds" class="level1">
-<h1>2a2 Comparing Curvatures on Toy Manifolds</h1>
 <blockquote class="blockquote">
 <p>Which will emerge victorious?</p>
 </blockquote>
 <p>The comparison consists of two parts: 1. A figure showing the visual differences, both in 3d scatter plots, and correlation plots. 2. Tables computing the resilience to noise across methods.</p>
-</section>
 <section id="machinery" class="level1">
 <h1>Machinery</h1>
 <p>Load up the results:</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-6" class="cell" data-execution_count="11">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-7" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>curvatures <span class="op">=</span> {</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ground Truth Curvature'</span> : np.load(<span class="st">"../../results/toy_datasets_ground_truth_curvatures_1000.npz"</span>),</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Diffusion Curvature'</span> : np.load(<span class="st">"../../results/toy_dataset_entropic_fixed_subtraction.npz"</span>),</span>
@@ -300,17 +296,17 @@
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>scaled_curvatures <span class="op">=</span> <span class="bu">dict</span>(curvatures)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <p>And the data</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-8" class="cell" data-execution_count="12">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-9" class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Xs <span class="op">=</span> np.load(<span class="st">"../../results/toy_data_saved_1000.npz"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Ks <span class="op">=</span> np.load(<span class="st">"../../results/toy_datasets_ground_truth_curvatures_1000.npz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-9" class="cell" data-execution_count="13">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-10" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Xs[<span class="st">'Ellipsoid'</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display">
 <pre><code>(1000, 3)</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-10" class="cell" data-execution_count="14">
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-11" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Establish Datasets</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># n_points = 2000</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs = {}</span></span>
@@ -330,16 +326,16 @@
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'Ellipsoid noise = {noise_scale}'], Ks[f'Ellipsoid noise = {noise_scale}'] = ellipsoid(n_points, seed=19323, noise = noise_scale)</span></span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'hyperboloid noise = {noise_scale}'], Ks[f'hyperboloid noise = {noise_scale}'] = hyperboloid(n_points, seed=19323, noise = noise_scale)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-11" class="cell" data-scrolled="true" data-execution_count="15">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-12" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>curvatures[<span class="st">'Hickok &amp; Blumberg'</span>][<span class="st">'Torus'</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display">
 <pre><code>(1000,)</code></pre>
 </div>
 </div></div>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell" data-execution_count="16">
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -415,7 +411,7 @@
 <div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="2a2-toy-manifolds-comparison_files/figure-html/fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="2a2-toy-manifolds-comparison_files/figure-html/fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+<a href="2a2-toy-manifolds-comparison_files/figure-html/fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="2a2-toy-manifolds-comparison_files/figure-html/fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
@@ -424,9 +420,9 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [31]:</pre></div><div id="cell-14" class="cell" data-execution_count="31">
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-15" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Xs[<span class="st">'Ellipsoid'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div class="cell-output cell-output-display">
 <pre><code>array([[ 0.63842898, -0.41691384, -0.95459822],
        [-1.08160955,  0.99866728,  0.78783205],
        [-2.40019712, -0.81698673, -0.43934956],
@@ -439,24 +435,24 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </section>
 <section id="table" class="level1">
 <h1>Table</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-16" class="cell" data-execution_count="21">
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-17" class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-17" class="cell" data-execution_count="22">
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-18" class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> root_mse_between(labels, method, dataset):</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    computed <span class="op">=</span> labels[method][dataset]</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt(mean_squared_error(truth, computed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [275]:</pre></div><div id="cell-18" class="cell" data-execution_count="275">
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-19" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> energy_distance</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> energy_between(labels, method, dataset):</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    computed <span class="op">=</span> labels[method][dataset]</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> energy_distance(truth, computed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [276]:</pre></div><div id="cell-19" class="cell" data-execution_count="276">
+<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-20" class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pearson_correlation_between(labels, method, dataset):</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
@@ -464,7 +460,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    rho, confidence <span class="op">=</span> pearsonr(truth, computed)</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [277]:</pre></div><div id="cell-20" class="cell" data-execution_count="277">
+<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-21" class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>noise_scales <span class="op">=</span> [<span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>, <span class="fl">0.25</span>]</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dataset_names <span class="op">=</span> [<span class="st">'Torus'</span>] <span class="op">+</span> [<span class="ss">f'Torus noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales] <span class="op">+</span> [<span class="st">'Saddle'</span>] <span class="op">+</span> [<span class="ss">f'Saddle noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales] <span class="op">+</span> [<span class="st">'Ellipsoid'</span>] <span class="op">+</span> [<span class="ss">f'Ellipsoid noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales]</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -495,15 +491,15 @@ AdaL-PCA
 Hickok &amp; Blumberg</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [278]:</pre></div><div id="cell-21" class="cell" data-execution_count="278">
+<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-22" class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>root_mse_between(curvatures, <span class="st">'Hickok &amp; Blumberg'</span>, <span class="st">'Torus'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="278">
+<div class="cell-output cell-output-display">
 <pre><code>1.3590765614253006</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [279]:</pre></div><div id="cell-22" class="cell" data-execution_count="279">
+<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-23" class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'RMSE'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="279">
+<div class="cell-output cell-output-display">
 <pre><code>{'Diffusion Curvature': {'Torus': 1.0460202196442228,
   'Torus noise = 0.05': 1.049243413612388,
   'Torus noise = 0.1': 1.0527980111124997,
@@ -578,9 +574,9 @@ Hickok &amp; Blumberg</code></pre>
   'Ellipsoid noise = 0.25': 1.6613846776494354}}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [280]:</pre></div><div id="cell-23" class="cell" data-execution_count="280">
+<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-24" class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'ED'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="280">
+<div class="cell-output cell-output-display">
 <pre><code>{'Diffusion Curvature': {'Torus': 0.8525297413122042,
   'Torus noise = 0.05': 0.8573076662269208,
   'Torus noise = 0.1': 0.8614849743189963,
@@ -655,9 +651,9 @@ Hickok &amp; Blumberg</code></pre>
   'Ellipsoid noise = 0.25': 1.304638006485671}}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [281]:</pre></div><div id="cell-24" class="cell" data-execution_count="281">
+<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div id="cell-25" class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'PCC'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="281">
+<div class="cell-output cell-output-display">
 <pre><code>{'Diffusion Curvature': {'Torus': 0.976824069472391,
   'Torus noise = 0.05': 0.9766554590998108,
   'Torus noise = 0.1': 0.9778295098788748,
@@ -732,7 +728,7 @@ Hickok &amp; Blumberg</code></pre>
   'Ellipsoid noise = 0.25': 0.5212241276382766}}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [282]:</pre></div><div id="cell-25" class="cell" data-execution_count="282">
+<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-26" class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the LaTeX table structure</span></span>
@@ -814,7 +810,7 @@ Hickok \&amp; Blumberg &amp; PCC &amp; 0.954 &amp; 0.955 &amp; 0.945 &amp; 0.903
 \bottomrule\n\end{tabular}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-26" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-27" class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display one part of the table, with all of the metrics for one method for one dataset</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>\begin{tabular}{lc<span class="op">|</span>cccccc<span class="op">|</span>cccccc<span class="op">|</span>cccccc}</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>\toprule</span>
@@ -835,10 +831,10 @@ Hickok \&amp; Blumberg &amp; PCC &amp; 0.954 &amp; 0.955 &amp; 0.945 &amp; 0.903
 </section>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-32" class="cell" data-execution_count="9">
+<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-33" class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>X, ks <span class="op">=</span> ellipsoid(n_points, seed<span class="op">=</span><span class="dv">19323</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display">
 <pre><code>array([[ 2.00397824, -0.41691384,  0.71437483],
        [ 1.27475224, -0.11175413,  0.90350592],
        [-1.91620722,  0.99866728,  0.58539095],
@@ -932,6 +928,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -966,7 +980,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1239,7 +1257,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","loop":false,"descPosition":"bottom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

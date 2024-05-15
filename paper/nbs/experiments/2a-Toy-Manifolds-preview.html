@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
     <meta charset="utf-8">
-    <meta name="generator" content="quarto-1.4.550">
+    <meta name="generator" content="quarto-1.4.551">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -207,8 +207,7 @@
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#a-toy-data---diffusion-curvature" id="toc-a-toy-data---diffusion-curvature" class="nav-link active" data-scroll-target="#a-toy-data---diffusion-curvature">3a Toy Data - Diffusion Curvature</a></li>
-  <li><a href="#run-on-toy-datasets" id="toc-run-on-toy-datasets" class="nav-link" data-scroll-target="#run-on-toy-datasets">Run on Toy Datasets</a></li>
+  <li><a href="#run-on-toy-datasets" id="toc-run-on-toy-datasets" class="nav-link active" data-scroll-target="#run-on-toy-datasets">Run on Toy Datasets</a></li>
   <li><a href="#figure" id="toc-figure" class="nav-link" data-scroll-target="#figure">Figure</a></li>
   <li><a href="#curvature-across-time" id="toc-curvature-across-time" class="nav-link" data-scroll-target="#curvature-across-time">Curvature Across Time</a>
   <ul class="collapse">
@@ -226,7 +225,7 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-0" class="cell" data-execution_count="1">
+       <div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-1" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Standard libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -267,13 +266,11 @@
 <pre><code>2024-05-09 21:16:17.628280: W external/xla/xla/service/platform_util.cc:198] unable to create StreamExecutor for CUDA:0: failed initializing StreamExecutor for CUDA device ordinal 0: INTERNAL: failed call to cuDevicePrimaryCtxRetain: CUDA_ERROR_OUT_OF_MEMORY: out of memory; total memory reported: 25363087360</code></pre>
 </div>
 </div></div>
-<section id="a-toy-data---diffusion-curvature" class="level1">
-<h1>3a Toy Data - Diffusion Curvature</h1>
 <blockquote class="blockquote">
 <p>2 Manifolds, colored by curvature, neatly compared</p>
 </blockquote>
 <p>Here is the curvature equivalent of the “sniff test”: does our technique appropriately color the most basic 2 manifolds? This notebook implements this comparison, making it easy to swap in and out curvature methods and rerun them on every baseline.</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-3" class="cell" data-execution_count="2">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-4" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Establish Datasets</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>load_from_saved <span class="op">=</span> <span class="va">True</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> load_from_saved:</span>
@@ -301,11 +298,11 @@
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        Xs[<span class="ss">f'hyperboloid noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>], Ks[<span class="ss">f'hyperboloid noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> hyperboloid(n_points, seed<span class="op">=</span><span class="dv">19323</span>, noise <span class="op">=</span> noise_scale)</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># np.savez(f'../../results/toy_datasets_ground_truth_curvatures.npz', **Ks)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-5" class="cell" data-execution_count="3">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-6" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save results on toy datasets for later use</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># np.savez(f'../../results/toy_datasets_ground_truth_curvatures.npz', **Ks)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-6" class="cell" data-execution_count="4">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-7" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.kernels <span class="im">import</span> gaussian_kernel</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fixed_median_heuristic_graph_former(X, alpha):</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> gaussian_kernel(</span>
@@ -320,7 +317,7 @@
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> pygsp.graphs.Graph(W)</span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> G</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-7" class="cell" data-execution_count="21">
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-8" class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># graph_former = partial(fixed_graph_former, sigma = 0.05, alpha = 1)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># graph_former = partial(fixed_median_heuristic_graph_former,alpha=1)</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -368,21 +365,20 @@
 <span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-</section>
 <section id="run-on-toy-datasets" class="level1">
 <h1>Run on Toy Datasets</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-9" class="cell" data-execution_count="22">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-10" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-10" class="cell" data-execution_count="23">
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-11" class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler(feature_range <span class="op">=</span> (<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="cell-11" class="cell" data-execution_count="24">
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-12" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>diffusion_ks <span class="op">=</span> {}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [25]:</pre></div><div id="cell-12" class="cell" data-execution_count="25">
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-13" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Xs[<span class="st">'Torus'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display">
 <pre><code>array([[ 2.16170717, -1.6416007 , -0.69976324],
        [-0.88426536, -0.55761963,  0.29789636],
        [-2.9651432 ,  0.39596009, -0.13037855],
@@ -392,16 +388,16 @@
        [ 1.29277486, -0.63298829, -0.82810288]])</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [26]:</pre></div><div id="cell-13" class="cell" data-execution_count="26">
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-14" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>torus2, ks_torus2 <span class="op">=</span> torus(<span class="dv">1000</span>, use_guide_points<span class="op">=</span><span class="va">False</span>, seed<span class="op">=</span><span class="dv">19323</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [27]:</pre></div><div id="cell-14" class="cell" data-execution_count="27">
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-15" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>np.allclose(Xs[<span class="st">'Torus'</span>], torus2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell-output cell-output-display">
 <pre><code>True</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div id="cell-15" class="cell" data-execution_count="28">
+<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-16" class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>G_torus <span class="op">=</span> graph_former(torus2)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ks_computed <span class="op">=</span> DC.curvature(G_torus, dim<span class="op">=</span><span class="dv">2</span>, t <span class="op">=</span> <span class="dv">25</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plot_3d(torus2, ks_computed, colorbar<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -417,10 +413,10 @@
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [29]:</pre></div><div id="cell-16" class="cell" data-execution_count="29">
+<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-17" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [30]:</pre></div><div id="cell-17" class="cell" data-execution_count="30">
+<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-18" class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>xtorus_from_file <span class="op">=</span> copy.deepcopy(Xs[<span class="st">'Torus'</span>])</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>G_torus_file <span class="op">=</span> graph_former(xtorus_from_file)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ks_computed_file <span class="op">=</span> DC.curvature(G_torus_file, dim<span class="op">=</span><span class="dv">2</span>, t <span class="op">=</span> <span class="dv">20</span>)</span>
@@ -437,27 +433,27 @@
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [31]:</pre></div><div id="cell-18" class="cell" data-execution_count="31">
+<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-19" class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>G_torus</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
-<pre><code>&lt;pygsp.graphs.graph.Graph at 0x7f4810f18690&gt;</code></pre>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;pygsp.graphs.graph.Graph&gt;</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [32]:</pre></div><div id="cell-19" class="cell" data-execution_count="32">
+<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-20" class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>G_torus_file</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="32">
-<pre><code>&lt;pygsp.graphs.graph.Graph at 0x7f4812dbea90&gt;</code></pre>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;pygsp.graphs.graph.Graph&gt;</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [33]:</pre></div><div id="cell-20" class="cell" data-execution_count="33">
+<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div id="cell-21" class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>np.allclose(G_torus_file.W.todense(), G_torus.W.todense())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display">
 <pre><code>True</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [34]:</pre></div><div id="cell-21" class="cell" data-execution_count="34">
+<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-22" class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>G_torus.W.todense()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell-output cell-output-display">
 <pre><code>matrix([[7.09085778e-03, 0.00000000e+00, 0.00000000e+00, ...,
          0.00000000e+00, 0.00000000e+00, 1.35239569e-04],
         [0.00000000e+00, 7.32278171e-03, 0.00000000e+00, ...,
@@ -473,7 +469,7 @@
          0.00000000e+00, 0.00000000e+00, 9.17920300e-03]])</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [35]:</pre></div><div id="cell-22" class="cell" data-scrolled="true" data-execution_count="35">
+<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-23" class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dname <span class="kw">in</span> Xs.keys():</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> Xs[dname]</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> graph_former(X)</span>
@@ -652,7 +648,7 @@
 </section>
 <section id="figure" class="level1">
 <h1>Figure</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [36]:</pre></div><div id="cell-fig-2-manifolds" class="cell" data-scrolled="true" data-execution_count="36">
+<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-fig-2-manifolds" class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -715,9 +711,9 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [102]:</pre></div><div id="cell-25" class="cell" data-execution_count="102">
+<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-26" class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ground_truth_labels[<span class="st">'Sphere'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="102">
+<div class="cell-output cell-output-display">
 <pre><code>array([2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2.,
        2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2.,
        2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2.,
@@ -779,19 +775,19 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
        2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2.])</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [97]:</pre></div><div id="cell-26" class="cell" data-execution_count="97">
+<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-27" class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save results on toy datasets for later use</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>np.savez(<span class="ss">f'../../results/toy_dataset_</span><span class="sc">{</span>method_name<span class="sc">}</span><span class="ss">.npz'</span>, <span class="op">**</span>diffusion_ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section>
 <section id="curvature-across-time" class="level1">
 <h1>Curvature Across Time</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [98]:</pre></div><div id="cell-28" class="cell" data-execution_count="98">
+<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-29" class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.comparison_space <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <section id="with-same-parameter-fitting" class="level2">
 <h2 class="anchored" data-anchor-id="with-same-parameter-fitting">With Same parameter fitting</h2>
-<div class="cell-container"><div class="cell-decorator"><pre>In [99]:</pre></div><div id="cell-30" class="cell" data-execution_count="99">
+<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="cell-31" class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>G_plane <span class="op">=</span> get_alpha_decay_graph(Xs[<span class="st">'plane'</span>], knn<span class="op">=</span><span class="dv">30</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>G_flat <span class="op">=</span> euclidean_comparison_graph(G_plane,dimension<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> diffusion_matrix_from_affinities(G_plane.K.todense())</span>
@@ -814,13 +810,13 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-31" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [25]:</pre></div><div id="cell-32" class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>G_flat.get_params()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-32" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [26]:</pre></div><div id="cell-33" class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>G_plane.get_params()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-33" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [27]:</pre></div><div id="cell-34" class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot uks and flat_uks on the same graph, with labels</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].plot(ts,uks,label<span class="op">=</span><span class="st">"Plane"</span>)</span>
@@ -838,7 +834,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-34" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div id="cell-35" class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>G_plane <span class="op">=</span> get_alpha_decay_graph(Xs[<span class="st">'plane'</span>], knn<span class="op">=</span><span class="dv">30</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>G_flat <span class="op">=</span> euclidean_comparison_graph(G_plane,dimension<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> diffusion_matrix_from_affinities(G_plane.K.todense())</span>
@@ -851,7 +847,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    uks <span class="op">+=</span> [<span class="bu">float</span>(DC.unsigned_curvature(G_plane,t)[<span class="dv">0</span>])]</span>
 <span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    flat_uks <span class="op">+=</span> [<span class="bu">float</span>(DC.unsigned_curvature(G_flat,t)[<span class="dv">0</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-35" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [29]:</pre></div><div id="cell-36" class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot uks and flat_uks on the same graph, with labels</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].plot(ts,uks,label<span class="op">=</span><span class="st">"plane"</span>)</span>
@@ -869,7 +865,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-36" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [30]:</pre></div><div id="cell-37" class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>G_paraboloid <span class="op">=</span> get_alpha_decay_graph(Xs[<span class="st">'paraboloid'</span>], knn<span class="op">=</span><span class="dv">30</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>G_flat <span class="op">=</span> euclidean_comparison_graph(G_paraboloid,dimension<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> diffusion_matrix_from_affinities(G_paraboloid.K.todense())</span>
@@ -882,7 +878,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    uks <span class="op">+=</span> [<span class="bu">float</span>(DC.unsigned_curvature(G_paraboloid,t)[<span class="dv">0</span>])]</span>
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    flat_uks <span class="op">+=</span> [<span class="bu">float</span>(DC.unsigned_curvature(G_flat,t)[<span class="dv">0</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-37" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [31]:</pre></div><div id="cell-38" class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot uks and flat_uks on the same graph, with labels</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].plot(ts,uks,label<span class="op">=</span><span class="st">"Paraboloid"</span>)</span>
@@ -905,7 +901,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <h2 class="anchored" data-anchor-id="with-fitted-comparison-space">With Fitted Comparison Space</h2>
 <section id="plane" class="level3">
 <h3 class="anchored" data-anchor-id="plane">Plane</h3>
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-40" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [32]:</pre></div><div id="cell-41" class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>plane <span class="op">=</span> get_alpha_decay_graph(Xs[<span class="st">'plane'</span>], knn<span class="op">=</span><span class="dv">30</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>jump_of_diffusion <span class="op">=</span> DC.unsigned_curvature(G_plane,<span class="dv">1</span>)[<span class="dv">0</span>]</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> diffusion_matrix_from_affinities(G_plane.K.todense())</span>
@@ -931,7 +927,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>    uks <span class="op">+=</span> [<span class="bu">float</span>(DC.unsigned_curvature(G_plane,t)[<span class="dv">0</span>])]</span>
 <span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>    flat_uks <span class="op">+=</span> [<span class="bu">float</span>(DC.unsigned_curvature(G_flat,t)[<span class="dv">0</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-41" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [33]:</pre></div><div id="cell-42" class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot uks and flat_uks on the same graph, with labels</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].plot(ts,uks,label<span class="op">=</span><span class="st">"Plane"</span>)</span>
@@ -952,7 +948,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </section>
 <section id="sphere" class="level3">
 <h3 class="anchored" data-anchor-id="sphere">Sphere</h3>
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-43" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [34]:</pre></div><div id="cell-44" class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>sphere <span class="op">=</span> get_alpha_decay_graph(Xs[<span class="st">'sphere'</span>], knn<span class="op">=</span><span class="dv">30</span>, anisotropy<span class="op">=</span><span class="dv">1</span>, )</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>jump_of_diffusion <span class="op">=</span> DC.unsigned_curvature(sphere,<span class="dv">1</span>)[<span class="dv">0</span>]</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> diffusion_matrix_from_affinities(sphere.K.todense())</span>
@@ -978,7 +974,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a>    uks <span class="op">+=</span> [<span class="bu">float</span>(DC.unsigned_curvature(sphere,t)[<span class="dv">0</span>])]</span>
 <span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>    flat_uks <span class="op">+=</span> [<span class="bu">float</span>(DC.unsigned_curvature(G_flat,t)[<span class="dv">0</span>])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-44" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [35]:</pre></div><div id="cell-45" class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot uks and flat_uks on the same graph, with labels</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">7</span>))</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].plot(ts,uks,label<span class="op">=</span><span class="st">"Sphere"</span>)</span>
@@ -996,13 +992,13 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-45" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [36]:</pre></div><div id="cell-46" class="cell">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">16</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>X_torus, ks_torus <span class="op">=</span> torus(<span class="dv">2000</span>,use_guide_points<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>G_torus <span class="op">=</span> graph_former(X_torus)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>ksdc, ksn, P, Pt, t <span class="op">=</span> DC.unsigned_curvature(G_torus,t<span class="op">=</span>t, _also_return_first_scale<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-46" class="cell" data-scrolled="true">
+<div class="cell-container"><div class="cell-decorator"><pre>In [37]:</pre></div><div id="cell-47" class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>plot_3d(X_torus,Pt[<span class="dv">0</span>], title<span class="op">=</span><span class="ss">f"t = </span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="hidden" aria-hidden="true">
@@ -1091,6 +1087,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1125,7 +1139,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1398,7 +1416,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

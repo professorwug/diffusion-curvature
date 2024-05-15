@@ -14,7 +14,7 @@ author:
     roles: []
     affiliations: 
     - MILA
-  - name: Kaly Zhang
+  - name: Yanlei Zhang
     orcid: 0000-0002-7859-8394
     corresponding: false
     roles: []
@@ -51,11 +51,10 @@ number-sections: true
 ---
 <!-- Latex formatting tweaks -->
 ```{=latex}
-\kz*{\labelitemi}{\textgreater}
+\newcommand\Kaly[1]{\textcolor{blue}{Kaly: [[[#1]]]}}
 ```
 
 # Introduction
-
 
 One of the most ubiquitous subjects of analysis in data science is the humble point cloud. The points, by themselves, are high dimensional and noisy; it is up to the data scientist to wring sense out of them. Per the Manifold Hypothesis, we assume the points were sampled on or near the surface of a low-dimensional manifold embedded in high-dimensional Euclidean space. Manifold learning methods, like t-SNE, PHATE, and Diffusion Maps, endeavor to recover salient features of the underlying manifold, like geodesic distances, population clusterings, and dimension, from its high-dimensional noisy sampling [@maaten2008VisualizingDataUsing; @moon2019VisualizingStructureTransitions; @coifman2006DiffusionMaps]. 
 
@@ -70,6 +69,37 @@ In this paper, we develop Diffusion Curvature, a fast curvature estimate derived
 # Background
 
 ## Curvature in the Continuous Setting
+
+There are many definitions of curvature on Riemannian manifolds. In this work, we focus on discrete analogs to the *Ricci* curvature $\text{Ric}(x,y)$, which we'll briefly motivate in the continuous setting. 
+
+Imagine two spheres of equal radius centered at $x$ and $y$ in a Riemannian manifold $\mathcal{M}$. Intuitively, the Ricci curvature between $x$ and $y$ measures the difference between the distance of these midpoints, and the average distance between corresponding points in each sphere. In an area of positive Ricci curvature, points in spheres are, on average, closer than their midpoints; in negative Ricci curvature, the points in the sphere are further, on average, than the midpoints. This is formally described by first defining the *sectional curvature* as the contraction of length incurred by parallel transport through a 2-plane of the manifold, then defining the Ricci curvature as an average of the sectional curvatures between two points. For the present work, we needn’t reproduce the full definitions, but we will recall some properties of manifolds with Ricci curvature bounded from below by some $k$.
+
+First, recall the relation between curvature and volume. In spaces of high positive curvature, the volume of a ball is \emph{smaller} than a ball of the same radius in a flat space, and even smaller than a ball of the same radius in a hyperbolic space. This is formally expressed by the Bishop Gromov inequality [@2021BishopGromovInequality].
+
+::: {#thm-bishop-gromov}
+
+### Bishop-Gromov
+
+Let $\mathcal{M}$ be a complete $d$-dimensional Riemannian manifold with $Ric(x,y) > (d - 1)k$ for all $x,y \in \mathcal{M}$ and $k \in \mathbb{R}$. Let $M_{K}^d$ be the complete $d$-dimensional simply connected space of constant sectional curvature $k$. Denote by $B(x,k)$ the ball of radius $k$ centered at $x$. Then for any $x \in \mathcal{M}$ and $x_{k} \in M_{K}^d$, the function
+
+$$
+\phi(r) = \frac{\operatorname{Vol}B(x,r)}{\operatorname{Vol}B(x_{k},r)}
+$$
+is non-increasing on $(0,\infty)$.
+:::
+
+This phenomenon of diminishing volume in positive curvature is related to the convergence of geodesic rays. In the plane (or saddle), two geodesic rays extending from the same point in different directions will never intersect. But on the sphere, they *will* meet again – at the opposite pole. This convergence constrains the maximum diameter a space of positive curvature may have, as expressed in the Bonnet-Myers Theorem [@ollivier2009RicciCurvatureMarkov]:
+
+::: {#thm-bonnet-myers}
+
+### Bonnet-Myers
+
+Let $X$ be an $d$-dimensional Riemannian manifold. Let $\inf \operatorname{Ric}(X)$ be the infimum of the Ricci curvature $\operatorname{Ric}(v, v)$ over all unit tangent vectors $v$.
+Let $S^d \subset \mathbb{R}^{d+1}$ be the unit sphere of the same dimension as $X$. Then, if $\inf \operatorname{Ric}(X) \geqslant \inf \operatorname{Ric}\left(S^d\right)$ then $\operatorname{diam} X \leqslant \operatorname{diam} S^d$.
+
+:::
+
+We’ll encounter versions of Bishop-Gromov and Bonnet-Myers in our discrete setting. But first, let’s describe the construction and properties of our specific discrete setting.
 
 ## The Discrete Setting
 
@@ -111,11 +141,6 @@ This is similar to applying a low-pass filter to the graph. As $t$ increases, th
 
 This is a remarkable feature of the diffusion matrix: the ability to “denoise” itself by iterating the random walk over larger time scales. Intuitively, the paths through the data most robustly trafficked by random walkers are those supported by multiple high-probability connections from independent starting points.
 
-# Related Work
-
-## Foreman Ricci Curvature
-
-## Hickock’s Curvature
 
 ## Ollivier-Ricci Curvature
 
@@ -228,7 +253,7 @@ $$
 
 - [ ] Use an arbitrary distance? Or a p-Wasserstein?
 
-Where $p_X^t$ is the t-step random walk over $X$, and $p_{\Phi(X)}^t$ is the same over the flattened points $\Phi(X)$. Depending on the ground distance used for the Wasserstein-1 transport distance, and the definition of flattening map employed, one obtains any of a family of diffusion curvatures. 
+where $p_X^t$ is the t-step random walk over $X$, and $p_{\Phi(X)}^t$ is the same over the flattened points $\Phi(X)$. Depending on the ground distance used for the Wasserstein-1 transport distance, and the definition of flattening map employed, one obtains any of a family of diffusion curvatures. 
 
 Our best results come a very simple formulation of both, where the ground distance is chosen such that $W_{1}$ becomes the Shannon Entropy, and our flattening map simply uniformly samples points from the Euclidean space $\mathbb{R}^d$ of the same dimension as $M$. This produces what we'll call the *Entropic Diffusion Curvature*,
 
@@ -250,13 +275,11 @@ This definition rests on two claims: that the laziness of diffusion reveals the 
 
 ## A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison
 
-Among the most obvious manifestations of curvature is differences in volume: the higher the curvature, the smaller the volume of geodesic balls of the same radius. This is formalized by Bishop-Gromov's Volume Comparison Theorem.
+Among the most obvious manifestations of curvature is differences in volume: the higher the curvature, the smaller the volume of geodesic balls of the same radius. In the continuous setting, this is expressed by [@thm-bishop-gromov].
 
-THEOREM!
+One route to discrete curvature is thus estimating volumes; this is the route taken by @hickok2023IntrinsicApproachScalarCurvature. However, standard methods of estimating volumes in discrete, sampled spaces like point clouds or graphs rely on more complex geometric quantities, like density estimation or approximated geodesic distances, which are not only susceptible to noise, but often themselves dependent on the curvature!^[Consider kernel density estimation, where one places gaussians on each data point and sums up the probability assigned to each area. The higher the curvature, the higher the reported density, since at the end of an ellipsoid the gaussians have greater overlap with each other than in its center – even though the intrinsic density of the surface is uniform.] One wonders: can we use the tools of diffusion geometry to robustly estimate volume? 
 
-One route to discrete curvature is thus estimating volumes [cite Hickok]. However, standard methods of estimating volumes in discrete, sampled spaces like point clouds or graphs rely on more complex geometric quantities, like density estimation or approximated geodesic distances, which are not only susceptible to noise, but often themselves dependent on the curvature!^[Consider kernel density estimation, where one places gaussians on each data point and sums up the probability assigned to each area. The higher the curvature, the higher the reported density, since at the end of an ellipsoid the gaussians have greater overlap with each other than in its center – even though the intrinsic density of the surface is uniform.] One wonders: can we use the tools of diffusion geometry to robustly estimate volume? 
-
-Indeed, this is one way to interpret diffusion laziness: as an inverse volume measurement. [Cite Huguet Heat Geo] motivates this with a result from Saloff Costes et al. [@saloff-costeHeatKernelIts]. For manifold satisfying the Parabolic Harnock Inequality (e.g. all manifolds of positive curvature), heat diffusion $m_{x}^t$ on the manifold is bounded by
+Indeed, this is one way to interpret diffusion laziness: as an inverse volume measurement. [Cite Huguet Heat Geo] motivates this with a result from Saloff Costes et al. [@saloff-coste2010HeatKernelIts]. For manifold satisfying the Parabolic Harnock Inequality (e.g. all manifolds of positive curvature), heat diffusion $m_{x}^t$ on the manifold is bounded by
 
 $$
 \frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
@@ -310,11 +333,15 @@ Although diffusion curvature was designed for sampled manifolds, it extends natu
 Ollivier Ricci curvature is based in optimal transport, formalizing the classical intuition that in spaces of positive curvature, “spheres are closer than their centers” [cite ollivier]. In place of spheres, Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1 distance with the shortest-path metric. Given points $x,y$ in the metric space, with 1-step diffusions $m_{x}$ and $m_{y}$, the Ollivier Ricci curvature of the edge between $x$ and $y$ is:
 $$\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}$$
 
-Local curvature always involves some comparison. Here, the comparison is between the manifold’s optimal transport distance (the numerator), and the Euclidean optimal transport distance (which, helpfully, is just the distance in the denominator. You’ll notice the similarity to diffusion curvature, which replaces the $W_{1}$ distance between two diffused distributions with the $W_{1}$ distance between a point and its $t$-step diffusion. We do this for both the manifold (in the numerator) and a Euclidean comparison space (in the denominator).
+Local curvature always involves some comparison. Here, the comparison is between the manifold’s optimal transport distance (the numerator), and the Euclidean optimal transport distance (which, helpfully, is just the distance in the denominator. You’ll notice the similarity to diffusion curvature ([@def-diffusion-curvature]), which replaces the $W_{1}$ distance between two diffused distributions with the $W_{1}$ laziness of a single diffusion ([@def-laziness-of-diffusion]), and replaces the quotient with a difference. We do this for both the manifold (Ollivier's numerator) and a Euclidean comparison space (Ollivier's denominator).
 
 $$
-k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
+k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
 $$
+
+<!-- $$
+k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
+$$ -->
 
 The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by $W_{1}(\delta_{x},m_{x}^t)$. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:
 
@@ -438,7 +465,14 @@ Most existing methods only quantify their performance in high dimensions on one 
 ## Loss Landscapes
 
 
-## Curvature as a TDA Filtration
+## Curvature ********as******** a TDA Filtration
+
+
+# Related Work
+
+## Foreman Ricci Curvature
+
+## Hickock & Blumberg's Volume Comparison Curvature
 
 
 # Conclusion

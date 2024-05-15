@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="generator" content="quarto-1.4.551">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+    <meta name="author" content="Kincaid MacDonald">
+    <meta name="author" content="Dhananjay Bhaskar">
+    <meta name="author" content="Yanlei Zhang">
+    <meta name="author" content="Ian Adelstein">
+    <meta name="author" content="Smita Krishnaswamy">
+    <meta name="dcterms.date" content="2024-05-15">
+    <meta name="keywords" content="Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds">
+
+    <title>Diffusion Curvature for Fast, Point-wise, Noise-Resistant Geometric Featurization of Graphs and Pointclouds</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      ul.task-list{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+        }
+      pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      /* CSS for citations */
+      div.csl-bib-body { }
+      div.csl-entry {
+        clear: both;
+        margin-bottom: 0em;
+      }
+      .hanging-indent div.csl-entry {
+        margin-left:2em;
+        text-indent:-2em;
+      }
+      div.csl-left-margin {
+        min-width:2em;
+        float:left;
+      }
+      div.csl-right-inline {
+        margin-left:2em;
+        padding-left:1em;
+      }
+      div.csl-indent {
+        margin-left: 2em;
+      }    </style>
+
+    <style>
+      body.hypothesis-enabled #quarto-embed-header {
+        padding-right: 36px;
+      }
+
+      #quarto-embed-header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px;
+      }
+
+      #quarto-embed-header h6 {
+        font-size: 1.1em;
+        padding-top: 0.6em;
+        margin-left: 1em;
+        margin-right: 1em;
+        font-weight: 400;
+      }
+
+      #quarto-embed-header a.quarto-back-link,
+      #quarto-embed-header a.quarto-download-embed {
+        font-size: 0.8em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      .quarto-back-container {
+        padding-left: 0.5em;
+        display: flex;
+      }
+
+      .headroom {
+          will-change: transform;
+          transition: transform 200ms linear;
+      }
+
+      .headroom--pinned {
+          transform: translateY(0%);
+      }
+
+      .headroom--unpinned {
+          transform: translateY(-100%);
+      }      
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script>
+    window.document.addEventListener("DOMContentLoaded", function () {
+
+      var header = window.document.querySelector("#quarto-embed-header");
+      const titleBannerEl = window.document.querySelector("body > #title-block-header");
+      if (titleBannerEl) {
+        titleBannerEl.style.paddingTop = header.clientHeight + "px";
+      }
+      const contentEl = window.document.getElementById('quarto-content');
+      for (const child of contentEl.children) {
+        child.style.paddingTop = header.clientHeight + "px";
+        child.style.marginTop = "1em";
+      }
+
+      // Use the article root if the `back` call doesn't work. This isn't perfect
+      // but should typically work
+      window.quartoBackToArticle = () => {
+        var currentUrl = window.location.href;
+        window.history.back();
+        setTimeout(() => {
+            // if location was not changed in 100 ms, then there is no history back
+            if(currentUrl === window.location.href){              
+                // redirect to site root
+                window.location.href = "index.html";
+            }
+        }, 100);
+      }
+
+      const headroom = new window.Headroom(header, {
+        tolerance: 5,
+        onPin: function () {
+        },
+        onUnpin: function () {
+        },
+      });
+      headroom.init();
+    });
+    </script>
+
+    
+<script src="site_libs/manuscript-notebook/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+     <script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script> 
+      <meta name="citation_title" content="Diffusion Curvature for Fast, Point-wise, Noise-Resistant Geometric Featurization of Graphs and Pointclouds">
+<meta name="citation_abstract" content="For a number of years now work has been proceeding in order to bring to perfection the crudely conceived idea of a machine that would not only supply inverse reactive current for use in unilateral phase detractors, but would also be capable of automatically synchronizing cardinal grammeters. Such a machine is the &amp;amp;quot;Turbo-Encabulator.&quot;">
+<meta name="citation_keywords" content="Manifold Learning,Geometric Deep Learning,Graph Curvature,Point Clouds">
+<meta name="citation_author" content="Kincaid MacDonald">
+<meta name="citation_author" content="Dhananjay Bhaskar">
+<meta name="citation_author" content="Yanlei Zhang">
+<meta name="citation_author" content="Ian Adelstein">
+<meta name="citation_author" content="Smita Krishnaswamy">
+<meta name="citation_publication_date" content="2024-05-15">
+<meta name="citation_cover_date" content="2024-05-15">
+<meta name="citation_year" content="2024">
+<meta name="citation_online_date" content="2024-05-15">
+<meta name="citation_language" content="en">
+<meta name="citation_journal_title" content="IEEE TPAMI">
+<meta name="citation_reference" content="citation_title=Conformal Flattening by Curvature Prescription and Metric Scaling;,citation_abstract=Abstract We present an efficient method to conformally parameterize 3D mesh data sets to the plane. The idea behind our method is to concentrate all the 3D curvature at a small number of select mesh vertices, called cone singularities, and then cut the mesh through those singular vertices to obtain disk topology. The singular vertices are chosen automatically. As opposed to most previous methods, our flattening process involves only the solution of linear systems of Poisson equations, thus is very efficient. Our method is shown to be faster than existing methods, yet generates parameterizations having comparable quasi‐conformal distortion.;,citation_author=Mirela Ben‐Chen;,citation_author=Craig Gotsman;,citation_author=Guy Bunin;,citation_publication_date=2008-04;,citation_cover_date=2008-04;,citation_year=2008;,citation_fulltext_html_url=https://onlinelibrary.wiley.com/doi/10.1111/j.1467-8659.2008.01142.x;,citation_issue=2;,citation_doi=10.1111/j.1467-8659.2008.01142.x;,citation_issn=0167-7055, 1467-8659;,citation_volume=27;,citation_language=en-US;,citation_journal_title=Computer Graphics Forum;,citation_journal_abbrev=Computer Graphics Forum;">
+<meta name="citation_reference" content="citation_title=Diffusion curvature for estimating local curvature in high dimensional data;,citation_author=Dhananjay Bhaskar;,citation_author=Kincaid MacDonald;,citation_author=Oluwadamilola Fasina;,citation_author=Dawson Thomas;,citation_author=Bastian Rieck;,citation_author=Ian Adelstein;,citation_author=Smita Krishnaswamy;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_fulltext_html_url=https://proceedings.neurips.cc/paper_files/paper/2022/hash/88438dc62fc5c8777e2b5f1b4f6d37a2-Abstract-Conference.html;,citation_volume=35;,citation_journal_title=Advances in Neural Information Processing Systems;">
+<meta name="citation_reference" content="citation_title=Curvature of Hypergraphs via Multi-Marginal Optimal Transport;,citation_abstract=We introduce a novel definition of curvature for hypergraphs, a natural generalization of graphs, by introducing a multi-marginal optimal transport problem for a naturally defined random walk on the hypergraph. This curvature, termed coarse scalar curvature, extends a recent definition of Ricci curvature for Markov chains on metric spaces by Ollivier [Journal of Functional Analysis 256 (2009) 810–864], and is related to the scalar curvature when the hypergraph arises naturally from a Riemannian manifold. We investigate basic theoretical properties of the coarse scalar curvature and obtain several bounds. Empirical experiments demonstrate that coarse scalar curvatures detects “bridges” across connected components in hypergraphs, akin to the behavior of coarse Ricci curvatures on graphs.;,citation_author=Eric Cayeux;,citation_author=Shahab Asoodeh;,citation_author=Shahab Asoodeh;,citation_author=Shahab Asoodeh;,citation_author=Tingran Gao;,citation_author=Tingran Gao;,citation_author=James A. Evans;,citation_author=James A. Evans;,citation_publication_date=2018-12-01;,citation_cover_date=2018-12-01;,citation_year=2018;,citation_doi=10.1109/cdc.2018.8619706;">
+<meta name="citation_reference" content="citation_title=Diffusion maps;,citation_abstract=In this paper, we provide a framework based upon diffusion processes for finding meaningful geometric descriptions of data sets. We show that eigenfunctions of Markov matrices can be used to construct coordinates called diffusion maps that generate efficient representations of complex geometric structures. The associated family of diffusion distances, obtained by iterating the Markov matrix, defines multiscale geometries that prove to be useful in the context of data parametrization and dimensionality reduction. The proposed framework relates the spectral properties of Markov processes to their geometric counterparts and it unifies ideas arising in a variety of contexts such as machine learning, spectral graph theory and eigenmap methods.;,citation_author=Ronald R. Coifman;,citation_author=Stéphane Lafon;,citation_publication_date=2006-07-01;,citation_cover_date=2006-07-01;,citation_year=2006;,citation_fulltext_html_url=https://www.sciencedirect.com/science/article/pii/S1063520306000546;,citation_issue=1;,citation_doi=10.1016/j.acha.2006.04.006;,citation_issn=1063-5203;,citation_volume=21;,citation_language=en-US;,citation_journal_title=Applied and Computational Harmonic Analysis;,citation_journal_abbrev=Applied and Computational Harmonic Analysis;,citation_series_title=Special Issue: Diffusion Maps and Wavelets;">
+<meta name="citation_reference" content="citation_title=Non-negative Ollivier curvature on graphs, reverse Poincaré inequality, Buser inequality, Liouville property, Harnack inequality and eigenvalue estimates;,citation_abstract=We prove that for combinatorial graphs with non-negative Ollivier curvature, one has \[ \|P_t \mu - P_t \nu\|_1 \leq \frac{W_1(\mu,\nu)}{\sqrt{t}} \] for all probability measures $\mu,\nu$ where $P_t$ is the heat semigroup and $W_1$ is the $\ell_1$-Wasserstein distance. This turns out to be an equivalent formulation of a version of reverse Poincare inequality. Furthermore, this estimate allows us to prove Buser inequality, Liouville property and the the eigenvalue estimate $\lambda_1 \geq \log(2)/\operatorname{diam}^2$.;,citation_author=Florentin Münch;,citation_author=Florentin Münch;,citation_publication_date=2019-07-31;,citation_cover_date=2019-07-31;,citation_year=2019;,citation_journal_title=arXiv: Differential Geometry;">
+<meta name="citation_reference" content="citation_title=A Loss Curvature Perspective on Training Instability in Deep Learning;,citation_abstract=In this work, we study the evolution of the loss Hessian across many classification tasks in order to understand the effect the curvature of the loss has on the training dynamics. Whereas prior work has focused on how different learning rates affect the loss Hessian observed during training, we also analyze the effects of model initialization, architectural choices, and common training heuristics such as gradient clipping and learning rate warmup. Our results demonstrate that successful model and hyperparameter choices allow the early optimization trajectory to either avoid – or navigate out of – regions of high curvature and into flatter regions that tolerate a higher learning rate. Our results suggest a unifying perspective on how disparate mitigation strategies for training instability ultimately address the same underlying failure mode of neural network optimization, namely poor conditioning. Inspired by the conditioning perspective, we show that learning rate warmup can improve training stability just as much as batch normalization, layer normalization, MetaInit, GradInit, and Fixup initialization.;,citation_author=Justin Gilmer;,citation_author=Behrooz Ghorbani;,citation_author=Ankush Garg;,citation_author=Sneha Kudugunta;,citation_author=Behnam Neyshabur;,citation_author=David Cardoze;,citation_author=George Dahl;,citation_author=Zachary Nado;,citation_author=Orhan Firat;,citation_publication_date=2021-10-08;,citation_cover_date=2021-10-08;,citation_year=2021;,citation_fulltext_html_url=http://arxiv.org/abs/2110.04369;">
+<meta name="citation_reference" content="citation_title=An Intrinsic Approach to Scalar-Curvature Estimation for Point Clouds;,citation_abstract=We introduce an intrinsic estimator for the scalar curvature of a data set presented as a finite metric space. Our estimator depends only on the metric structure of the data and not on an embedding in $\mathbb{R}^n$. We show that the estimator is consistent in the sense that for points sampled from a probability measure on a compact Riemannian manifold, the estimator converges to the scalar curvature as the number of points increases. To justify its use in applications, we show that the estimator is stable with respect to perturbations of the metric structure, e.g., noise in the sample or error estimating the intrinsic metric. We validate our estimator experimentally on synthetic data that is sampled from manifolds with specified curvature.;,citation_author=Abigail Hickok;,citation_author=Andrew J. Blumberg;,citation_publication_date=2023-08-04;,citation_cover_date=2023-08-04;,citation_year=2023;,citation_fulltext_html_url=http://arxiv.org/abs/2308.02615;,citation_doi=10.48550/arXiv.2308.02615;,citation_publisher=arXiv;">
+<meta name="citation_reference" content="citation_title=Gradient flows of the entropy for finite Markov chains;,citation_abstract=Let K be an irreducible and reversible Markov kernel on a finite set X. We construct a metric W on the set of probability measures on X and show that with respect to this metric, the law of the continuous time Markov chain evolves as the gradient flow of the entropy. This result is a discrete counterpart of the Wasserstein gradient flow interpretation of the heat flow in Rn by Jordan, Kinderlehrer and Otto (1998). The metric W is similar to, but different from, the L2-Wasserstein metric, and is defined via a discrete variant of the Benamou–Brenier formula.;,citation_author=Jan Maas;,citation_author=Jan Maas;,citation_publication_date=2011-10-15;,citation_cover_date=2011-10-15;,citation_year=2011;,citation_issue=8;,citation_doi=10.1016/j.jfa.2011.06.009;,citation_volume=261;,citation_journal_title=Journal of Functional Analysis;">
+<meta name="citation_reference" content="citation_title=Entropic Ricci Curvature for Discrete Spaces;,citation_abstract=We give a short overview on a recently developed notion of Ricci curvature for discrete spaces. This notion relies on geodesic convexity properties of the relative entropy along geodesics in the space of probability densities, for a metric which is similar to (but different from) the 2-Wasserstein metric. The theory can be considered as a discrete counterpart to the theory of Ricci curvature for geodesic measure spaces developed by Lott–Sturm–Villani.;,citation_author=Jan Maas;,citation_author=Jan Maas;,citation_publication_date=2017-01-01;,citation_cover_date=2017-01-01;,citation_year=2017;,citation_doi=10.1007/978-3-319-58002-9_5;">
+<meta name="citation_reference" content="citation_title=Visualizing Data using t-SNE;,citation_abstract=We present a new technique called &amp;amp;amp;quot;t-SNE&amp;quot; that visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map. The technique is a variation of Stochastic Neighbor Embedding (Hinton and Roweis, 2002) that is much easier to optimize, and produces significantly better visualizations by reducing the tendency to crowd points together in the center of the map. t-SNE is better than existing techniques at creating a single map that reveals structure at many different scales. This is particularly important for high-dimensional data that lie on several different, but related, low-dimensional manifolds, such as images ofobjects from multiple classes seen from multiple viewpoints. For visualizing the structure of very large data sets, we show how t-SNE can use random walks on neighborhood graphs to allow the implicit structure of all of the data to influence the way in which a subset of the data is displayed. We illustrate the performance of t-SNE on a wide variety of data sets and compare it with many other non-parametric visualization techniques, including Sammon mapping, Isomap, and Locally Linear Embedding. The visualizations produced by t-SNE are significantly better than those produced by the other techniques on almost all of the data sets.;,citation_author=Laurens Maaten;,citation_author=Geoffrey Hinton;,citation_publication_date=2008;,citation_cover_date=2008;,citation_year=2008;,citation_fulltext_html_url=http://jmlr.org/papers/v9/vandermaaten08a.html;,citation_issue=86;,citation_issn=1533-7928;,citation_volume=9;,citation_journal_title=Journal of Machine Learning Research;">
+<meta name="citation_reference" content="citation_title=Coarse Ricci curvature of hypergraphs and its generalization;,citation_abstract=In the present paper, we introduce a concept of Ricci curvature on hypergraphs for a nonlinear Laplacian. We prove that our definition of the Ricci curvature is a generalization of Lin-Lu-Yau coarse Ricci curvature for graphs to hypergraphs. We also show a lower bound of nonzero eigenvalues of Laplacian, gradient estimate of heat flow, and diameter bound of Bonnet-Myers type for our curvature notion. This research leads to understanding how nonlinearity of Laplacian causes complexity of curvatures.;,citation_author=Masahiro Ikeda;,citation_author=Masahiro Ikeda;,citation_author=Yu Kitabeppu;,citation_author=Yu Kitabeppu;,citation_author=Yuuki Takai;,citation_author=Yuuki Takai;,citation_publication_date=2021;,citation_cover_date=2021;,citation_year=2021;,citation_journal_title=arXiv: Metric Geometry;">
+<meta name="citation_reference" content="citation_title=The heat flow on metric random walk spaces;,citation_abstract=Abstract In this paper we study the Heat Flow on Metric Random Walk Spaces, which unifies into a broad framework the heat flow on locally finite weighted connected graphs, the heat flow determined by finite Markov chains and some nonlocal evolution problems. We give different characterizations of the ergodicity and prove that a metric random walk space with positive Ollivier-Ricci curvature is ergodic. Furthermore, we prove a Cheeger inequality and, as a consequence, we show that a Poincare inequality holds if, and only if, an isoperimetric inequality holds. We also study the Bakry-Emery curvature-dimension condition and its relation with functional inequalities like the Poincare inequality and the transport-information inequalities.;,citation_author=José M. Mazón;,citation_author=Marcos Solera;,citation_author=Julián Toledo;,citation_publication_date=2020;,citation_cover_date=2020;,citation_year=2020;,citation_doi=10.1016/j.jmaa.2019.123645;,citation_journal_title=Journal of Mathematical Analysis and Applications;">
+<meta name="citation_reference" content="citation_title=Curvature of Nonlocal Markov Generators;,citation_abstract=Bakry’s curvature-dimension condition will be extended to certain nonlocal Markov generators. In particular this gives rise to a possible notion of curvature for graphs. 1. Definition of Curvature Let (Ω, μ) be a probability space and L a self-adjoint negative but not necessarily bounded operator on L2(μ) given by Lf(x) := ∫ (f(y)− f(x))K(x, y)μ(dy) (1) where K is a non negative symmetric kernel. Obviously L remains unchanged if we change K on the diagonal. By Pt = e we denote the continuous contraction semigroup on L2(μ) with generator L. We will assume that Pt is ergodic and that there exists an algebra A ⊆ n domL of bounded functions which is a form core of L. Then the Beurling–Deny condition implies that Pt is a symmetric Markov semigroup, i.e., Pt preserves positivity and extends to a continuous contraction semigroup on Lp(μ) for all 1 ≤ p 0. Let us say a a word about the motivation for this definition. Assume L is the Laplacian on a Riemannian manifold, then;,citation_author=Michael Schmuckenschläger;,citation_author=Michael Schmuckenschläger;,citation_publication_date=1998-01-01;,citation_cover_date=1998-01-01;,citation_year=1998;">
+<meta name="citation_reference" content="citation_title=Visualizing structure and transitions in high-dimensional biological data;,citation_abstract=The high-dimensional data created by high-throughput technologies require visualization tools that reveal data structure and patterns in an intuitive form. We present PHATE, a visualization method that captures both local and global nonlinear structure using an information-geometric distance between data points. We compare PHATE to other tools on a variety of artificial and biological datasets, and find that it consistently preserves a range of patterns in data, including continual progressions, branches and clusters, better than other tools. We define a manifold preservation metric, which we call denoised embedding manifold preservation (DEMaP), and show that PHATE produces lower-dimensional embeddings that are quantitatively better denoised as compared to existing visualization methods. An analysis of a newly generated single-cell RNA sequencing dataset on human germ-layer differentiation demonstrates how PHATE reveals unique biological insight into the main developmental branches, including identification of three previously undescribed subpopulations. We also show that PHATE is applicable to a wide variety of data types, including mass cytometry, single-cell RNA sequencing, Hi-C and gut microbiome data.;,citation_author=Kevin R. Moon;,citation_author=David Dijk;,citation_author=Zheng Wang;,citation_author=Scott Gigante;,citation_author=Daniel B. Burkhardt;,citation_author=William S. Chen;,citation_author=Kristina Yim;,citation_author=Antonia Elzen;,citation_author=Matthew J. Hirn;,citation_author=Ronald R. Coifman;,citation_author=Natalia B. Ivanova;,citation_author=Guy Wolf;,citation_author=Smita Krishnaswamy;,citation_publication_date=2019-12;,citation_cover_date=2019-12;,citation_year=2019;,citation_fulltext_html_url=https://www.nature.com/articles/s41587-019-0336-3;,citation_issue=12, 12;,citation_doi=10.1038/s41587-019-0336-3;,citation_issn=1546-1696;,citation_volume=37;,citation_language=en-US;,citation_journal_title=Nature Biotechnology;,citation_journal_abbrev=Nat Biotechnol;,citation_publisher=Nature Publishing Group;">
+<meta name="citation_reference" content="citation_title=Ricci curvature of Markov chains on metric spaces;,citation_abstract=We define the coarse Ricci curvature of metric spaces in terms of how much small balls are closer (in Wasserstein transportation distance) than their …;,citation_author=Yann Ollivier;,citation_publication_date=2009-02-01;,citation_cover_date=2009-02-01;,citation_year=2009;,citation_fulltext_html_url=https://www.sciencedirect.com/science/article/pii/S002212360800493X;,citation_issue=3;,citation_doi=10.1016/j.jfa.2008.11.001;,citation_issn=0022-1236;,citation_volume=256;,citation_language=en-US;,citation_journal_title=Journal of Functional Analysis;,citation_publisher=Academic Press;">
+<meta name="citation_reference" content="citation_title=The heat kernel and its estimates;,citation_abstract=After a short survey of some of the reasons that make the heat kernel an important object of study, we review a number of basic heat kernel estimates. We then describe recent results concerning (a) the heat kernel on certain manifolds with ends, and (b) the heat kernel with the Neumann or Dirichlet boundary condition in inner uniform Euclidean domains.;,citation_author=Laurent Saloff-Coste;,citation_publication_date=2010;,citation_cover_date=2010;,citation_year=2010;,citation_fulltext_html_url=https://projecteuclid.org/euclid.aspm/1543086330;,citation_doi=10.2969/aspm/05710405;,citation_language=en-US;,citation_conference_title=Advanced Studies in Pure Mathematics;">
+<meta name="citation_reference" content="citation_title=On the geometry of metric measure spaces;,citation_abstract=We introduce and analyze lower (Ricci) curvature bounds$\underline{{Curv}} {\left( {M,d,m} \right)}$ ⩾ K for metric measure spaces${\left( {M,d,m} \right)}$. Our definition is based on convexity properties of the relative entropy$Ent{\left( { \cdot \left| m \right.} \right)}$regarded as a function on the L2-Wasserstein space of probability measures on the metric space${\left( {M,d} \right)}$. Among others, we show that$\underline{{Curv}} {\left( {M,d,m} \right)}$ ⩾ K implies estimates for the volume growth of concentric balls. For Riemannian manifolds,$\underline{{Curv}} {\left( {M,d,m} \right)}$ ⩾ K if and only if$Ric_{M} {\left( {\xi ,\xi } \right)}$ ⩾ K${\left| \xi \right|}^{2} $for all $\xi \in TM$.;,citation_author=Karl-Theodor Sturm;,citation_publication_date=2006-07-01;,citation_cover_date=2006-07-01;,citation_year=2006;,citation_fulltext_html_url=https://doi.org/10.1007/s11511-006-0002-8;,citation_issue=1;,citation_doi=10.1007/s11511-006-0002-8;,citation_issn=1871-2509;,citation_volume=196;,citation_language=en-US;,citation_journal_title=Acta Mathematica;,citation_journal_abbrev=Acta Math;">
+<meta name="citation_reference" content="citation_title=A note on a Bonnet-Myers type diameter bound for graphs with positive entropic Ricci curvature;,citation_abstract=An equivalent definition of entropic Ricci curvature on discrete spaces was given in terms of the global gradient estimate. With a particular choice of the density function $\rho$, we obtain a localized gradient estimate, which in turns allow us to derive a Bonnet-Myers type diameter bound for graphs with positive entropic Ricci curvature. However, the case of the hypercubes indicates that the bound may be not optimal (where $\theta$ is chosen to be logarithmic mean by default). If $\theta$ is arithmetic mean, the Bakry-Emery criterion can be recovered and the diameter bound is optimal as it can be attained by the hypercubes.;,citation_author=Supanat Kamtue;,citation_author=Supanat Kamtue;,citation_author=Supanat Kamtue;,citation_publication_date=2020-03-02;,citation_cover_date=2020-03-02;,citation_year=2020;,citation_journal_title=arXiv: Probability;">
+<meta name="citation_reference" content="citation_title=Spectral Properties of Hypergraph Laplacian and Approximation Algorithms;,citation_abstract=The celebrated Cheeger’s Inequality (Alon and Milman 1985; Alon 1986) establishes a bound on the edge expansion of a graph via its spectrum. This inequality is central to a rich spectral theory of graphs, based on studying the eigenvalues and eigenvectors of the adjacency matrix (and other related matrices) of graphs. It has remained open to define a suitable spectral model for hypergraphs whose spectra can be used to estimate various combinatorial properties of the hypergraph. In this article, we introduce a new hypergraph Laplacian operator generalizing the Laplacian matrix of graphs. In particular, the operator is induced by a diffusion process on the hypergraph, such that within each hyperedge, measure flows from vertices having maximum weighted measure to those having minimum. Since the operator is nonlinear, we have to exploit other properties of the diffusion process to recover the Cheeger’s Inequality that relates hyperedge expansion with the “second eigenvalue” of the resulting Laplacian. However, we show that higher-order spectral properties cannot hold in general using the current framework. Since higher-order spectral properties do not hold for the Laplacian operator, we instead use the concept of procedural minimizers to consider higher-order Cheeger-like inequalities. For any k ∈ N, we give a polynomial-time algorithm to compute an O(log r)-approximation to the kth procedural minimizer, where r is the maximum cardinality of a hyperedge. We show that this approximation factor is optimal under the SSE hypothesis (introduced by Raghavendra and Steurer (2010)) for constant values of k. Moreover, using the factor-preserving reduction from vertex expansion in graphs to hypergraph expansion, we show that all our results for hypergraphs extend to vertex expansion in graphs.;,citation_author=T.-H. Hubert Chan;,citation_author=T.-H. Hubert Chan;,citation_author=Anand Louis;,citation_author=Anand Louis;,citation_author=Zhihao Gavin Tang;,citation_author=Zhihao Gavin Tang;,citation_author=Zhihao Gavin Tang;,citation_author=Chenzi Zhang;,citation_author=Chenzi Zhang;,citation_publication_date=2018-03-05;,citation_cover_date=2018-03-05;,citation_year=2018;,citation_issue=3;,citation_doi=10.1145/3178123;,citation_volume=65;,citation_journal_title=Journal of the ACM;">
+<meta name="citation_reference" content="citation_title=A new transport distance and its associated Ricci curvature of hypergraphs;,citation_abstract=The coarse Ricci curvature of graphs introduced by Ollivier as well as its modification by Lin-Lu-Yau have been studied from various aspects. In this paper, we propose a new transport distance appropriate for hypergraphs and study a generalization of Lin-Lu-Yau type curvature of hypergraphs. As an application, we derive a Bonnet-Myers type estimate for hypergraphs under a lower Ricci curvature bound associated with our transport distance. We remark that our transport distance is new even for graphs and worthy of further study.;,citation_author=Tomoya Akamatsu;,citation_author=Tomoya Akamatsu;,citation_publication_date=2021-05-16;,citation_cover_date=2021-05-16;,citation_year=2021;,citation_journal_title=arXiv: Metric Geometry;">
+<meta name="citation_reference" content="citation_title=Data-driven learning of geometric scattering modules for gnns;,citation_author=Alexander Tong;,citation_author=Frederick Wenkel;,citation_author=Kincaid Macdonald;,citation_author=Smita Krishnaswamy;,citation_author=Guy Wolf;,citation_publication_date=2021;,citation_cover_date=2021;,citation_year=2021;,citation_fulltext_html_url=https://ieeexplore.ieee.org/abstract/document/9596169/;,citation_conference_title=2021 IEEE 31st International Workshop on Machine Learning for Signal Processing (MLSP);,citation_conference=IEEE;">
+<meta name="citation_reference" content="citation_title=Diffusion Earth Mover’s Distance and Distribution Embeddings;,citation_abstract=We propose a new fast method of measuring distances between large numbers of related high dimensional datasets called the Diffusion Earth Mover’s Distance (EMD). We model the datasets as distributions supported on common data graph that is derived from the affinity matrix computed on the combined data. In such cases where the graph is a discretization of an underlying Riemannian closed manifold, we prove that Diffusion EMD is topologically equivalent to the standard EMD with a geodesic ground distance. Diffusion EMD can be computed in {Õ}(n) time and is more accurate than similarly fast algorithms such as tree-based EMDs. We also show Diffusion EMD is fully differentiable, making it amenable to future uses in gradient-descent frameworks such as deep neural networks. Finally, we demonstrate an application of Diffusion EMD to single cell data collected from 210 COVID-19 patient samples at Yale New Haven Hospital. Here, Diffusion EMD can derive distances between patients on the manifold of cells at least two orders of magnitude faster than equally accurate methods. This distance matrix between patients can be embedded into a higher level patient manifold which uncovers structure and heterogeneity in patients. More generally, Diffusion EMD is applicable to all datasets that are massively collected in parallel in many medical and biological systems.;,citation_author=Alexander Y. Tong;,citation_author=Guillaume Huguet;,citation_author=Amine Natik;,citation_author=Kincaid Macdonald;,citation_author=Manik Kuchroo;,citation_author=Ronald Coifman;,citation_author=Guy Wolf;,citation_author=Smita Krishnaswamy;,citation_publication_date=2021-07-01;,citation_cover_date=2021-07-01;,citation_year=2021;,citation_fulltext_html_url=https://proceedings.mlr.press/v139/tong21a.html;,citation_issn=2640-3498;,citation_language=en-US;,citation_conference_title=Proceedings of the 38th International Conference on Machine Learning;,citation_conference=PMLR;">
+</head>
+
+  <body class="quarto-notebook">
+    <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
+      
+      <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link" href=""><i class="bi bi-caret-left"></i> Back to Article</a>
+      <h6><i class="bi bi-journal-code"></i> Article Notebook</h6>
+
+            <a href="./index.qmd" class="btn btn-primary quarto-download-embed" download="index.qmd">Download Source</a>
+          </div>
+
+     <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Diffusion Curvature for Fast, Point-wise, Noise-Resistant Geometric Featurization of Graphs and Pointclouds</h1>
+          </div>
+
+    
+    <div class="quarto-title-meta-container">
+      <div class="quarto-title-meta-column-start">
+            <div class="quarto-title-meta-author">
+          <div class="quarto-title-meta-heading">Authors</div>
+          <div class="quarto-title-meta-heading">Affiliations</div>
+          
+                <div class="quarto-title-meta-contents">
+            <p class="author">Kincaid MacDonald <a href="mailto:kincaid@aya.yale.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0009-0006-4686-7488" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        Yale
+                      </p>
+                  </div>
+                      <div class="quarto-title-meta-contents">
+            <p class="author">Dhananjay Bhaskar <a href="https://orcid.org/0000-0002-7859-8394" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        MILA
+                      </p>
+                  </div>
+                      <div class="quarto-title-meta-contents">
+            <p class="author">Yanlei Zhang <a href="https://orcid.org/0000-0002-7859-8394" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        MILA
+                      </p>
+                  </div>
+                      <div class="quarto-title-meta-contents">
+            <p class="author">Ian Adelstein <a href="https://orcid.org/0000-0002-7859-8394" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        Yale Department of Math
+                      </p>
+                  </div>
+                      <div class="quarto-title-meta-contents">
+            <p class="author">Smita Krishnaswamy <a href="https://orcid.org/0000-0002-7859-8394" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        Yale Department of Applied Math
+                      </p>
+                    <p class="affiliation">
+                        Yale School of Medicine
+                      </p>
+                  </div>
+                    </div>
+        
+        <div class="quarto-title-meta">
+
+                      
+                <div>
+            <div class="quarto-title-meta-heading">Published</div>
+            <div class="quarto-title-meta-contents">
+              <p class="date">May 15, 2024</p>
+            </div>
+          </div>
+          
+                
+              </div>
+      </div>
+      <div class="quarto-title-meta-column-end quarto-other-formats-target">
+      </div>
+    </div>
+
+    <div>
+      <div class="abstract">
+        <div class="block-title">Abstract</div>
+        For a number of years now work has been proceeding in order to bring to perfection the crudely conceived idea of a machine that would not only supply inverse reactive current for use in unilateral phase detractors, but would also be capable of automatically synchronizing cardinal grammeters. Such a machine is the “Turbo-Encabulator.”
+      </div>
+    </div>
+
+    <div>
+      <div class="keywords">
+        <div class="block-title">Keywords</div>
+        <p>Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds</p>
+      </div>
+    </div>
+
+    <div class="quarto-other-links-text-target">
+    </div>  </div>
+</header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">2</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#curvature-in-the-continuous-setting" id="toc-curvature-in-the-continuous-setting" class="nav-link" data-scroll-target="#curvature-in-the-continuous-setting"><span class="header-section-number">2.1</span> Curvature in the Continuous Setting</a></li>
+  <li><a href="#the-discrete-setting" id="toc-the-discrete-setting" class="nav-link" data-scroll-target="#the-discrete-setting"><span class="header-section-number">2.2</span> The Discrete Setting</a></li>
+  <li><a href="#graph-diffusion" id="toc-graph-diffusion" class="nav-link" data-scroll-target="#graph-diffusion"><span class="header-section-number">2.3</span> Graph Diffusion</a></li>
+  <li><a href="#ollivier-ricci-curvature" id="toc-ollivier-ricci-curvature" class="nav-link" data-scroll-target="#ollivier-ricci-curvature"><span class="header-section-number">2.4</span> Ollivier-Ricci Curvature</a></li>
+  </ul></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="header-section-number">3</span> Methods</a>
+  <ul class="collapse">
+  <li><a href="#a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" id="toc-a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" class="nav-link" data-scroll-target="#a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison"><span class="header-section-number">3.1</span> A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison</a></li>
+  <li><a href="#bounding-diffusion-laziness-by-ollivier-ricci-curvature" id="toc-bounding-diffusion-laziness-by-ollivier-ricci-curvature" class="nav-link" data-scroll-target="#bounding-diffusion-laziness-by-ollivier-ricci-curvature"><span class="header-section-number">3.2</span> Bounding diffusion laziness by Ollivier-Ricci curvature</a></li>
+  <li><a href="#comparing-diffusion-across-manifolds" id="toc-comparing-diffusion-across-manifolds" class="nav-link" data-scroll-target="#comparing-diffusion-across-manifolds"><span class="header-section-number">3.3</span> Comparing Diffusion Across Manifolds</a>
+  <ul class="collapse">
+  <li><a href="#standard-methods-of-graph-construction-obscure-geometric-information" id="toc-standard-methods-of-graph-construction-obscure-geometric-information" class="nav-link" data-scroll-target="#standard-methods-of-graph-construction-obscure-geometric-information"><span class="header-section-number">3.3.1</span> Standard methods of graph construction obscure geometric information</a></li>
+  <li><a href="#the-curvature-agnostic-kernel" id="toc-the-curvature-agnostic-kernel" class="nav-link" data-scroll-target="#the-curvature-agnostic-kernel"><span class="header-section-number">3.3.2</span> The Curvature Agnostic Kernel</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4</span> Results</a>
+  <ul class="collapse">
+  <li><a href="#differentiating-sign-in-high-dimensions" id="toc-differentiating-sign-in-high-dimensions" class="nav-link" data-scroll-target="#differentiating-sign-in-high-dimensions"><span class="header-section-number">4.0.1</span> Differentiating Sign in High Dimensions</a></li>
+  <li><a href="#loss-landscapes" id="toc-loss-landscapes" class="nav-link" data-scroll-target="#loss-landscapes"><span class="header-section-number">4.1</span> Loss Landscapes</a></li>
+  <li><a href="#curvature-as-a-tda-filtration" id="toc-curvature-as-a-tda-filtration" class="nav-link" data-scroll-target="#curvature-as-a-tda-filtration"><span class="header-section-number">4.2</span> Curvature ********as******** a TDA Filtration</a></li>
+  </ul></li>
+  <li><a href="#related-work" id="toc-related-work" class="nav-link" data-scroll-target="#related-work"><span class="header-section-number">5</span> Related Work</a>
+  <ul class="collapse">
+  <li><a href="#foreman-ricci-curvature" id="toc-foreman-ricci-curvature" class="nav-link" data-scroll-target="#foreman-ricci-curvature"><span class="header-section-number">5.1</span> Foreman Ricci Curvature</a></li>
+  <li><a href="#hickock-blumbergs-volume-comparison-curvature" id="toc-hickock-blumbergs-volume-comparison-curvature" class="nav-link" data-scroll-target="#hickock-blumbergs-volume-comparison-curvature"><span class="header-section-number">5.2</span> Hickock &amp; Blumberg’s Volume Comparison Curvature</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">      
+
+       <!-- Latex formatting tweaks -->
+<section id="introduction" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
+<p>One of the most ubiquitous subjects of analysis in data science is the humble point cloud. The points, by themselves, are high dimensional and noisy; it is up to the data scientist to wring sense out of them. Per the Manifold Hypothesis, we assume the points were sampled on or near the surface of a low-dimensional manifold embedded in high-dimensional Euclidean space. Manifold learning methods, like t-SNE, PHATE, and Diffusion Maps, endeavor to recover salient features of the underlying manifold, like geodesic distances, population clusterings, and dimension, from its high-dimensional noisy sampling <span class="citation" data-cites="maaten2008VisualizingDataUsing moon2019VisualizingStructureTransitions coifman2006DiffusionMaps">(<a href="#ref-maaten2008VisualizingDataUsing" role="doc-biblioref">Maaten and Hinton 2008</a>; <a href="#ref-moon2019VisualizingStructureTransitions" role="doc-biblioref">Moon et al. 2019</a>; <a href="#ref-coifman2006DiffusionMaps" role="doc-biblioref">Coifman and Lafon 2006</a>)</span>.</p>
+<p>Curvature is a particularly troublesome geometric property to translate into the discrete, sampled realm. In smooth Riemannian manifolds, curvature is a <em>local</em> phenomenon. It can be obtained by fitting osculating circles of radius limiting to zero, or computed from the manifold’s Hessian, using the Second Fundamental Form. None of these translate into the discrete realm. In a sampled manifold, taking a local limit is impossible – one can’t “zoom in” past the sampling of points – and we don’t have access to the parametrization of the manifold or its tangent bundle, without computationally costly and potentially error-prone estimation. Moreover, as our sampling is likely noisy, the curvature can only be recovered over a sufficiently large neighborhood of points to counter the spurious geometric artifacts created noisy sampling. Thus, in the discrete realm, curvature becomes a “semi-local” phenomenon, in which neither the smallest nor larger scales can be trusted.</p>
+<p>There are elegant generalizations of classical curvature to discrete spaces that overcome many of these roadblocks. Ollivier’s <em>Coarse Ricci Curvature</em> (CRC) employs optimal transport theory to relate the behavior of a discrete neighborhood to its smooth counterpart <span class="citation" data-cites="ollivier2009RicciCurvatureMarkov">(<a href="#ref-ollivier2009RicciCurvatureMarkov" role="doc-biblioref">Ollivier 2009</a>)</span>. Sturm’s <em>displacement convexity of entropy</em> (DCE) measures the proliferation of midpoints in positive curvature <span class="citation" data-cites="sturm2006GeometryMetricMeasure">(<a href="#ref-sturm2006GeometryMetricMeasure" role="doc-biblioref">Sturm 2006</a>)</span>. Both methods use optimal transport as the basis of their “semi-local” measurement. Rather than trying to zoom in on a point, they define curvature between pairs of points, approximating, at a coarse scale, a Ricci tangent vector.</p>
+<p>Although these techniques are theoretically elegant, general, and applicable to any metric measure space, the setting of noisily sampled point clouds is practically challenging for CRC and DCE. Both methods rely on the graph’s shortest-path lengths as an approximation of the manifold’s ground distance - a perilous assumption when dealing with noisy data. And for large datasets, optimal transport calculations can be computationally prohibitive.</p>
+<p>In this paper, we develop Diffusion Curvature, a fast curvature estimate derived solely from the graph diffusion matrix. We first introduced the ideas behind Diffusion Curvature in <span class="citation" data-cites="bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span>, in which we demonstrated its ability to produce an unsigned magnitude of curvature estimation for toy datasets and single-cell data, and proved a correspondence between the ratios of scalar curvature and diffusion curvature. We now present a refined definition which produces <em>signed</em> curvature values and prove bounds relating Diffusion Curvature to Ollivier’s coarse Ricci Curvature. We demonstrate Diffusion Curvature’s robustness to noise and sampling artifacts, and position our technique as an adaptation of coarse Ricci curvature particularly suitable for point cloud data.</p>
+</section>
+<section id="background" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Background</h1>
+<section id="curvature-in-the-continuous-setting" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="curvature-in-the-continuous-setting"><span class="header-section-number">2.1</span> Curvature in the Continuous Setting</h2>
+<p>There are many definitions of curvature on Riemannian manifolds. In this work, we focus on discrete analogs to the <em>Ricci</em> curvature <span class="math inline">\(\text{Ric}(x,y)\)</span>, which we’ll briefly motivate in the continuous setting.</p>
+<p>Imagine two spheres of equal radius centered at <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> in a Riemannian manifold <span class="math inline">\(\mathcal{M}\)</span>. Intuitively, the Ricci curvature between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> measures the difference between the distance of these midpoints, and the average distance between corresponding points in each sphere. In an area of positive Ricci curvature, points in spheres are, on average, closer than their midpoints; in negative Ricci curvature, the points in the sphere are further, on average, than the midpoints. This is formally described by first defining the <em>sectional curvature</em> as the contraction of length incurred by parallel transport through a 2-plane of the manifold, then defining the Ricci curvature as an average of the sectional curvatures between two points. For the present work, we needn’t reproduce the full definitions, but we will recall some properties of manifolds with Ricci curvature bounded from below by some <span class="math inline">\(k\)</span>.</p>
+<p>First, recall the relation between curvature and volume. In spaces of high positive curvature, the volume of a ball is than a ball of the same radius in a flat space, and even smaller than a ball of the same radius in a hyperbolic space. This is formally expressed by the Bishop Gromov inequality <span class="citation" data-cites="2021BishopGromovInequality">(<a href="#ref-2021BishopGromovInequality" role="doc-biblioref"><strong>2021BishopGromovInequality?</strong></a>)</span>.</p>
+<div id="thm-bishop-gromov" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1 (Bishop-Gromov)</strong></span> Let <span class="math inline">\(\mathcal{M}\)</span> be a complete <span class="math inline">\(d\)</span>-dimensional Riemannian manifold with <span class="math inline">\(Ric(x,y) &gt; (d - 1)k\)</span> for all <span class="math inline">\(x,y \in \mathcal{M}\)</span> and <span class="math inline">\(k \in \mathbb{R}\)</span>. Let <span class="math inline">\(M_{K}^d\)</span> be the complete <span class="math inline">\(d\)</span>-dimensional simply connected space of constant sectional curvature <span class="math inline">\(k\)</span>. Denote by <span class="math inline">\(B(x,k)\)</span> the ball of radius <span class="math inline">\(k\)</span> centered at <span class="math inline">\(x\)</span>. Then for any <span class="math inline">\(x \in \mathcal{M}\)</span> and <span class="math inline">\(x_{k} \in M_{K}^d\)</span>, the function</p>
+<p><span class="math display">\[
+\phi(r) = \frac{\operatorname{Vol}B(x,r)}{\operatorname{Vol}B(x_{k},r)}
+\]</span> is non-increasing on <span class="math inline">\((0,\infty)\)</span>.</p>
+</div>
+<p>This phenomenon of diminishing volume in positive curvature is related to the convergence of geodesic rays. In the plane (or saddle), two geodesic rays extending from the same point in different directions will never intersect. But on the sphere, they <em>will</em> meet again – at the opposite pole. This convergence constrains the maximum diameter a space of positive curvature may have, as expressed in the Bonnet-Myers Theorem <span class="citation" data-cites="ollivier2009RicciCurvatureMarkov">(<a href="#ref-ollivier2009RicciCurvatureMarkov" role="doc-biblioref">Ollivier 2009</a>)</span>:</p>
+<div id="thm-bonnet-myers" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 2 (Bonnet-Myers)</strong></span> Let <span class="math inline">\(X\)</span> be an <span class="math inline">\(d\)</span>-dimensional Riemannian manifold. Let <span class="math inline">\(\inf \operatorname{Ric}(X)\)</span> be the infimum of the Ricci curvature <span class="math inline">\(\operatorname{Ric}(v, v)\)</span> over all unit tangent vectors <span class="math inline">\(v\)</span>. Let <span class="math inline">\(S^d \subset \mathbb{R}^{d+1}\)</span> be the unit sphere of the same dimension as <span class="math inline">\(X\)</span>. Then, if <span class="math inline">\(\inf \operatorname{Ric}(X) \geqslant \inf \operatorname{Ric}\left(S^d\right)\)</span> then <span class="math inline">\(\operatorname{diam} X \leqslant \operatorname{diam} S^d\)</span>.</p>
+</div>
+<p>We’ll encounter versions of Bishop-Gromov and Bonnet-Myers in our discrete setting. But first, let’s describe the construction and properties of our specific discrete setting.</p>
+</section>
+<section id="the-discrete-setting" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="the-discrete-setting"><span class="header-section-number">2.2</span> The Discrete Setting</h2>
+<p>Within the ambient setting of points <span class="math inline">\(x_{i} \in \mathbb{R}^D\)</span>, the Euclidean distances between the points in our point cloud are not very useful. To perform geometric analysis, we want the manifold’s <em>geodesic</em> distances between <span class="math inline">\(x_{i}, x_{j \in \mathcal{M}}\)</span>,. However, manifolds are locally euclidean, so within a sufficiently small neighborhood of <span class="math inline">\(x_{i} \in \mathcal{M}\)</span> , the euclidean distances are accurate. This is the basis of graph construction: retain only the trustworthy local distances, discard the rest, and then “integrate” over the local neighborhoods to recover features of the global geometry.</p>
+<p>A graph <span class="math inline">\(G = (V, E)\)</span> is a collection of <span class="math inline">\(n\)</span> vertices <span class="math inline">\(v_{i} \in V\)</span> connected by (possibly weighted) edges <span class="math inline">\(e_{ij} \in E\)</span> . It is efficiently represented by a single <em>adjacency</em> (or <em>affinity</em>) matrix <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span>, where <span class="math inline">\(A_{ij}\)</span> expresses the degree of connection between the vertices <span class="math inline">\(v_{i}\)</span> and <span class="math inline">\(v_{j}\)</span>. In a binary adjacency matrix, <span class="math inline">\(A_{ij}=1\)</span> iff there is an edge between <span class="math inline">\(v_{i}\)</span> and <span class="math inline">\(v_{j}\)</span>. In a weighted affinity matrix, <span class="math inline">\(0&lt;A_{ij}&lt;1\)</span> with a higher affinity indicating a closer connection between the nodes.</p>
+<p>One can construct an affinity matrix from a point cloud with the following algorithm: 1. Compute the matrix <span class="math inline">\(D\)</span> of pairwise euclidean distances between points, so that <span class="math inline">\(D_{ij}=\|x_{i}-x_{j}\|_{2}\)</span>. 2. Apply a kernel <span class="math inline">\(\kappa\)</span> to the distances to construct the affinity matrix, where <span class="math inline">\(A_{ij} = \kappa(D_{ij})\)</span>. This is typically the gaussian kernel: <span class="math display">\[
+k(y) = \frac{1}{\sqrt{ 2\pi }\sigma}\exp\left( -\frac{y}{\sigma^2} \right)
+\]</span> There are a variety of heuristics for selecting an appropriate kernel bandwidth <span class="math inline">\(\sigma\)</span>. In this paper, we use an adaptive kernel bandwidth, in which, when computing <span class="math inline">\(k(D_{ij})\)</span>, <span class="math inline">\(\sigma\)</span> is set to the mean distance from the points <span class="math inline">\(x_{i}\)</span> and <span class="math inline">\(x_{j}\)</span> to their <span class="math inline">\(k\)</span>-th nearest neighbor.</p>
+<p>After building our graph affinity matrix <span class="math inline">\(A\)</span>, we created a new representation of the point cloud <span class="math inline">\(X\)</span> – turning it from an <span class="math inline">\(n \times D\)</span> matrix of unwieldy ambient coordinates into an <span class="math inline">\(n \times n\)</span> matrix of pairwise connections between points. The challenge is now to reassemble this information of local connectivity to recover the features of <span class="math inline">\(\mathcal{M}\)</span>. Graph diffusion does precisely this.</p>
+</section>
+<section id="graph-diffusion" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="graph-diffusion"><span class="header-section-number">2.3</span> Graph Diffusion</h2>
+<p>The graph diffusion matrix <span class="math inline">\(P\)</span> is a commonly-used method of “integrating” the local connectivity of the graph <span class="math inline">\(A\)</span> into global geometric descriptors of <span class="math inline">\(\mathcal{M}\)</span>. Coifman and Lafon (WAWA YEAR) proved a correspondence between iterated graph diffusion <span class="math inline">\(P^t\)</span> and the Neumann heat kernel on <span class="math inline">\(\mathcal{M}\)</span>. Their technique, <em>Diffusion Maps</em>, uses the euclidean distances between eigencoordinates of <span class="math inline">\(P\)</span> to approximate the geodesic distances on <span class="math inline">\(\mathcal{M}\)</span>. The visualization technique <span class="math inline">\(PHATE\)</span> <span class="citation" data-cites="moon2019VisualizingStructureTransitions">(<a href="#ref-moon2019VisualizingStructureTransitions" role="doc-biblioref">Moon et al. 2019</a>)</span> constructs a low-dimensional embedding of a point cloud <span class="math inline">\(X\)</span> such that a distance between the transition probabilities <span class="math inline">\(P\)</span> of <span class="math inline">\(X\)</span> is preserved in the embedding. (More on properties of phate, trajectory preservation.) <em>Diffusion Earth Mover’s Distance</em> <span class="citation" data-cites="tong2021DiffusionEarthMovera">(<a href="#ref-tong2021DiffusionEarthMovera" role="doc-biblioref">A. Y. Tong et al. 2021</a>)</span> efficiently approximates the transportation distance between distributions on a graph using multi-scale wavelet transform obtained by applying different scales of diffusion. <em>LEGSNet</em>‘s “learnable geometric scattering” computes tunable scales of diffusion with a graph neural network and achieves state of the art performance on biochemistry graph classification <span class="citation" data-cites="tong2021DatadrivenLearningGeometric">(<a href="#ref-tong2021DatadrivenLearningGeometric" role="doc-biblioref">A. Tong et al. 2021</a>)</span>. These are but a few of the many manifold learning techniques based in diffusion.</p>
+<p>Constructing the diffusion matrix from the affinity matrix <span class="math inline">\(A\)</span> is straightforward: you simply row-normalize <span class="math inline">\(A\)</span>, with an optional step to normalizing by density.</p>
+<p>Here is the algorithm presented in Coifman and Lafon <span class="citation" data-cites="coifman2006DiffusionMaps">(<a href="#ref-coifman2006DiffusionMaps" role="doc-biblioref">Coifman and Lafon 2006</a>)</span>:</p>
+<ol type="1">
+<li>(Optional) Compute an <em>anisotropic density normalization</em> on <span class="math inline">\(A\)</span>, obtaining the anisotropic adjacency matrix <span class="math inline">\(A_{\star}\)</span>.</li>
+<li>Construct the degree matrix <span class="math inline">\(D\)</span>, whose diagonal entries are the rowsums of <span class="math inline">\(A\)</span>, i.e.&nbsp;<span class="math inline">\(D_{ii} = \sum_{j}A_{ij}\)</span>.. The other entries are zeros.</li>
+<li>Define <span class="math inline">\(P = D^{-1} A\)</span>, the graph diffusion matrix.</li>
+</ol>
+<ul class="task-list">
+<li><label><input type="checkbox">Clean this up: get anisotropic equation, and clarify the role of the self affinity. When is it removed? When is laziness added?</label></li>
+</ul>
+<p><span class="math inline">\(P\)</span> has several nice properties. The rows <span class="math inline">\(P[i]\)</span> give the transition probabilities of a single step random walk starting at point <span class="math inline">\(x_{i}\)</span>; each row <span class="math inline">\(P[i]\)</span> can be viewed as a probability distribution centered at <span class="math inline">\(x_{i}\)</span>. This is preserved under powers of the matrix. The rows of <span class="math inline">\(P^t\)</span> still sum to 1, and <span class="math inline">\(P^t[i]\)</span> now gives the probability distribution of a <span class="math inline">\(t\)</span>-step random walk starting at <span class="math inline">\(x_{i}\)</span>.</p>
+<p>Although <span class="math inline">\(P\)</span> is not symmetric, it is conjugate to a symmetric matrix, via <span class="math inline">\(D^{0.5}PD^{-0.5} = D^{-0.5}AD^{-0.5}\)</span>, granting it a full basis of real-valued eigenvectors and eigenvalues. These eigenvectors are shared with the normalized graph Laplacian <span class="math inline">\(L = I - D^{-0.5}AD^{-0.5}\)</span>. The eigenvalues of <span class="math inline">\(P\)</span> lie between 0 and 1. Powering the matrix <span class="math inline">\(P^t\)</span> thus corresponds to powering the eigenvalues <span class="math inline">\(\lambda_{i}^t\)</span> of <span class="math inline">\(P\)</span>, via diagonalization <span class="math display">\[
+P^t = \Psi \Lambda^t \Psi^T
+\]</span> This is similar to applying a low-pass filter to the graph. As <span class="math inline">\(t\)</span> increases, the smallest eigenvalues decay fastest under repeated powering, and their corresponding eigenvector vanishes from the eigenbasis – leaving only the largest <span class="math inline">\(\lambda_{i}\)</span>, whose eigenvectors trace global geometric features.</p>
+<p>This is a remarkable feature of the diffusion matrix: the ability to “denoise” itself by iterating the random walk over larger time scales. Intuitively, the paths through the data most robustly trafficked by random walkers are those supported by multiple high-probability connections from independent starting points.</p>
+</section>
+<section id="ollivier-ricci-curvature" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="ollivier-ricci-curvature"><span class="header-section-number">2.4</span> Ollivier-Ricci Curvature</h2>
+<p>Developed by Yann Ollivier in 2007, <em>Coarse Ricci Curvature</em> (or sometimes, “Ollivier Ricci Curvature”) is a direct translation of Ricci curvature to discrete metric spaces like graphs <span class="citation" data-cites="ollivier2009RicciCurvatureMarkov">(<a href="#ref-ollivier2009RicciCurvatureMarkov" role="doc-biblioref">Ollivier 2009</a>)</span>. Several classical properties of Ricci curvature can be extended to the graph setting using Coarse Ricci Curvature. Ollivier has, for instance, proven versions of concentration inequalities, Bonnet Myers (more). Coarse Ricci Curvature has, in this way, become something of a bridge between continuous and coarse geometry. The basis of this bridge is optimal transport, and specifically, the 1-Wasserstein distance.</p>
+<p>In the Riemannian setting, Ricci curvature captures the phenomenon that, in positive curvature, “small spheres are closer (in transportation distance) than their centers are” (CITE 43 in ORC Paper). On the sphere, for instance, imagine two circles placed at the north and south poles: every point is closer to the corresponding point on the opposite pole than the centers. In negatively curved spaces, the discrepancy reverses, while in a flat space, the average distance between the points of the circles is the distance between the centers.</p>
+<p>Coarse Ricci Curvature captures a similar phenomenon on graphs. Instead of spheres, it uses locally-centered probability distributions defined by random walks. And to measure the distance between these walks, it uses the 1-Wasserstein (or Earth Mover’s) distance. We’ll briefly define each.</p>
+<p>The 1-Wasserstein distance is a measure of the distance between probability distributions. Given distributions <span class="math inline">\(\mu_{x}\)</span> and <span class="math inline">\(\mu_{y}\)</span> over some shared space <span class="math inline">\(X\)</span>, the Wasserstein distance quantifies the smallest amount of “work” needed to transform one distribution into another, by transporting probability “mass” between pairs of points over the ground metric <span class="math inline">\(d(x,y)\)</span>:</p>
+<div id="def-1-wasserstein" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 1 (1-Wasserstein Distance)</strong></span> The 1-Wasserstein distance between distributions <span class="math inline">\(\mu_{x}\)</span> and <span class="math inline">\(\mu_{y}\)</span> is <span class="math display">\[ W_{1}(\mu_{x},\mu_{y}) := \inf_{\xi \in \Pi(\mu_{x},\mu_{u})} \int \int d(x,y) \, d\xi(x,y) \]</span> where the “transportation plan” <span class="math inline">\(\xi\)</span> is drawn from the space <span class="math inline">\(\Pi(\mu_{x},\mu_{y})\)</span> of joint probability distributions over <span class="math inline">\(X \times X\)</span> which project onto <span class="math inline">\(\mu_{x}\)</span> and <span class="math inline">\(\mu_{y}\)</span>. In the discrete setting, this translates naturally into an infimum over a summation. <span class="math display">\[W_{1}(\mu_{x},\mu_{y}) := \inf_{\xi \in \Pi(\mu_{x},\mu_{y})} \sum_{x \in X} \sum_{y \in X} d(x,y) \xi(x,y)\]</span></p>
+</div>
+<p>What is the analog on a graph of a “small sphere” around a point? Ollivier replaces spheres with a family of measures <span class="math inline">\(m_{x}(\cdot)\)</span> defined for each point <span class="math inline">\(x\)</span>, where 1. Each <span class="math inline">\(\mu_{x}(\cdot)\)</span> depends measurably on <span class="math inline">\(x\)</span>, i.e.&nbsp;the map <span class="math inline">\(x \to \mu_{x}\)</span> is measurable. 2. Each <span class="math inline">\(\mu_{x}(\cdot)\)</span> has finite first moment, or <em>Jump</em>, i.e.&nbsp;for some <span class="math inline">\(o \in X\)</span> <span class="math inline">\(\int d(o,y) \mu_{x}(y) \, dx &lt; \infty\)</span>.</p>
+<p>The <em>Jump</em> <span class="math inline">\(J(\mu_{x})\)</span> of a measure, a measure of its concentration around a central point, is a concept to which we’ll return. <span class="math display">\[
+J(\mu_{x}) = \int_{y \in X} d(x, y) \mu_{x}(y) \, dx
+\]</span></p>
+<p>In graphs, Ollivier defines these <span class="math inline">\(\mu_x\)</span> as the probability distributions created by a single-step random walk from the point <span class="math inline">\(x\)</span>. With a transition probability <span class="math inline">\(\alpha\)</span>, and equal probability of moving to each of <span class="math inline">\(x\)</span>’s neighbors on the graph, <span class="math inline">\(\mu_{x}(x) = (1-\alpha)\)</span> and <span class="math inline">\(m_{x}(y) = \alpha\)</span> if <span class="math inline">\(y \in N(x)\)</span> or <span class="math inline">\(0\)</span> otherwise. This is analogous to defining <span class="math inline">\(m_{x} = P e_{x}\)</span>, if <span class="math inline">\(P\)</span> is the diffusion matrix created from a binary adjacency matrix. Note, however, that there is nothing limiting us to binary adjacency matrices, or even single steps of diffusion; the two conditions above are equally satisfied by weighted adjacency matrices and <span class="math inline">\(t\)</span>-step diffusions, and in sparse or noisy graphs, this may be desirable.</p>
+<div id="def-coarse-ricci-curvature" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 2 (Coarse Ricci Curvature)</strong></span> The <em>Coarse Ricci Curvature</em> between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is <span class="math display">\[\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}\]</span></p>
+</div>
+<p>There are a number of provisos attached to this definition, which tries to approximate a continuous phenomenon within discrete constraints. These constraints, and the relationship between Ricci and Ollivier’s coarse Ricci curvature are illustrated Ollivier’s Example 2.6 <span class="citation" data-cites="ollivier2009RicciCurvatureMarkov">(<a href="#ref-ollivier2009RicciCurvatureMarkov" role="doc-biblioref">Ollivier 2009</a>)</span>:</p>
+<div id="exm-ollivier-example-2.6" class="theorem example">
+<p><span class="theorem-title"><strong>Example 1</strong></span> Let <span class="math inline">\((X,d)\)</span> be a smooth Riemannian manifold of dimension <span class="math inline">\(d\)</span> and let <span class="math inline">\(\text{vol}\)</span> be the Riemannian volume measure. Let <span class="math inline">\(\epsilon&gt;0\)</span> small enough and consider the ball of radius <span class="math inline">\(\epsilon\)</span> around each point <span class="math inline">\(x\)</span>. Let <span class="math inline">\(x,y \in X\)</span> be two sufficiently close points. Let <span class="math inline">\(v\)</span> be the unit tangent vector at <span class="math inline">\(x\)</span> directed towards <span class="math inline">\(y\)</span>. The coarse Ricci curvature along <span class="math inline">\(v\)</span> is then <span class="math display">\[\kappa(x,y) = \frac{\epsilon^2 \text{Ric}(v,v)}{2(d+2)}+o(\epsilon^3 + \epsilon^2d(x,y))\]</span></p>
+</div>
+<p>Hence the coarse Ricci curvature applied to a manifold recovers the Ricci curvature, up to a scaling factor contingent on dimension, and plus an error term that grows with the radius of ball and distance between points.</p>
+<p>Ollivier’s choice not to scale <span class="math inline">\(\kappa(x,y)\)</span> by dimension is interesting, and likely motivated by his application of coarse Ricci curvature to graph-like spaces for which dimension isn’t clearly defined, like social networks. Within our domain of point-cloud data, incorporating dimension may be desirable; without it, spaces of high dimension can be conflated with spaces of low negative curvature but high dimension.</p>
+<p>A result on coarse Ricci curvature which will prove useful concerns the <em>contraction (or expansion) of measure</em> that occurs under diffusion in spaces of positive (or negative) curvature. This is <span class="citation" data-cites="ollivier2009RicciCurvatureMarkov">Ollivier (<a href="#ref-ollivier2009RicciCurvatureMarkov" role="doc-biblioref">2009</a>)</span>’s Proposition 20:</p>
+<div id="prp-ollivier-contraction-of-measure" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 1 (<span class="math inline">\(W_1\)</span> Contraction of Measure)</strong></span> Let <span class="math inline">\((X,d,m)\)</span> be a metric space with a random walk. Let <span class="math inline">\(\kappa \in \mathbb{R}\)</span>. Then we have <span class="math inline">\(\kappa(x,y) \geq \kappa\)</span> for all <span class="math inline">\(x,y \in X\)</span> iff for any two probability distributions <span class="math inline">\(\mu, \mu' \in \mathcal{P}(X)\)</span> one has</p>
+<p><span class="math display">\[
+W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
+\]</span> Where <span class="math display">\[
+\mu \star m := \int_{{x \in X}} d\mu(x)m_{x} \, dx
+\]</span></p>
+</div>
+</section>
+</section>
+<section id="methods" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Methods</h1>
+<p>The Coarse Ricci Curvature and Displacement Convexity of Entropy are both based on an invariant property of flat spaces, the deviation from which allows for a measure of curvature even without a clear definition of factors which normally interfere with curvature, like dimension. However, the elegance of these invariance-based definitions comes at a computational cost. Both methods require optimal transport calculations for (a subset) of each pair of edges, a complexity growing with <span class="math inline">\(O(n^2)\)</span>. Additionally, the transport distance based on the graph shortest-path distance is highly susceptible to noise.</p>
+<p>This motivates our formulation of graph curvature, which uses a <em>comparison</em> between spaces in lieu of an invariant. This gives <em>Diffusion Curvature</em> a number of nice properties:</p>
+<ol type="1">
+<li><p><strong>Point-wise, instead of edge-wise</strong>. In many applications, knowledge of the Ricci curvatures is unnecessarily detailed. Diffusion curvature answers the question: <em>is the region around this point positively or negatively curved, and in what magnitude, relative to other points on the manifold?</em></p></li>
+<li><p><strong>Diffusion-based denoising</strong>. When edges may be spurious, and random sampling creates deceptive pockets of density, Diffusion Curvature inherits the denoising obtained by powering the diffusion operator.</p></li>
+<li><p><strong>Extremely fast</strong>. Designed for point clouds with millions of points, the pointwise Diffusion Curvature of the entire dataset can be calculated with a handful of sparse matrix multiplications. In addition, Diffusion Curvature can be <em>GPU accelerated</em>. This combination allows computing in minutes what takes existing methods hours.</p></li>
+<li><p><strong>Differentiable</strong>. Diffusion Curvature natively supports backpropogation, and can easily be incorporated into a loss function for a neural network, e.g.&nbsp;to regularize a latent space to have low (or high) curvature. We provide a PyTorch implementation of the algorithm for this purpose. [LINK TO GITHUB]</p></li>
+</ol>
+<p>The core intuition of Diffusion Curvature is that the <em>laziness</em> of random walks on a graph is a proxy for the curvature of the underlying manifold. Picture a “random walker” drunkenly traversing a sphere. If he manages, over the course of several steps, to wander to the opposite pole, he has many ways of getting back to where he started. By contrast, if he begins on the top of a (negatively curved) saddle and wanders down one side, any path aside from exactly retracing his steps incurs a steep distance penalty. On the sphere, the random walker is more likely to find his way home: his walks are “lazier”.</p>
+<p>Our previous paper <span class="citation" data-cites="bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span> measured this laziness directly, as the return probability within a k-neighborhood of the starting point. This required tuning the parameter <span class="math inline">\(k\)</span>, and neglected the information provided by the random walk probabilities outside of this k-neighborhood. We now refine this definition in two ways.</p>
+<p>First, we refine our previous definition of diffusion laziness using the Wasserstein distance between a dirac <span class="math inline">\(\delta_{x}\)</span> and its <span class="math inline">\(t\)</span> step diffusion <span class="math inline">\(p_{X}^t(x)\)</span>,</p>
+<div id="def-laziness-of-diffusion" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Diffusion Laziness)</strong></span> The <span class="math inline">\(W_1\)</span> Laziness of a diffusion <span class="math inline">\(p_{X}^t(x)\)</span> is <span class="math display">\[
+- W_1\left(\delta_x, p_X^t(x)\right)
+\]</span></p>
+</div>
+<p>This provides a more sensitive and parameter-free measure of the ‘spread’ of diffusion.</p>
+<p>Second, by comparing the laziness of diffusion between two manifolds – one of known curvature – we make our method signed.</p>
+<div id="def-diffusion-curvature" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Diffusion Curvature)</strong></span> Given samples <span class="math inline">\(X \subseteq M\)</span> and a flattening map <span class="math inline">\(\Phi: X \rightarrow \mathbb{R}^d\)</span>, the <span class="math inline">\(t\)</span>-step <em>Diffusion Curvature</em> of <span class="math inline">\(x\)</span> is <span class="math display">\[
+k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
+\]</span></p>
+</div>
+<ul class="task-list">
+<li><label><input type="checkbox">Use an arbitrary distance? Or a p-Wasserstein?</label></li>
+</ul>
+<p>where <span class="math inline">\(p_X^t\)</span> is the t-step random walk over <span class="math inline">\(X\)</span>, and <span class="math inline">\(p_{\Phi(X)}^t\)</span> is the same over the flattened points <span class="math inline">\(\Phi(X)\)</span>. Depending on the ground distance used for the Wasserstein-1 transport distance, and the definition of flattening map employed, one obtains any of a family of diffusion curvatures.</p>
+<p>Our best results come a very simple formulation of both, where the ground distance is chosen such that <span class="math inline">\(W_{1}\)</span> becomes the Shannon Entropy, and our flattening map simply uniformly samples points from the Euclidean space <span class="math inline">\(\mathbb{R}^d\)</span> of the same dimension as <span class="math inline">\(M\)</span>. This produces what we’ll call the <em>Entropic Diffusion Curvature</em>,</p>
+<div id="def-entropic-diffusion-curvature" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Entropic Diffusion Curvature)</strong></span> The Entropic Diffusion Curvature of a t-step diffusion on points sampled from <span class="math inline">\(\mathcal{M} \in \mathbb{R}^d\)</span>, with markov matrix <span class="math inline">\(P^t\)</span>, is <span class="math display">\[
+\kappa^e_{t}(x_{i}) = H(P^t[i]) - H(P_{E}^t[i])
+\]</span></p>
+<p>where <span class="math inline">\(H\)</span> is the Shannon Entropy, and <span class="math inline">\(P_{E}^t\)</span> is the diffusion matrix of the Euclidean comparison space <span class="math inline">\(\mathbb{R}^d\)</span>.</p>
+</div>
+<p>which evokes the use of entropy to measure heat diffusion.</p>
+<p>This definition rests on two claims: that the laziness of diffusion reveals the (unsigned) magnitude of curvature, and that by comparing diffusion across manifolds, we can convert this into a signed curvature. The next two sections will analyze this first claim. We provide a motivating example recovering a Bishop-Gromov type volume comparison from our entropic definition. We then analyze diffusion laziness within Ollivier’s framework of metric measure theory, and bound the diffusion laziness from above by the Ollivier-Ricci curvature.</p>
+<section id="a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison"><span class="header-section-number">3.1</span> A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison</h2>
+<p>Among the most obvious manifestations of curvature is differences in volume: the higher the curvature, the smaller the volume of geodesic balls of the same radius. In the continuous setting, this is expressed by <a href="#thm-bishop-gromov" class="quarto-xref">Theorem&nbsp;1</a>.</p>
+<p>One route to discrete curvature is thus estimating volumes; this is the route taken by <span class="citation" data-cites="hickok2023IntrinsicApproachScalarCurvature">Hickok and Blumberg (<a href="#ref-hickok2023IntrinsicApproachScalarCurvature" role="doc-biblioref">2023</a>)</span>. However, standard methods of estimating volumes in discrete, sampled spaces like point clouds or graphs rely on more complex geometric quantities, like density estimation or approximated geodesic distances, which are not only susceptible to noise, but often themselves dependent on the curvature!<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> One wonders: can we use the tools of diffusion geometry to robustly estimate volume?</p>
+<p>Indeed, this is one way to interpret diffusion laziness: as an inverse volume measurement. [Cite Huguet Heat Geo] motivates this with a result from Saloff Costes et al. <span class="citation" data-cites="saloff-coste2010HeatKernelIts">(<a href="#ref-saloff-coste2010HeatKernelIts" role="doc-biblioref">Saloff-Coste 2010</a>)</span>. For manifold satisfying the Parabolic Harnock Inequality (e.g.&nbsp;all manifolds of positive curvature), heat diffusion <span class="math inline">\(m_{x}^t\)</span> on the manifold is bounded by</p>
+<p><span class="math display">\[
+\frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
+\]</span></p>
+<p>In other words, heat diffusion on non-Euclidean manifolds behaves approximately like Euclidean heat diffusion scaled by the local volume.</p>
+<p>Powering the diffusion matrix approximates heat diffusion [cite Coifman]. We can thus relate our measure of the ‘spread’ or ‘laziness’ of this diffusion to the manifold’s volume.</p>
+<p>The Shannon entropy of the diffusion <span class="math inline">\(m_{x}\)</span> over the bounded neighborhood of <span class="math inline">\(X\)</span> with non-zero diffusion mass, can be written <span class="math display">\[
+H\left(m_x^t\right)=-\int_{y_\epsilon x} m_x^t(y) \ln \left(m_x^t(y)\right)
+\]</span> Here we use Shannon’s differential entropy.Though this formulation encounters pathologies on unbounded domains, it approximates the entropy a signal on a sampled region as the number of samples goes to infinity.</p>
+<p>We’ll simplify the notation by combining the integral and distribution into an expected value over <span class="math inline">\(m_{x}^t\)</span> <span class="math display">\[
+=-\mathbb{E}_{m_x} \ln \left(m_x(y)\right) d y
+\]</span> Recalling the above result, there are constants <span class="math inline">\(c_{1}\dots c_{4}\)</span> such that</p>
+<p><span class="math display">\[
+\frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
+\]</span> hence we can approximate <span class="math inline">\(H(m_{x}^t)\)</span> by</p>
+<p><span class="math display">\[
+=-\mathbb{E}_{m_{x}^t} \ln \left(\frac{1}{V(y, \sqrt{t})} \exp \left(\frac{-d(x, y)^2}{4 t}\right)\right)
+\]</span> <span class="math display">\[
+=-\mathbb{E}_{m_x^t} \ln \left(\frac{1}{V(y, \sqrt{6})}\right)-\frac{d(x, y)^2}{4 t}
+\]</span> <span class="math display">\[
+=\mathbb{E}_{m_x^t} \ln (V(y, \sqrt{t}))+\mathbb{E}_{m_{x}^t} \frac{d(x, y)^2}{4 t}
+\]</span></p>
+<p>By assumption, the volumes <span class="math inline">\(V(y,\sqrt{ t })\)</span> equal some constant <span class="math inline">\(V_{m}(\sqrt{ t })\)</span> over the support of <span class="math inline">\(m_{x}^t\)</span>. Also note that the right hand term is precisely <span class="math inline">\(\frac{1}{4t}W_{2}(\delta_{x}, m_{x}^t)\)</span>, so <span class="math display">\[
+H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
+\]</span> The Diffusion Curvature is then <span class="math display">\[
+\frac{1}{t}(H(m_{E}^t) - H(m_{x}^t)) \simeq \frac{1}{t}\ln(V_{E}(\sqrt{ t })) - \frac{1}{t}\ln(V_{m}(\sqrt{ t })) + \frac{1}{4t^2}( W_{2}(d_{x},m_{E}^t) - W_{2}(d_{x},m_{x}^t))
+\]</span> This presents us with two comparisons: one between the average volume within <span class="math inline">\(N_{t}(x)\)</span> both in Euclidean space and on the manifold, and one between the Wasserstein spread of diffusion in Euclidean space and on the manifold. Note that both exhibit the same inverse relationship to curvature. If the curvature of <span class="math inline">\(m\)</span> is greater than in euclidean space (e.g.&nbsp;positive), the volume of a ball is smaller – just as the spread of diffusion is diminished. In negative curvature, we have the opposite.</p>
+</section>
+<section id="bounding-diffusion-laziness-by-ollivier-ricci-curvature" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="bounding-diffusion-laziness-by-ollivier-ricci-curvature"><span class="header-section-number">3.2</span> Bounding diffusion laziness by Ollivier-Ricci curvature</h2>
+<p>Although diffusion curvature was designed for sampled manifolds, it extends naturally to the realm of more general graphs. Indeed, diffusion curvature can be seen as an node-wise adaptation of Ollivier Ricci curvature, the theoretically richest and highest performing edge-wise graph curvature [citations to Bastian’s paper on ORC expressivity]. Here we review the definitions of Ollivier-Ricci curvature and present theoretical connections between it and diffusion curvature. These motivate the use of diffusion curvature as substitute for Ollivier Ricci curvature on large, or noisy graphs where the latter method stumbles. [Present some of these in experiments]</p>
+<p>Ollivier Ricci curvature is based in optimal transport, formalizing the classical intuition that in spaces of positive curvature, “spheres are closer than their centers” [cite ollivier]. In place of spheres, Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1 distance with the shortest-path metric. Given points <span class="math inline">\(x,y\)</span> in the metric space, with 1-step diffusions <span class="math inline">\(m_{x}\)</span> and <span class="math inline">\(m_{y}\)</span>, the Ollivier Ricci curvature of the edge between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is: <span class="math display">\[\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}\]</span></p>
+<p>Local curvature always involves some comparison. Here, the comparison is between the manifold’s optimal transport distance (the numerator), and the Euclidean optimal transport distance (which, helpfully, is just the distance in the denominator. You’ll notice the similarity to diffusion curvature (<a href="#def-diffusion-curvature" class="quarto-xref">Definition&nbsp;4</a>), which replaces the <span class="math inline">\(W_{1}\)</span> distance between two diffused distributions with the <span class="math inline">\(W_{1}\)</span> laziness of a single diffusion (<a href="#def-laziness-of-diffusion" class="quarto-xref">Definition&nbsp;3</a>), and replaces the quotient with a difference. We do this for both the manifold (Ollivier’s numerator) and a Euclidean comparison space (Ollivier’s denominator).</p>
+<p><span class="math display">\[
+k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
+\]</span></p>
+<!-- $$
+k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
+$$ -->
+<p>The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by <span class="math inline">\(W_{1}(\delta_{x},m_{x}^t)\)</span>. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:</p>
+<div id="prp-coarse-ricci-curvature-bounds-diffusion-laziness" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 2 (Coarse Ricci Curvature Bounds Diffusion Laziness)</strong></span> Let <span class="math inline">\((X,d,m)\)</span> be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some <span class="math inline">\(k\)</span> such that <span class="math inline">\(\kappa(x,y) \geq k\)</span> for all <span class="math inline">\(x,y \in X\)</span>. The Wasserstein Spread of Diffusion of a <span class="math inline">\(t\)</span> step diffusion in <span class="math inline">\(X\)</span> is bounded above by <span class="math display">\[
+W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
+\]</span></p>
+<p>In particular, if <span class="math inline">\(k&gt;0\)</span> then <span class="math inline">\(W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}\)</span>, and if <span class="math inline">\(k=0\)</span>, then <span class="math inline">\(W_{1}(\delta_{x},m_{x}^t) \leq tW_1\left(\delta_x,m_x\right)\)</span>.</p>
+</div>
+<p>To prove this, first we bound <span class="math inline">\(W_{1}(m_{x}^t,m_{x}^{t+1})\)</span> using <a href="#prp-ollivier-contraction-of-measure" class="quarto-xref">Proposition&nbsp;1</a>. The proposition states that a lower bound on curvature, such as we have, implies that <span class="math display">\[
+W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
+\]</span> where here <span class="math inline">\(\mu,\mu'\)</span> are two probability distributions and <span class="math inline">\(m\)</span> is a random walk. This provides an easy lemma:</p>
+<div id="lem-inductive-contraction-of-measure" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lemma 1 (Inductive Contraction of Measure)</strong></span> Let <span class="math inline">\((X,d,m)\)</span> be a metric space with a random walk. Suppose there is some <span class="math inline">\(k \in \mathbb{R}\)</span> such that the coarse Ricci curvature <span class="math inline">\(\kappa(x,y) \geq k\)</span> for all <span class="math inline">\(x,y \in X\)</span>. Then: <span class="math display">\[
+W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
+\]</span></p>
+</div>
+<p>We proceed by induction. For <span class="math inline">\(t=0\)</span>, the above is true, as <span class="math inline">\(W_{1}(m_{x}^0, m_{x}^{1}) =W_{1}(\delta_x, m_{x}^{1}) = W_1\left(\delta_x,m_x\right)\)</span>. Suppose it holds for <span class="math inline">\(t-1\)</span>, e.g. <span class="math display">\[
+W_1\left(m_x^{t-1}, m_x^{t}\right) \leq(1-k)^{t-1} W_1\left(\delta_x,m_x\right)
+\]</span></p>
+<p>Consider <span class="math inline">\(W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right)\)</span>, the application of another step of diffusion. By Ollivier’s Proposition 20, this distance is bounded above by <span class="math display">\[
+W_1\left(\mu_1 \star m, \mu_2 \star m\right) \leq(1-k) W_1\left(\mu_1, \mu_2\right)
+\]</span> So <span class="math display">\[
+W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right) \leq  (1-k)W_1\left(m_x^{t-1}, m_x^{t}\right)
+\]</span></p>
+<p>which, since the statement holds for <span class="math inline">\(t-1\)</span>, yields <span class="math display">\[
+W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
+\]</span></p>
+<p>To use this lemma, we can decompose our <span class="math inline">\(t-\)</span>step diffusion into a sum of single step diffusions. By the triangle inequality, <span class="math display">\[
+W_{1}(\delta_{x},m_{x}^t) \leq W_1\left(\delta_x,m_x\right) + W_{1}(m_{x},m_{x}^2) + \dots + W_{1}(m_{x}^{t-1}, m_{x}^t)
+\]</span></p>
+<p>By <a href="#lem-inductive-contraction-of-measure" class="quarto-xref">Lemma&nbsp;1</a>, <span class="math display">\[
+\leq W_1\left(\delta_x,m_x\right)\left(1+(1-k)+(1-k)^2+\ldots+(1-k)^{t-1}\right)
+\]</span></p>
+<p>This truncated series is equal to <span class="math inline">\(\frac{1-(1-k)^t}{1-(1-k)} = \frac{(1-(1-k)^t)}{k}\)</span>. If <span class="math inline">\(k&gt;0\)</span>, then as <span class="math inline">\(t \to \infty\)</span>, the infinite sum <span class="math inline">\(\sum_{i=0}^t (1-k)^i\)</span> converges to the geometric series <span class="math inline">\(\frac{1}{1-(1-k)} = \frac{1}{k}\)</span>. Because the sum is monotonically increasing with <span class="math inline">\(t\)</span>, the partial sum is upper bounded by the infinite sum. It follows that <span class="math display">\[
+W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
+\]</span></p>
+<p>If <span class="math inline">\(k=0\)</span>, then obviously <span class="math inline">\(\sum_{i}^t (1-k)^i = t\)</span>.</p>
+<p>The above asserts that the “spread” of diffusion is bounded from above by the Ollivier Ricci curvature of the region. To turn this measurement of spread into a signed curvature, we have only to introduce a comparison: the dimensional constant of the Euclidean spread of diffusion, <span class="math inline">\(W_{1}^E(\delta_{x},m_{x}^t)\)</span>. Using Proposition 1, we can directly bound <span class="math inline">\(k_{D}\)</span> in terms of the Ollivier Ricci curvature:</p>
+<p><span class="math display">\[
+1 - \frac{W^M_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}}{W_{1}^E(\delta_{x},m_{x}^t)} \leq k_{D}
+\]</span> A simple approximation of <span class="math inline">\(W_{1}^E(\delta_{x},m_{x}^t)\)</span> is obtained by scaling the spread of a single-step diffusion by a factor of t, i.e.&nbsp;<span class="math inline">\(tW_{1}^E(\delta_{x},m_{x})\)</span>. Using this, and noting that <span class="math inline">\(W_{1}^E(\delta_{x},m_{x}) \approx W_{1}^M(\delta_{x},m_{x})\)</span>,</p>
+<p><span class="math display">\[
+1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
+\]</span></p>
+<p><strong>Note: this analysis sidesteps the reality that tJ is a (possibly egregious) <em>overestimate</em> of the euclidean WSD. We can’t actually just plug it in without pushing some indeterminate space inbetween the sides of the inequality</strong></p>
+</section>
+<section id="comparing-diffusion-across-manifolds" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="comparing-diffusion-across-manifolds"><span class="header-section-number">3.3</span> Comparing Diffusion Across Manifolds</h2>
+<p>For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature with a comparison between spaces. In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is <em>assumed</em> that the scale differs between and possibly even <em>within</em> a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the ‘size’ of one’s ‘measuring stick’ could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed <em>most</em> in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.</p>
+<p>Our challenge is to construct graphs to allow comparison of their diffusions.</p>
+<section id="standard-methods-of-graph-construction-obscure-geometric-information" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="standard-methods-of-graph-construction-obscure-geometric-information"><span class="header-section-number">3.3.1</span> Standard methods of graph construction obscure geometric information</h3>
+<p>To turn a point cloud into a graph, one places a kernel (e.g.&nbsp;a gaussian) at each point, and assigns edges to surrounding points with weight given by the kernel. The main parameter is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.</p>
+</section>
+<section id="the-curvature-agnostic-kernel" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="the-curvature-agnostic-kernel"><span class="header-section-number">3.3.2</span> The Curvature Agnostic Kernel</h3>
+</section>
+</section>
+</section>
+<section id="results" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
+<p>Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined <em>accidentally</em> [cite Steinerberger, myself]! The challenge is to make one’s definition robust to the bogeyman of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok &amp; Blumberg’s, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most <em>fail entirely</em> in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.</p>
+<p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;1</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> places this in the context of existing methods.</p>
+<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a-Toy-Manifolds.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-fig-2-manifolds" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming Xs, labels, ground_truth_labels, and key_names are defined</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>key_names <span class="op">=</span> [<span class="st">'Torus'</span>, <span class="st">'Saddle'</span>, <span class="st">'Ellipsoid'</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> diffusion_ks</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ground_truth_labels <span class="op">=</span> Ks</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of seaborn</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes with 2 rows and 3 columns</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">12</span>), subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'3d'</span>} <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&lt;</span> <span class="st">'3.4.0'</span> <span class="cf">else</span> <span class="va">None</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, key <span class="kw">in</span> <span class="bu">enumerate</span>(key_names):</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3D scatter plot for the first row</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    lim <span class="op">=</span> np.<span class="bu">max</span>(np.linalg.norm(Xs[key], axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&gt;=</span> <span class="st">'3.4.0'</span>:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        axs[<span class="dv">0</span>, i].remove()</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        axs[<span class="dv">0</span>, i] <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>, <span class="dv">3</span>, i<span class="op">+</span><span class="dv">1</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_xlim3d(left<span class="op">=-</span>lim, right<span class="op">=</span>lim)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_ylim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_zlim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    scatter3d <span class="op">=</span> axs[<span class="dv">0</span>, i].scatter(Xs[key][:, <span class="dv">0</span>], Xs[key][:, <span class="dv">1</span>], Xs[key][:, <span class="dv">2</span>], c<span class="op">=</span>labels[key], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].set_title(<span class="ss">f'</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot for the second row, colored by labels</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].remove()</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i] <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>, <span class="dv">3</span>, i<span class="op">+</span><span class="dv">4</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    scatter2d <span class="op">=</span> axs[<span class="dv">1</span>, i].scatter(ground_truth_labels[key], labels[key], c<span class="op">=</span>labels[key], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[1, i].set_title(f'')</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].set_xlabel(<span class="st">'Gaussian Curvature'</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].set_ylabel(<span class="st">'Diffusion Curvature'</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the origin lines in 2D scatter plots</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # Add colorbar for each subplot</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter3d, ax=axs[0, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter2d, ax=axs[1, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Diffusion Curvature on 2 Manifolds"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-2-manifolds" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<p>Though the correlation is strong – passing the ‘sniff test’ – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature.</p>
+<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds-visual-comparison">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming Xs, labels, ground_truth_labels, and key_names are defined</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>key_names <span class="op">=</span> [<span class="st">'Torus'</span>, <span class="st">'Saddle'</span>, <span class="st">'Ellipsoid'</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> curvatures</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ground_truth_labels <span class="op">=</span> Ks</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of seaborn</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>fig_shape <span class="op">=</span> (<span class="bu">len</span>(curvatures.keys()) <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(key_names))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>method_colors <span class="op">=</span> [<span class="st">'green'</span>, <span class="st">'olive'</span>, <span class="st">'navy'</span>, <span class="st">'orange'</span>, <span class="st">'purple'</span>]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(method_colors) <span class="op">==</span> <span class="bu">len</span>(curvatures.keys())</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>ordered_keys <span class="op">=</span> curvatures.keys() <span class="co">#['Gaussian', 'Adal-PCA', 'Unsigned Diffusion Curvature', 'Hickok &amp; Blumberg']</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">set</span>(ordered_keys) <span class="op">==</span> <span class="bu">set</span>(curvatures.keys())</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes with 2 rows and 3 columns</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], figsize<span class="op">=</span>(fig_shape[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span>, fig_shape[<span class="dv">1</span>]<span class="op">*</span><span class="dv">5</span>), subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'3d'</span>} <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&lt;</span> <span class="st">'3.4.0'</span> <span class="cf">else</span> <span class="va">None</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, key <span class="kw">in</span> <span class="bu">enumerate</span>(key_names):</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3D scatter plot for the first row</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    lim <span class="op">=</span> np.<span class="bu">max</span>(np.linalg.norm(Xs[key], axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if plt.matplotlib.__version__ &gt;= '3.4.0':</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the curvature for each method</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        axs[j, i].remove()</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        axs[j, i] <span class="op">=</span> fig.add_subplot(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], i <span class="op">+</span> j<span class="op">*</span>fig_shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_xlim3d(left<span class="op">=-</span>lim, right<span class="op">=</span>lim)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_ylim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_zlim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_xticks([])</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_yticks([])</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_zticks([])</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        scatter3d <span class="op">=</span> axs[j, i].scatter(Xs[key][:, <span class="dv">0</span>], Xs[key][:, <span class="dv">1</span>], Xs[key][:, <span class="dv">2</span>], c<span class="op">=</span>scaled_labels, cmap <span class="op">=</span> <span class="st">'coolwarm'</span>)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>            axs[j, i].set_title(<span class="ss">f'</span><span class="sc">{</span>method_name<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">15</span>, c <span class="op">=</span> method_colors[j])</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot for the second row, colored by labels</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i].remove()</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i] = fig.add_subplot(fig_shape[0], fig_shape[1], i+4)</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># min max scaling</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        scatter2d <span class="op">=</span> axs[j<span class="op">+</span><span class="dv">1</span>, i].scatter(ground_truth_labels[key], scaled_labels, c <span class="op">=</span> method_colors[k], s <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        axs[j<span class="op">+</span><span class="dv">1</span>,i].set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[1, i].set_title(f'')</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_xlabel(<span class="st">'Gaussian Curvature'</span>)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_ylabel(<span class="st">'Estimated Curvature'</span>)</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the origin lines in 2D scatter plots</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # Add colorbar for each subplot</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter3d, ax=axs[0, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter2d, ax=axs[1, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Estimated Gaussian Curvatures of 2-Manifolds"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<p>The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, <em>what matters?</em> Most methods don’t care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%</p>
+<p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> perform well on well-sampled noiseless toy manifolds. In Table WAWA3, we see the results of adding Gaussian noise to each manifold.</p>
+<p>![[CleanShot 2024-04-28 at 23.30.38_147B95A7.png]]</p>
+<section id="differentiating-sign-in-high-dimensions" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="differentiating-sign-in-high-dimensions"><span class="header-section-number">4.0.1</span> Differentiating Sign in High Dimensions</h3>
+<p>Most existing methods only quantify their performance in high dimensions on one or two test cases.</p>
+<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2f-sign-prediction-tests.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-sadspheres">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-fig-sadspheres" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>SS1._aggregate_labels()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>SS1.plot_by_dimension()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-sadspheres" class="quarto-figure quarto-figure-center quarto-float anchored" alt="...">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+</section>
+<section id="loss-landscapes" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">4.1</span> Loss Landscapes</h2>
+</section>
+<section id="curvature-as-a-tda-filtration" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="curvature-as-a-tda-filtration"><span class="header-section-number">4.2</span> Curvature ********as******** a TDA Filtration</h2>
+</section>
+</section>
+<section id="related-work" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Related Work</h1>
+<section id="foreman-ricci-curvature" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="foreman-ricci-curvature"><span class="header-section-number">5.1</span> Foreman Ricci Curvature</h2>
+</section>
+<section id="hickock-blumbergs-volume-comparison-curvature" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="hickock-blumbergs-volume-comparison-curvature"><span class="header-section-number">5.2</span> Hickock &amp; Blumberg’s Volume Comparison Curvature</h2>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
+</section>
+<section id="references" class="level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bhaskar2022DiffusionCurvatureEstimating" class="csl-entry" role="listitem">
+Bhaskar, Dhananjay, Kincaid MacDonald, Oluwadamilola Fasina, Dawson Thomas, Bastian Rieck, Ian Adelstein, and Smita Krishnaswamy. 2022. <span>“Diffusion Curvature for Estimating Local Curvature in High Dimensional Data.”</span> <em>Advances in Neural Information Processing Systems</em> 35: 21738–49. <a href="https://proceedings.neurips.cc/paper_files/paper/2022/hash/88438dc62fc5c8777e2b5f1b4f6d37a2-Abstract-Conference.html">https://proceedings.neurips.cc/paper_files/paper/2022/hash/88438dc62fc5c8777e2b5f1b4f6d37a2-Abstract-Conference.html</a>.
+</div>
+<div id="ref-coifman2006DiffusionMaps" class="csl-entry" role="listitem">
+Coifman, Ronald R., and Stéphane Lafon. 2006. <span>“Diffusion Maps.”</span> <em>Applied and Computational Harmonic Analysis</em>, Special <span>Issue</span>: <span>Diffusion Maps</span> and <span>Wavelets</span>, 21 (1): 5–30. <a href="https://doi.org/10.1016/j.acha.2006.04.006">https://doi.org/10.1016/j.acha.2006.04.006</a>.
+</div>
+<div id="ref-hickok2023IntrinsicApproachScalarCurvature" class="csl-entry" role="listitem">
+Hickok, Abigail, and Andrew J. Blumberg. 2023. <span>“An <span>Intrinsic Approach</span> to <span>Scalar-Curvature Estimation</span> for <span>Point Clouds</span>.”</span> arXiv. <a href="https://doi.org/10.48550/arXiv.2308.02615">https://doi.org/10.48550/arXiv.2308.02615</a>.
+</div>
+<div id="ref-maaten2008VisualizingDataUsing" class="csl-entry" role="listitem">
+Maaten, Laurens van der, and Geoffrey Hinton. 2008. <span>“Visualizing <span>Data</span> Using t-<span>SNE</span>.”</span> <em>Journal of Machine Learning Research</em> 9 (86): 2579–2605. <a href="http://jmlr.org/papers/v9/vandermaaten08a.html">http://jmlr.org/papers/v9/vandermaaten08a.html</a>.
+</div>
+<div id="ref-moon2019VisualizingStructureTransitions" class="csl-entry" role="listitem">
+Moon, Kevin R., David van Dijk, Zheng Wang, Scott Gigante, Daniel B. Burkhardt, William S. Chen, Kristina Yim, et al. 2019. <span>“Visualizing Structure and Transitions in High-Dimensional Biological Data.”</span> <em>Nature Biotechnology</em> 37 (12, 12): 1482–92. <a href="https://doi.org/10.1038/s41587-019-0336-3">https://doi.org/10.1038/s41587-019-0336-3</a>.
+</div>
+<div id="ref-ollivier2009RicciCurvatureMarkov" class="csl-entry" role="listitem">
+Ollivier, Yann. 2009. <span>“Ricci Curvature of <span>Markov</span> Chains on Metric Spaces.”</span> <em>Journal of Functional Analysis</em> 256 (3): 810–64. <a href="https://doi.org/10.1016/j.jfa.2008.11.001">https://doi.org/10.1016/j.jfa.2008.11.001</a>.
+</div>
+<div id="ref-saloff-coste2010HeatKernelIts" class="csl-entry" role="listitem">
+Saloff-Coste, Laurent. 2010. <span>“The Heat Kernel and Its Estimates.”</span> In <em>Advanced <span>Studies</span> in <span>Pure Mathematics</span></em>, 405–36. Kyoto University, Japan. <a href="https://doi.org/10.2969/aspm/05710405">https://doi.org/10.2969/aspm/05710405</a>.
+</div>
+<div id="ref-sturm2006GeometryMetricMeasure" class="csl-entry" role="listitem">
+Sturm, Karl-Theodor. 2006. <span>“On the Geometry of Metric Measure Spaces.”</span> <em>Acta Mathematica</em> 196 (1): 65–131. <a href="https://doi.org/10.1007/s11511-006-0002-8">https://doi.org/10.1007/s11511-006-0002-8</a>.
+</div>
+<div id="ref-tong2021DiffusionEarthMovera" class="csl-entry" role="listitem">
+Tong, Alexander Y., Guillaume Huguet, Amine Natik, Kincaid Macdonald, Manik Kuchroo, Ronald Coifman, Guy Wolf, and Smita Krishnaswamy. 2021. <span>“Diffusion <span>Earth Mover</span>’s <span>Distance</span> and <span>Distribution Embeddings</span>.”</span> In <em>Proceedings of the 38th <span>International Conference</span> on <span>Machine Learning</span></em>, 10336–46. PMLR. <a href="https://proceedings.mlr.press/v139/tong21a.html">https://proceedings.mlr.press/v139/tong21a.html</a>.
+</div>
+<div id="ref-tong2021DatadrivenLearningGeometric" class="csl-entry" role="listitem">
+Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Guy Wolf. 2021. <span>“Data-Driven Learning of Geometric Scattering Modules for Gnns.”</span> In <em>2021 <span>IEEE</span> 31st <span>International Workshop</span> on <span>Machine Learning</span> for <span>Signal Processing</span> (<span>MLSP</span>)</em>, 1–6. IEEE. <a href="https://ieeexplore.ieee.org/abstract/document/9596169/">https://ieeexplore.ieee.org/abstract/document/9596169/</a>.
+</div>
+</div>
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.</span>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Consider kernel density estimation, where one places gaussians on each data point and sums up the probability assigned to each area. The higher the curvature, the higher the reported density, since at the end of an ellipsoid the gaussians have greater overlap with each other than in its center – even though the intrinsic density of the surface is uniform.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+     </main>
+<!-- /main column -->  <script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script> 
+  
+</body></html>
