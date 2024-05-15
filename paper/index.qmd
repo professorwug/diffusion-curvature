@@ -49,6 +49,10 @@ citation:
     container-title: IEEE TPAMI
 number-sections: true
 ---
+<!-- Latex formatting tweaks -->
+```{=latex}
+\kz*{\labelitemi}{\textgreater}
+```
 
 # Introduction
 
