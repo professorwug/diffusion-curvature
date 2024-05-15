@@ -19,7 +19,7 @@ not done
 (tags includes #projects/DiffusionCurvature) OR (heading includes #projects/DiffusionCurvature)
 ```
 
-| [ClickUp](https://app.clickup.com/9013032587/v/li/901300236665)  | [Diffusion Curvature](omnifocus:///folder/dVHuiaIwheP) | 
+| [ClickUp](https://app.clickup.com/9013032587/v/li/901300236665)  | [OmniFocus](omnifocus:///folder/dVHuiaIwheP) | 
 
 # Flow Model for Neural Flattening
 
@@ -120,3 +120,6 @@ Here’s an interesting experiment. The hypothesis is that graphs, because they 
 To test this, take a dataset of 3d objects (e.g. ShapeNet) and train varieties of GNNs on it, with different supplemental features, including diffusion curvature.
 
 # Can GNNs predict curvature?
+
+# Making Diffusion Curvature Density Invariant
+
