@@ -1,70 +1,27 @@
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. IEEE's font choices can trigger bugs that do  ***
-% *** not appear when using other class files.                            ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
-
-
-%%*************************************************************************
-%% Legal Notice:
-%% This code is offered as-is without any warranty either expressed or
-%% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE!
-%% User assumes all risk.
-%% In no event shall IEEE or any contributor to this code be liable for
-%% any damages or losses, including, but not limited to, incidental,
-%% consequential, or any other damages, resulting from the use or misuse
-%% of any information contained here.
-%%
-%% All comments are the opinions of their respective authors and are not
-%% necessarily endorsed by the IEEE.
-%%
-%% This work is distributed under the LaTeX Project Public License (LPPL)
-%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
-%% distributed and modified. A copy of the LPPL, version 1.3, is included
-%% in the base LaTeX documentation of all distributions of LaTeX released
-%% 2003/12/01 or later.
-%% Retain all contribution notices and credits.
-%% ** Modified files should be clearly indicated as such, including  **
-%% ** renaming them and changing author support contact information. **
-%%
-%% File list of work: IEEEtran.cls, New_IEEEtran_how-to.pdf, bare_jrnl_new_sample4.tex,
-%%*************************************************************************
+% Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
-% Note that the a4paper option is mainly intended so that authors in
-% countries using A4 can easily print to A4 and see how their papers will
-% look in print - the typesetting of the document will not typically be
-% affected with changes in paper size (but the bottom and side margins will).
-% Use the testflow package mentioned above to verify correct handling of
-% both paper sizes by the user's LaTeX system.
-%
-% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
-% should be used if it is desired that the figures are to be displayed in
-% draft mode.
 %
 \documentclass[
-  journal,
-]{IEEEtran}%
-% If IEEEtran.cls has not been installed into the LaTeX system files,
-% manually specify the path to it like:
-% \documentclass[journal]{../sty/IEEEtran}
-\usepackage[cmex10]{amsmath}
-\usepackage{amssymb}
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
+  \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-%\usepackage{lmodern}
-\ifPDFTeX\else
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -73,14 +30,17 @@
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 \makeatletter
-\parindent    1.0em
-\ifCLASSOPTIONcompsoc
-  \parindent    1.5em
-\fi
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
-
 \setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
 \ifx\paragraph\undefined\else
@@ -151,11 +111,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-\usepackage{physics}
-\usepackage[version=3]{mhchem}
-\usepackage{orcidlink}
-\usepackage{float}
-\floatplacement{table}{htb}
+\KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -175,9 +131,9 @@
   \newcommand\listtablename{List of Tables}
 \fi
 \ifdefined\figurename
-  \renewcommand*\figurename{Fig.}
+  \renewcommand*\figurename{Figure}
 \else
-  \newcommand\figurename{Fig.}
+  \newcommand\figurename{Figure}
 \fi
 \ifdefined\tablename
   \renewcommand*\tablename{Table}
@@ -190,6 +146,21 @@
 \@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}[section]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{remark}
+\AtBeginDocument{\renewcommand*{\proofname}{Proof}}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
+\newtheorem{refremark}{Remark}[section]
+\newtheorem{refsolution}{Solution}[section]
 \makeatother
 \makeatletter
 \makeatother
@@ -197,22 +168,11 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-\usepackage[skip=2pt,font=footnotesize]{caption}
-%\captionsetup{format=myformat}
-\makeatletter
-%\setlength{\cslhangindent}{0pt plus .5pt}
-\providecommand{\bibfont}{\footnotesize}
-\let\CSLReferences@rig=\CSLReferences
-\renewcommand{\CSLReferences}[2]{
-\bibfont\settowidth\csllabelwidth{[999]}
-\CSLReferences@rig{#1}{#2}
-\vskip 0.3\baselineskip plus 0.1\baselineskip minus 0.1\baselineskip%
-}
-\makeatother
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
+
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
@@ -227,61 +187,14 @@ Curvature, Point Clouds},
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-% *** Do not adjust lengths that control margins, column widths, etc. ***
-% *** Do not use packages that alter fonts (such as pslatex).         ***
-% There should be no need to do such things with IEEEtran.cls V1.6 and later.
-% (Unless specifically asked to do so by the journal or conference you plan
-% to submit to, of course. )
-
-
-% correct bad hyphenation here
-\hyphenation{op-tical net-works semi-conduc-tor}
-
-%
-% paper title
-% can use linebreaks \\ within to get better formatting as desired
-% Do not put math or special symbols in the title.
-% paper title
-% can use linebreaks \\ within to get better formatting as desired
-% Do not put math or special symbols in the title.
 \title{Diffusion Curvature for Fast, Point-wise, Noise-Resistant
 Geometric Featurization of Graphs and Pointclouds}
+\author{Kincaid MacDonald \and Dhananjay Bhaskar \and Kaly
+Zhang \and Ian Adelstein \and Smita Krishnaswamy}
+\date{2024-05-10}
 
-\author{
-Kincaid MacDonald\orcidlink{0009-0006-4686-7488},~Dhananjay
-Bhaskar\orcidlink{0000-0002-7859-8394},~Kaly
-Zhang\orcidlink{0000-0002-7859-8394},~Ian
-Adelstein\orcidlink{0000-0002-7859-8394}
-and~Smita Krishnaswamy\orcidlink{0000-0002-7859-8394}%
-\thanks{Kincaid MacDonald is with Yale%
-  Corresponding author: kincaid@aya.yale.edu
-}
-%by-author.affiliations
-\thanks{Dhananjay Bhaskar is with MILA%
-}
-%by-author.affiliations
-\thanks{Kaly Zhang is with MILA%
-}
-%by-author.affiliations
-\thanks{Ian Adelstein is with Yale Department of Math%
-}
-%by-author.affiliations
-\thanks{Smita Krishnaswamy is with Yale Department of Applied Math%
-}
-\thanks{Yale School of Medicine}
-%by-author.affiliations
-}
 \begin{document}
-
-% The paper headers
-
-% use for special paper notices
-
-% make the title area
 \maketitle
-
-% As a general rule, do not put math, special symbols or citations
-% in the abstract or keywords.
 \begin{abstract}
 For a number of years now work has been proceeding in order to bring to
 perfection the crudely conceived idea of a machine that would not only
@@ -289,24 +202,8 @@ supply inverse reactive current for use in unilateral phase detractors,
 but would also be capable of automatically synchronizing cardinal
 grammeters. Such a machine is the ``Turbo-Encabulator.''
 \end{abstract}
-% Note that keywords are not normally used for peerreview papers.
-\begin{IEEEkeywords}
-Manifold Learning, Geometric Deep Learning, Graph Curvature, Point
-Clouds
-\end{IEEEkeywords}
 
-% For peer review papers, you can put extra information on the cover
-% page as needed:
-% \ifCLASSOPTIONpeerreview
-% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
-% \fi
-%
-% For peerreview papers, this IEEEtran command inserts a page break and
-% creates the second title. It will be ignored for other modes.
-% \IEEEpeerreviewmaketitle
-
-
-\subsection{Introduction}\label{introduction}
+\section{Introduction}\label{introduction}
 
 One of the most ubiquitous subjects of analysis in data science is the
 humble point cloud. The points, by themselves, are high dimensional and
@@ -314,11 +211,10 @@ noisy; it is up to the data scientist to wring sense out of them. Per
 the Manifold Hypothesis, we assume the points were sampled on or near
 the surface of a low-dimensional manifold embedded in high-dimensional
 Euclidean space. Manifold learning methods, like t-SNE, PHATE, and
-Diffusion Maps
-{[}\citeproc{ref-maaten2008VisualizingDataUsing}{\textbf{maaten2008VisualizingDataUsing?}}{]}\citeproc{ref-moon2019VisualizingStructureTransitions}{\textbf{moon2019VisualizingStructureTransitions?}}\citeproc{ref-coifman2006DiffusionMaps}{\textbf{coifman2006DiffusionMaps?}},
-endeavor to recover salient features of the underlying manifold, like
-geodesic distances, population clusterings, and dimension, from its
-high-dimensional noisy sampling.
+Diffusion Maps, endeavor to recover salient features of the underlying
+manifold, like geodesic distances, population clusterings, and
+dimension, from its high-dimensional noisy sampling (Maaten and Hinton
+2008; Moon et al. 2019; Coifman and Lafon 2006).
 
 Curvature is a particularly troublesome geometric property to translate
 into the discrete, sampled realm. In smooth Riemannian manifolds,
@@ -339,12 +235,10 @@ scales can be trusted.
 There are elegant generalizations of classical curvature to discrete
 spaces that overcome many of these roadblocks. Ollivier's \emph{Coarse
 Ricci Curvature} (CRC) employs optimal transport theory to relate the
-behavior of a discrete neighborhood to its smooth counterpart
-\citeproc{ref-ollivier2009RicciCurvatureMarkov}{\textbf{ollivier2009RicciCurvatureMarkov?}}.
-Sturm's \emph{displacement convexity of entropy} (DCE) measures the
-proliferation of midpoints in positive curvature
-\citeproc{ref-sturm2006GeometryMetricMeasure}{\textbf{sturm2006GeometryMetricMeasure?}}.
-Both methods use optimal transport as the basis of their ``semi-local''
+behavior of a discrete neighborhood to its smooth counterpart (Ollivier
+2009). Sturm's \emph{displacement convexity of entropy} (DCE) measures
+the proliferation of midpoints in positive curvature (Sturm 2006). Both
+methods use optimal transport as the basis of their ``semi-local''
 measurement. Rather than trying to zoom in on a point, they define
 curvature between pairs of points, approximating, at a coarse scale, a
 Ricci tangent vector.
@@ -359,24 +253,23 @@ be computationally prohibitive.
 
 In this paper, we develop Diffusion Curvature, a fast curvature estimate
 derived solely from the graph diffusion matrix. We first introduced the
-ideas behind Diffusion Curvature in
-\citeproc{ref-bhaskarDiffusionCurvatureEstimating2022}{{[}1{]}}, in
-which we demonstrated its ability to produce an unsigned magnitude of
-curvature estimation for toy datasets and single-cell data, and proved a
+ideas behind Diffusion Curvature in (Bhaskar et al. 2022), in which we
+demonstrated its ability to produce an unsigned magnitude of curvature
+estimation for toy datasets and single-cell data, and proved a
 correspondence between the ratios of scalar curvature and diffusion
 curvature. We now present a refined definition which produces
 \emph{signed} curvature values and prove bounds relating Diffusion
-Curvature to coarse Ricci Curvature. We demonstrate Diffusion
+Curvature to Ollivier's coarse Ricci Curvature. We demonstrate Diffusion
 Curvature's robustness to noise and sampling artifacts, and position our
 technique as an adaptation of coarse Ricci curvature particularly
 suitable for point cloud data.
 
-\subsection{Background}\label{background}
+\section{Background}\label{background}
 
-\subsubsection{Curvature in the Continuous
+\subsection{Curvature in the Continuous
 Setting}\label{curvature-in-the-continuous-setting}
 
-\subsubsection{The Discrete Setting}\label{the-discrete-setting}
+\subsection{The Discrete Setting}\label{the-discrete-setting}
 
 Within the ambient setting of points \(x_{i} \in \mathbb{R}^D\), the
 Euclidean distances between the points in our point cloud are not very
@@ -419,7 +312,7 @@ challenge is now to reassemble this information of local connectivity to
 recover the features of \(\mathcal{M}\). Graph diffusion does precisely
 this.
 
-\subsubsection{Graph Diffusion}\label{graph-diffusion}
+\subsection{Graph Diffusion}\label{graph-diffusion}
 
 The graph diffusion matrix \(P\) is a commonly-used method of
 ``integrating'' the local connectivity of the graph \(A\) into global
@@ -428,29 +321,25 @@ proved a correspondence between iterated graph diffusion \(P^t\) and the
 Neumann heat kernel on \(\mathcal{M}\). Their technique, \emph{Diffusion
 Maps}, uses the euclidean distances between eigencoordinates of \(P\) to
 approximate the geodesic distances on \(\mathcal{M}\). The visualization
-technique \(PHATE\)
-\citeproc{ref-moon2019VisualizingStructureTransitions}{\textbf{moon2019VisualizingStructureTransitions?}}
-constructs a low-dimensional embedding of a point cloud \(X\) such that
-a distance between the transition probabilities \(P\) of \(X\) is
-preserved in the embedding. (More on properties of phate, trajectory
-preservation.) \emph{Diffusion Earth Mover's Distance}
-\citeproc{ref-tongDiffusionEarthMover2021}{\textbf{tongDiffusionEarthMover2021?}}
-efficiently approximates the transportation distance between
-distributions on a graph using multi-scale wavelet transform obtained by
-applying different scales of diffusion. \emph{LEGSNet}`s ``learnable
-geometric scattering'' computes tunable scales of diffusion with a graph
-neural network and achieves state of the art performance on biochemistry
-graph classification
-\citeproc{ref-tong2020DataDrivenLearningGeometric}{\textbf{tong2020DataDrivenLearningGeometric?}}.
-These are but a few of the many manifold learning techniques based in
-diffusion.
+technique \(PHATE\) (Moon et al. 2019) constructs a low-dimensional
+embedding of a point cloud \(X\) such that a distance between the
+transition probabilities \(P\) of \(X\) is preserved in the embedding.
+(More on properties of phate, trajectory preservation.) \emph{Diffusion
+Earth Mover's Distance} (A. Y. Tong et al. 2021) efficiently
+approximates the transportation distance between distributions on a
+graph using multi-scale wavelet transform obtained by applying different
+scales of diffusion. \emph{LEGSNet}`s ``learnable geometric scattering''
+computes tunable scales of diffusion with a graph neural network and
+achieves state of the art performance on biochemistry graph
+classification (A. Tong et al. 2021). These are but a few of the many
+manifold learning techniques based in diffusion.
 
 Constructing the diffusion matrix from the affinity matrix \(A\) is
 straightforward: you simply row-normalize \(A\), with an optional step
 to normalizing by density.
 
-Here is the algorithm presented in Coifman and Lafon
-\citeproc{ref-coifman2006DiffusionMaps}{\textbf{coifman2006DiffusionMaps?}}:
+Here is the algorithm presented in Coifman and Lafon (Coifman and Lafon
+2006):
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -500,18 +389,17 @@ Intuitively, the paths through the data most robustly trafficked by
 random walkers are those supported by multiple high-probability
 connections from independent starting points.
 
-\subsection{Related Work}\label{related-work}
+\section{Related Work}\label{related-work}
 
-\subsubsection{Foreman Ricci Curvature}\label{foreman-ricci-curvature}
+\subsection{Foreman Ricci Curvature}\label{foreman-ricci-curvature}
 
-\subsubsection{Hickock's Curvature}\label{hickocks-curvature}
+\subsection{Hickock's Curvature}\label{hickocks-curvature}
 
-\subsubsection{Ollivier-Ricci Curvature}\label{ollivier-ricci-curvature}
+\subsection{Ollivier-Ricci Curvature}\label{ollivier-ricci-curvature}
 
 Developed by Yann Ollivier in 2007, \emph{Coarse Ricci Curvature} (or
 sometimes, ``Ollivier Ricci Curvature'') is a direct translation of
-Ricci curvature to discrete metric spaces like graphs
-\citeproc{ref-ollivier2009RicciCurvatureMarkov}{\textbf{ollivier2009RicciCurvatureMarkov?}}.
+Ricci curvature to discrete metric spaces like graphs (Ollivier 2009).
 Several classical properties of Ricci curvature can be extended to the
 graph setting using Coarse Ricci Curvature. Ollivier has, for instance,
 proven versions of concentration inequalities, Bonnet Myers (more).
@@ -541,19 +429,20 @@ quantifies the smallest amount of ``work'' needed to transform one
 distribution into another, by transporting probability ``mass'' between
 pairs of points over the ground metric \(d(x,y)\):
 
-\begin{quote}
-{[}!Info{]} Definition The 1-Wasserstein distance between distributions
-\(\mu_{x}\) and \(\mu_{y}\) is
+\begin{definition}[1-Wasserstein
+Distance]\protect\hypertarget{def-1-wasserstein}{}\label{def-1-wasserstein}
+
+The 1-Wasserstein distance between distributions \(\mu_{x}\) and
+\(\mu_{y}\) is
 \[ W_{1}(\mu_{x},\mu_{y}) := \inf_{\xi \in \Pi(\mu_{x},\mu_{u})} \int \int d(x,y) \, d\xi(x,y) \]
 where the ``transportation plan'' \(\xi\) is drawn from the space
 \(\Pi(\mu_{x},\mu_{y})\) of joint probability distributions over
-\(X \times X\) which project onto \(\mu_{x}\) and \(\mu_{y}\).
-
-In the discrete setting, this translates naturally into an infimum over
-a summation.
-
+\(X \times X\) which project onto \(\mu_{x}\) and \(\mu_{y}\). In the
+discrete setting, this translates naturally into an infimum over a
+summation.
 \[W_{1}(\mu_{x},\mu_{y}) := \inf_{\xi \in \Pi(\mu_{x},\mu_{y})} \sum_{x \in X} \sum_{y \in X} d(x,y) \xi(x,y)\]
-\end{quote}
+
+\end{definition}
 
 What is the analog on a graph of a ``small sphere'' around a point?
 Ollivier replaces spheres with a family of measures \(m_{x}(\cdot)\)
@@ -580,16 +469,21 @@ matrices, or even single steps of diffusion; the two conditions above
 are equally satisfied by weighted adjacency matrices and \(t\)-step
 diffusions, and in sparse or noisy graphs, this may be desirable.
 
-Definition
+\begin{definition}[Coarse Ricci
+Curvature]\protect\hypertarget{def-coarse-ricci-curvature}{}\label{def-coarse-ricci-curvature}
 
 The \emph{Coarse Ricci Curvature} between \(x\) and \(y\) is
 \[\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}\]
 
+\end{definition}
+
 There are a number of provisos attached to this definition, which tries
 to approximate a continuous phenomenon within discrete constraints.
 These constraints, and the relationship between Ricci and Ollivier's
-coarse Ricci curvature are illustrated Ollivier's Example 2.6
-\citeproc{ref-ollivier2009RicciCurvatureMarkov}{\textbf{ollivier2009RicciCurvatureMarkov?}}:
+coarse Ricci curvature are illustrated Ollivier's Example 2.6 (Ollivier
+2009):
+
+\begin{example}[]\protect\hypertarget{exm-ollivier-example-2.6}{}\label{exm-ollivier-example-2.6}
 
 Let \((X,d)\) be a smooth Riemannian manifold of dimension \(d\) and let
 \(\text{vol}\) be the Riemannian volume measure. Let \(\epsilon>0\)
@@ -598,6 +492,8 @@ point \(x\). Let \(x,y \in X\) be two sufficiently close points. Let
 \(v\) be the unit tangent vector at \(x\) directed towards \(y\). The
 coarse Ricci curvature along \(v\) is then
 \[\kappa(x,y) = \frac{\epsilon^2 \text{Ric}(v,v)}{2(d+2)}+o(\epsilon^3 + \epsilon^2d(x,y))\]
+
+\end{example}
 
 Hence the coarse Ricci curvature applied to a manifold recovers the
 Ricci curvature, up to a scaling factor contingent on dimension, and
@@ -614,10 +510,11 @@ high dimension.
 
 A result on coarse Ricci curvature which will prove useful concerns the
 \emph{contraction (or expansion) of measure} that occurs under diffusion
-in spaces of positive (or negative) curvature.
+in spaces of positive (or negative) curvature. This is Ollivier (2009)'s
+Proposition 20:
 
-Proposition 20
-\citeproc{ref-ollivier2009RicciCurvatureMarkov}{\textbf{ollivier2009RicciCurvatureMarkov?}}
+\begin{proposition}[\(W_1\) Contraction of
+Measure]\protect\hypertarget{prp-ollivier-contraction-of-measure}{}\label{prp-ollivier-contraction-of-measure}
 
 Let \((X,d,m)\) be a metric space with a random walk. Let
 \(\kappa \in \mathbb{R}\). Then we have \(\kappa(x,y) \geq \kappa\) for
@@ -630,27 +527,225 @@ W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
  \mu \star m := \int_{{x \in X}} d\mu(x)m_{x} \, dx
 \]
 
-\subsection{Theory \& Methods}\label{theory-methods}
+\end{proposition}
 
-\subsubsection{Definition}\label{definition}
+\section{Methods}\label{methods}
+
+The Coarse Ricci Curvature and Displacement Convexity of Entropy are
+both based on an invariant property of flat spaces, the deviation from
+which allows for a measure of curvature even without a clear definition
+of factors which normally interfere with curvature, like dimension.
+However, the elegance of these invariance-based definitions comes at a
+computational cost. Both methods require optimal transport calculations
+for (a subset) of each pair of edges, a complexity growing with
+\(O(n^2)\). Additionally, the transport distance based on the graph
+shortest-path distance is highly susceptible to noise.
+
+This motivates our formulation of graph curvature, which uses a
+\emph{comparison} between spaces in lieu of an invariant. This gives
+\emph{Diffusion Curvature} a number of nice properties:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Point-wise, instead of edge-wise}. In many applications,
+  knowledge of the Ricci curvatures is unnecessarily detailed. Diffusion
+  curvature answers the question: \emph{is the region around this point
+  positively or negatively curved, and in what magnitude, relative to
+  other points on the manifold?}
+\item
+  \textbf{Diffusion-based denoising}. When edges may be spurious, and
+  random sampling creates deceptive pockets of density, Diffusion
+  Curvature inherits the denoising obtained by powering the diffusion
+  operator.
+\item
+  \textbf{Extremely fast}. Designed for point clouds with millions of
+  points, the pointwise Diffusion Curvature of the entire dataset can be
+  calculated with a handful of sparse matrix multiplications. In
+  addition, Diffusion Curvature can be \emph{GPU accelerated}. This
+  combination allows computing in minutes what takes existing methods
+  hours.
+\item
+  \textbf{Differentiable}. Diffusion Curvature natively supports
+  backpropogation, and can easily be incorporated into a loss function
+  for a neural network, e.g.~to regularize a latent space to have low
+  (or high) curvature. We provide a PyTorch implementation of the
+  algorithm for this purpose. {[}LINK TO GITHUB{]}
+\end{enumerate}
+
+The core intuition of Diffusion Curvature is that the \emph{laziness} of
+random walks on a graph is a proxy for the curvature of the underlying
+manifold. Picture a ``random walker'' drunkenly traversing a sphere. If
+he manages, over the course of several steps, to wander to the opposite
+pole, he has many ways of getting back to where he started. By contrast,
+if he begins on the top of a (negatively curved) saddle and wanders down
+one side, any path aside from exactly retracing his steps incurs a steep
+distance penalty. On the sphere, the random walker is more likely to
+find his way home: his walks are ``lazier''.
+
+Our previous paper (Bhaskar et al. 2022) measured this laziness
+directly, as the return probability within a k-neighborhood of the
+starting point. This required tuning the parameter \(k\), and neglected
+the information provided by the random walk probabilities outside of
+this k-neighborhood. We now refine this definition in two ways.
+
+First, we refine our previous definition of diffusion laziness using the
+Wasserstein distance between a dirac \(\delta_{x}\) and its \(t\) step
+diffusion \(p_{X}^t(x)\),
+
+\begin{definition}[Diffusion
+Laziness]\protect\hypertarget{def-laziness-of-diffusion}{}\label{def-laziness-of-diffusion}
+
+The \(W_1\) Laziness of a diffusion \(p_{X}^t(x)\) is \[
+- W_1\left(\delta_x, p_X^t(x)\right)
+\]
+
+\end{definition}
+
+This provides a more sensitive and parameter-free measure of the
+`spread' of diffusion.
+
+Second, by comparing the laziness of diffusion between two manifolds --
+one of known curvature -- we make our method signed.
+
+\begin{definition}[Diffusion
+Curvature]\protect\hypertarget{def-diffusion-curvature}{}\label{def-diffusion-curvature}
 
 Given samples \(X \subseteq M\) and a flattening map
-\(\Phi: X \rightarrow \mathbb{R}^d\),
+\(\Phi: X \rightarrow \mathbb{R}^d\), the \(t\)-step \emph{Diffusion
+Curvature} of \(x\) is \[
+k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
+\]
 
-The \(t\)-step \emph{Diffusion Curvature} of \(x\) is \[
-k_t(x)=1-\frac{W_1\left(\delta_x, p_X^t(x)\right)}{W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right)}
-\]\{eq-definition\}
+\end{definition}
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  Use an arbitrary distance? Or a p-Wasserstein?
+\end{itemize}
 
 Where \(p_X^t\) is the t-step random walk over \(X\), and
-\(p_{\Phi(X)}^t\) is the same over the flattened points \(\Phi(X)\). In
-both cases, the \(W_1\) distance is taken with respect to manifold
-distances.
+\(p_{\Phi(X)}^t\) is the same over the flattened points \(\Phi(X)\).
+Depending on the ground distance used for the Wasserstein-1 transport
+distance, and the definition of flattening map employed, one obtains any
+of a family of diffusion curvatures.
 
-\subsubsection{Separating Geometry from Sampling: Neural
-Flattening}\label{separating-geometry-from-sampling-neural-flattening}
+Our best results come a very simple formulation of both, where the
+ground distance is chosen such that \(W_{1}\) becomes the Shannon
+Entropy, and our flattening map simply uniformly samples points from the
+Euclidean space \(\mathbb{R}^d\) of the same dimension as \(M\). This
+produces what we'll call the \emph{Entropic Diffusion Curvature},
 
-\subsubsection{Connections to Ollivier-Ricci
-Curvature}\label{connections-to-ollivier-ricci-curvature}
+\begin{definition}[Entropic Diffusion
+Curvature]\protect\hypertarget{def-entropic-diffusion-curvature}{}\label{def-entropic-diffusion-curvature}
+
+The Entropic Diffusion Curvature of a t-step diffusion on points sampled
+from \(\mathcal{M} \in \mathbb{R}^d\), with markov matrix \(P^t\), is \[
+\kappa^e_{t}(x_{i}) = H(P^t[i]) - H(P_{E}^t[i])
+\]
+
+where \(H\) is the Shannon Entropy, and \(P_{E}^t\) is the diffusion
+matrix of the Euclidean comparison space \(\mathbb{R}^d\).
+
+\end{definition}
+
+which evokes the use of entropy to measure heat diffusion.
+
+This definition rests on two claims: that the laziness of diffusion
+reveals the (unsigned) magnitude of curvature, and that by comparing
+diffusion across manifolds, we can convert this into a signed curvature.
+The next two sections will analyze this first claim. We provide a
+motivating example recovering a Bishop-Gromov type volume comparison
+from our entropic definition. We then analyze diffusion laziness within
+Ollivier's framework of metric measure theory, and bound the diffusion
+laziness from above by the Ollivier-Ricci curvature.
+
+\subsection{A Motivating Example: Entropic Diffusion Curvature Recovers
+a Bishop-Gromov Volume
+Comparison}\label{a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison}
+
+Among the most obvious manifestations of curvature is differences in
+volume: the higher the curvature, the smaller the volume of geodesic
+balls of the same radius. This is formalized by Bishop-Gromov's Volume
+Comparison Theorem.
+
+THEOREM!
+
+One route to discrete curvature is thus estimating volumes {[}cite
+Hickok{]}. However, standard methods of estimating volumes in discrete,
+sampled spaces like point clouds or graphs rely on more complex
+geometric quantities, like density estimation or approximated geodesic
+distances, which are not only susceptible to noise, but often themselves
+dependent on the curvature!\footnote{Consider kernel density estimation,
+  where one places gaussians on each data point and sums up the
+  probability assigned to each area. The higher the curvature, the
+  higher the reported density, since at the end of an ellipsoid the
+  gaussians have greater overlap with each other than in its center --
+  even though the intrinsic density of the surface is uniform.} One
+wonders: can we use the tools of diffusion geometry to robustly estimate
+volume?
+
+Indeed, this is one way to interpret diffusion laziness: as an inverse
+volume measurement. {[}Cite Huguet Heat Geo{]} motivates this with a
+result from Saloff Costes et al. (\textbf{saloff-costeHeatKernelIts?}).
+For manifold satisfying the Parabolic Harnock Inequality (e.g.~all
+manifolds of positive curvature), heat diffusion \(m_{x}^t\) on the
+manifold is bounded by
+
+\[
+\frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
+\]
+
+In other words, heat diffusion on non-Euclidean manifolds behaves
+approximately like Euclidean heat diffusion scaled by the local volume.
+
+Powering the diffusion matrix approximates heat diffusion {[}cite
+Coifman{]}. We can thus relate our measure of the `spread' or `laziness'
+of this diffusion to the manifold's volume.
+
+The Shannon entropy of the diffusion \(m_{x}\) over the bounded
+neighborhood of \(X\) with non-zero diffusion mass, can be written \[
+H\left(m_x^t\right)=-\int_{y_\epsilon x} m_x^t(y) \ln \left(m_x^t(y)\right)
+\] Here we use Shannon's differential entropy.Though this formulation
+encounters pathologies on unbounded domains, it approximates the entropy
+a signal on a sampled region as the number of samples goes to infinity.
+
+We'll simplify the notation by combining the integral and distribution
+into an expected value over \(m_{x}^t\) \[
+=-\mathbb{E}_{m_x} \ln \left(m_x(y)\right) d y
+\] Recalling the above result, there are constants \(c_{1}\dots c_{4}\)
+such that
+
+\[
+\frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
+\] hence we can approximate \(H(m_{x}^t)\) by
+
+\[
+=-\mathbb{E}_{m_{x}^t} \ln \left(\frac{1}{V(y, \sqrt{t})} \exp \left(\frac{-d(x, y)^2}{4 t}\right)\right)
+\] \[
+=-\mathbb{E}_{m_x^t} \ln \left(\frac{1}{V(y, \sqrt{6})}\right)-\frac{d(x, y)^2}{4 t}
+\] \[
+=\mathbb{E}_{m_x^t} \ln (V(y, \sqrt{t}))+\mathbb{E}_{m_{x}^t} \frac{d(x, y)^2}{4 t}
+\]
+
+By assumption, the volumes \(V(y,\sqrt{ t })\) equal some constant
+\(V_{m}(\sqrt{ t })\) over the support of \(m_{x}^t\). Also note that
+the right hand term is precisely
+\(\frac{1}{4t}W_{2}(\delta_{x}, m_{x}^t)\), so \[
+H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
+\] The Diffusion Curvature is then \[
+\frac{1}{t}(H(m_{E}^t) - H(m_{x}^t)) \simeq \frac{1}{t}\ln(V_{E}(\sqrt{ t })) - \frac{1}{t}\ln(V_{m}(\sqrt{ t })) + \frac{1}{4t^2}( W_{2}(d_{x},m_{E}^t) - W_{2}(d_{x},m_{x}^t))
+\] This presents us with two comparisons: one between the average volume
+within \(N_{t}(x)\) both in Euclidean space and on the manifold, and one
+between the Wasserstein spread of diffusion in Euclidean space and on
+the manifold. Note that both exhibit the same inverse relationship to
+curvature. If the curvature of \(m\) is greater than in euclidean space
+(e.g.~positive), the volume of a ball is smaller -- just as the spread
+of diffusion is diminished. In negative curvature, we have the opposite.
+
+\subsection{Bounding diffusion laziness by Ollivier-Ricci
+curvature}\label{bounding-diffusion-laziness-by-ollivier-ricci-curvature}
 
 Although diffusion curvature was designed for sampled manifolds, it
 extends naturally to the realm of more general graphs. Indeed, diffusion
@@ -691,11 +786,13 @@ regions of positive curvature, diffusion spreads less; neighborhoods
 with higher interconnectivity make random walks lazier. We can formalize
 this with reference to Ollivier Ricci curvature:
 
-\textbf{Proposition 1.} Let \((X,d,m)\) be a metric space equipped with
-a random walk, with coarse Ricci curvature bounded from below by some
-\(k\) such that \(\kappa(x,y) \geq k\) for all \(x,y \in X\). The
-Wasserstein Spread of Diffusion of a \(t\) step diffusion in \(X\) is
-bounded above by \[
+\begin{proposition}[Coarse Ricci Curvature Bounds Diffusion
+Laziness]\protect\hypertarget{prp-coarse-ricci-curvature-bounds-diffusion-laziness}{}\label{prp-coarse-ricci-curvature-bounds-diffusion-laziness}
+
+Let \((X,d,m)\) be a metric space equipped with a random walk, with
+coarse Ricci curvature bounded from below by some \(k\) such that
+\(\kappa(x,y) \geq k\) for all \(x,y \in X\). The Wasserstein Spread of
+Diffusion of a \(t\) step diffusion in \(X\) is bounded above by \[
 W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
 \]
 
@@ -704,22 +801,27 @@ In particular, if \(k>0\) then
 and if \(k=0\), then
 \(W_{1}(\delta_{x},m_{x}^t) \leq tW_1\left(\delta_x,m_x\right)\).
 
-\emph{Proof}. First, we bound \(W_{1}(m_{x}^t,m_{x}^{t+1})\) using
-Ollivier's Proposition 20 {[}citation needed{]} on concentration of
-measure. The proposition states that a lower bound on curvature, such as
-we have, implies that \[
+\end{proposition}
+
+To prove this, first we bound \(W_{1}(m_{x}^t,m_{x}^{t+1})\) using
+Proposition~\ref{prp-ollivier-contraction-of-measure}. The proposition
+states that a lower bound on curvature, such as we have, implies that \[
 W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
 \] where here \(\mu,\mu'\) are two probability distributions and \(m\)
 is a random walk. This provides an easy lemma:
 
-\textbf{Lemma 1.} Let \((X,d,m)\) be a metric space with a random walk.
-Suppose there is some \(k \in \mathbb{R}\) such that the coarse Ricci
-curvature \(\kappa(x,y) \geq k\) for all \(x,y \in X\). Then: \[
+\begin{lemma}[Inductive Contraction of
+Measure]\protect\hypertarget{lem-inductive-contraction-of-measure}{}\label{lem-inductive-contraction-of-measure}
+
+Let \((X,d,m)\) be a metric space with a random walk. Suppose there is
+some \(k \in \mathbb{R}\) such that the coarse Ricci curvature
+\(\kappa(x,y) \geq k\) for all \(x,y \in X\). Then: \[
 W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
 \]
 
-\emph{Proof.} We proceed by induction. For \(t=0\), the above is true,
-as
+\end{lemma}
+
+We proceed by induction. For \(t=0\), the above is true, as
 \(W_{1}(m_{x}^0, m_{x}^{1}) =W_{1}(\delta_x, m_{x}^{1}) = W_1\left(\delta_x,m_x\right)\).
 Suppose it holds for \(t-1\), e.g. \[
 W_1\left(m_x^{t-1}, m_x^{t}\right) \leq(1-k)^{t-1} W_1\left(\delta_x,m_x\right)
@@ -742,7 +844,7 @@ of single step diffusions. By the triangle inequality, \[
 W_{1}(\delta_{x},m_{x}^t) \leq W_1\left(\delta_x,m_x\right) + W_{1}(m_{x},m_{x}^2) + \dots + W_{1}(m_{x}^{t-1}, m_{x}^t)
 \]
 
-By Lemma 1, \[
+By Lemma~\ref{lem-inductive-contraction-of-measure}, \[
 \leq W_1\left(\delta_x,m_x\right)\left(1+(1-k)+(1-k)^2+\ldots+(1-k)^{t-1}\right)
 \]
 
@@ -773,16 +875,70 @@ i.e.~\(tW_{1}^E(\delta_{x},m_{x})\). Using this, and noting that
 
 \[
 1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
-\] \textbf{Note: this analysis sidesteps the reality that tJ is a
-(possibly egregious) \emph{overestimate} of the euclidean WSD. We can't
-actually just plug it in without pushing some indeterminate space
-inbetween the sides of the inequality}
+\]
 
-\subsection{Results}\label{results}
+\textbf{Note: this analysis sidesteps the reality that tJ is a (possibly
+egregious) \emph{overestimate} of the euclidean WSD. We can't actually
+just plug it in without pushing some indeterminate space inbetween the
+sides of the inequality}
 
-\subsubsection{Toy Manifolds}\label{toy-manifolds}
+\subsection{Comparing Diffusion Across
+Manifolds}\label{comparing-diffusion-across-manifolds}
 
-\paragraph{2 Manifolds}\label{manifolds}
+For a single graph, the laziness of diffusion is linked to graph volume,
+and theoretically bounded by curvature: within that graph, the higher
+the curvature, the higher the diffusion laziness. In analogy to
+Bishop-Gromov, we can convert this unsigned magnitude-of-curvature
+estimation to a signed curvature with a comparison between spaces. In
+the continuous realm, this is easy: volume on one surface has the same
+units as volume on another. But in the point cloud setting, there is no
+common scale; it is \emph{assumed} that the scale differs between and
+possibly even \emph{within} a point cloud. Moreover, differences in
+graph construction can make diffusion spread faster independently from
+the local geometry -- much as changing the `size' of one's `measuring
+stick' could give the appearance of larger volumes. Diabolically, common
+techniques for constructing graphs from variably-sampled data interfere
+with the speed \emph{most} in areas with high negative or positive
+curvature, obscuring the geometric information in the diffusion
+operator.
+
+Our challenge is to construct graphs to allow comparison of their
+diffusions.
+
+\subsubsection{Standard methods of graph construction obscure geometric
+information}\label{standard-methods-of-graph-construction-obscure-geometric-information}
+
+To turn a point cloud into a graph, one places a kernel (e.g.~a
+gaussian) at each point, and assigns edges to surrounding points with
+weight given by the kernel. The main parameter is the bandwidth of each
+kernel: make it too high, and everything is connected; too low, and
+points are isolated. Moreover, the distances between a point and its
+neighbors may vary. Where the points are sparse, one wants a higher
+bandwidth. Where dense, a lower bandwidth.
+
+\subsubsection{The Curvature Agnostic
+Kernel}\label{the-curvature-agnostic-kernel}
+
+\section{Results}\label{results}
+
+Curvature is an easy quantity to find -- indeed, at least two of the
+many recent curvature methods were defined \emph{accidentally} {[}cite
+Steinerberger, myself{]}! The challenge is to make one's definition
+robust to the bogeyman of real-world data, especially 1) noise and 2)
+high dimensions. Our benchmarks of existing methods, including Hickok \&
+Blumberg's, Ollivier Ricci Curvature, Adal-PCA {[}and Sritharan{]},
+{[}citations{]} reveal that all deteriorate quickly under noise, and
+most \emph{fail entirely} in high-dimensional data. The
+dimension-independent, noise-resilient properties of the diffusion
+operator endow diffusion curvature with good performance on both of
+these axes.
+
+But first, a sanity check. Does diffusion curvature recover the Gaussian
+curvature of basic 2-manifolds? Figure~\ref{fig-2-manifolds} shows the
+diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a
+scatter plot correlating diffusion curvature and Gaussian curvature.
+Figure~\ref{fig-2-manifolds-visual-comparison} places this in the
+context of existing methods.
 
 \begin{figure}[H]
 
@@ -801,53 +957,133 @@ Curvature on 2-Manifolds.}
 \href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a-Toy-Manifolds.ipynb.html\#cell-fig-2-manifolds}{Standard
 libraries}}
 
-\paragraph{Saddle sphere sign-differentiation
-test}\label{saddle-sphere-sign-differentiation-test}
+Though the correlation is strong -- passing the `sniff test' -- this
+low-dimensional validation highlights two subtleties of our method.
+First, diffusion curvature, being an intrinsic, graph-based measurement,
+is susceptible to edge effects to a greater degree than extrinsic
+methods. When diffusion hits the edges of the saddle, it rebounds,
+creating the false appearance of positive curvature.
 
-\paragraph{Noise Resilience}\label{noise-resilience}
+\begin{figure}[H]
 
-\subsubsection{Loss Landscapes}\label{loss-landscapes}
+\centering{
 
-\subsubsection{Curvature as a TDA
+\includegraphics{index_files/figure-latex/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png}
+
+}
+
+\caption{\label{fig-2-manifolds-visual-comparison}Diffusion Curvature vs
+Gaussian Curvature on 2-Manifolds.}
+
+\end{figure}%
+
+\textsubscript{Source:
+\href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb.html\#cell-fig-2-manifolds-visual-comparison}{Standard
+libraries}}
+
+The second subtly emerges in the context of related methods. Everything
+pictured does an excellent job of coloring the toy manifolds. But
+looking beyond this, \emph{what matters?} Most methods don't care about
+the precise magnitude -- or even exactly matching the correlations, as
+in the ellipsoid\ldots{} \%\% mean vs gaussian curvature, and uniqueness
+of definitions\%\%
+
+All of these methods in Figure~\ref{fig-2-manifolds-visual-comparison}
+perform well on well-sampled noiseless toy manifolds. In Table WAWA3, we
+see the results of adding Gaussian noise to each manifold.
+
+!{[}{[}CleanShot 2024-04-28 at 23.30.38\_147B95A7.png{]}{]}
+
+\subsubsection{Differentiating Sign in High
+Dimensions}\label{differentiating-sign-in-high-dimensions}
+
+Most existing methods only quantify their performance in high dimensions
+on one or two test cases.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics{index_files/figure-latex/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png}
+
+}
+
+\caption{\label{fig-sadspheres}Predicted curvatures of Saddles and
+Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes
+between the signs of the data, even in high dimensions, and with
+relative sparsity.}
+
+\end{figure}%
+
+\textsubscript{Source:
+\href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2f-sign-prediction-tests.ipynb.html\#cell-fig-sadspheres}{Standard
+libraries}}
+
+\subsection{Loss Landscapes}\label{loss-landscapes}
+
+\subsection{Curvature as a TDA
 Filtration}\label{curvature-as-a-tda-filtration}
 
-\subsection{Conclusion}\label{conclusion}
+\section{Conclusion}\label{conclusion}
 
-\subsection*{References}\label{references}
-\addcontentsline{toc}{subsection}{References}
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
 
 \phantomsection\label{refs}
-\begin{CSLReferences}{0}{0}
-\bibitem[\citeproctext]{ref-bhaskarDiffusionCurvatureEstimating2022}
-\CSLLeftMargin{{[}1{]} }%
-\CSLRightInline{D. Bhaskar \emph{et al.}, {``Diffusion curvature for
-estimating local curvature in high dimensional data,''} \emph{Advances
-in Neural Information Processing Systems}, vol. 35, pp. 21738--21749,
-2022 {[}Online{]}. Available:
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-bhaskar2022DiffusionCurvatureEstimating}
+Bhaskar, Dhananjay, Kincaid MacDonald, Oluwadamilola Fasina, Dawson
+Thomas, Bastian Rieck, Ian Adelstein, and Smita Krishnaswamy. 2022.
+{``Diffusion Curvature for Estimating Local Curvature in High
+Dimensional Data.''} \emph{Advances in Neural Information Processing
+Systems} 35: 21738--49.
 \url{https://proceedings.neurips.cc/paper_files/paper/2022/hash/88438dc62fc5c8777e2b5f1b4f6d37a2-Abstract-Conference.html}.
-{[}Accessed: 01-Dec-2023{]}}
+
+\bibitem[\citeproctext]{ref-coifman2006DiffusionMaps}
+Coifman, Ronald R., and Stéphane Lafon. 2006. {``Diffusion Maps.''}
+\emph{Applied and Computational Harmonic Analysis}, Special {Issue}:
+{Diffusion Maps} and {Wavelets}, 21 (1): 5--30.
+\url{https://doi.org/10.1016/j.acha.2006.04.006}.
+
+\bibitem[\citeproctext]{ref-maaten2008VisualizingDataUsing}
+Maaten, Laurens van der, and Geoffrey Hinton. 2008. {``Visualizing
+{Data} Using t-{SNE}.''} \emph{Journal of Machine Learning Research} 9
+(86): 2579--2605. \url{http://jmlr.org/papers/v9/vandermaaten08a.html}.
+
+\bibitem[\citeproctext]{ref-moon2019VisualizingStructureTransitions}
+Moon, Kevin R., David van Dijk, Zheng Wang, Scott Gigante, Daniel B.
+Burkhardt, William S. Chen, Kristina Yim, et al. 2019. {``Visualizing
+Structure and Transitions in High-Dimensional Biological Data.''}
+\emph{Nature Biotechnology} 37 (12, 12): 1482--92.
+\url{https://doi.org/10.1038/s41587-019-0336-3}.
+
+\bibitem[\citeproctext]{ref-ollivier2009RicciCurvatureMarkov}
+Ollivier, Yann. 2009. {``Ricci Curvature of {Markov} Chains on Metric
+Spaces.''} \emph{Journal of Functional Analysis} 256 (3): 810--64.
+\url{https://doi.org/10.1016/j.jfa.2008.11.001}.
+
+\bibitem[\citeproctext]{ref-sturm2006GeometryMetricMeasure}
+Sturm, Karl-Theodor. 2006. {``On the Geometry of Metric Measure
+Spaces.''} \emph{Acta Mathematica} 196 (1): 65--131.
+\url{https://doi.org/10.1007/s11511-006-0002-8}.
+
+\bibitem[\citeproctext]{ref-tong2021DiffusionEarthMovera}
+Tong, Alexander Y., Guillaume Huguet, Amine Natik, Kincaid Macdonald,
+Manik Kuchroo, Ronald Coifman, Guy Wolf, and Smita Krishnaswamy. 2021.
+{``Diffusion {Earth Mover}'s {Distance} and {Distribution
+Embeddings}.''} In \emph{Proceedings of the 38th {International
+Conference} on {Machine Learning}}, 10336--46. PMLR.
+\url{https://proceedings.mlr.press/v139/tong21a.html}.
+
+\bibitem[\citeproctext]{ref-tong2021DatadrivenLearningGeometric}
+Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita
+Krishnaswamy, and Guy Wolf. 2021. {``Data-Driven Learning of Geometric
+Scattering Modules for Gnns.''} In \emph{2021 {IEEE} 31st {International
+Workshop} on {Machine Learning} for {Signal Processing} ({MLSP})}, 1--6.
+IEEE. \url{https://ieeexplore.ieee.org/abstract/document/9596169/}.
 
 \end{CSLReferences}
 
 
-% Can use something like this to put references on a page
-% by themselves when using endfloat and the captionsoff option.
-\ifCLASSOPTIONcaptionsoff
-  \newpage
-\fi
 
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
-
-% Uncomment when use biblatex with style=ieee
-%\renewcommand{\bibfont}{\footnotesize} % for IEEE bibfont size
-
-\pagebreak[3]
-% that's all folks
 \end{document}
-

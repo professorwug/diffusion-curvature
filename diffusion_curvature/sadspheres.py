@@ -56,9 +56,9 @@ class SadSpheres(SelfEvaluatingDataset):
                     )
                     names.append(f'{d}-Plane')
 
-            super().__init__(
-                datalist, names, ['ks']
-            )
+        super().__init__(
+            datalist, names, ['ks']
+        )
 
                 
     def get_item(self, idx):
@@ -120,13 +120,14 @@ class SadSpheres(SelfEvaluatingDataset):
     
 
     @metric
-    def pearson_r(self, a, b):
+    def pearson_r(self, a, b, result_name = None):
         return scipy.stats.pearsonr(a,b)[0]
 
     @metric
     def sign_score(self, 
                    a, # prediction
-                   b # target
+                   b, # target
+                   result_name = None,
                   ):
         a = np.array(a)
         b = np.array(b)
