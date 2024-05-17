@@ -103,7 +103,7 @@ We’ll encounter versions of Bishop-Gromov and Bonnet-Myers in our discrete set
 
 ## The Discrete Setting
 
-Within the ambient setting of points $x_{i} \in \mathbb{R}^D$, the Euclidean distances between the points in our point cloud are not very useful. To perform geometric analysis, we want the manifold’s *geodesic* distances between $x_{i}, x_{j \in \mathcal{M}}$,. However, manifolds are locally euclidean, so within a sufficiently small neighborhood of $x_{i} \in \mathcal{M}$ , the euclidean distances are accurate. This is the basis of graph construction: retain only the trustworthy local distances, discard the rest, and then “integrate” over the local neighborhoods to recover features of the global geometry.
+Within the ambient setting of points $x_{i} \in \mathbb{R}^D$, the Euclidean distances between the points in our point cloud are not very useful. To perform geometric analysis, we want the manifold’s *geodesic* distances between $x_{i}, x_{j} \in \mathcal{M}$,. However, manifolds are locally euclidean, so within a sufficiently small neighborhood of $x_{i} \in \mathcal{M}$ , the euclidean distances are accurate. This is the basis of graph construction: retain only the trustworthy local distances, discard the rest, and then “integrate” over the local neighborhoods to recover features of the global geometry.
 
 A graph $G = (V, E)$ is a collection of $n$ vertices $v_{i} \in V$ connected by (possibly weighted) edges $e_{ij} \in E$ . It is efficiently represented by a single *adjacency* (or *affinity*) matrix $A \in \mathbb{R}^{n \times n}$, where $A_{ij}$ expresses the degree of connection between the vertices $v_{i}$ and $v_{j}$. In a binary adjacency matrix, $A_{ij}=1$ iff there is an edge between $v_{i}$ and $v_{j}$. In a weighted affinity matrix, $0<A_{ij}<1$ with a higher affinity indicating a closer connection between the nodes.
 
@@ -111,15 +111,15 @@ One can construct an affinity matrix from a point cloud with the following algor
 1. Compute the matrix $D$ of pairwise euclidean distances between points, so that $D_{ij}=\|x_{i}-x_{j}\|_{2}$.
 2. Apply a kernel $\kappa$ to the distances to construct the affinity matrix, where $A_{ij} = \kappa(D_{ij})$. This is typically the gaussian kernel:
 $$
-k(y) = \frac{1}{\sqrt{ 2\pi }\sigma}\exp\left( -\frac{y}{\sigma^2} \right)
+\kappa(y) = \frac{1}{\sqrt{ 2\pi }\sigma}\exp\left( -\frac{y}{\sigma^2} \right)
 $$
 There are a variety of heuristics for selecting an appropriate kernel bandwidth $\sigma$. In this paper, we use an adaptive kernel bandwidth, in which, when computing $k(D_{ij})$, $\sigma$ is set to the mean distance from the points $x_{i}$ and $x_{j}$ to their $k$-th nearest neighbor.
 
-After building our graph affinity matrix $A$, we created a new representation of the point cloud $X$ – turning it from an $n \times D$ matrix of unwieldy ambient coordinates into an $n \times n$ matrix of pairwise connections between points. The challenge is now to reassemble this information of local connectivity to recover the features of $\mathcal{M}$. Graph diffusion does precisely this.
+After building our graph affinity matrix $A$, we created a new representation of the point cloud $X$ – turning it from an $n \times D$ matrix of unwieldy ambient coordinates into an $n \times n$ matrix of pairwise connections between points. The challenge is now to reassemble this information of local connectivity to recover the features of $\mathcal{M}$. Graph diffusion does precisely this. 
 
 ## Graph Diffusion
 
-The graph diffusion matrix $P$ is a commonly-used method of “integrating” the local connectivity of the graph $A$ into global geometric descriptors of $\mathcal{M}$. Coifman and Lafon (WAWA YEAR) proved a correspondence between iterated graph diffusion $P^t$ and the Neumann heat kernel on $\mathcal{M}$. Their technique, *Diffusion Maps*, uses the euclidean distances between eigencoordinates of $P$ to approximate the geodesic distances on $\mathcal{M}$. The visualization technique $PHATE$ [@moon2019VisualizingStructureTransitions] constructs a low-dimensional embedding of a point cloud $X$ such that a distance between the transition probabilities $P$ of $X$ is preserved in the embedding. (More on properties of phate, trajectory preservation.) *Diffusion Earth Mover’s Distance* [@tong2021DiffusionEarthMovera] efficiently approximates the transportation distance between distributions on a graph using multi-scale wavelet transform obtained by applying different scales of diffusion. *LEGSNet*‘s “learnable geometric scattering” computes tunable scales of diffusion with a graph neural network and achieves state of the art performance on biochemistry graph classification [@tong2021DatadrivenLearningGeometric]. These are but a few of the many manifold learning techniques based in diffusion.
+By row-normalizing $A$, one obtains the graph diffusion matrix $P = D^{-1}A$, which is a commonly-used method of “integrating” the local connectivity of the graph $A$ into global geometric descriptors of $\mathcal{M}$. Coifman and Lafon [@coifman2006DiffusionMaps] proved a correspondence between iterated graph diffusion $P^t$ and the Neumann heat kernel on $\mathcal{M}$. Their technique, *Diffusion Maps*, uses the Euclidean distances between eigencoordinates of $P$ to approximate the geodesic distances on $\mathcal{M}$. The visualization technique $PHATE$ [@moon2019VisualizingStructureTransitions] constructs a low-dimensional embedding of a point cloud $X$ such that a distance between the transition probabilities $P$ of $X$ is preserved in the embedding. (More on properties of phate, trajectory preservation.) *Diffusion Earth Mover’s Distance* [@tong2021DiffusionEarthMovera] efficiently approximates the transportation distance between distributions on a graph using multi-scale wavelet transform obtained by applying different scales of diffusion. *LEGSNet*‘s “learnable geometric scattering” computes tunable scales of diffusion with a graph neural network and achieves state of the art performance on biochemistry graph classification [@tong2021DatadrivenLearningGeometric]. These are but a few of the many manifold learning techniques based in diffusion.
 
 Constructing the diffusion matrix from the affinity matrix $A$ is straightforward: you simply row-normalize $A$, with an optional step to normalizing by density.
 
@@ -133,7 +133,7 @@ Here is the algorithm presented in Coifman and Lafon [@coifman2006DiffusionMaps]
 
 $P$ has several nice properties. The rows $P[i]$ give the transition probabilities of a single step random walk starting at point $x_{i}$; each row $P[i]$ can be viewed as a probability distribution centered at $x_{i}$. This is preserved under powers of the matrix. The rows of $P^t$ still sum to 1, and $P^t[i]$ now gives the probability distribution of a $t$-step random walk starting at $x_{i}$.
 
-Although $P$ is not symmetric, it is conjugate to a symmetric matrix, via $D^{0.5}PD^{-0.5} = D^{-0.5}AD^{-0.5}$, granting it a full basis of real-valued eigenvectors and eigenvalues. These eigenvectors are shared with the normalized graph Laplacian $L = I - D^{-0.5}AD^{-0.5}$. The eigenvalues of $P$ lie between 0 and 1. Powering the matrix $P^t$ thus corresponds to powering the eigenvalues $\lambda_{i}^t$ of $P$, via diagonalization
+Although $P$ is not symmetric, it is conjugate to a symmetric matrix, via $D^{0.5}PD^{-0.5} = D^{-0.5}AD^{-0.5}$, granting it a full basis of real-valued eigenvectors and eigenvalues. These eigenvectors are shared with the normalized graph Laplacian $L = I - D^{-0.5}AD^{-0.5}$. The eigenvalues of $P$ have magnitude less than or equal to 1. Powering the matrix $P^t$ thus corresponds to powering the eigenvalues $\lambda_{i}^t$ of $P$, via diagonalization
 $$
 P^t = \Psi \Lambda^t \Psi^T
 $$
@@ -146,7 +146,7 @@ This is a remarkable feature of the diffusion matrix: the ability to “denoise�
 
 Developed by Yann Ollivier in 2007, *Coarse Ricci Curvature* (or sometimes, “Ollivier Ricci Curvature”) is a direct translation of Ricci curvature to discrete metric spaces like graphs [@ollivier2009RicciCurvatureMarkov]. Several classical properties of Ricci curvature can be extended to the graph setting using Coarse Ricci Curvature. Ollivier has, for instance, proven versions of concentration inequalities, Bonnet Myers (more). Coarse Ricci Curvature has, in this way, become something of a bridge between continuous and coarse geometry. The basis of this bridge is optimal transport, and specifically, the 1-Wasserstein distance.
 
-In the Riemannian setting, Ricci curvature captures the phenomenon that, in positive curvature, “small spheres are closer (in transportation distance) than their centers are” (CITE 43 in ORC Paper). On the sphere, for instance, imagine two circles placed at the north and south poles: every point is closer to the corresponding point on the opposite pole than the centers. In negatively curved spaces, the discrepancy reverses, while in a flat space, the average distance between the points of the circles is the distance between the centers.
+In the Riemannian setting, Ricci curvature captures the phenomenon that, in positive curvature, “small spheres are closer (in transportation distance) than their centers are” [@ollivier2009RicciCurvatureMarkov]. On the sphere, for instance, imagine two circles centered on the north and south poles: every point in each circle is closer to the corresponding point in the opposite circle than are the circles' centers. This effect diminishes as one moves the circles closer together, but never reaches equality. In negatively curved spaces, the discrepancy reverses, while in a flat space, the average distance between the points of the circles is the distance between the centers.
 
 Coarse Ricci Curvature captures a similar phenomenon on graphs. Instead of spheres, it uses locally-centered probability distributions defined by random walks. And to measure the distance between these walks, it uses the 1-Wasserstein (or Earth Mover’s) distance. We’ll briefly define each.
 
@@ -162,15 +162,17 @@ $$W_{1}(\mu_{x},\mu_{y}) := \inf_{\xi \in \Pi(\mu_{x},\mu_{y})} \sum_{x \in X} \
 :::
 
 What is the analog on a graph of a “small sphere” around a point? Ollivier replaces spheres with a family of measures $m_{x}(\cdot)$ defined for each point $x$, where
+
 1. Each $\mu_{x}(\cdot)$ depends measurably on $x$, i.e. the map $x \to \mu_{x}$ is measurable.
 2. Each $\mu_{x}(\cdot)$ has finite first moment, or *Jump*, i.e. for some $o \in X$ $\int d(o,y) \mu_{x}(y) \, dx < \infty$.
 
-The *Jump* $J(\mu_{x})$ of a measure, a measure of its concentration around a central point, is a concept to which we’ll return.
-$$
-J(\mu_{x}) = \int_{y \in X} d(x, y) \mu_{x}(y) \, dx 
-$$
+In graphs, Ollivier defines these $\mu_x$ as the probability distributions created by a single-step random walk from the point $x$.
 
-In graphs, Ollivier defines these $\mu_x$ as the probability distributions created by a single-step random walk from the point $x$. With a transition probability $\alpha$, and equal probability of moving to each of $x$‘s neighbors on the graph, $\mu_{x}(x) = (1-\alpha)$ and $m_{x}(y) = \alpha$ if $y \in N(x)$ or $0$ otherwise. This is analogous to defining $m_{x} = P e_{x}$, if $P$ is the diffusion matrix created from a binary adjacency matrix. Note, however, that there is nothing limiting us to binary adjacency matrices, or even single steps of diffusion; the two conditions above are equally satisfied by weighted adjacency matrices and $t$-step diffusions, and in sparse or noisy graphs, this may be desirable.
+
+
+ With a transition probability $\alpha$, and equal probability of moving to each of $x$‘s neighbors on the graph, $\mu_{x}(x) = (1-\alpha)$ and $m_{x}(y) = \alpha$ if $y \in N(x)$ or $0$ otherwise. 
+ 
+ This is analogous to defining $m_{x} = P e_{x}$, if $P$ is the diffusion matrix created from a binary adjacency matrix. Note, however, that there is nothing limiting us to binary adjacency matrices, or even single steps of diffusion; the two conditions above are equally satisfied by weighted adjacency matrices and $t$-step diffusions, and in sparse or noisy graphs, this may be desirable.
 
 ::: {#def-coarse-ricci-curvature}
 ### Coarse Ricci Curvature
@@ -191,7 +193,9 @@ $$\kappa(x,y) = \frac{\epsilon^2 \text{Ric}(v,v)}{2(d+2)}+o(\epsilon^3 + \epsilo
 
 Hence the coarse Ricci curvature applied to a manifold recovers the Ricci curvature, up to a scaling factor contingent on dimension, and plus an error term that grows with the radius of ball and distance between points.
 
-Ollivier’s choice not to scale $\kappa(x,y)$ by dimension is interesting, and likely motivated by his application of coarse Ricci curvature to graph-like spaces for which dimension isn’t clearly defined, like social networks. Within our domain of point-cloud data, incorporating dimension may be desirable; without it, spaces of high dimension can be conflated with spaces of low negative curvature but high dimension.
+Ollivier’s choice not to scale $\kappa(x,y)$ by dimension is interesting, and likely motivated by his application of coarse Ricci curvature to graph-like spaces for which dimension isn’t clearly defined, like social networks. Within our domain of point-cloud data, incorporating dimension may be desirable; without it, spaces of high dimension can be conflated with spaces of lower dimension but higher negative curvature. 
+
+- [ ] Ollivier actually does define a local diffusion-based dimension
 
 A result on coarse Ricci curvature which will prove useful concerns the *contraction (or expansion) of measure* that occurs under diffusion in spaces of positive (or negative) curvature. This is @ollivier2009RicciCurvatureMarkov's Proposition 20:
 
@@ -218,11 +222,11 @@ This motivates our formulation of graph curvature, which uses a *comparison* bet
 
 1. **Point-wise, instead of edge-wise**. In many applications, knowledge of the Ricci curvatures is unnecessarily detailed. Diffusion curvature answers the question: *is the region around this point positively or negatively curved, and in what magnitude, relative to other points on the manifold?*
 
-2. **Diffusion-based denoising**. When edges may be spurious, and random sampling creates deceptive pockets of density, Diffusion Curvature inherits the denoising obtained by powering the diffusion operator.
+2. **Diffusion-based denoising**. When edges may be spurious, and random sampling creates deceptive pockets of density, Diffusion Curvature inherits the denoising properties of the diffusion operator.
 
 3. **Extremely fast**. Designed for point clouds with millions of points, the pointwise Diffusion Curvature of the entire dataset can be calculated with a handful of sparse matrix multiplications. In addition, Diffusion Curvature can be *GPU accelerated*. This combination allows computing in minutes what takes existing methods hours.
 
-4. **Differentiable**. Diffusion Curvature natively supports backpropogation, and can easily be incorporated into a loss function for a neural network, e.g. to regularize a latent space to have low (or high) curvature. We provide a PyTorch implementation of the algorithm for this purpose. [LINK TO GITHUB]
+4. **Differentiable**. Diffusion Curvature natively supports backpropogation, and can easily be incorporated into a loss function for a neural network, e.g. to regularize a latent space to have low (or high) curvature. We provide a PyTorch implementation of the algorithm for this purpose.
 
 The core intuition of Diffusion Curvature is that the *laziness* of random walks on a graph is a proxy for the curvature of the underlying manifold. Picture a “random walker” drunkenly traversing a sphere. If he manages, over the course of several steps, to wander to the opposite pole, he has many ways of getting back to where he started. By contrast, if he begins on the top of a (negatively curved) saddle and wanders down one side, any path aside from exactly retracing his steps incurs a steep distance penalty. On the sphere, the random walker is more likely to find his way home: his walks are “lazier”.
 
@@ -240,7 +244,7 @@ $$
 
 This provides a more sensitive and parameter-free measure of the 'spread' of diffusion.
 
-Second, by comparing the laziness of diffusion between two manifolds – one of known curvature – we make our method signed.
+Second, by comparing the laziness of diffusion between our manifold and one of known curvature, we make our method signed.
 
 ::: {#def-diffusion-curvature}
 #### Diffusion Curvature
@@ -260,7 +264,7 @@ Our best results come a very simple formulation of both, where the ground distan
 ::: {#def-entropic-diffusion-curvature}
 #### Entropic Diffusion Curvature
 
-The Entropic Diffusion Curvature of a t-step diffusion on points sampled from $\mathcal{M} \in \mathbb{R}^d$, with markov matrix $P^t$, is
+The Entropic Diffusion Curvature of a t-step diffusion on points sampled from manifold $\mathcal{M}$ with intrinsic dimension $d$ and markov matrix $P^t$, is
 $$
 \kappa^e_{t}(x_{i}) = H(P^t[i]) - H(P_{E}^t[i])
 $$
@@ -268,9 +272,112 @@ $$
 where $H$ is the Shannon Entropy, and $P_{E}^t$ is the diffusion matrix of the Euclidean comparison space  $\mathbb{R}^d$.
 :::
 
-which evokes the use of entropy to measure heat diffusion.
+This evokes the use of entropy to measure heat diffusion.
 
-This definition rests on two claims: that the laziness of diffusion reveals the (unsigned) magnitude of curvature, and that by comparing diffusion across manifolds, we can convert this into a signed curvature. The next two sections will analyze this first claim. We provide a motivating example recovering a Bishop-Gromov type volume comparison from our entropic definition. We then analyze diffusion laziness within Ollivier's framework of metric measure theory, and bound the diffusion laziness from above by the Ollivier-Ricci curvature. 
+This definition rests on two claims: that the laziness of diffusion reveals the (unsigned) magnitude of curvature, and that by comparing diffusion across manifolds, we can convert this into a signed curvature. The next two sections will analyze this first claim. We first analyze diffusion laziness within Ollivier's framework of metric measure theory, and bound the diffusion laziness from above by the Ollivier-Ricci curvature. We then provide a motivating example recovering a Bishop-Gromov type volume comparison from our entropic definition. Finally, we describe our method for constructing a comparison space with locally-indistinguishable diffusion to the given manifold.
+
+## Bounding diffusion laziness by Ollivier-Ricci curvature
+
+Although diffusion curvature was designed for sampled manifolds, it extends naturally to the realm of more general graphs. Indeed, diffusion curvature can be seen as an node-wise adaptation of Ollivier Ricci curvature, the theoretically richest and highest performing edge-wise graph curvature [citations to Bastian’s paper on ORC expressivity]. Here we review the definitions of Ollivier-Ricci curvature and present theoretical connections between it and diffusion curvature. These motivate the use of diffusion curvature as substitute for Ollivier Ricci curvature on large, or noisy graphs where the latter method stumbles. [Present some of these in experiments]
+
+Ollivier Ricci curvature is based in optimal transport, formalizing the classical intuition that in spaces of positive curvature, “spheres are closer than their centers” [cite ollivier]. In place of spheres, Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1 distance with the shortest-path metric. Given points $x,y$ in the metric space, with 1-step diffusions $m_{x}$ and $m_{y}$, the Ollivier Ricci curvature of the edge between $x$ and $y$ is:
+$$\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}$$
+
+Local curvature always involves some comparison. Here, the comparison is between the manifold’s optimal transport distance (the numerator), and the Euclidean optimal transport distance (which, helpfully, is just the distance in the denominator. You’ll notice the similarity to diffusion curvature ([@def-diffusion-curvature]), which replaces the $W_{1}$ distance between two diffused distributions with the $W_{1}$ laziness of a single diffusion ([@def-laziness-of-diffusion]), and replaces the quotient with a difference. We do this for both the manifold (Ollivier's numerator) and a Euclidean comparison space (Ollivier's denominator).
+
+$$
+k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
+$$
+
+<!-- $$
+k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
+$$ -->
+
+The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by $W_{1}(\delta_{x},m_{x}^t)$. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:
+
+::: {#prp-coarse-ricci-curvature-bounds-diffusion-laziness}
+#### Coarse Ricci Curvature Bounds Diffusion Laziness
+
+Let $(X,d,m)$ be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some $k$ such that $\kappa(x,y) \geq k$ for all $x,y \in X$. The Wasserstein Spread of Diffusion of a $t$ step diffusion in $X$ is bounded above by
+$$
+W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
+$$
+
+In particular, if $k>0$ then $W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}$, and if $k=0$, then $W_{1}(\delta_{x},m_{x}^t) \leq tW_1\left(\delta_x,m_x\right)$.
+:::
+
+To prove this, first we bound $W_{1}(m_{x}^t,m_{x}^{t+1})$ using @prp-ollivier-contraction-of-measure. The proposition states that a lower bound on curvature, such as we have, implies that
+$$
+W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
+$$
+where here $\mu,\mu'$ are two probability distributions and $m$ is a random walk. This provides an easy lemma:
+
+
+::: {#lem-inductive-contraction-of-measure}
+
+#### Inductive Contraction of Measure
+Let $(X,d,m)$ be a metric space with a random walk. Suppose there is some $k \in \mathbb{R}$ such that the coarse Ricci curvature $\kappa(x,y) \geq k$ for all $x,y \in X$. Then:
+$$
+W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
+$$
+:::
+
+::: {.proof}
+We proceed by induction. For $t=0$, the above is true, as $W_{1}(m_{x}^0, m_{x}^{1}) =W_{1}(\delta_x, m_{x}^{1}) = W_1\left(\delta_x,m_x\right)$. Suppose it holds for $t-1$, e.g.
+$$
+W_1\left(m_x^{t-1}, m_x^{t}\right) \leq(1-k)^{t-1} W_1\left(\delta_x,m_x\right)
+$$
+
+Consider $W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right)$, the application of another step of diffusion. By Ollivier’s Proposition 20, this distance is bounded above by
+$$
+W_1\left(\mu_1 \star m, \mu_2 \star m\right) \leq(1-k) W_1\left(\mu_1, \mu_2\right)
+$$
+So
+$$
+W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right) \leq  (1-k)W_1\left(m_x^{t-1}, m_x^{t}\right)
+$$
+
+which, since the statement holds for $t-1$, yields
+$$
+W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
+$$
+:::
+
+We can now use this lemma to decompose our $t$-step diffusion into a sum of single-step diffusions, allowing an easy proof of the proposition.
+
+:::{.proof}
+By the triangle inequality,
+$$
+W_{1}(\delta_{x},m_{x}^t) \leq W_1\left(\delta_x,m_x\right) + W_{1}(m_{x},m_{x}^2) + \dots + W_{1}(m_{x}^{t-1}, m_{x}^t)
+$$
+
+By @lem-inductive-contraction-of-measure,
+$$
+\leq W_1\left(\delta_x,m_x\right)\left(1+(1-k)+(1-k)^2+\ldots+(1-k)^{t-1}\right)
+$$
+
+This truncated series is equal to $\frac{1-(1-k)^t}{1-(1-k)} = \frac{(1-(1-k)^t)}{k}$. If $k>0$, then as $t \to \infty$, the infinite sum $\sum_{i=0}^t (1-k)^i$ converges to the geometric series $\frac{1}{1-(1-k)} = \frac{1}{k}$. Because the sum is monotonically increasing with $t$, the partial sum is upper bounded by the infinite sum. It follows that
+$$
+W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
+$$
+
+If $k=0$, then obviously $\sum_{i}^t (1-k)^i = t$.
+
+:::
+
+The above asserts that the “spread” of diffusion is bounded from above by the Ollivier Ricci curvature of the region. To turn this measurement of spread into a signed curvature, we have only to introduce a comparison: the dimensional constant of the Euclidean spread of diffusion, $W_{1}^E(\delta_{x},m_{x}^t)$. Using Proposition 1, we can directly bound $k_{D}$ in terms of the Ollivier Ricci curvature:
+
+$$
+1 - \frac{W^M_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}}{W_{1}^E(\delta_{x},m_{x}^t)} \leq k_{D}
+$$
+
+A simple approximation of $W_{1}^E(\delta_{x},m_{x}^t)$ is obtained by scaling the spread of a single-step diffusion by a factor of t, i.e. $tW_{1}^E(\delta_{x},m_{x})$. Using this, and noting that $W_{1}^E(\delta_{x},m_{x}) \approx W_{1}^M(\delta_{x},m_{x})$,
+
+$$
+1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
+$$
+<!-- 
+**Note: this analysis sidesteps the reality that tJ is a (possibly egregious) *overestimate* of the euclidean WSD. We can’t actually just plug it in without pushing some indeterminate space inbetween the sides of the inequality** -->
 
 
 ## A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison
@@ -326,102 +433,6 @@ $$
 $$
 This presents us with two comparisons: one between the average volume within $N_{t}(x)$ both in Euclidean space and on the manifold, and one between the Wasserstein spread of diffusion in Euclidean space and on the manifold. Note that both exhibit the same inverse relationship to curvature. If the curvature of $m$ is greater than in euclidean space (e.g. positive), the volume of a ball is smaller – just as the spread of diffusion is diminished. In negative curvature, we have the opposite. 
 
-## Bounding diffusion laziness by Ollivier-Ricci curvature
-
-Although diffusion curvature was designed for sampled manifolds, it extends naturally to the realm of more general graphs. Indeed, diffusion curvature can be seen as an node-wise adaptation of Ollivier Ricci curvature, the theoretically richest and highest performing edge-wise graph curvature [citations to Bastian’s paper on ORC expressivity]. Here we review the definitions of Ollivier-Ricci curvature and present theoretical connections between it and diffusion curvature. These motivate the use of diffusion curvature as substitute for Ollivier Ricci curvature on large, or noisy graphs where the latter method stumbles. [Present some of these in experiments]
-
-Ollivier Ricci curvature is based in optimal transport, formalizing the classical intuition that in spaces of positive curvature, “spheres are closer than their centers” [cite ollivier]. In place of spheres, Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1 distance with the shortest-path metric. Given points $x,y$ in the metric space, with 1-step diffusions $m_{x}$ and $m_{y}$, the Ollivier Ricci curvature of the edge between $x$ and $y$ is:
-$$\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}$$
-
-Local curvature always involves some comparison. Here, the comparison is between the manifold’s optimal transport distance (the numerator), and the Euclidean optimal transport distance (which, helpfully, is just the distance in the denominator. You’ll notice the similarity to diffusion curvature ([@def-diffusion-curvature]), which replaces the $W_{1}$ distance between two diffused distributions with the $W_{1}$ laziness of a single diffusion ([@def-laziness-of-diffusion]), and replaces the quotient with a difference. We do this for both the manifold (Ollivier's numerator) and a Euclidean comparison space (Ollivier's denominator).
-
-$$
-k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
-$$
-
-<!-- $$
-k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
-$$ -->
-
-The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by $W_{1}(\delta_{x},m_{x}^t)$. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:
-
-::: {#prp-coarse-ricci-curvature-bounds-diffusion-laziness}
-#### Coarse Ricci Curvature Bounds Diffusion Laziness
-
-Let $(X,d,m)$ be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some $k$ such that $\kappa(x,y) \geq k$ for all $x,y \in X$. The Wasserstein Spread of Diffusion of a $t$ step diffusion in $X$ is bounded above by
-$$
-W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
-$$
-
-In particular, if $k>0$ then $W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}$, and if $k=0$, then $W_{1}(\delta_{x},m_{x}^t) \leq tW_1\left(\delta_x,m_x\right)$.
-:::
-
-To prove this, first we bound $W_{1}(m_{x}^t,m_{x}^{t+1})$ using @prp-ollivier-contraction-of-measure. The proposition states that a lower bound on curvature, such as we have, implies that
-$$
-W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
-$$
-where here $\mu,\mu'$ are two probability distributions and $m$ is a random walk. This provides an easy lemma:
-
-
-::: {#lem-inductive-contraction-of-measure}
-
-#### Inductive Contraction of Measure
-Let $(X,d,m)$ be a metric space with a random walk. Suppose there is some $k \in \mathbb{R}$ such that the coarse Ricci curvature $\kappa(x,y) \geq k$ for all $x,y \in X$. Then:
-$$
-W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
-$$
-:::
-
-
-We proceed by induction. For $t=0$, the above is true, as $W_{1}(m_{x}^0, m_{x}^{1}) =W_{1}(\delta_x, m_{x}^{1}) = W_1\left(\delta_x,m_x\right)$. Suppose it holds for $t-1$, e.g.
-$$
-W_1\left(m_x^{t-1}, m_x^{t}\right) \leq(1-k)^{t-1} W_1\left(\delta_x,m_x\right)
-$$
-
-Consider $W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right)$, the application of another step of diffusion. By Ollivier’s Proposition 20, this distance is bounded above by
-$$
-W_1\left(\mu_1 \star m, \mu_2 \star m\right) \leq(1-k) W_1\left(\mu_1, \mu_2\right)
-$$
-So
-$$
-W_1\left(m_x^{t-1}\star m, m_x^{t}\star m\right) \leq  (1-k)W_1\left(m_x^{t-1}, m_x^{t}\right)
-$$
-
-which, since the statement holds for $t-1$, yields
-$$
-W_1\left(m_x^t, m_x^{t+1}\right) \leq(1-k)^t W_1\left(\delta_x,m_x\right)
-$$
-
-To use this lemma, we can decompose our $t-$step diffusion into a sum of single step diffusions. By the triangle inequality,
-$$
-W_{1}(\delta_{x},m_{x}^t) \leq W_1\left(\delta_x,m_x\right) + W_{1}(m_{x},m_{x}^2) + \dots + W_{1}(m_{x}^{t-1}, m_{x}^t)
-$$
-
-By @lem-inductive-contraction-of-measure,
-$$
-\leq W_1\left(\delta_x,m_x\right)\left(1+(1-k)+(1-k)^2+\ldots+(1-k)^{t-1}\right)
-$$
-
-This truncated series is equal to $\frac{1-(1-k)^t}{1-(1-k)} = \frac{(1-(1-k)^t)}{k}$. If $k>0$, then as $t \to \infty$, the infinite sum $\sum_{i=0}^t (1-k)^i$ converges to the geometric series $\frac{1}{1-(1-k)} = \frac{1}{k}$. Because the sum is monotonically increasing with $t$, the partial sum is upper bounded by the infinite sum. It follows that
-$$
-W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
-$$
-
-If $k=0$, then obviously $\sum_{i}^t (1-k)^i = t$.
-
-The above asserts that the “spread” of diffusion is bounded from above by the Ollivier Ricci curvature of the region. To turn this measurement of spread into a signed curvature, we have only to introduce a comparison: the dimensional constant of the Euclidean spread of diffusion, $W_{1}^E(\delta_{x},m_{x}^t)$. Using Proposition 1, we can directly bound $k_{D}$ in terms of the Ollivier Ricci curvature:
-
-$$
-1 - \frac{W^M_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}}{W_{1}^E(\delta_{x},m_{x}^t)} \leq k_{D}
-$$
-A simple approximation of $W_{1}^E(\delta_{x},m_{x}^t)$ is obtained by scaling the spread of a single-step diffusion by a factor of t, i.e. $tW_{1}^E(\delta_{x},m_{x})$. Using this, and noting that $W_{1}^E(\delta_{x},m_{x}) \approx W_{1}^M(\delta_{x},m_{x})$,
-
-$$
-1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
-$$
-
-**Note: this analysis sidesteps the reality that tJ is a (possibly egregious) *overestimate* of the euclidean WSD. We can’t actually just plug it in without pushing some indeterminate space inbetween the sides of the inequality**
-
 ## Comparing Diffusion Across Manifolds
 
 For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature with a comparison between spaces. In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is *assumed* that the scale differs between and possibly even *within* a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the 'size' of one's 'measuring stick' could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed *most* in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.
@@ -465,7 +476,7 @@ Most existing methods only quantify their performance in high dimensions on one 
 ## Loss Landscapes
 
 
-## Curvature ********as******** a TDA Filtration
+## Curvature as a TDA Filtration
 
 
 # Related Work
