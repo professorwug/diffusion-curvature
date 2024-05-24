@@ -168,10 +168,13 @@ What is the analog on a graph of a “small sphere” around a point? Ollivier r
 
 In graphs, Ollivier defines these $\mu_x$ as the probability distributions created by a single-step random walk from the point $x$.
 
-
-
- With a transition probability $\alpha$, and equal probability of moving to each of $x$‘s neighbors on the graph, $\mu_{x}(x) = (1-\alpha)$ and $m_{x}(y) = \alpha$ if $y \in N(x)$ or $0$ otherwise. 
- 
+$$
+\mu_x(y)=\left\{\begin{array}{cl}
+\frac{\alpha}{|N(x)|} & \text { if } y \in N(x) \\
+1-\alpha & \text { if } y=x \\
+0 & \text { else }
+\end{array}\right.
+$$
  This is analogous to defining $m_{x} = P e_{x}$, if $P$ is the diffusion matrix created from a binary adjacency matrix. Note, however, that there is nothing limiting us to binary adjacency matrices, or even single steps of diffusion; the two conditions above are equally satisfied by weighted adjacency matrices and $t$-step diffusions, and in sparse or noisy graphs, this may be desirable.
 
 ::: {#def-coarse-ricci-curvature}
@@ -288,10 +291,6 @@ Local curvature always involves some comparison. Here, the comparison is between
 $$
 k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
 $$
-
-<!-- $$
-k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
-$$ -->
 
 The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by $W_{1}(\delta_{x},m_{x}^t)$. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:
 
@@ -505,11 +504,14 @@ Most existing methods only quantify their performance in high dimensions on one 
 ## Curvature as a TDA Filtration
 
 
+
 # Related Work
 
 ## Foreman Ricci Curvature
 
 ## Hickock & Blumberg's Volume Comparison Curvature
+
+## Sritharan's Extrinsic Curvature
 
 
 # Conclusion
