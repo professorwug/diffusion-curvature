@@ -168,13 +168,10 @@ What is the analog on a graph of a “small sphere” around a point? Ollivier r
 
 In graphs, Ollivier defines these $\mu_x$ as the probability distributions created by a single-step random walk from the point $x$.
 
-$$
-\mu_x(y)=\left\{\begin{array}{cl}
-\frac{\alpha}{|N(x)|} & \text { if } y \in N(x) \\
-1-\alpha & \text { if } y=x \\
-0 & \text { else }
-\end{array}\right.
-$$
+
+
+ With a transition probability $\alpha$, and equal probability of moving to each of $x$‘s neighbors on the graph, $\mu_{x}(x) = (1-\alpha)$ and $m_{x}(y) = \alpha$ if $y \in N(x)$ or $0$ otherwise. 
+ 
  This is analogous to defining $m_{x} = P e_{x}$, if $P$ is the diffusion matrix created from a binary adjacency matrix. Note, however, that there is nothing limiting us to binary adjacency matrices, or even single steps of diffusion; the two conditions above are equally satisfied by weighted adjacency matrices and $t$-step diffusions, and in sparse or noisy graphs, this may be desirable.
 
 ::: {#def-coarse-ricci-curvature}
@@ -361,7 +358,6 @@ W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
 $$
 
 If $k=0$, then obviously $\sum_{i}^t (1-k)^i = t$.
-
 :::
 
 The above asserts that the “spread” of diffusion is bounded from above by the Ollivier Ricci curvature of the region. To turn this measurement of spread into a signed curvature, we have only to introduce a comparison: the dimensional constant of the Euclidean spread of diffusion, $W_{1}^E(\delta_{x},m_{x}^t)$. Using Proposition 1, we can directly bound $k_{D}$ in terms of the Ollivier Ricci curvature:
@@ -375,8 +371,7 @@ A simple approximation of $W_{1}^E(\delta_{x},m_{x}^t)$ is obtained by scaling t
 $$
 1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
 $$
-<!-- 
-**Note: this analysis sidesteps the reality that tJ is a (possibly egregious) *overestimate* of the euclidean WSD. We can’t actually just plug it in without pushing some indeterminate space inbetween the sides of the inequality** -->
+
 
 
 ## A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison
@@ -430,6 +425,7 @@ The Diffusion Curvature is then
 $$
 \frac{1}{t}(H(m_{E}^t) - H(m_{x}^t)) \simeq \frac{1}{t}\ln(V_{E}(\sqrt{ t })) - \frac{1}{t}\ln(V_{m}(\sqrt{ t })) + \frac{1}{4t^2}( W_{2}(d_{x},m_{E}^t) - W_{2}(d_{x},m_{x}^t))
 $$
+
 This presents us with two comparisons: one between the average volume within $N_{t}(x)$ both in Euclidean space and on the manifold, and one between the Wasserstein spread of diffusion in Euclidean space and on the manifold. Note that both exhibit the same inverse relationship to curvature. If the curvature of $m$ is greater than in euclidean space (e.g. positive), the volume of a ball is smaller – just as the spread of diffusion is diminished. In negative curvature, we have the opposite. 
 
 ## Comparing Diffusion Across Point Clouds
@@ -440,11 +436,11 @@ In the continuous realm, this is easy: volume on one surface has the same units 
 
 Our challenge is to construct a Euclidean comparison space on which diffusion locally behaves the same as on our given point cloud. We first motivate the need for taking special care with the graph construction, illustrating how naive approaches obscure geometric information. We then describe two simple workarounds.
 
-A caveat here: while the (unsigned) diffusion laziness is easily applicable to arbitrary graphs, the methods we describe below for constructing a comparison space and obtained a (signed) diffusion curvature only apply to point clouds. We suspect there are equivalent methods applicable to general graphs, but we focus on the point cloud setting.^[For instance, one could construct a comparison graph which matched the 1-step diffusion laziness of the input graph, after suitable denoising.]
+A caveat here: while the (unsigned) diffusion laziness is easily applicable to arbitrary graphs, the methods we describe below for constructing a comparison space and obtaining a (signed) diffusion curvature only apply to point clouds. We suspect there are equivalent methods applicable to general graphs, but we focus on the point cloud setting.^[For instance, one could construct a comparison graph which matched the 1-step diffusion laziness of the input graph, after suitable denoising.]
 
 ### Standard methods of graph construction obscure geometric information
 
-To turn a point cloud into a graph, one places a kernel (e.g. a gaussian) at each point, and assigns edges to surrounding points with weight given by the kernel. The main parameter is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.
+To turn a point cloud into a graph, one places a kernel (e.g. a gaussian) at each point, and assigns edges to surrounding points with weights given by the kernel. The main parameter here is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.
 
 A standard technique for accommodating the variable densities of point cloud data is a $k$-neighbor *adaptive kernel*. Here, the bandwidth at each point is set to the squared distance to the $k$-th nearest neighbor, averaged in some way between the two inputs. Here’s one standard adaptive kernel:
 
@@ -466,11 +462,22 @@ As a result, the adaptive kernel constructed in highly curved spaces has a small
 
 ### The Curvature Agnostic Kernel
 
+To remedy the above, we make a simple adjustment to the standard adaptive kernel. The key is separating the parameter which controls neighborhood size from neighborhood scale. In the adaptive kernel, both are controlled by the parameter $k$; as discussed above, in spaces of high curvature, the same $k$ creates different scales. Instead, we always set $k = 1$ and use another parameter – $\nu$, the neighbor-size – to control the variance of the kernel.
 
+$$
+\begin{aligned}
+k(x, y) & =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y))}
++\frac{e^{-\frac{d(x, y)^2}{d(y, N_{k}(x))^2\nu^2}}}{d(x, N_{k}(y)}
+\end{aligned}
+$$
+
+$\nu$ behaves like the kernel bandwidth in the regular fixed Gaussian kernel.
 
 ### A Simple Euclidean Comparison Space
 
+Now we describe the ‘flattening map’ $\Phi_{X}: \mathbb{R}^d \to \mathbb{R}^d$ introduced above. Its goal: to transform samples from Euclidean space of the manifold’s intrinsic dimension into the same ‘sampling’ as our point cloud. While developing this method, we tried many types of flattening maps, many involving deep learning and flow models. In the end, a very simple technique proved just as effective.
 
+Given points $X$, we compute the average distance to the $k$th nearest neighbor. $\Phi_{X}$ then scales samples in $\mathbb{R}^d$ to have the same average distance.
 
 # Results
 
@@ -489,7 +496,8 @@ The second subtly emerges in the context of related methods. Everything pictured
 
 All of these methods in @fig-2-manifolds-visual-comparison perform well on well-sampled noiseless toy manifolds. In Table [@fig-2-manifolds-noise-table], we see the results of adding Gaussian noise to each manifold.
 
-{{< embed ../nbs/experiments/2a2-toy-manifolds-comparison.ipynb#fig-2-manifolds-noise-table >}}
+<!-- {{< embed ../nbs/experiments/2a2-toy-manifolds-comparison.ipynb#fig-2-manifolds-noise-table >}} -->
+
 
 ### Differentiating Sign in High Dimensions
 
@@ -504,14 +512,11 @@ Most existing methods only quantify their performance in high dimensions on one 
 ## Curvature as a TDA Filtration
 
 
-
 # Related Work
 
 ## Foreman Ricci Curvature
 
 ## Hickock & Blumberg's Volume Comparison Curvature
-
-## Sritharan's Extrinsic Curvature
 
 
 # Conclusion
