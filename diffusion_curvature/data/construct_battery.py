@@ -2,7 +2,7 @@ __all__ = ['create_battery', 'main']
 
 # %% ../nbs/library/datasets/Construct-Battery.ipynb 2
 from tqdm.auto import trange, tqdm
-from .random_surfaces import samples_from_random_surface
+from diffusion_curvature.data.random_surfaces import samples_from_random_surface
 from functools import partial
 def create_battery(
         intrinsic_dims = [3,4,5,6],

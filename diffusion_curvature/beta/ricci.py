@@ -13,8 +13,8 @@ def jax_repeatedly_diffuse_dirac(P, i, t):
 # %% ../nbs/library/core-jax/Ricci-Curvature.ipynb 13
 from fastcore.all import *
 from typing import Callable, Literal, get_args, get_origin
-from .diffusion_laziness import wasserstein_spread_of_diffusion, entropy_of_diffusion
-from .heat_diffusion import jax_power_matrix
+from diffusion_curvature.diffusion_laziness import wasserstein_spread_of_diffusion, entropy_of_diffusion
+from diffusion_curvature.beta.heat_diffusion import jax_power_matrix
 from tqdm.auto import trange
 import jax.numpy as jnp
 import jax

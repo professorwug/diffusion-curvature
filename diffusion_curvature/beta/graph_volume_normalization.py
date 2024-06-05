@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from functools import partial
 from fastcore.all import *
-from ..core import *
+from diffusion_curvature.core import *
 import jax.numpy as jnp
 
 @patch 

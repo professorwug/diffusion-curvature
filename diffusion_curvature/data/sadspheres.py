@@ -2,9 +2,9 @@
 __all__ = ['SadSpheres']
 
 # %% ../nbs/library/datasets/saddle-sphere-ablations.ipynb 5
-from .core import get_adaptive_graph
-from .datasets import rejection_sample_from_saddle, sphere, plane
-from .self_evaluating_datasets import SelfEvaluatingDataset, metric
+from diffusion_curvature.core import get_adaptive_graph
+from diffusion_curvature.data.toys import rejection_sample_from_saddle, sphere, plane
+from diffusion_curvature.data.self_evaluating_datasets import SelfEvaluatingDataset, metric
 from fastcore.all import *
 import xarray as xr
 import inspect

@@ -5,7 +5,7 @@ __all__ = ['rejection_sample_for_torus', 'torus', 'rejection_sample_for_hyperbol
 
 # %% ../nbs/library/datasets/toy-datasets.ipynb 2
 import numpy as np
-from .utils import plot_3d
+from diffusion_curvature.utils import plot_3d
 from nbdev.showdoc import *
 
 # %% ../nbs/library/datasets/toy-datasets.ipynb 16
