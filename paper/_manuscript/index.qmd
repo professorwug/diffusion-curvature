@@ -289,10 +289,6 @@ $$
 k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
 $$
 
-<!-- $$
-k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
-$$ -->
-
 The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by $W_{1}(\delta_{x},m_{x}^t)$. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:
 
 ::: {#prp-coarse-ricci-curvature-bounds-diffusion-laziness}
@@ -362,7 +358,6 @@ W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
 $$
 
 If $k=0$, then obviously $\sum_{i}^t (1-k)^i = t$.
-
 :::
 
 The above asserts that the “spread” of diffusion is bounded from above by the Ollivier Ricci curvature of the region. To turn this measurement of spread into a signed curvature, we have only to introduce a comparison: the dimensional constant of the Euclidean spread of diffusion, $W_{1}^E(\delta_{x},m_{x}^t)$. Using Proposition 1, we can directly bound $k_{D}$ in terms of the Ollivier Ricci curvature:
@@ -376,8 +371,7 @@ A simple approximation of $W_{1}^E(\delta_{x},m_{x}^t)$ is obtained by scaling t
 $$
 1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
 $$
-<!-- 
-**Note: this analysis sidesteps the reality that tJ is a (possibly egregious) *overestimate* of the euclidean WSD. We can’t actually just plug it in without pushing some indeterminate space inbetween the sides of the inequality** -->
+
 
 
 ## A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison
@@ -431,19 +425,46 @@ The Diffusion Curvature is then
 $$
 \frac{1}{t}(H(m_{E}^t) - H(m_{x}^t)) \simeq \frac{1}{t}\ln(V_{E}(\sqrt{ t })) - \frac{1}{t}\ln(V_{m}(\sqrt{ t })) + \frac{1}{4t^2}( W_{2}(d_{x},m_{E}^t) - W_{2}(d_{x},m_{x}^t))
 $$
+
 This presents us with two comparisons: one between the average volume within $N_{t}(x)$ both in Euclidean space and on the manifold, and one between the Wasserstein spread of diffusion in Euclidean space and on the manifold. Note that both exhibit the same inverse relationship to curvature. If the curvature of $m$ is greater than in euclidean space (e.g. positive), the volume of a ball is smaller – just as the spread of diffusion is diminished. In negative curvature, we have the opposite. 
 
-## Comparing Diffusion Across Manifolds
+## Comparing Diffusion Across Point Clouds
 
-For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature with a comparison between spaces. In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is *assumed* that the scale differs between and possibly even *within* a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the 'size' of one's 'measuring stick' could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed *most* in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.
+For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature via a comparison between spaces. 
 
-Our challenge is to construct graphs to allow comparison of their diffusions.
+In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is *assumed* that the scale differs between and possibly even *within* a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the 'size' of one's 'measuring stick' could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed *most* in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.
+
+Our challenge is to construct a Euclidean comparison space on which diffusion locally behaves the same as on our given point cloud. We first motivate the need for taking special care with the graph construction, illustrating how naive approaches obscure geometric information. We then describe two simple workarounds.
+
+A caveat here: while the (unsigned) diffusion laziness is easily applicable to arbitrary graphs, the methods we describe below for constructing a comparison space and obtaining a (signed) diffusion curvature only apply to point clouds. We suspect there are equivalent methods applicable to general graphs, but we focus on the point cloud setting.^[For instance, one could construct a comparison graph which matched the 1-step diffusion laziness of the input graph, after suitable denoising.]
 
 ### Standard methods of graph construction obscure geometric information
 
-To turn a point cloud into a graph, one places a kernel (e.g. a gaussian) at each point, and assigns edges to surrounding points with weight given by the kernel. The main parameter is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.
+To turn a point cloud into a graph, one places a kernel (e.g. a gaussian) at each point, and assigns edges to surrounding points with weights given by the kernel. The main parameter here is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.
+
+A standard technique for accommodating the variable densities of point cloud data is a $k$-neighbor *adaptive kernel*. Here, the bandwidth at each point is set to the squared distance to the $k$-th nearest neighbor, averaged in some way between the two inputs. Here’s one standard adaptive kernel:
+
+$$
+\begin{aligned}
+k(x, y) & =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2}}}{d(y, N_{k}(y))}
++\frac{e^{-\frac{d(x, y)^2}{d(y, N_{k}(x))^2}}}{d(x, N_{k}(y)}
+\end{aligned}
+$$
+
+where $N_{k}(x)$ gives the $k$th nearest neighbor to $x$.
+
+Note that that parameter $k$ plays roles in two kinds of adaptation. By setting the bandwidth to some Euclidean distance $d(x,N_{k}(x))$ between data points, it adapts the kernel to the *right scale* for the point cloud, concentrating its probability within a local neighborhood. It also controls the *size* of that local neighborhood; typically set between 5 and 15.
+
+Unfortunately, this adaptive process hinges on the correspondence between the Euclidean distances $d(x,N_{k}(x))$, and the manifold distances – a correspondence that degrades *faster* the higher the magnitude of curvature!
+Consider a highly-curved paraboloid. The Euclidean distance from its center point to its nearest few neighbors is roughly the geodesic distance. But as the neighborhood widens, and the neighbors move higher up the paraboloid, the Euclidean distance now underestimates the true geodesic distance: it cuts across the manifold. This happens in spaces of high positive or high negative curvature.
+
+As a result, the adaptive kernel constructed in highly curved spaces has a smaller bandwidth than in flat spaces, even using the same kernel parameters. If one directly compares the laziness of diffusion on two such graphs, it will appear lazier than on the flat manifold. 
 
 ### The Curvature Agnostic Kernel
+
+
+
+### A Simple Euclidean Comparison Space
 
 
 

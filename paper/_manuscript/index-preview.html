@@ -10,7 +10,7 @@
     <meta name="author" content="Yanlei Zhang">
     <meta name="author" content="Ian Adelstein">
     <meta name="author" content="Smita Krishnaswamy">
-    <meta name="dcterms.date" content="2024-05-16">
+    <meta name="dcterms.date" content="2024-05-24">
     <meta name="keywords" content="Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds">
 
     <title>Diffusion Curvature for Fast, Point-wise, Noise-Resistant Geometric Featurization of Graphs and Pointclouds</title>
@@ -203,10 +203,10 @@
 <meta name="citation_author" content="Yanlei Zhang">
 <meta name="citation_author" content="Ian Adelstein">
 <meta name="citation_author" content="Smita Krishnaswamy">
-<meta name="citation_publication_date" content="2024-05-16">
-<meta name="citation_cover_date" content="2024-05-16">
+<meta name="citation_publication_date" content="2024-05-24">
+<meta name="citation_cover_date" content="2024-05-24">
 <meta name="citation_year" content="2024">
-<meta name="citation_online_date" content="2024-05-16">
+<meta name="citation_online_date" content="2024-05-24">
 <meta name="citation_language" content="en">
 <meta name="citation_journal_title" content="IEEE TPAMI">
 <meta name="citation_reference" content="citation_title=Bishop–Gromov inequality;,citation_abstract=In mathematics, the Bishop–Gromov inequality is a comparison theorem in Riemannian geometry, named after Richard L. Bishop and Mikhail Gromov. It is closely related to Myers’ theorem, and is the key point in the proof of Gromov’s compactness theorem.;,citation_publication_date=2021-12-08;,citation_cover_date=2021-12-08;,citation_year=2021;,citation_fulltext_html_url=https://en.wikipedia.org/w/index.php?title=Bishop%E2%80%93Gromov_inequality&amp;amp;amp;oldid=1059331416;,citation_language=en-US;,citation_journal_title=Wikipedia;">
@@ -309,7 +309,7 @@
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">May 16, 2024</p>
+              <p class="date">May 24, 2024</p>
             </div>
           </div>
           
@@ -354,10 +354,11 @@
   <ul class="collapse">
   <li><a href="#bounding-diffusion-laziness-by-ollivier-ricci-curvature" id="toc-bounding-diffusion-laziness-by-ollivier-ricci-curvature" class="nav-link" data-scroll-target="#bounding-diffusion-laziness-by-ollivier-ricci-curvature"><span class="header-section-number">3.1</span> Bounding diffusion laziness by Ollivier-Ricci curvature</a></li>
   <li><a href="#a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" id="toc-a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" class="nav-link" data-scroll-target="#a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison"><span class="header-section-number">3.2</span> A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison</a></li>
-  <li><a href="#comparing-diffusion-across-manifolds" id="toc-comparing-diffusion-across-manifolds" class="nav-link" data-scroll-target="#comparing-diffusion-across-manifolds"><span class="header-section-number">3.3</span> Comparing Diffusion Across Manifolds</a>
+  <li><a href="#comparing-diffusion-across-point-clouds" id="toc-comparing-diffusion-across-point-clouds" class="nav-link" data-scroll-target="#comparing-diffusion-across-point-clouds"><span class="header-section-number">3.3</span> Comparing Diffusion Across Point Clouds</a>
   <ul class="collapse">
   <li><a href="#standard-methods-of-graph-construction-obscure-geometric-information" id="toc-standard-methods-of-graph-construction-obscure-geometric-information" class="nav-link" data-scroll-target="#standard-methods-of-graph-construction-obscure-geometric-information"><span class="header-section-number">3.3.1</span> Standard methods of graph construction obscure geometric information</a></li>
   <li><a href="#the-curvature-agnostic-kernel" id="toc-the-curvature-agnostic-kernel" class="nav-link" data-scroll-target="#the-curvature-agnostic-kernel"><span class="header-section-number">3.3.2</span> The Curvature Agnostic Kernel</a></li>
+  <li><a href="#a-simple-euclidean-comparison-space" id="toc-a-simple-euclidean-comparison-space" class="nav-link" data-scroll-target="#a-simple-euclidean-comparison-space"><span class="header-section-number">3.3.3</span> A Simple Euclidean Comparison Space</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4</span> Results</a>
@@ -522,9 +523,6 @@ k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\
 <p><span class="math display">\[
 k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
 \]</span></p>
-<!-- $$
-k_{d}(x,y) = 1 - \frac{W_{1}^M(\delta_{x}, m_{x}^t)}{W_{1}^E(\delta_{x},m_{x}^t)}
-$$ -->
 <p>The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by <span class="math inline">\(W_{1}(\delta_{x},m_{x}^t)\)</span>. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:</p>
 <div id="prp-coarse-ricci-curvature-bounds-diffusion-laziness" class="theorem proposition">
 <p><span class="theorem-title"><strong>Proposition 2 (Coarse Ricci Curvature Bounds Diffusion Laziness)</strong></span> Let <span class="math inline">\((X,d,m)\)</span> be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some <span class="math inline">\(k\)</span> such that <span class="math inline">\(\kappa(x,y) \geq k\)</span> for all <span class="math inline">\(x,y \in X\)</span>. The Wasserstein Spread of Diffusion of a <span class="math inline">\(t\)</span> step diffusion in <span class="math inline">\(X\)</span> is bounded above by <span class="math display">\[
@@ -573,8 +571,7 @@ W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
 <p>A simple approximation of <span class="math inline">\(W_{1}^E(\delta_{x},m_{x}^t)\)</span> is obtained by scaling the spread of a single-step diffusion by a factor of t, i.e.&nbsp;<span class="math inline">\(tW_{1}^E(\delta_{x},m_{x})\)</span>. Using this, and noting that <span class="math inline">\(W_{1}^E(\delta_{x},m_{x}) \approx W_{1}^M(\delta_{x},m_{x})\)</span>,</p>
 <p><span class="math display">\[
 1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
-\]</span> <!-- 
-**Note: this analysis sidesteps the reality that tJ is a (possibly egregious) *overestimate* of the euclidean WSD. We can’t actually just plug it in without pushing some indeterminate space inbetween the sides of the inequality** --></p>
+\]</span></p>
 </section>
 <section id="a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison"><span class="header-section-number">3.2</span> A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison</h2>
@@ -606,18 +603,35 @@ H\left(m_x^t\right)=-\int_{y_\epsilon x} m_x^t(y) \ln \left(m_x^t(y)\right)
 H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
 \]</span> The Diffusion Curvature is then <span class="math display">\[
 \frac{1}{t}(H(m_{E}^t) - H(m_{x}^t)) \simeq \frac{1}{t}\ln(V_{E}(\sqrt{ t })) - \frac{1}{t}\ln(V_{m}(\sqrt{ t })) + \frac{1}{4t^2}( W_{2}(d_{x},m_{E}^t) - W_{2}(d_{x},m_{x}^t))
-\]</span> This presents us with two comparisons: one between the average volume within <span class="math inline">\(N_{t}(x)\)</span> both in Euclidean space and on the manifold, and one between the Wasserstein spread of diffusion in Euclidean space and on the manifold. Note that both exhibit the same inverse relationship to curvature. If the curvature of <span class="math inline">\(m\)</span> is greater than in euclidean space (e.g.&nbsp;positive), the volume of a ball is smaller – just as the spread of diffusion is diminished. In negative curvature, we have the opposite.</p>
+\]</span></p>
+<p>This presents us with two comparisons: one between the average volume within <span class="math inline">\(N_{t}(x)\)</span> both in Euclidean space and on the manifold, and one between the Wasserstein spread of diffusion in Euclidean space and on the manifold. Note that both exhibit the same inverse relationship to curvature. If the curvature of <span class="math inline">\(m\)</span> is greater than in euclidean space (e.g.&nbsp;positive), the volume of a ball is smaller – just as the spread of diffusion is diminished. In negative curvature, we have the opposite.</p>
 </section>
-<section id="comparing-diffusion-across-manifolds" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="comparing-diffusion-across-manifolds"><span class="header-section-number">3.3</span> Comparing Diffusion Across Manifolds</h2>
-<p>For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature with a comparison between spaces. In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is <em>assumed</em> that the scale differs between and possibly even <em>within</em> a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the ‘size’ of one’s ‘measuring stick’ could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed <em>most</em> in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.</p>
-<p>Our challenge is to construct graphs to allow comparison of their diffusions.</p>
+<section id="comparing-diffusion-across-point-clouds" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="comparing-diffusion-across-point-clouds"><span class="header-section-number">3.3</span> Comparing Diffusion Across Point Clouds</h2>
+<p>For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature via a comparison between spaces.</p>
+<p>In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is <em>assumed</em> that the scale differs between and possibly even <em>within</em> a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the ‘size’ of one’s ‘measuring stick’ could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed <em>most</em> in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.</p>
+<p>Our challenge is to construct a Euclidean comparison space on which diffusion locally behaves the same as on our given point cloud. We first motivate the need for taking special care with the graph construction, illustrating how naive approaches obscure geometric information. We then describe two simple workarounds.</p>
+<p>A caveat here: while the (unsigned) diffusion laziness is easily applicable to arbitrary graphs, the methods we describe below for constructing a comparison space and obtaining a (signed) diffusion curvature only apply to point clouds. We suspect there are equivalent methods applicable to general graphs, but we focus on the point cloud setting.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <section id="standard-methods-of-graph-construction-obscure-geometric-information" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="standard-methods-of-graph-construction-obscure-geometric-information"><span class="header-section-number">3.3.1</span> Standard methods of graph construction obscure geometric information</h3>
-<p>To turn a point cloud into a graph, one places a kernel (e.g.&nbsp;a gaussian) at each point, and assigns edges to surrounding points with weight given by the kernel. The main parameter is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.</p>
+<p>To turn a point cloud into a graph, one places a kernel (e.g.&nbsp;a gaussian) at each point, and assigns edges to surrounding points with weights given by the kernel. The main parameter here is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.</p>
+<p>A standard technique for accommodating the variable densities of point cloud data is a <span class="math inline">\(k\)</span>-neighbor <em>adaptive kernel</em>. Here, the bandwidth at each point is set to the squared distance to the <span class="math inline">\(k\)</span>-th nearest neighbor, averaged in some way between the two inputs. Here’s one standard adaptive kernel:</p>
+<p><span class="math display">\[
+\begin{aligned}
+k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2}}}{d(y, N_{k}(y))}
++\frac{e^{-\frac{d(x, y)^2}{d(y, N_{k}(x))^2}}}{d(x, N_{k}(y)}
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(N_{k}(x)\)</span> gives the <span class="math inline">\(k\)</span>th nearest neighbor to <span class="math inline">\(x\)</span>.</p>
+<p>Note that that parameter <span class="math inline">\(k\)</span> plays roles in two kinds of adaptation. By setting the bandwidth to some Euclidean distance <span class="math inline">\(d(x,N_{k}(x))\)</span> between data points, it adapts the kernel to the <em>right scale</em> for the point cloud, concentrating its probability within a local neighborhood. It also controls the <em>size</em> of that local neighborhood; typically set between 5 and 15.</p>
+<p>Unfortunately, this adaptive process hinges on the correspondence between the Euclidean distances <span class="math inline">\(d(x,N_{k}(x))\)</span>, and the manifold distances – a correspondence that degrades <em>faster</em> the higher the magnitude of curvature! Consider a highly-curved paraboloid. The Euclidean distance from its center point to its nearest few neighbors is roughly the geodesic distance. But as the neighborhood widens, and the neighbors move higher up the paraboloid, the Euclidean distance now underestimates the true geodesic distance: it cuts across the manifold. This happens in spaces of high positive or high negative curvature.</p>
+<p>As a result, the adaptive kernel constructed in highly curved spaces has a smaller bandwidth than in flat spaces, even using the same kernel parameters. If one directly compares the laziness of diffusion on two such graphs, it will appear lazier than on the flat manifold.</p>
 </section>
 <section id="the-curvature-agnostic-kernel" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="the-curvature-agnostic-kernel"><span class="header-section-number">3.3.2</span> The Curvature Agnostic Kernel</h3>
+</section>
+<section id="a-simple-euclidean-comparison-space" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="a-simple-euclidean-comparison-space"><span class="header-section-number">3.3.3</span> A Simple Euclidean Comparison Space</h3>
 </section>
 </section>
 </section>
@@ -1290,6 +1304,7 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
 <hr>
 <ol>
 <li id="fn1"><p>Consider kernel density estimation, where one places gaussians on each data point and sums up the probability assigned to each area. The higher the curvature, the higher the reported density, since at the end of an ellipsoid the gaussians have greater overlap with each other than in its center – even though the intrinsic density of the surface is uniform.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>For instance, one could construct a comparison graph which matched the 1-step diffusion laziness of the input graph, after suitable denoising.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
      </main>
@@ -1701,7 +1716,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
