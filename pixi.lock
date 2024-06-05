@@ -443,11 +443,15 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.17.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zlib-1.2.13-hd590300_5.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.5-hfc55251_0.conda
+      - pypi: https://files.pythonhosted.org/packages/45/82/077c13035d6f45d8b8b74d67e9f73f2bfc54ef8d1f79572790f6f7d2b4f5/Cython-3.0.10-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+      - pypi: https://files.pythonhosted.org/packages/24/a8/526e91d1123f415e3e28303cacb3bca8b9822c5e97f2e8e685525a4c22a6/GraphRicciCurvature-0.5.3.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/66/31/1da3877139d75e392f5fd0cbdc3b718ae726f5308ed792d385250c43167c/keopscore-2.2.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/a4/1f/300788b5eab99aec872ed2f3647386d7d7f7bbf4f99c91e9e023b404ff7f/llvmlite-0.42.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+      - pypi: https://files.pythonhosted.org/packages/8b/7d/7da07b8b898b25a83bd91064ffceaa9fa0d7cb3d20c374c14fa431fb257d/networkit-11.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/54/f2/7d1579037643c874fa73516ea84c07e8d30ea347fb1a88c03b198447655d/numba-0.59.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/26/55/e776489172f576b782e616f58273e1f3de56a91004b0d20504169dd345af/pybind11-2.12.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f9/64/2c7b49954aeac6b10e1fd553e190aef8e4737d48506aae60aa6f2b035809/pykeops-2.2.3.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/7c/0d/8787b021d52eb8764c0bb18ab95f720cf554902044c6a5cb1865daf45763/python-louvain-0.16.tar.gz
       - pypi: https://files.pythonhosted.org/packages/ad/2e/8168da51fb50b44909a9f13d9bf831ca8256dd2f36d105db51873b273e2f/scikit_dimension-0.3.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3c/6d/8bd97b4cee55305830b5c5d0121ff7a879597db755152b2d05ce4d7e92ff/tadasets-0.2.1-py3-none-any.whl
       - pypi: .
@@ -892,11 +896,15 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.17.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zlib-1.2.13-hd590300_5.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.5-hfc55251_0.conda
+      - pypi: https://files.pythonhosted.org/packages/45/82/077c13035d6f45d8b8b74d67e9f73f2bfc54ef8d1f79572790f6f7d2b4f5/Cython-3.0.10-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+      - pypi: https://files.pythonhosted.org/packages/24/a8/526e91d1123f415e3e28303cacb3bca8b9822c5e97f2e8e685525a4c22a6/GraphRicciCurvature-0.5.3.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/66/31/1da3877139d75e392f5fd0cbdc3b718ae726f5308ed792d385250c43167c/keopscore-2.2.3.tar.gz
       - pypi: https://files.pythonhosted.org/packages/a4/1f/300788b5eab99aec872ed2f3647386d7d7f7bbf4f99c91e9e023b404ff7f/llvmlite-0.42.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+      - pypi: https://files.pythonhosted.org/packages/8b/7d/7da07b8b898b25a83bd91064ffceaa9fa0d7cb3d20c374c14fa431fb257d/networkit-11.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/54/f2/7d1579037643c874fa73516ea84c07e8d30ea347fb1a88c03b198447655d/numba-0.59.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/26/55/e776489172f576b782e616f58273e1f3de56a91004b0d20504169dd345af/pybind11-2.12.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/f9/64/2c7b49954aeac6b10e1fd553e190aef8e4737d48506aae60aa6f2b035809/pykeops-2.2.3.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/7c/0d/8787b021d52eb8764c0bb18ab95f720cf554902044c6a5cb1865daf45763/python-louvain-0.16.tar.gz
       - pypi: https://files.pythonhosted.org/packages/ad/2e/8168da51fb50b44909a9f13d9bf831ca8256dd2f36d105db51873b273e2f/scikit_dimension-0.3.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/3c/6d/8bd97b4cee55305830b5c5d0121ff7a879597db755152b2d05ce4d7e92ff/tadasets-0.2.1-py3-none-any.whl
       - pypi: .
@@ -2355,6 +2363,12 @@ packages:
   - pkg:pypi/cycler
   size: 13458
   timestamp: 1696677888423
+- kind: pypi
+  name: cython
+  version: 3.0.10
+  url: https://files.pythonhosted.org/packages/45/82/077c13035d6f45d8b8b74d67e9f73f2bfc54ef8d1f79572790f6f7d2b4f5/Cython-3.0.10-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  sha256: 38d40fa1324ac47c04483d151f5e092406a147eac88a18aec789cf01c089c3f2
+  requires_python: '>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*'
 - kind: conda
   name: cytoolz
   version: 0.12.3
@@ -3333,6 +3347,20 @@ packages:
   license: LGPLv2
   size: 104701
   timestamp: 1604365484436
+- kind: pypi
+  name: graphriccicurvature
+  version: 0.5.3.1
+  url: https://files.pythonhosted.org/packages/24/a8/526e91d1123f415e3e28303cacb3bca8b9822c5e97f2e8e685525a4c22a6/GraphRicciCurvature-0.5.3.1-py3-none-any.whl
+  sha256: 0c34473038e5a37af61bfb9ca8f1822e18c72de28358fb647663f8ab5a94e22d
+  requires_dist:
+  - cython
+  - numpy
+  - scipy >=1.0
+  - networkx >=2.0
+  - pot >=0.8.0
+  - packaging
+  - networkit >=6.1
+  - python-louvain
 - kind: conda
   name: graphtools
   version: 1.5.3
@@ -7537,6 +7565,15 @@ packages:
   license_family: GPL
   size: 6773272
   timestamp: 1605211080998
+- kind: pypi
+  name: networkit
+  version: '11.0'
+  url: https://files.pythonhosted.org/packages/8b/7d/7da07b8b898b25a83bd91064ffceaa9fa0d7cb3d20c374c14fa431fb257d/networkit-11.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  sha256: 0bc668b38162edf623c638feb8ff546334f4df0509ef2e24bf35967f5e66f300
+  requires_dist:
+  - scipy
+  - numpy
+  requires_python: '>=3.7'
 - kind: conda
   name: networkx
   version: 2.8.6
@@ -8992,6 +9029,14 @@ packages:
   - pkg:pypi/python-json-logger
   size: 13383
   timestamp: 1677079727691
+- kind: pypi
+  name: python-louvain
+  version: '0.16'
+  url: https://files.pythonhosted.org/packages/7c/0d/8787b021d52eb8764c0bb18ab95f720cf554902044c6a5cb1865daf45763/python-louvain-0.16.tar.gz
+  sha256: b7ba2df5002fd28d3ee789a49532baad11fe648e4f2117cf0798e7520a1da56b
+  requires_dist:
+  - networkx
+  - numpy
 - kind: conda
   name: python-tzdata
   version: '2023.4'

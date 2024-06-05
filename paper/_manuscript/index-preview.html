@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
     <meta charset="utf-8">
-    <meta name="generator" content="quarto-1.4.551">
+    <meta name="generator" content="quarto-1.4.554">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -639,8 +639,8 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2}}}{d(y, N_{k}(y))}
 <h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
 <p>Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined <em>accidentally</em> <span class="citation" data-cites="steinerberger2022CurvatureGraphsEquilibrium bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-steinerberger2022CurvatureGraphsEquilibrium" role="doc-biblioref">Steinerberger 2022</a>; <a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span>! The challenge is to make one’s definition robust to the bogeyman of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok &amp; Blumberg’s, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most <em>fail entirely</em> in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.</p>
 <p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;1</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> places this in the context of existing methods.</p>
-<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a-Toy-Manifolds.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds">
-<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-fig-2-manifolds" class="cell">
+<div class="quarto-embed-nb-cell" data-notebook="/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a-Toy-Manifolds.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds">
+<div class="cell-container"><div class="cell-decorator"><pre>In [38]:</pre></div><div id="cell-fig-2-manifolds" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -694,7 +694,7 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2}}}{d(y, N_{k}(y))}
 <div id="fig-2-manifolds" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+<a href="index_files/figure-html/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="index_files/figure-html/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
@@ -705,8 +705,8 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div></div>
 </div>
 <p>Though the correlation is strong – passing the ‘sniff test’ – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature.</p>
-<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds-visual-comparison">
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell">
+<div class="quarto-embed-nb-cell" data-notebook="/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds-visual-comparison">
+<div class="cell-container"><div class="cell-decorator"><pre>In [72]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell" data-execution_count="72">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -782,7 +782,7 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+<a href="index_files/figure-html/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="index_files/figure-html/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
@@ -794,8 +794,8 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 <p>The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, <em>what matters?</em> Most methods don’t care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%</p>
 <p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> perform well on well-sampled noiseless toy manifolds. In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;3</a>, we see the results of adding Gaussian noise to each manifold.</p>
-<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds-noise-table">
-<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-fig-2-manifolds-noise-table" class="cell">
+<div class="quarto-embed-nb-cell" data-notebook="/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds-noise-table">
+<div class="cell-container"><div class="cell-decorator"><pre>In [88]:</pre></div><div id="cell-fig-2-manifolds-noise-table" class="cell" data-execution_count="88">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, style, loc, exibble</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> sp500</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -848,51 +848,51 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-noise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
-<div id="cnramwscbt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ttargjgnre" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#cnramwscbt table {
+#ttargjgnre table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#cnramwscbt thead, tbody, tfoot, tr, td, th { border-style: none; }
+#ttargjgnre thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#cnramwscbt p { margin: 0; padding: 0; }
- #cnramwscbt .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #cnramwscbt .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #cnramwscbt .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #cnramwscbt .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #cnramwscbt .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cnramwscbt .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #cnramwscbt .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #cnramwscbt .gt_column_spanner_outer:first-child { padding-left: 0; }
- #cnramwscbt .gt_column_spanner_outer:last-child { padding-right: 0; }
- #cnramwscbt .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #cnramwscbt .gt_spanner_row { border-bottom-style: hidden; }
- #cnramwscbt .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #cnramwscbt .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #cnramwscbt .gt_from_md> :first-child { margin-top: 0; }
- #cnramwscbt .gt_from_md> :last-child { margin-bottom: 0; }
- #cnramwscbt .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #cnramwscbt .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #cnramwscbt .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #cnramwscbt .gt_row_group_first td { border-top-width: 2px; }
- #cnramwscbt .gt_row_group_first th { border-top-width: 2px; }
- #cnramwscbt .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cnramwscbt .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #cnramwscbt .gt_left { text-align: left; }
- #cnramwscbt .gt_center { text-align: center; }
- #cnramwscbt .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #cnramwscbt .gt_font_normal { font-weight: normal; }
- #cnramwscbt .gt_font_bold { font-weight: bold; }
- #cnramwscbt .gt_font_italic { font-style: italic; }
- #cnramwscbt .gt_super { font-size: 65%; }
- #cnramwscbt .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #cnramwscbt .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#ttargjgnre p { margin: 0; padding: 0; }
+ #ttargjgnre .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #ttargjgnre .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #ttargjgnre .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #ttargjgnre .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #ttargjgnre .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #ttargjgnre .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #ttargjgnre .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #ttargjgnre .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #ttargjgnre .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #ttargjgnre .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #ttargjgnre .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #ttargjgnre .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #ttargjgnre .gt_spanner_row { border-bottom-style: hidden; }
+ #ttargjgnre .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #ttargjgnre .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #ttargjgnre .gt_from_md> :first-child { margin-top: 0; }
+ #ttargjgnre .gt_from_md> :last-child { margin-bottom: 0; }
+ #ttargjgnre .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #ttargjgnre .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #ttargjgnre .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #ttargjgnre .gt_row_group_first td { border-top-width: 2px; }
+ #ttargjgnre .gt_row_group_first th { border-top-width: 2px; }
+ #ttargjgnre .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #ttargjgnre .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #ttargjgnre .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #ttargjgnre .gt_left { text-align: left; }
+ #ttargjgnre .gt_center { text-align: center; }
+ #ttargjgnre .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #ttargjgnre .gt_font_normal { font-weight: normal; }
+ #ttargjgnre .gt_font_bold { font-weight: bold; }
+ #ttargjgnre .gt_font_italic { font-style: italic; }
+ #ttargjgnre .gt_super { font-size: 65%; }
+ #ttargjgnre .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #ttargjgnre .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 
@@ -914,23 +914,23 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </tr>
 <tr class="even gt_col_headings">
 <td id="Torus" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus</td>
-<td id="Torus noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.05</td>
 <td id="Torus noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.1</td>
-<td id="Torus noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.15</td>
 <td id="Torus noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.2</td>
-<td id="Torus noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.25</td>
+<td id="Torus noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.3</td>
+<td id="Torus noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.4</td>
+<td id="Torus noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.5</td>
 <td id="Saddle" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle</td>
-<td id="Saddle noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.05</td>
 <td id="Saddle noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.1</td>
-<td id="Saddle noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.15</td>
 <td id="Saddle noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.2</td>
-<td id="Saddle noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.25</td>
+<td id="Saddle noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.3</td>
+<td id="Saddle noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.4</td>
+<td id="Saddle noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.5</td>
 <td id="Ellipsoid" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid</td>
-<td id="Ellipsoid noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.05</td>
 <td id="Ellipsoid noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.1</td>
-<td id="Ellipsoid noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.15</td>
 <td id="Ellipsoid noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.2</td>
-<td id="Ellipsoid noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.25</td>
+<td id="Ellipsoid noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.3</td>
+<td id="Ellipsoid noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.4</td>
+<td id="Ellipsoid noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.5</td>
 </tr>
 </tbody>
 <tbody class="gt_table_body">
@@ -938,262 +938,175 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">ED</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
-<td class="gt_row gt_right">0.671</td>
-<td class="gt_row gt_right">0.695</td>
-<td class="gt_row gt_right">0.862</td>
-<td class="gt_row gt_right">1.053</td>
-<td class="gt_row gt_right">1.258</td>
-<td class="gt_row gt_right">1.346</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.546</td>
-<td class="gt_row gt_right">5.179</td>
-<td class="gt_row gt_right">6.903</td>
-<td class="gt_row gt_right">5.927</td>
-<td class="gt_row gt_right">5.019</td>
-<td class="gt_row gt_right">4.513</td>
-<td class="gt_row gt_right">0.297</td>
-<td class="gt_row gt_right">0.596</td>
-<td class="gt_row gt_right">1.036</td>
-<td class="gt_row gt_right">1.610</td>
-<td class="gt_row gt_right">1.944</td>
-<td class="gt_row gt_right">2.087</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.774</td>
+<td class="gt_row gt_right">0.867</td>
+<td class="gt_row gt_right">0.938</td>
+<td class="gt_row gt_right">1.066</td>
+<td class="gt_row gt_right">1.029</td>
+<td class="gt_row gt_right">1.080</td>
+<td class="gt_row gt_right">0.829</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.517</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.234</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.355</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.450</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.561</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.331</td>
+<td class="gt_row gt_right">0.667</td>
+<td class="gt_row gt_right">1.116</td>
+<td class="gt_row gt_right">1.136</td>
+<td class="gt_row gt_right">1.260</td>
+<td class="gt_row gt_right">1.275</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.757</td>
-<td class="gt_row gt_right">0.813</td>
-<td class="gt_row gt_right">0.854</td>
-<td class="gt_row gt_right">0.889</td>
-<td class="gt_row gt_right">0.963</td>
-<td class="gt_row gt_right">0.976</td>
-<td class="gt_row gt_right">0.952</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.722</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.363</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.327</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.383</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.513</td>
-<td class="gt_row gt_right">0.349</td>
-<td class="gt_row gt_right">0.620</td>
-<td class="gt_row gt_right">0.683</td>
-<td class="gt_row gt_right">0.933</td>
-<td class="gt_row gt_right">1.070</td>
-<td class="gt_row gt_right">1.102</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Forman Ricci Curvature</td>
+<td class="gt_row gt_right">6.832</td>
+<td class="gt_row gt_right">6.726</td>
+<td class="gt_row gt_right">6.508</td>
+<td class="gt_row gt_right">6.210</td>
+<td class="gt_row gt_right">5.852</td>
+<td class="gt_row gt_right">5.449</td>
+<td class="gt_row gt_right">8.307</td>
+<td class="gt_row gt_right">8.432</td>
+<td class="gt_row gt_right">8.888</td>
+<td class="gt_row gt_right">9.155</td>
+<td class="gt_row gt_right">9.175</td>
+<td class="gt_row gt_right">9.013</td>
+<td class="gt_row gt_right">7.693</td>
+<td class="gt_row gt_right">7.643</td>
+<td class="gt_row gt_right">7.498</td>
+<td class="gt_row gt_right">7.330</td>
+<td class="gt_row gt_right">7.093</td>
+<td class="gt_row gt_right">6.756</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
 <td class="gt_row gt_right">0.961</td>
-<td class="gt_row gt_right">0.865</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.556</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.365</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.353</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.409</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.444</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.410</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.381</td>
 <td class="gt_row gt_right">2.138</td>
-<td class="gt_row gt_right">1.741</td>
 <td class="gt_row gt_right">0.953</td>
-<td class="gt_row gt_right">1.072</td>
 <td class="gt_row gt_right">1.455</td>
-<td class="gt_row gt_right">1.726</td>
+<td class="gt_row gt_right">1.902</td>
+<td class="gt_row gt_right">1.996</td>
+<td class="gt_row gt_right">2.130</td>
 <td class="gt_row gt_right">1.070</td>
-<td class="gt_row gt_right">0.875</td>
-<td class="gt_row gt_right">0.319</td>
-<td class="gt_row gt_right">0.593</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.319</td>
 <td class="gt_row gt_right">1.055</td>
-<td class="gt_row gt_right">1.305</td>
+<td class="gt_row gt_right">1.424</td>
+<td class="gt_row gt_right">1.426</td>
+<td class="gt_row gt_right">1.369</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.573</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.572</td>
-<td class="gt_row gt_right">0.569</td>
-<td class="gt_row gt_right">0.567</td>
-<td class="gt_row gt_right">0.566</td>
-<td class="gt_row gt_right">0.566</td>
-<td class="gt_row gt_right">1.180</td>
-<td class="gt_row gt_right">1.180</td>
-<td class="gt_row gt_right">1.190</td>
-<td class="gt_row gt_right">1.199</td>
-<td class="gt_row gt_right">1.202</td>
-<td class="gt_row gt_right">1.190</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.181</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.187</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.194</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.199</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.188</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.191</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Ollivier Ricci Curvature</td>
+<td class="gt_row gt_right">0.845</td>
+<td class="gt_row gt_right">0.837</td>
+<td class="gt_row gt_right">0.826</td>
+<td class="gt_row gt_right">0.818</td>
+<td class="gt_row gt_right">0.814</td>
+<td class="gt_row gt_right">0.814</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.792</td>
+<td class="gt_row gt_right">0.847</td>
+<td class="gt_row gt_right">0.843</td>
+<td class="gt_row gt_right">0.829</td>
+<td class="gt_row gt_right">0.819</td>
+<td class="gt_row gt_right">0.816</td>
+<td class="gt_row gt_right">0.587</td>
+<td class="gt_row gt_right">0.551</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.507</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.485</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.480</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.480</td>
 </tr>
 <tr class="even gt_group_heading_row">
 <td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">PCC</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
-<td class="gt_row gt_right">0.942</td>
-<td class="gt_row gt_right">0.562</td>
-<td class="gt_row gt_right">0.153</td>
-<td class="gt_row gt_right">0.069</td>
-<td class="gt_row gt_right">0.078</td>
-<td class="gt_row gt_right">0.033</td>
-<td class="gt_row gt_right">0.740</td>
-<td class="gt_row gt_right">0.035</td>
-<td class="gt_row gt_right">0.007</td>
-<td class="gt_row gt_right">0.047</td>
-<td class="gt_row gt_right">0.096</td>
-<td class="gt_row gt_right">0.179</td>
-<td class="gt_row gt_right">0.561</td>
-<td class="gt_row gt_right">−0.102</td>
-<td class="gt_row gt_right">−0.028</td>
-<td class="gt_row gt_right">0.040</td>
-<td class="gt_row gt_right">0.085</td>
-<td class="gt_row gt_right">0.091</td>
-</tr>
-<tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.918</td>
-<td class="gt_row gt_right">0.935</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.954</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.957</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.948</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.931</td>
-<td class="gt_row gt_right">0.739</td>
-<td class="gt_row gt_right">0.800</td>
-<td class="gt_row gt_right">0.801</td>
-<td class="gt_row gt_right">0.764</td>
-<td class="gt_row gt_right">0.707</td>
-<td class="gt_row gt_right">0.636</td>
-<td class="gt_row gt_right">0.004</td>
-<td class="gt_row gt_right">−0.003</td>
-<td class="gt_row gt_right">0.002</td>
-<td class="gt_row gt_right">−0.002</td>
-<td class="gt_row gt_right">0.009</td>
-<td class="gt_row gt_right">0.011</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.954</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.955</td>
-<td class="gt_row gt_right">0.945</td>
-<td class="gt_row gt_right">0.903</td>
-<td class="gt_row gt_right">0.856</td>
-<td class="gt_row gt_right">0.791</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.992</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.966</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.904</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.828</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.749</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.664</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.727</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.734</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.706</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.640</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.575</td>
-<td class="gt_row gt_right">0.521</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
-<td class="gt_row gt_right">0.948</td>
-<td class="gt_row gt_right">0.942</td>
-<td class="gt_row gt_right">0.931</td>
-<td class="gt_row gt_right">0.909</td>
-<td class="gt_row gt_right">0.873</td>
-<td class="gt_row gt_right">0.838</td>
-<td class="gt_row gt_right">0.838</td>
-<td class="gt_row gt_right">0.834</td>
-<td class="gt_row gt_right">0.809</td>
-<td class="gt_row gt_right">0.765</td>
-<td class="gt_row gt_right">0.703</td>
-<td class="gt_row gt_right">0.629</td>
-<td class="gt_row gt_right">0.595</td>
-<td class="gt_row gt_right">0.583</td>
-<td class="gt_row gt_right">0.558</td>
-<td class="gt_row gt_right">0.548</td>
-<td class="gt_row gt_right">0.551</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.537</td>
-</tr>
-<tr class="odd gt_group_heading_row">
-<td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">RMSE</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.791</td>
-<td class="gt_row gt_right">0.981</td>
-<td class="gt_row gt_right">1.702</td>
-<td class="gt_row gt_right">2.041</td>
-<td class="gt_row gt_right">2.676</td>
-<td class="gt_row gt_right">2.652</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.597</td>
-<td class="gt_row gt_right">157.151</td>
-<td class="gt_row gt_right">83.544</td>
-<td class="gt_row gt_right">48.499</td>
-<td class="gt_row gt_right">29.631</td>
-<td class="gt_row gt_right">21.951</td>
-<td class="gt_row gt_right">0.681</td>
-<td class="gt_row gt_right">3.707</td>
-<td class="gt_row gt_right">6.694</td>
-<td class="gt_row gt_right">7.433</td>
-<td class="gt_row gt_right">6.795</td>
-<td class="gt_row gt_right">6.402</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.916</td>
-<td class="gt_row gt_right">0.954</td>
-<td class="gt_row gt_right">0.988</td>
-<td class="gt_row gt_right">1.024</td>
-<td class="gt_row gt_right">1.110</td>
-<td class="gt_row gt_right">1.130</td>
-<td class="gt_row gt_right">1.102</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.900</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.632</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.642</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.574</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.628</td>
-<td class="gt_row gt_right">0.760</td>
-<td class="gt_row gt_right">0.888</td>
 <td class="gt_row gt_right">0.921</td>
-<td class="gt_row gt_right">1.074</td>
-<td class="gt_row gt_right">1.186</td>
-<td class="gt_row gt_right">1.218</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.951</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.958</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.923</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.862</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.792</td>
+<td class="gt_row gt_right">0.753</td>
+<td class="gt_row gt_right">0.766</td>
+<td class="gt_row gt_right">0.673</td>
+<td class="gt_row gt_right">0.536</td>
+<td class="gt_row gt_right">0.426</td>
+<td class="gt_row gt_right">0.339</td>
+<td class="gt_row gt_right">0.625</td>
+<td class="gt_row gt_right">0.589</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.614</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.617</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.569</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.521</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
-<td class="gt_row gt_right">1.359</td>
-<td class="gt_row gt_right">1.256</td>
-<td class="gt_row gt_right">0.928</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.670</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.601</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.676</td>
-<td class="gt_row gt_right">3.108</td>
-<td class="gt_row gt_right">2.420</td>
-<td class="gt_row gt_right">1.912</td>
-<td class="gt_row gt_right">3.334</td>
-<td class="gt_row gt_right">4.246</td>
-<td class="gt_row gt_right">4.745</td>
-<td class="gt_row gt_right">0.983</td>
-<td class="gt_row gt_right">0.794</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.547</td>
-<td class="gt_row gt_right">0.791</td>
-<td class="gt_row gt_right">1.222</td>
-<td class="gt_row gt_right">1.661</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Forman Ricci Curvature</td>
+<td class="gt_row gt_right">0.558</td>
+<td class="gt_row gt_right">0.575</td>
+<td class="gt_row gt_right">0.598</td>
+<td class="gt_row gt_right">0.594</td>
+<td class="gt_row gt_right">0.559</td>
+<td class="gt_row gt_right">0.524</td>
+<td class="gt_row gt_right">0.466</td>
+<td class="gt_row gt_right">0.482</td>
+<td class="gt_row gt_right">0.522</td>
+<td class="gt_row gt_right">0.457</td>
+<td class="gt_row gt_right">0.396</td>
+<td class="gt_row gt_right">0.325</td>
+<td class="gt_row gt_right">0.412</td>
+<td class="gt_row gt_right">0.373</td>
+<td class="gt_row gt_right">0.332</td>
+<td class="gt_row gt_right">0.343</td>
+<td class="gt_row gt_right">0.338</td>
+<td class="gt_row gt_right">0.314</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
-<td class="gt_row gt_right">0.894</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.892</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.900</td>
-<td class="gt_row gt_right">0.903</td>
-<td class="gt_row gt_right">0.904</td>
-<td class="gt_row gt_right">0.907</td>
-<td class="gt_row gt_right">1.295</td>
-<td class="gt_row gt_right">1.295</td>
-<td class="gt_row gt_right">1.309</td>
-<td class="gt_row gt_right">1.323</td>
-<td class="gt_row gt_right">1.332</td>
-<td class="gt_row gt_right">1.323</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.598</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.605</td>
-<td class="gt_row gt_right">0.616</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.618</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.617</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.624</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.954</td>
+<td class="gt_row gt_right">0.945</td>
+<td class="gt_row gt_right">0.856</td>
+<td class="gt_row gt_right">0.737</td>
+<td class="gt_row gt_right">0.658</td>
+<td class="gt_row gt_right">0.583</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.992</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.904</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.749</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.588</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.462</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.355</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.727</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.706</td>
+<td class="gt_row gt_right">0.575</td>
+<td class="gt_row gt_right">0.468</td>
+<td class="gt_row gt_right">0.381</td>
+<td class="gt_row gt_right">0.338</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Ollivier Ricci Curvature</td>
+<td class="gt_row gt_right">0.687</td>
+<td class="gt_row gt_right">0.677</td>
+<td class="gt_row gt_right">0.636</td>
+<td class="gt_row gt_right">0.624</td>
+<td class="gt_row gt_right">0.598</td>
+<td class="gt_row gt_right">0.559</td>
+<td class="gt_row gt_right">0.566</td>
+<td class="gt_row gt_right">0.484</td>
+<td class="gt_row gt_right">0.558</td>
+<td class="gt_row gt_right">0.505</td>
+<td class="gt_row gt_right">0.424</td>
+<td class="gt_row gt_right">0.335</td>
+<td class="gt_row gt_right">0.596</td>
+<td class="gt_row gt_right">0.560</td>
+<td class="gt_row gt_right">0.488</td>
+<td class="gt_row gt_right">0.452</td>
+<td class="gt_row gt_right">0.427</td>
+<td class="gt_row gt_right">0.386</td>
 </tr>
 </tbody>
 </table>
@@ -1213,15 +1126,15 @@ Figure&nbsp;3: Performance of methods under noise on 2-Manifolds with Noise.
 <section id="differentiating-sign-in-high-dimensions" class="level3" data-number="4.0.1">
 <h3 data-number="4.0.1" class="anchored" data-anchor-id="differentiating-sign-in-high-dimensions"><span class="header-section-number">4.0.1</span> Differentiating Sign in High Dimensions</h3>
 <p>Most existing methods only quantify their performance in high dimensions on one or two test cases.</p>
-<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2f-sign-prediction-tests.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-sadspheres">
-<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-fig-sadspheres" class="cell">
+<div class="quarto-embed-nb-cell" data-notebook="/home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2f-sign-prediction-tests.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-sadspheres">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-fig-sadspheres" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SS1._aggregate_labels()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>SS1.plot_by_dimension()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sadspheres" class="quarto-figure quarto-figure-center quarto-float anchored" alt="...">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
+<a href="index_files/figure-html/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="index_files/figure-html/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
@@ -1716,7 +1629,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

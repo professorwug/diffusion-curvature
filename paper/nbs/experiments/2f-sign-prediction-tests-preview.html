@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
     <meta charset="utf-8">
-    <meta name="generator" content="quarto-1.4.551">
+    <meta name="generator" content="quarto-1.4.554">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -219,7 +219,7 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <p>::: {#cell-1 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’}</p>
+       <p>::: {#cell-1 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’ execution_count=1}</p>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Standard libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -254,20 +254,20 @@
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.graphs <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.datasets <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.core <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.utils <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.comparison_space <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.sadspheres <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.kernels <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>jax.devices()</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>jax.default_device <span class="op">=</span> jax.devices(<span class="st">"cpu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload</code></pre>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># from diffusion_curvature.core import *</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.core_beta <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.utils <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.comparison_space <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.sadspheres <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.kernels <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>jax.devices()</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>jax.default_device <span class="op">=</span> jax.devices(<span class="st">"cpu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2024-05-17 11:51:05.602132: W external/xla/xla/service/platform_util.cc:198] unable to create StreamExecutor for CUDA:0: failed initializing StreamExecutor for CUDA device ordinal 0: INTERNAL: failed call to cuDevicePrimaryCtxRetain: CUDA_ERROR_OUT_OF_MEMORY: out of memory; total memory reported: 25363087360</code></pre>
 </div>
 <p>:::</p>
 <blockquote class="blockquote">
@@ -276,11 +276,11 @@
 <p>Here we employ saddles and spheres of increasing dimension to test our model’s ability to detect sign.</p>
 <section id="machinery" class="level1">
 <h1>Machinery</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-5" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dims <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>num_pointclouds <span class="op">=</span> <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-6" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SS1 <span class="op">=</span> SadSpheres(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    dimension <span class="op">=</span> dims, <span class="co"># Dimension of saddles and spheres</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    num_pointclouds <span class="op">=</span> num_pointclouds, <span class="co"># num pointclouds to make in total</span></span>
@@ -292,53 +292,53 @@
 <pre><code>Loaded evaluations on methods ['ground truth', 'Diffusion Curvature (Entropic)', 'Diffusion Curvature (Wasserstein)', 'Hickok &amp; Blumberg']</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-7" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-7" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>SS1.imported_methods</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>['ground truth',
  'Diffusion Curvature (Entropic)',
  'Diffusion Curvature (Wasserstein)',
  'Hickok &amp; Blumberg']</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-8" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>SS1.save_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-9" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-9" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># graph_former = partial(get_curvature_agnostic_graph, k = dim*2, )</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>graph_former <span class="op">=</span> partial(get_fixed_graph, sigma <span class="op">=</span> <span class="fl">0.2</span>, alpha <span class="op">=</span> <span class="dv">1</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> X <span class="kw">in</span> tqdm(SS1):</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"Diffusion Curvature (Entropic)"</span> <span class="kw">not</span> <span class="kw">in</span> SS1.imported_methods:</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"Diffusion Curvature (Scaled Entropic)"</span> <span class="kw">not</span> <span class="kw">in</span> SS1.imported_methods:</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        G <span class="op">=</span> graph_former(X)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        DC <span class="op">=</span> DiffusionCurvature(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            laziness_method<span class="op">=</span><span class="st">"Wasserstein"</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            flattening_method<span class="op">=</span><span class="st">"Fixed"</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            comparison_method<span class="op">=</span><span class="st">"Ollivier"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            flattening_method<span class="op">=</span><span class="st">"Scaled Fixed"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>,</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            graph_former <span class="op">=</span> graph_former,</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>            points_per_cluster<span class="op">=</span><span class="va">None</span>,  <span class="co"># construct separate comparison spaces around each point</span></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        ks <span class="op">=</span> DC.curvature(G, dim <span class="op">=</span> X.shape[<span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span>, t <span class="op">=</span> <span class="dv">25</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        SS1.update(ks[<span class="dv">0</span>], method_name<span class="op">=</span><span class="st">"Diffusion Curvature (Entropic)"</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"Diffusion Curvature (Wasserstein)"</span> <span class="kw">not</span> <span class="kw">in</span> SS1.imported_methods:</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        ks <span class="op">=</span> DC.fit_transform(G, dim <span class="op">=</span> X.shape[<span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span>, t <span class="op">=</span> <span class="dv">25</span>, X <span class="op">=</span> X)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        SS1.update(ks[<span class="dv">0</span>], method_name<span class="op">=</span><span class="st">"Diffusion Curvature (Scaled Entropic)"</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"Diffusion Curvature (Scaled Wasserstein)"</span> <span class="kw">not</span> <span class="kw">in</span> SS1.imported_methods:</span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        G <span class="op">=</span> graph_former(X)</span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        DC <span class="op">=</span> DiffusionCurvature(</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>            laziness_method<span class="op">=</span><span class="st">"Entropic"</span>,</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            flattening_method<span class="op">=</span><span class="st">"Fixed"</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>            laziness_method<span class="op">=</span><span class="st">"Wasserstein"</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            flattening_method<span class="op">=</span><span class="st">"Scaled Fixed"</span>,</span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>            comparison_method<span class="op">=</span><span class="st">"Subtraction"</span>,</span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>            graph_former <span class="op">=</span> graph_former,</span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>            points_per_cluster<span class="op">=</span><span class="va">None</span>,  <span class="co"># construct separate comparison spaces around each point</span></span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>            comparison_space_size_factor<span class="op">=</span><span class="dv">1</span>,</span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        ks <span class="op">=</span> DC.curvature(G, dim <span class="op">=</span> X.shape[<span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span>, t <span class="op">=</span> <span class="dv">25</span>)</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        SS1.update(ks[<span class="dv">0</span>], method_name<span class="op">=</span><span class="st">"Diffusion Curvature (Wasserstein)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>        ks <span class="op">=</span> DC.fit_transform(G, dim <span class="op">=</span> X.shape[<span class="dv">1</span>] <span class="op">-</span> <span class="dv">1</span>, t <span class="op">=</span> <span class="dv">25</span>, X <span class="op">=</span> X)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        SS1.update(ks[<span class="dv">0</span>], method_name<span class="op">=</span><span class="st">"Diffusion Curvature (Scaled Wasserstein)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"e4e077402f8246b0a6b6e93fc1190893","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"2f92855ec4094185be1f422ba502d551","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-10" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-10" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>SS1.table()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ks
@@ -356,14 +356,14 @@ Hickok &amp; Blumberg                   0.031123       0.600</code></pre>
  Hickok &amp; Blumberg                   0.031123       0.600}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-sadspheres" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-sadspheres" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SS1._aggregate_labels()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SS1.plot_by_dimension()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sadspheres" class="quarto-figure quarto-figure-center quarto-float anchored" alt="...">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
+<a href="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="2f-sign-prediction-tests_files/figure-html/fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
@@ -788,7 +788,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

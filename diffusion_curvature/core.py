@@ -33,6 +33,7 @@ from .comparison_space import EuclideanComparisonSpace, fit_comparison_space_mod
 # from diffusion_curvature.normalizing_flows import neural_flattener
 # from diffusion_curvature.flattening.mioflow_quicktrain import MIOFlowStandard
 from .flattening.radial_ae import radially_flatten_with_ae
+from .local_distance_scaling import scale_by_local_distances
 
 # Algorithmic niceties
 from .clustering import enhanced_spectral_clustering
@@ -103,6 +104,7 @@ class DiffusionCurvature():
             distance_t = None,
             comparison_space_file = "../data/entropies_averaged.h5",
             verbose = False,
+            scale_euclidean_space = True,
     ):
         store_attr()
         self.D = None
@@ -319,8 +321,13 @@ class DiffusionCurvature():
                     G_euclidean = self.graph_former(X_flattened)
                     fs = self.unsigned_curvature(G_euclidean, t, idx=0)
                     return fs
-
-                    
+                case "Scaled Fixed":
+                    Rd = plane(n = len(X), dim=dim)
+                    self.Rd = scale_by_local_distances(X, Rd, k = 1)
+                    G_euclidean = self.graph_former(self.Rd)
+                    fs = self.unsigned_curvature(G_euclidean,t,idx=0) #,D=D_euclidean)   
+                    if self.verbose: print(f"comparison entropy is {fs}")
+                    return fs
 
         # Start by estimating the manifold's unsigned curvature, i.e. spreads of diffusion
         manifold_spreads, manifold_spreads_nought, P, Pt, t = self.unsigned_curvature(G,t,idx, _also_return_first_scale=True, D = D)

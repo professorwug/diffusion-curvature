@@ -147,16 +147,16 @@
 \floatname{codelisting}{Listing}
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[section]
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
 \theoremstyle{plain}
-\newtheorem{lemma}{Lemma}[section]
-\theoremstyle{plain}
 \newtheorem{proposition}{Proposition}[section]
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -193,7 +193,7 @@ Curvature, Point Clouds},
 Geometric Featurization of Graphs and Pointclouds}
 \author{Kincaid MacDonald \and Dhananjay Bhaskar \and Yanlei
 Zhang \and Ian Adelstein \and Smita Krishnaswamy}
-\date{2024-05-16}
+\date{2024-05-24}
 
 \begin{document}
 \maketitle
@@ -297,7 +297,7 @@ First, recall the relation between curvature and volume. In spaces of
 high positive curvature, the volume of a ball is \emph{smaller} than a
 ball of the same radius in a flat space, and even smaller than a ball of
 the same radius in a hyperbolic space. This is formally expressed by the
-Bishop Gromov inequality (\textbf{2021BishopGromovInequality?}).
+Bishop Gromov inequality ({``Bishop--{Gromov} Inequality''} 2021).
 
 \begin{theorem}[Bishop-Gromov]\protect\hypertarget{thm-bishop-gromov}{}\label{thm-bishop-gromov}
 
@@ -757,11 +757,11 @@ curvature on large, or noisy graphs where the latter method stumbles.
 
 Ollivier Ricci curvature is based in optimal transport, formalizing the
 classical intuition that in spaces of positive curvature, ``spheres are
-closer than their centers'' {[}cite ollivier{]}. In place of spheres,
-Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1
-distance with the shortest-path metric. Given points \(x,y\) in the
-metric space, with 1-step diffusions \(m_{x}\) and \(m_{y}\), the
-Ollivier Ricci curvature of the edge between \(x\) and \(y\) is:
+closer than their centers''. In place of spheres, Ollivier uses diffused
+diracs; for distance, he uses the Wasserstein-1 distance with the
+shortest-path metric. Given points \(x,y\) in the metric space, with
+1-step diffusions \(m_{x}\) and \(m_{y}\), the Ollivier Ricci curvature
+of the edge between \(x\) and \(y\) is:
 \[\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}\]
 
 Local curvature always involves some comparison. Here, the comparison is
@@ -909,11 +909,10 @@ curvature!\footnote{Consider kernel density estimation, where one places
 of diffusion geometry to robustly estimate volume?
 
 Indeed, this is one way to interpret diffusion laziness: as an inverse
-volume measurement. {[}Cite Huguet Heat Geo{]} motivates this with a
-result from Saloff Costes et al. (Saloff-Coste 2010). For manifold
-satisfying the Parabolic Harnock Inequality (e.g.~all manifolds of
-positive curvature), heat diffusion \(m_{x}^t\) on the manifold is
-bounded by
+volume measurement. Huguet et al. (2023) motivates this with a result
+from Saloff Costes et al. (Saloff-Coste 2010). For manifold satisfying
+the Parabolic Harnock Inequality (e.g.~all manifolds of positive
+curvature), heat diffusion \(m_{x}^t\) on the manifold is bounded by
 
 \[
 \frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
@@ -958,7 +957,9 @@ the right hand term is precisely
 H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
 \] The Diffusion Curvature is then \[
 \frac{1}{t}(H(m_{E}^t) - H(m_{x}^t)) \simeq \frac{1}{t}\ln(V_{E}(\sqrt{ t })) - \frac{1}{t}\ln(V_{m}(\sqrt{ t })) + \frac{1}{4t^2}( W_{2}(d_{x},m_{E}^t) - W_{2}(d_{x},m_{x}^t))
-\] This presents us with two comparisons: one between the average volume
+\]
+
+This presents us with two comparisons: one between the average volume
 within \(N_{t}(x)\) both in Euclidean space and on the manifold, and one
 between the Wasserstein spread of diffusion in Euclidean space and on
 the manifold. Note that both exhibit the same inverse relationship to
@@ -966,18 +967,19 @@ curvature. If the curvature of \(m\) is greater than in euclidean space
 (e.g.~positive), the volume of a ball is smaller -- just as the spread
 of diffusion is diminished. In negative curvature, we have the opposite.
 
-\subsection{Comparing Diffusion Across
-Manifolds}\label{comparing-diffusion-across-manifolds}
+\subsection{Comparing Diffusion Across Point
+Clouds}\label{comparing-diffusion-across-point-clouds}
 
 For a single graph, the laziness of diffusion is linked to graph volume,
 and theoretically bounded by curvature: within that graph, the higher
 the curvature, the higher the diffusion laziness. In analogy to
 Bishop-Gromov, we can convert this unsigned magnitude-of-curvature
-estimation to a signed curvature with a comparison between spaces. In
-the continuous realm, this is easy: volume on one surface has the same
-units as volume on another. But in the point cloud setting, there is no
-common scale; it is \emph{assumed} that the scale differs between and
-possibly even \emph{within} a point cloud. Moreover, differences in
+estimation to a signed curvature via a comparison between spaces.
+
+In the continuous realm, this is easy: volume on one surface has the
+same units as volume on another. But in the point cloud setting, there
+is no common scale; it is \emph{assumed} that the scale differs between
+and possibly even \emph{within} a point cloud. Moreover, differences in
 graph construction can make diffusion spread faster independently from
 the local geometry -- much as changing the `size' of one's `measuring
 stick' could give the appearance of larger volumes. Diabolically, common
@@ -986,33 +988,115 @@ with the speed \emph{most} in areas with high negative or positive
 curvature, obscuring the geometric information in the diffusion
 operator.
 
-Our challenge is to construct graphs to allow comparison of their
-diffusions.
+Our challenge is to construct a Euclidean comparison space on which
+diffusion locally behaves the same as on our given point cloud. We first
+motivate the need for taking special care with the graph construction,
+illustrating how naive approaches obscure geometric information. We then
+describe two simple workarounds.
+
+A caveat here: while the (unsigned) diffusion laziness is easily
+applicable to arbitrary graphs, the methods we describe below for
+constructing a comparison space and obtaining a (signed) diffusion
+curvature only apply to point clouds. We suspect there are equivalent
+methods applicable to general graphs, but we focus on the point cloud
+setting.\footnote{For instance, one could construct a comparison graph
+  which matched the 1-step diffusion laziness of the input graph, after
+  suitable denoising.}
 
 \subsubsection{Standard methods of graph construction obscure geometric
 information}\label{standard-methods-of-graph-construction-obscure-geometric-information}
 
 To turn a point cloud into a graph, one places a kernel (e.g.~a
 gaussian) at each point, and assigns edges to surrounding points with
-weight given by the kernel. The main parameter is the bandwidth of each
-kernel: make it too high, and everything is connected; too low, and
+weights given by the kernel. The main parameter here is the bandwidth of
+each kernel: make it too high, and everything is connected; too low, and
 points are isolated. Moreover, the distances between a point and its
 neighbors may vary. Where the points are sparse, one wants a higher
 bandwidth. Where dense, a lower bandwidth.
 
+A standard technique for accommodating the variable densities of point
+cloud data is a \(k\)-neighbor \emph{adaptive kernel}. Here, the
+bandwidth at each point is set to the squared distance to the \(k\)-th
+nearest neighbor, averaged in some way between the two inputs. Here's
+one standard adaptive kernel:
+
+\[
+\begin{aligned}
+k(x, y) & =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2}}}{d(y, N_{k}(y))}
++\frac{e^{-\frac{d(x, y)^2}{d(y, N_{k}(x))^2}}}{d(x, N_{k}(y)}
+\end{aligned}
+\]
+
+where \(N_{k}(x)\) gives the \(k\)th nearest neighbor to \(x\).
+
+Note that that parameter \(k\) plays roles in two kinds of adaptation.
+By setting the bandwidth to some Euclidean distance \(d(x,N_{k}(x))\)
+between data points, it adapts the kernel to the \emph{right scale} for
+the point cloud, concentrating its probability within a local
+neighborhood. It also controls the \emph{size} of that local
+neighborhood; typically set between 5 and 15.
+
+Unfortunately, this adaptive process hinges on the correspondence
+between the Euclidean distances \(d(x,N_{k}(x))\), and the manifold
+distances -- a correspondence that degrades \emph{faster} the higher the
+magnitude of curvature! Consider a highly-curved paraboloid. The
+Euclidean distance from its center point to its nearest few neighbors is
+roughly the geodesic distance. But as the neighborhood widens, and the
+neighbors move higher up the paraboloid, the Euclidean distance now
+underestimates the true geodesic distance: it cuts across the manifold.
+This happens in spaces of high positive or high negative curvature.
+
+As a result, the adaptive kernel constructed in highly curved spaces has
+a smaller bandwidth than in flat spaces, even using the same kernel
+parameters. If one directly compares the laziness of diffusion on two
+such graphs, it will appear lazier than on the flat manifold.
+
 \subsubsection{The Curvature Agnostic
 Kernel}\label{the-curvature-agnostic-kernel}
+
+To remedy the above, we make a simple adjustment to the standard
+adaptive kernel. The key is separating the parameter which controls
+neighborhood size from neighborhood scale. In the adaptive kernel, both
+are controlled by the parameter \(k\); as discussed above, in spaces of
+high curvature, the same \(k\) creates different scales. Instead, we
+always set \(k = 1\) and use another parameter -- \(\nu\), the
+neighbor-size -- to control the variance of the kernel.
+
+\[
+\begin{aligned}
+k(x, y) & =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y))}
++\frac{e^{-\frac{d(x, y)^2}{d(y, N_{k}(x))^2\nu^2}}}{d(x, N_{k}(y)}
+\end{aligned}
+\]
+
+\(\nu\) behaves like the kernel bandwidth in the regular fixed Gaussian
+kernel.
+
+\subsubsection{A Simple Euclidean Comparison
+Space}\label{a-simple-euclidean-comparison-space}
+
+Now we describe the `flattening map'
+\(\Phi_{X}: \mathbb{R}^d \to \mathbb{R}^d\) introduced above. Its goal:
+to transform samples from Euclidean space of the manifold's intrinsic
+dimension into the same `sampling' as our point cloud. While developing
+this method, we tried many types of flattening maps, many involving deep
+learning and flow models. In the end, a very simple technique proved
+just as effective.
+
+Given points \(X\), we compute the average distance to the \(k\)th
+nearest neighbor. \(\Phi_{X}\) then scales samples in \(\mathbb{R}^d\)
+to have the same average distance.
 
 \section{Results}\label{results}
 
 Curvature is an easy quantity to find -- indeed, at least two of the
-many recent curvature methods were defined \emph{accidentally} {[}cite
-Steinerberger, myself{]}! The challenge is to make one's definition
-robust to the bogeyman of real-world data, especially 1) noise and 2)
-high dimensions. Our benchmarks of existing methods, including Hickok \&
-Blumberg's, Ollivier Ricci Curvature, Adal-PCA {[}and Sritharan{]},
-{[}citations{]} reveal that all deteriorate quickly under noise, and
-most \emph{fail entirely} in high-dimensional data. The
+many recent curvature methods were defined \emph{accidentally}
+(Steinerberger 2022; Bhaskar et al. 2022)! The challenge is to make
+one's definition robust to the bogeyman of real-world data, especially
+1) noise and 2) high dimensions. Our benchmarks of existing methods,
+including Hickok \& Blumberg's, Ollivier Ricci Curvature, Adal-PCA
+{[}and Sritharan{]}, {[}citations{]} reveal that all deteriorate quickly
+under noise, and most \emph{fail entirely} in high-dimensional data. The
 dimension-independent, noise-resilient properties of the diffusion
 operator endow diffusion curvature with good performance on both of
 these axes.
@@ -1038,7 +1122,7 @@ Curvature on 2-Manifolds.}
 \end{figure}%
 
 \textsubscript{Source:
-\href{https://professorwug.github.io/diffusion-curvature//Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a-Toy-Manifolds.ipynb.html\#cell-fig-2-manifolds}{Standard
+\href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a-Toy-Manifolds.ipynb.html\#cell-fig-2-manifolds}{Standard
 libraries}}
 
 Though the correlation is strong -- passing the `sniff test' -- this
@@ -1062,7 +1146,7 @@ Gaussian Curvature on 2-Manifolds.}
 \end{figure}%
 
 \textsubscript{Source:
-\href{https://professorwug.github.io/diffusion-curvature//Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb.html\#cell-fig-2-manifolds-visual-comparison}{Standard
+\href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2a2-toy-manifolds-comparison.ipynb.html\#cell-fig-2-manifolds-visual-comparison}{Standard
 libraries}}
 
 The second subtly emerges in the context of related methods. Everything
@@ -1073,10 +1157,9 @@ in the ellipsoid\ldots{} \%\% mean vs gaussian curvature, and uniqueness
 of definitions\%\%
 
 All of these methods in Figure~\ref{fig-2-manifolds-visual-comparison}
-perform well on well-sampled noiseless toy manifolds. In Table WAWA3, we
-see the results of adding Gaussian noise to each manifold.
-
-!{[}{[}CleanShot 2024-04-28 at 23.30.38\_147B95A7.png{]}{]}
+perform well on well-sampled noiseless toy manifolds. In Table
+\textbf{?@fig-2-manifolds-noise-table}, we see the results of adding
+Gaussian noise to each manifold.
 
 \subsubsection{Differentiating Sign in High
 Dimensions}\label{differentiating-sign-in-high-dimensions}
@@ -1100,7 +1183,7 @@ relative sparsity.}
 \end{figure}%
 
 \textsubscript{Source:
-\href{https://professorwug.github.io/diffusion-curvature//Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2f-sign-prediction-tests.ipynb.html\#cell-fig-sadspheres}{Standard
+\href{https://professorwug.github.io/diffusion-curvature//home/piriac/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/experiments/2f-sign-prediction-tests.ipynb.html\#cell-fig-sadspheres}{Standard
 libraries}}
 
 \subsection{Loss Landscapes}\label{loss-landscapes}
@@ -1130,6 +1213,10 @@ Dimensional Data.''} \emph{Advances in Neural Information Processing
 Systems} 35: 21738--49.
 \url{https://proceedings.neurips.cc/paper_files/paper/2022/hash/88438dc62fc5c8777e2b5f1b4f6d37a2-Abstract-Conference.html}.
 
+\bibitem[\citeproctext]{ref-2021BishopGromovInequality}
+{``Bishop--{Gromov} Inequality.''} 2021. In \emph{Wikipedia}.
+\url{https://en.wikipedia.org/w/index.php?title=Bishop\%E2\%80\%93Gromov_inequality&oldid=1059331416}.
+
 \bibitem[\citeproctext]{ref-coifman2006DiffusionMaps}
 Coifman, Ronald R., and Stéphane Lafon. 2006. {``Diffusion Maps.''}
 \emph{Applied and Computational Harmonic Analysis}, Special {Issue}:
@@ -1140,6 +1227,12 @@ Coifman, Ronald R., and Stéphane Lafon. 2006. {``Diffusion Maps.''}
 Hickok, Abigail, and Andrew J. Blumberg. 2023. {``An {Intrinsic
 Approach} to {Scalar-Curvature Estimation} for {Point Clouds}.''} arXiv.
 \url{https://doi.org/10.48550/arXiv.2308.02615}.
+
+\bibitem[\citeproctext]{ref-huguet2023HeatDiffusionPerspective}
+Huguet, Guillaume, Alexander Tong, Edward De Brouwer, Yanlei Zhang, Guy
+Wolf, Ian Adelstein, and Smita Krishnaswamy. 2023. {``A {Heat Diffusion
+Perspective} on {Geodesic Preserving Dimensionality Reduction}.''} May
+30, 2023. \url{https://doi.org/10.48550/arXiv.2305.19043}.
 
 \bibitem[\citeproctext]{ref-maaten2008VisualizingDataUsing}
 Maaten, Laurens van der, and Geoffrey Hinton. 2008. {``Visualizing
@@ -1162,6 +1255,11 @@ Spaces.''} \emph{Journal of Functional Analysis} 256 (3): 810--64.
 Saloff-Coste, Laurent. 2010. {``The Heat Kernel and Its Estimates.''} In
 \emph{Advanced {Studies} in {Pure Mathematics}}, 405--36. Kyoto
 University, Japan. \url{https://doi.org/10.2969/aspm/05710405}.
+
+\bibitem[\citeproctext]{ref-steinerberger2022CurvatureGraphsEquilibrium}
+Steinerberger, Stefan. 2022. {``Curvature on {Graphs} via {Equilibrium
+Measures}.''} September 5, 2022.
+\url{https://doi.org/10.48550/arXiv.2202.01658}.
 
 \bibitem[\citeproctext]{ref-sturm2006GeometryMetricMeasure}
 Sturm, Karl-Theodor. 2006. {``On the Geometry of Metric Measure

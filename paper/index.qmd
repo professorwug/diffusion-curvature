@@ -496,7 +496,8 @@ The second subtly emerges in the context of related methods. Everything pictured
 
 All of these methods in @fig-2-manifolds-visual-comparison perform well on well-sampled noiseless toy manifolds. In Table [@fig-2-manifolds-noise-table], we see the results of adding Gaussian noise to each manifold.
 
-{{< embed ../nbs/experiments/2a2-toy-manifolds-comparison.ipynb#fig-2-manifolds-noise-table >}}
+<!-- {{< embed ../nbs/experiments/2a2-toy-manifolds-comparison.ipynb#fig-2-manifolds-noise-table >}} -->
+
 
 ### Differentiating Sign in High Dimensions
 
