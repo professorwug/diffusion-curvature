@@ -1,9 +1,0 @@
-ipynb-filters: []
-
-execute: 
-  enabled: false
-
-format:
-  gfm:
-    code-annotations: false
-

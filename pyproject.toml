@@ -59,13 +59,7 @@ postinstall = "python -m ipykernel install --user --name diffusion_curvature-pix
 test_import = "python -c 'import diffusion_curvature'"
 # Adding and creating experiments
 new_experiment = "bash .zetteldev/new_experiment.sh"
-# Jupyter cache shorthands
-run_experiments = "jcache project execute --executor local-parallel"
-# NBDev shorthands
-nbsync = "nbdev_export" # export code from notebooks into the library
-nbclean = "nbdev_clean" # remove extraneous notebook metadata to reduce git conflicts
-pysync = "nbdev_update" # sync changes from library to notebooks
-docmaker = "nbdev_docs" # build docs
+
 zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels" # export experiments to markdown with quarto
 notebooks = "jupyter lab --ip=0.0.0.0"
 
