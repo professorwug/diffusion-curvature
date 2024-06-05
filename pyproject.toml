@@ -6,7 +6,7 @@ dependencies = ["scikit-dimension", "tadasets", "graphriccicurvature"]
 
 [tool.pixi.project]
 channels = ["nvidia", "conda-forge", "fastai", "pytorch"] 
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-arm64"]
 
 [tool.pixi.dependencies] # Conda dependencies managed by pixi
 # # Common & Ubiquitous
@@ -63,14 +63,12 @@ new_experiment = "bash .zetteldev/new_experiment.sh"
 zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels" # export experiments to markdown with quarto
 notebooks = "jupyter lab --ip=0.0.0.0"
 
-[tool.pixi.feature.cuda] # CUDA support; insteall with pixi install -e cuda
+[tool.pixi.feature.cuda] # CUDA support; install with pixi install -e cuda
 platforms = ["win-64", "linux-64"]
 channels = ["nvidia", {channel = "pytorch", priority = -1}]
 system-requirements = {cuda = "12.1"}
 [tool.pixi.feature.cuda.dependencies]
 pytorch-cuda = {version = "12.1.*", channel = "pytorch"}
-[tool.pixi.feature.cuda.tasks]
-jupyter = "jupyter notebook"
 
 [tool.pixi.environments]
 cuda = ["cuda"]
