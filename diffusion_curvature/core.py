@@ -56,17 +56,19 @@ from dataclasses import dataclass
 class SimpleGraph:
     W: np.ndarray
 
-def get_adaptive_graph(X, k = 5, alpha = 1):
+def get_adaptive_graph(X, k = 5, alpha = 1, self_loops=True):
     W = gaussian_kernel(
         X,
         kernel_type='adaptive',
         k = k,
         anisotropic_density_normalization = alpha,
     )
+    if not self_loops:
+        np.fill_diagonal(W, 0)
     G = pygsp.graphs.Graph(W)
     return G
 
-def get_fixed_graph(X, sigma, alpha):
+def get_fixed_graph(X, sigma, alpha, self_loops=True):
     W = gaussian_kernel(
         X, 
         kernel_type = "fixed",
@@ -74,7 +76,7 @@ def get_fixed_graph(X, sigma, alpha):
         anisotropic_density_normalization = alpha,
     )
     # set diagonal of W to zero
-    np.fill_diagonal(W, 0)
+    if not self_loops: np.fill_diagonal(W, 0)
     G = pygsp.graphs.Graph(W)
     return G
 
