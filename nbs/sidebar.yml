@@ -43,3 +43,4 @@ website:
       - 8-Ricci-Curvature.ipynb
       - 8a-experiments-with-ricci-curvature.ipynb
       - curvature-filtrations.ipynb
+      - diffusion-trajectory-distance-normalization.ipynb
