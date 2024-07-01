@@ -1,174 +1,45 @@
 website:
   sidebar:
     contents:
-      - section: documentation
-        contents:
-          - documentation/index.ipynb
-          - documentation/Examples.ipynb
-      - section: experiments
-        contents:
-          - experiments/1b-wasserstein-laziness-with-heatgeo.ipynb
-          - experiments/1c-poincare-disk.ipynb
-          - experiments/1c1-visible-spread-on-torus.ipynb
-          - experiments/2a-Toy-Manifolds.ipynb
-          - experiments/2b-detecting-negative-curvature.ipynb
-          - experiments/2c-sampling-experiments.ipynb
-          - experiments/2c1-kernel-bandwidth-effects-on-negative-curvature-detection.ipynb
-          - experiments/2c1a-laziness-effects-on-negative-curvature-detection.ipynb
-          - experiments/2c2-snekhorn.ipynb
-          - experiments/2c3-are-kernels-zeitgeibers.ipynb
-          - experiments/2c4 Normalization.ipynb
-          - experiments/2c5-graph-volume-normalization.ipynb
-          - experiments/2da-curvature-colosseum-with-diffusion-curvature.ipynb
-          - experiments/2db-hickock-curvature-of-battery.ipynb
-          - experiments/2e-are-planes-flat.ipynb
-          - experiments/2f-sign-prediction-tests.ipynb
-          - experiments/3c-curvature-from-radial-flattening.ipynb
-          - experiments/3d1-effects-of-graph-construction.ipynb
-          - experiments/3e-curvature-via-neural-flattening.ipynb
-          - experiments/3e1-flattening-with-diffusion-models.ipynb
-          - experiments/3e2-flattening-with-gromov-wasserstein.ipynb
-          - experiments/3e3-flattening-with-continuous-normalizing-flows.ipynb
-          - experiments/3f-Sampling-Semifinals.ipynb
-          - experiments/3g-density-invariance.ipynb
-          - experiments/4a-scalar-curvature-by-volume-comparisons.ipynb
-          - experiments/4a1-Volume-Estimation-with-heat-diffusion.ipynb
-          - experiments/5-curvature-filtrations.ipynb
-          - experiments/6a-Loss-Landscapes.ipynb
-          - experiments/7-experiments-with-ricci-curvature.ipynb
-          - experiments/9a-learning-pykeops.ipynb
-          - experiments/foo bar.ipynb
-      - section: library
-        contents:
-          - library/Bobby-Tables.ipynb
-          - library/Core-PyKeops.ipynb
-          - library/Diffusion-Entropy.ipynb
-          - library/Utils.ipynb
-          - section: benchmarking
-            contents:
-              - library/benchmarking/diffusion-curvature-of-battery.ipynb
-      - section: library
-        contents:
-          - section: benchmarking
-            contents:
-              - library/benchmarking/hickock-curvature.ipynb
-      - section: library
-        contents:
-          - section: benchmarking
-            contents:
-              - library/benchmarking/sampling-distance.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Chebyshev-Neumann.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Comparison-Space-Construction.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Core.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Curvature-Enhanced-Spectral-Clustering.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Diffusion-Laziness.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Graphs.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Heat-Diffusion.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Kernels.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Manifold-Distances.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Mean-Flat-Entropies.ipynb
-      - section: library
-        contents:
-          - section: core-jax
-            contents:
-              - library/core-jax/Ricci-Curvature.ipynb
-      - section: library
-        contents:
-          - section: core-pyg
-            contents:
-              - library/core-pyg/1-Diffusion-Curvature.ipynb
-      - section: library
-        contents:
-          - section: core-pyg
-            contents:
-              - library/core-pyg/1a-Graph-Diffusion-PyG.ipynb
-      - section: library
-        contents:
-          - section: core-pyg
-            contents:
-              - library/core-pyg/3a-Diffusion-Rays.ipynb
-      - section: library
-        contents:
-          - section: core-pyg
-            contents:
-              - library/core-pyg/3b-Line-MAGIC-for-Diffusion-Geodesics.ipynb
-      - section: library
-        contents:
-          - section: core-pyg
-            contents:
-              - library/core-pyg/3c-Landmark-Graphs.ipynb
-      - section: library
-        contents:
-          - section: datasets
-            contents:
-              - library/datasets/Construct-Battery.ipynb
-      - section: library
-        contents:
-          - section: datasets
-            contents:
-              - library/datasets/Random-Surfaces.ipynb
-      - section: library
-        contents:
-          - section: datasets
-            contents:
-              - library/datasets/saddle-sphere-ablations.ipynb
-      - section: library
-        contents:
-          - section: datasets
-            contents:
-              - library/datasets/toy-datasets.ipynb
-      - section: library
-        contents:
-          - section: flattening
-            contents:
-              - library/flattening/MIOFlow Standard - Quicktrain.ipynb
-      - section: library
-        contents:
-          - section: flattening
-            contents:
-              - library/flattening/MIOFlow for Neural Flattening.ipynb
-      - section: library
-        contents:
-          - section: flattening
-            contents:
-              - library/flattening/Radial Flattening Autoencoder.ipynb
+      - 0a-Atoms.ipynb
+      - 0a0-Kernels.ipynb
+      - 0a1-Graphs.ipynb
+      - 0a2-Heat-Diffusion.ipynb
+      - 0a3-Diffusion-Spectral-Entropy.ipynb
+      - 0a4-Manifold-Distances.ipynb
+      - 0b-Baselines.ipynb
+      - 0b1-hickock-curvature.ipynb
+      - 0b2-zhang-principal-curvature.ipynb
+      - 0c-Core.ipynb
+      - 0c1a-Diffusion-Laziness.ipynb
+      - 0c2-Comparison-Space-Construction.ipynb
+      - 0c2a-Mean-Flat-Entropies.ipynb
+      - 0d-Data.ipynb
+      - 0d1-toy-manifolds.ipynb
+      - 0d2-Colosseum-of-Random-Surfaces.ipynb
+      - 0d2a-Random-Surfaces.ipynb
+      - 0d3-saddle-sphere-ablations.ipynb
+      - 0e-Errata.ipynb
+      - 0e1-self-evaluating-datasets.ipynb
+      - 0g-Guide.ipynb
+      - 1-Curvature-Enhanced-Spectral-Clustering.ipynb
+      - 2-Toy-Manifolds-Benchmark.ipynb
+      - 2a-Diffusion-Curvatures-of-Toy-Manifolds.ipynb
+      - 2b-Hickock-Curvature-of-Toy-manifolds.ipynb
+      - 2c-Zhang-Principal-Curvature-of-Toy-manifolds.ipynb
+      - 3-Sampling-Resilience.ipynb
+      - 3a-are-kernels-zeitgeibers.ipynb
+      - 3b-Normalizing-by-Graph-Volume.ipynb
+      - 3c-effects-of-graph-construction.ipynb
+      - 4-Curvature-Colosseum.ipynb
+      - 4a-curvature-colosseum-with-diffusion-curvature.ipynb
+      - 4b-hickock-curvature-of-battery.ipynb
+      - 5-sign-prediction-tests.ipynb
+      - 5a-kernel-bandwidth-effects-on-negative-curvature-detection.ipynb
+      - 5b-hickok-sign-prediction-tests.ipynb
+      - 6-scalar-curvature-by-volume-comparisons.ipynb
+      - 6a-Volume-Estimation-with-heat-diffusion.ipynb
+      - 7-Loss-Landscapes.ipynb
+      - 8-Ricci-Curvature.ipynb
+      - 8a-experiments-with-ricci-curvature.ipynb
+      - curvature-filtrations.ipynb

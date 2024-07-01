@@ -17,7 +17,7 @@ format:
 website:
   title: "diffusion_curvature"
   site-url: "https://professorwug.github.io/diffusion_curvature"
-  description: "Fast, pointwise graph curvature"
+  description: "Fast, pointwise, noise-resistant graph curvature with diffusion geometry"
   twitter-card: true
   open-graph: true
   repo-branch: main
