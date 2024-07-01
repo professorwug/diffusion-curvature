@@ -8,7 +8,7 @@ formattedString=$(echo "$name" | sed 's/-/ /g')
 # Capitalize each word
 outputString=$(echo "$formattedString" | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2));}1')
 
-sed -i "s/# Experiment Name/# ${outputString}/g" "nbs/experiments/${name}".ipynb 
+sed -i "s/# Experiment Name/# ${outputString}/g" "nbs/${name}".ipynb 
 
 # 2. Add the notebook to the jupyter cache index
 jcache notebook add "nbs/${name}".ipynb 
