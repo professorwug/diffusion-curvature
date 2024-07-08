@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['get_adaptive_graph', 'diff_op', 'kernel_degree', 'diff_aff', 'get_knn_graph', 'get_alpha_decay_graph',
-           'get_scanpy_graph', 'get_umap_graph', 'generic_kernel', 'diffusion_matrix_from_affinities']
+           'get_scanpy_graph', 'get_umap_graph']
 
 # %% ../nbs/0a1-Graphs.ipynb 2
 import pygsp
@@ -121,27 +121,3 @@ def get_umap_graph(X, knn=5, **kwargs):  # knn default to 15 in UMAP
     umap_op.fit(X)
     w = umap_op.graph_.toarray()
     return pygsp.graphs.Graph(w)
-
-# %% ../nbs/0a1-Graphs.ipynb 6
-import jax
-import jax.numpy as jnp
-
-def generic_kernel(
-        D, # distance matrix
-        sigma, # kernel bandwidth
-        anisotropic_density_normalization, 
-
-):  
-    W = (1/(sigma*np.sqrt(2*jnp.pi)))*jnp.exp((-D**2)/(2*sigma**2))
-    D = jnp.diag(1/((jnp.sum(W,axis=1)+1e-8)**anisotropic_density_normalization))
-    W = D @ W @ D
-    return W
-
-# %% ../nbs/0a1-Graphs.ipynb 7
-def diffusion_matrix_from_affinities(
-        W
-):
-    W = W + jnp.eye(len(W))*1e-8
-    D = jnp.diag(1/jnp.sum(W,axis=1))
-    P = D @ W
-    return P
