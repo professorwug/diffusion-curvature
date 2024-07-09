@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['default_fixed_graph_former', 'graphtools_graph_from_data', 'SimpleGraph', 'get_adaptive_graph', 'get_fixed_graph',
-           'DiffusionCurvature', 'fill_diagonal']
+           'DiffusionCurvature', 'fill_diagonal', 'DiffusionCurvature2']
 
 # %% ../nbs/0c-Core.ipynb 8
 import pygsp
@@ -22,17 +22,18 @@ from tqdm.auto import trange, tqdm
 from jax.experimental import sparse
 
 # Graph operations, laziness, measures
-from .graphs import diff_aff, diff_op, diffusion_matrix_from_affinities
+from .graphs import diff_aff, diff_op
+from .kernels import diffusion_matrix_from_affinities
 from .heat_diffusion import heat_diffusion_on_signal, kronecker_delta, jax_power_matrix, heat_diffusion_from_dirac
 from .diffusion_laziness import wasserstein_spread_of_diffusion, entropy_of_diffusion
 from .distances import phate_distances
 from .datasets import plane
 
 # Comparison space construction
-from .comparison_space import EuclideanComparisonSpace, fit_comparison_space_model, euclidean_comparison_graph, construct_ndgrid_from_shape, diffusion_coordinates, load_average_entropies
+# from diffusion_curvature.comparison_space import EuclideanComparisonSpace, fit_comparison_space_model, euclidean_comparison_graph, construct_ndgrid_from_shape, diffusion_coordinates, load_average_entropies
 # from diffusion_curvature.normalizing_flows import neural_flattener
 # from diffusion_curvature.flattening.mioflow_quicktrain import MIOFlowStandard
-from .flattening.radial_ae import radially_flatten_with_ae
+# from diffusion_curvature.flattening.radial_ae import radially_flatten_with_ae
 
 # Algorithmic niceties
 from .clustering import enhanced_spectral_clustering
@@ -437,4 +438,128 @@ def fill_diagonal(a, val):
   assert a.ndim >= 2
   i, j = jnp.diag_indices(min(a.shape[-2:]))
   return a.at[..., i, j].set(val)
+
+
+# %% ../nbs/0c-Core.ipynb 9
+from .diffusion_laziness import DiffusionLaziness
+
+class DiffusionCurvature2():
+    DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
+    LAZINESS_METHOD = Literal['Wasserstein','Entropic', 'Laziness', 'Wasserstein Normalized']
+    FLATTENING_METHOD = Literal['Neural', 'Fixed', 'Mean Fixed', 'MIOFlow', 'Radial Flattener']
+    COMPARISON_METHOD = Literal['Ollivier', 'Subtraction']
+    def __init__(
+            self,
+            diffusion_type:_DIFFUSION_TYPES = 'diffusion matrix', # Either ['diffusion matrix','heat kernel']
+            laziness_method: _LAZINESS_METHOD = 'Entropic', # Either ['Wasserstein','Entropic', 'Laziness']
+            comparison_method: _COMPARISON_METHOD = 'Subtraction', # Either ['Ollivier', 'Subtraction']
+            graph_former = None,
+            dimest = None, # Dimension estimator to use. If none, defaults to kNN.
+            points_per_cluster = None, # Number of points to use in each cluster when constructing comparison spaces. Each comparison space takes about 20sec to construct, and has different sampling and dimension. If 1, constructs a different comparison space for each point; if None, constructs just one comparison space.
+            comparison_space_size_factor = 1, # Number of points in comparison space is the number of points in the original space divided by this factor.
+            use_grid=False, # If True, uses a grid of points as the comparison space. If False, uses a random sample of points.            
+            max_flattening_epochs=50,     
+            aperture = 20, # if using Laziness flattening, this controls the size of neighborhood over which the return probability is averaged.
+            smoothing=1,
+            distance_t = None,
+            comparison_space_file = "../data/entropies_averaged.h5",
+            verbose = False,
+    ):
+        store_attr()
+        self.D = None
+        
+        self.manifold_lazy_est = DiffusionLaziness(
+            diffusion_type = diffusion_type,
+            laziness_method = laziness_method,
+        )
+        self.comparison_lazy_est = DiffusionLaziness(
+            diffusion_type = diffusion_type,
+            laziness_method = laziness_method,
+        )
+        
+        if graph_former is None: self.graph_former = partial(get_adaptive_graph, k = 5, alpha = 1)
+        
+        if self.dimest is None:
+            self.dimest = skdim.id.KNN()
+        
+            
+    def unsigned_curvature(
+            self,
+            **kwargs,
+    ):
+        return self.fit(**kwargs, unsigned = True)
+
+    def curvature(
+        self,
+        **kwarsg
+    ):
+        return self.fit(**kwargs, unsigned = False)
+        
+        
+    def fit(
+            self,
+            X, # input pointcloud
+            dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
+            ts:int = None, # scales; supply an integer or list of indices, and we'll only calculate their laziness
+            idx=None, # the index at which to compute curvature. If None, computes for all points.
+            unsigned = False, # If True, computes unsigned curvature. If False, computes signed curvature.
+            D = None, # Supply manifold distances yourself to override their computation. Only used with the Wasserstein laziness method.
+            t_dist:int = 25,
+            t = None, # alias for ts
+    ):
+        # build graph
+        if t is not None: ts = [t]
+        self.X = X
+        self.G = self.graph_former(X)
+
+        # fit points
+        ls_manifold = self.manifold_lazy_est.fit_transform(
+            self.G,
+            ts, 
+            idx, 
+            D, 
+            t_dist
+        )
+
+        if unsigned:
+            return ls_manifold
+
+        # build comparison space
+        Rn = plane(n = len(X), dim=dim)
+        G_euclidean = self.graph_former(Rn)
+        # fit comparison space
+        ls_euclidean = self.comparison_lazy_est.fit_transform(
+            G_euclidean,
+            ts, 
+            idx = 0,
+            D = None,
+            t_dist = t_dist,
+        )
+
+        self.ls_manifold = ls_manifold
+        self.ls_euclidean = ls_euclidean
+        
+        match self.comparison_method:
+            case "Ollivier":
+                ks = 1 - ls_manifold/ls_euclidean
+            case "Subtraction":
+                ks = ls_euclidean - ls_manifold
+            case _:
+                raise ValueError(f'Comparison method must be in {_COMPARISON_METHOD}')    
+        return ks 
+    def fit_transform(
+            self,
+            X, # input pointcloud
+            dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
+            ts:int = None, # scales; supply an integer or list of indices, and we'll only calculate their laziness
+            idx=None, # the index at which to compute curvature. If None, computes for all points.
+            unsigned = False, # If True, computes unsigned curvature. If False, computes signed curvature.
+            D = None, # Supply manifold distances yourself to override their computation. Only used with the Wasserstein laziness method.
+            t_dist:int = 25, 
+            t = None, # Alias for t
+    ):
+        ks = self.fit(
+            X, dim, ts, idx, unsigned, D, t_dist, t
+        )
+        return ks
 

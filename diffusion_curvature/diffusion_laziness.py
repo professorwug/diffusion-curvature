@@ -5,8 +5,10 @@ __all__ = ['wasserstein_spread_of_diffusion', 'entropy_of_diffusion', 'kl_div', 
            'trapezoidal_rule', 'DiffusionLaziness', 'curvature_curves']
 
 # %% ../nbs/0c1a-Diffusion-Laziness.ipynb 3
+import jax
 import jax.numpy as jnp
 from jax import jit
+import scipy
 
 @jit
 def wasserstein_spread_of_diffusion(
@@ -90,6 +92,7 @@ def diffusion_distances_along_trajectory(diffusions):
 import jax
 import jax.numpy as jnp
 
+@jax.jit
 def trapezoidal_rule(x, y):
     # Ensure x and y are JAX arrays
     x = jnp.asarray(x)
@@ -110,6 +113,7 @@ def trapezoidal_rule(x, y):
 from typing import Literal
 from .kernels import diffusion_matrix_from_affinities
 from .heat_diffusion import heat_diffusion_from_dirac, powers_of_diffusion
+from copy import deepcopy
 
 class DiffusionLaziness():
     DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
@@ -121,11 +125,11 @@ class DiffusionLaziness():
     ):
         store_attr()
 
-
     def fit_transform(
         self,
         G, # graph
         ts, # time or list of times.
+        idx = None, # supply an integer or list of indices, and we'll only calculate their laziness
         D = None,
         t_dist:int = 25, # diffusion time for distance calculation
     ):
@@ -133,6 +137,8 @@ class DiffusionLaziness():
         W = G.W
         if scipy.sparse.issparse(W):
             W = W.todense()
+        ts = deepcopy(ts)
+        if isinstance(ts, int): ts = [ts]
         if D is None: ts += [t_dist]
         W = jnp.array(W)
         # get powers of diffusion
@@ -151,13 +157,15 @@ class DiffusionLaziness():
             case "Entropic":
                 laziness_fn = jax.vmap(entropy_of_diffusion, (0), 0)
         if D is None: diffusions = Pts[:-1] # the last Pt is for heat 
+        if idx is not None: diffusions = [d[idx][None,:] for d in diffusions]
         self.ts = ts[:-1]
         self.ls = laziness_fn(jnp.stack(diffusions)).T 
         self.ds = diffusion_distances_along_trajectory(diffusions).T
-        laziness_under_curve = trapezoidal_rule(self.ds, self.ls)
+        if len(self.ts) > 1: laziness_under_curve = trapezoidal_rule(self.ds, self.ls)
+        else:                laziness_under_curve = self.ls
         return laziness_under_curve
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 51
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 61
 from functools import partial
 import numpy as np
 import matplotlib.pyplot as plt

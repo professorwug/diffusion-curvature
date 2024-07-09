@@ -16,7 +16,7 @@ def jax_power_matrix(
             return jnp.linalg.matrix_power(P, t)
 
 # %% ../nbs/0a2-Heat-Diffusion.ipynb 10
-from typing import List
+from typing import List, Literal
 import math
 
 def get_matrix_power_recursive(
@@ -40,7 +40,7 @@ def get_matrix_power_recursive(
 
 def powers_of_diffusion(
     P:jax.Array, # diffusion matrix
-    ts:List[Int], # list of times 
+    ts:List[int], # list of times 
 )->List[jax.Array]: 
     """
     Returns list[P^t for t in ts], but done efficiently.
