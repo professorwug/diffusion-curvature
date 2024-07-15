@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['wasserstein_spread_of_diffusion', 'entropy_of_diffusion', 'kl_div', 'js_dist', 'diffusion_distances_along_trajectory',
-           'trapezoidal_rule', 'DiffusionLaziness', 'curvature_curves']
+           'trapezoidal_rule', 'DiffusionLaziness', 'curvature_curves', 'compare_curvature_across_datasets']
 
 # %% ../nbs/0c1a-Diffusion-Laziness.ipynb 3
 import jax
@@ -44,7 +44,7 @@ def entropy_of_diffusion(
         # entropy_of_rows = entropy_of_rows / (-jnp.log(1/jnp.sum(Pt>epsilon, axis=-1)))
         return entropy_of_rows
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 19
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 20
 @jax.jit
 def kl_div(A, B, eps = 1e-12):
     # Calculate Kullback-Leibler divergence
@@ -54,7 +54,7 @@ def kl_div(A, B, eps = 1e-12):
     v = A*(jnp.log(A) - jnp.log(B)) 
     return jnp.sum(v)
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 21
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 22
 @jax.jit
 def js_dist(
     P:jax.Array, 
@@ -75,7 +75,7 @@ def js_dist(
     # Take sqrt to get the JS DISTANCE
     return jnp.sqrt(jnp.abs(result))
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 29
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 30
 from scipy.spatial.distance import jensenshannon
 def diffusion_distances_along_trajectory(diffusions):
     # given a sequence of diffusions, returns the distances between each 
@@ -88,7 +88,7 @@ def diffusion_distances_along_trajectory(diffusions):
         )
     return jnp.stack(distances)
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 33
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 34
 import jax
 import jax.numpy as jnp
 
@@ -101,8 +101,12 @@ def trapezoidal_rule(x, y):
     # Calculate the differences between consecutive x values along the second axis (axis=1)
     dx = x[:, 1:] - x[:, :-1]
     
-    # Calculate the trapezoidal areas along the second axis
+    # Calculate the trapezoidal areas along the second axis, handling NaNs
     trapezoidal_areas = dx * (y[:, :-1] + y[:, 1:]) / 2
+    
+    # Mask out the NaNs in the trapezoidal areas
+    valid_mask = ~jnp.isnan(trapezoidal_areas)
+    trapezoidal_areas = jnp.where(valid_mask, trapezoidal_areas, 0.0)
     
     # Sum up the areas along the second axis to get the integral for each row
     integral = jnp.sum(trapezoidal_areas, axis=1)
@@ -164,8 +168,25 @@ class DiffusionLaziness():
         if len(self.ts) > 1: laziness_under_curve = trapezoidal_rule(self.ds, self.ls)
         else:                laziness_under_curve = self.ls
         return laziness_under_curve
+    
+    def integrate_laziness_with_bounds(self, min_d, max_d, idxs=None):
+        if idxs is None:
+            idxs = jnp.arange(self.ds.shape[0])
+        else:
+            idxs = jnp.asarray(idxs)
+        
+        ds_filtered = self.ds[idxs]
+        ls_filtered = self.ls[idxs]
+        
+        mask = (ds_filtered >= min_d) & (ds_filtered <= max_d)
+        valid_ds = jnp.where(mask, ds_filtered, jnp.nan)
+        valid_ls = jnp.where(mask, ls_filtered, jnp.nan)
+        
+        results = trapezoidal_rule(valid_ds, valid_ls)
+        return results
+        
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 61
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 66
 from functools import partial
 import numpy as np
 import matplotlib.pyplot as plt
@@ -205,3 +226,34 @@ def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", als
     fig.suptitle(title)
     axs[0].legend()
     plt.show()
+
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 70
+def compare_curvature_across_datasets(
+    *diffusion_lazinesses,
+    idxs:List  = None # list of idxs to compare. Can also be a list of lists of idxs, one per DiffusionLaziness
+):
+    if idxs is None:
+        idxs = jnp.arange(diffusion_lazinesses[0].ds.shape[0])
+    def _get_means_by_idxs(DL, id):
+        idxs = jnp.array(id)
+        if len(idxs) == 1:
+            mean_ds = DL.ds[id[0]] 
+        else:
+            mean_ds = jnp.mean(DL.ds[id], axis=0)
+        return mean_ds
+
+    if isinstance(idxs[0], List) or isinstance(idxs[0], jax.Array):
+        assert len(idxs) == len(diffusion_lazinesses)
+        mean_ds = [_get_means_by_idxs(diffusion_lazinesses[i],idxs[i]) for i in range(len(diffusion_lazinesses))]
+    else:
+        mean_ds = [_get_means_by_idxs(DL,idxs) for DL in diffusion_lazinesses]
+    
+    max_ds = jnp.array([jnp.max(md) for md in mean_ds])
+    minmax_ds = jnp.min(max_ds)
+
+    if isinstance(idxs[0], List) or isinstance(idxs[0], jax.Array):
+        bounded_integrals = [diffusion_lazinesses[i].integrate_laziness_with_bounds(0, minmax_ds, idxs=idxs[i]) for i in range(len(diffusion_lazinesses))]
+    else:
+        bounded_integrals = [DL.integrate_laziness_with_bounds(0, minmax_ds, idxs = idxs) for DL in diffusion_lazinesses]
+
+    return bounded_integrals

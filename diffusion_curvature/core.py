@@ -441,7 +441,7 @@ def fill_diagonal(a, val):
 
 
 # %% ../nbs/0c-Core.ipynb 9
-from .diffusion_laziness import DiffusionLaziness
+from .diffusion_laziness import DiffusionLaziness, compare_curvature_across_datasets
 
 class DiffusionCurvature2():
     DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
@@ -513,7 +513,7 @@ class DiffusionCurvature2():
         self.G = self.graph_former(X)
 
         # fit points
-        ls_manifold = self.manifold_lazy_est.fit_transform(
+        ls_manifold_raw = self.manifold_lazy_est.fit_transform(
             self.G,
             ts, 
             idx, 
@@ -528,7 +528,7 @@ class DiffusionCurvature2():
         Rn = plane(n = len(X), dim=dim)
         G_euclidean = self.graph_former(Rn)
         # fit comparison space
-        ls_euclidean = self.comparison_lazy_est.fit_transform(
+        ls_euclidean_raw = self.comparison_lazy_est.fit_transform(
             G_euclidean,
             ts, 
             idx = 0,
@@ -536,14 +536,23 @@ class DiffusionCurvature2():
             t_dist = t_dist,
         )
 
-        self.ls_manifold = ls_manifold
-        self.ls_euclidean = ls_euclidean
+        # integrate with bounds across spaces.
+        comparison_idxs = jnp.arange(len(X)) if idx is None else [idx]
+        comparison_integrals = compare_curvature_across_datasets(
+            self.manifold_lazy_est, self.comparison_lazy_est, idxs = [comparison_idxs, [0]]
+        )
+
+        self.ls_manifold = comparison_integrals[0]
+        self.ls_euclidean = comparison_integrals[1]
+
+        # self.ls_manifold = ls_manifold_raw
+        # self.ls_euclidean = ls_euclidean_raw
         
         match self.comparison_method:
             case "Ollivier":
-                ks = 1 - ls_manifold/ls_euclidean
+                ks = 1 - self.ls_manifold/self.ls_euclidean
             case "Subtraction":
-                ks = ls_euclidean - ls_manifold
+                ks = self.ls_euclidean - self.ls_manifold
             case _:
                 raise ValueError(f'Comparison method must be in {_COMPARISON_METHOD}')    
         return ks 
