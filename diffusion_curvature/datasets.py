@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['rejection_sample_for_torus', 'torus', 'rejection_sample_for_hyperboloid', 'hyperboloid',
            'rejection_sample_for_ellipsoid', 'ellipsoid', 'sphere', 'rejection_sample_for_saddle', 'paraboloid',
-           'rejection_sample_from_saddle', 'plane']
+           'rejection_sample_from_saddle', 'plane', 'klein_bottle']
 
 # %% ../nbs/0d1-toy-manifolds.ipynb 2
 import numpy as np
@@ -273,6 +273,39 @@ def paraboloid(n=2000,a=1,b=-1, seed=None, use_guide_points = False, noise = Non
 # %% ../nbs/0d1-toy-manifolds.ipynb 51
 import sympy as sp
 from .random_surfaces import rejection_sample_from_surface, scalar_curvature_at_origin
+
+def klein_bottle(n=2000, noise=0, seed=None):
+    """
+    Sample `n` data points on a 4D Klein Bottle.
+
+    Parameters
+    -----------
+    n : int
+        Number of data points in shape.
+    noise : float
+        Standard deviation of Gaussian noise to add to the points.
+    seed : int, default=None
+        Seed for random state.
+    """
+    np.random.seed(seed)
+    u = np.random.uniform(0, 2 * np.pi, n)
+    v = np.random.uniform(0, 2 * np.pi, n)
+
+    x = (np.cos(u) * (1 + np.sin(u) * np.cos(v / 2)))
+    y = (np.sin(u) * (1 + np.sin(u) * np.cos(v / 2)))
+    z = (np.sin(u) * np.sin(v / 2))
+    w = (np.cos(u) * np.sin(v / 2))
+
+    X = np.vstack([x, y, z, w]).T
+
+    # Placeholder for curvature values
+    ks = np.zeros(n)
+
+    if noise:
+        noise = np.random.normal(size=X.shape, loc=0, scale=noise)
+        X = X + noise
+
+    return X, ks
 def rejection_sample_from_saddle(n_samples=1000, intrinsic_dim = 2, verbose=False, intensity=1):
     d = intrinsic_dim
     vars = sp.symbols('x0:%d' % d)
