@@ -298,8 +298,8 @@ def klein_bottle(n=2000, noise=0, seed=None):
 
     X = np.vstack([x, y, z, w]).T
 
-    # Placeholder for curvature values
-    ks = np.zeros(n)
+    # Calculate the scalar curvature for each point
+    ks = 2 * (np.sin(u) * np.cos(v / 2)) / (1 + np.sin(u) * np.cos(v / 2))**2
 
     if noise:
         noise = np.random.normal(size=X.shape, loc=0, scale=noise)
