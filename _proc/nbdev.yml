@@ -1,0 +1,9 @@
+project:
+  output-dir: docs
+
+website:
+  title: "diffusion_curvature"
+  site-url: "https://professorwug.github.io/diffusion_curvature"
+  description: "Fast, pointwise, noise-resistant graph curvature with diffusion geometry"
+  repo-branch: main
+  repo-url: "https://github.com/professorwug/diffusion_curvature"

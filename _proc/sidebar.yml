@@ -1,0 +1,46 @@
+website:
+  sidebar:
+    contents:
+      - 0a-Atoms.ipynb
+      - 0a0-Kernels.ipynb
+      - 0a1-Graphs.ipynb
+      - 0a2-Heat-Diffusion.ipynb
+      - 0a3-Diffusion-Spectral-Entropy.ipynb
+      - 0a4-Manifold-Distances.ipynb
+      - 0b-Baselines.ipynb
+      - 0b1-hickock-curvature.ipynb
+      - 0b2-zhang-principal-curvature.ipynb
+      - 0c-Core.ipynb
+      - 0c1a-Diffusion-Laziness.ipynb
+      - 0c2-Comparison-Space-Construction.ipynb
+      - 0c2a-Mean-Flat-Entropies.ipynb
+      - 0d-Data.ipynb
+      - 0d1-toy-manifolds.ipynb
+      - 0d2-Colosseum-of-Random-Surfaces.ipynb
+      - 0d2a-Random-Surfaces.ipynb
+      - 0d3-saddle-sphere-ablations.ipynb
+      - 0e-Errata.ipynb
+      - 0e1-self-evaluating-datasets.ipynb
+      - 0g-Guide.ipynb
+      - 1-Curvature-Enhanced-Spectral-Clustering.ipynb
+      - 2-Toy-Manifolds-Benchmark.ipynb
+      - 2a-Diffusion-Curvatures-of-Toy-Manifolds.ipynb
+      - 2b-Hickock-Curvature-of-Toy-manifolds.ipynb
+      - 2c-Zhang-Principal-Curvature-of-Toy-manifolds.ipynb
+      - 3-Sampling-Resilience.ipynb
+      - 3a-are-kernels-zeitgeibers.ipynb
+      - 3b-Normalizing-by-Graph-Volume.ipynb
+      - 3c-effects-of-graph-construction.ipynb
+      - 4-Curvature-Colosseum.ipynb
+      - 4a-curvature-colosseum-with-diffusion-curvature.ipynb
+      - 4b-hickock-curvature-of-battery.ipynb
+      - 5-sign-prediction-tests.ipynb
+      - 5a-kernel-bandwidth-effects-on-negative-curvature-detection.ipynb
+      - 5b-hickok-sign-prediction-tests.ipynb
+      - 6-scalar-curvature-by-volume-comparisons.ipynb
+      - 6a-Volume-Estimation-with-heat-diffusion.ipynb
+      - 7-Loss-Landscapes.ipynb
+      - 8-Ricci-Curvature.ipynb
+      - 8a-experiments-with-ricci-curvature.ipynb
+      - curvature-filtrations.ipynb
+      - diffusion-trajectory-distance-normalization.ipynb
