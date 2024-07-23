@@ -175,3 +175,4 @@ token
 **/.quarto/
 
 /.thread-dev-
+.thread-dev
