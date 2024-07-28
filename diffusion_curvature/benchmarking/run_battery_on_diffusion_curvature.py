@@ -6,14 +6,14 @@ __all__ = ['battery_file', 'k', 'neighbor_scale', 'alpha', 'ts', 'name_of_run', 
 
 # %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 2
 # parameters for run
-battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_dikey.h5"
-# tiny_battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_LowD_HighSampled.h5" # for test runs
+# battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_dikey.h5"
+battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_LowD_HighSampled.h5" # for test runs
 k = 1 # for curvature agnostic kernel
-neighbor_scale = 1 # for curvature agnostic kernel
+neighbor_scale = 2 # for curvature agnostic kernel
 alpha = 0 
 ts = list(range(1,80))
 
-name_of_run = f"DC2_with_idx_k-{k}_ns-{neighbor_scale}_alpha-{alpha}_maxt-{max(ts)}"
+name_of_run = f"DC2_with_idx_k-{k}_ns-{neighbor_scale}_alpha-{alpha}_maxt-{max(ts)}_lowdhighsamples"
 print(name_of_run)
 
 # %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 4

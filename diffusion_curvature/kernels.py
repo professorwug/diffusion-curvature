@@ -4,7 +4,7 @@
 __all__ = ['median_heuristic', 'gaussian_kernel', 'compute_anisotropic_affinities_from_graph',
            'compute_anisotropic_diffusion_matrix_from_graph', 'pygsp_graph_from_points', 'SimpleGraph',
            'get_curvature_agnostic_graph', 'get_adaptive_graph', 'get_fixed_graph', 'get_knn_graph', 'diffusion_matrix',
-           'generic_kernel', 'diffusion_matrix_from_affinities']
+           'diffusion_matrix_from_graph', 'num_in_first_scale_of_diffusion', 'tune_curvature_agnostic_kernel']
 
 # %% ../nbs/0a0-Kernels.ipynb 7
 import numpy as np
@@ -189,26 +189,51 @@ def diffusion_matrix(
     P = normalize(W, norm="l1", axis=1)
     return P
 
-# %% ../nbs/0a0-Kernels.ipynb 55
-import jax
-import jax.numpy as jnp
-
-def generic_kernel(
-        D, # distance matrix
-        sigma, # kernel bandwidth
-        anisotropic_density_normalization, 
-
-):  
-    W = (1/(sigma*np.sqrt(2*jnp.pi)))*jnp.exp((-D**2)/(2*sigma**2))
-    D = jnp.diag(1/((jnp.sum(W,axis=1)+1e-8)**anisotropic_density_normalization))
-    W = D @ W @ D
-    return W
+# %% ../nbs/0a0-Kernels.ipynb 21
+def diffusion_matrix_from_graph(
+        G
+):
+    return diffusion_matrix(A = G.W)
 
 # %% ../nbs/0a0-Kernels.ipynb 56
-def diffusion_matrix_from_affinities(
-        W
+import jax
+from functools import partial
+
+def num_in_first_scale_of_diffusion(
+        P:jax.Array, # diffusion matrix
+        eps:float = 1e-10, # only counts points with diffusion mass greater than this
 ):
-    W = W + jnp.eye(len(W))*1e-8
-    D = jnp.diag(1/jnp.sum(W,axis=1))
-    P = D @ W
-    return P
+    P_e = (P > eps).astype(int)
+    nums = jnp.sum(P_e, axis=1)
+    return jnp.median(nums).item() # the median is hopefully more robust to outlier points in really dense pockets.
+
+# %% ../nbs/0a0-Kernels.ipynb 57
+def tune_curvature_agnostic_kernel(X:np.ndarray, num_in_first_scale:int, tolerance:int = 5, eps:float = 1e-10):
+        def try_kernel_with_neighbor_scale(X, ns):
+                kernel = partial(get_curvature_agnostic_graph, neighbor_scale = ns)
+                G = kernel(X)
+                P = diffusion_matrix_from_graph(G)
+                num = num_in_first_scale_of_diffusion(P, eps)
+                return num, kernel
+        
+        lower_bound = 0
+        upper_bound = 10
+        best_ns = None
+        best_num = float('inf')
+        
+        while abs(best_num - num_in_first_scale) > tolerance:
+                ns = (lower_bound + upper_bound) / 2
+                num, kernel = try_kernel_with_neighbor_scale(X, ns)
+                
+                if num > num_in_first_scale:
+                        upper_bound = ns
+                else:
+                        lower_bound = ns
+                
+                if abs(num - num_in_first_scale) < abs(best_num - num_in_first_scale):
+                        best_ns = ns
+                        best_num = num
+        
+        _, best_kernel = try_kernel_with_neighbor_scale(X, best_ns)
+        return best_kernel, best_ns
+
