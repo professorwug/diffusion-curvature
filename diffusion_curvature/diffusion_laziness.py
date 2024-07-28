@@ -195,7 +195,7 @@ from fastcore.all import *
 from tqdm.auto import tqdm
 import inspect
 
-def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", also_plot_against_time = False, **kwargs):
+def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", also_plot_against_time = True, **kwargs):
     if also_plot_against_time: fig, axs = plt.subplots(1, 2, figsize=(12, 6))
     else:                      fig, axs = plt.subplots(1, 1, figsize=(6, 6))
     for dc in diffusion_curvatures:
@@ -210,21 +210,23 @@ def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", als
                     dc_name = name
         if dc_name is None:
             dc_name = "Unknown"
+        if isinstance(dc, DiffusionLaziness):
+            t_values, distances, curvatures = dc.ts, dc.ds[idx], dc.ls[idx]
+        else:
+            t_values, distances, curvatures = dc.manifold_lazy_est.ts, dc.manifold_lazy_est.ds[idx], dc.manifold_lazy_est.ls[idx]
+        axs[1].plot(distances, curvatures, label=dc_name)
+        if also_plot_against_time: axs[0].plot(t_values, curvatures, label=dc_name)
         
-        t_values, distances, curvatures = dc.ts, dc.ds[idx], dc.ls[idx]
-        axs[0].plot(distances, curvatures, label=dc_name)
-        if also_plot_against_time: axs[1].plot(t_values, curvatures, label=dc_name)
-        
-    axs[0].set_title("Spread of diffusion vs distance along diffusion trajectory")
-    axs[0].set_xlabel('Distance')
-    axs[0].set_ylabel('Spread of diffusion')
+    axs[1].set_title("Diffusion Energy Vs. Diffusion Trajectory Distance")
+    axs[1].set_xlabel('Distance')
+    axs[1].set_ylabel('Diffusion Energy')
     if also_plot_against_time:
-        axs[1].set_title("Spread of diffusion vs time")
-        axs[1].set_xlabel('Time ($t$)')    
-        axs[1].set_ylabel('Spread of diffusion')
-        axs[1].legend()
+        axs[0].set_title("Diffusion Energy vs. Time")
+        axs[0].set_xlabel('Time ($t$)')    
+        axs[0].set_ylabel('Diffusion Energy')
+        axs[0].legend()
     fig.suptitle(title)
-    axs[0].legend()
+    axs[1].legend()
     plt.show()
 
 # %% ../nbs/0c1a-Diffusion-Laziness.ipynb 70

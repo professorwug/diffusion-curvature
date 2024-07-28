@@ -96,6 +96,7 @@ class SelfEvaluatingDataset():
         if self.idx >= self.__len__():
             self.save_results()
             raise StopIteration
+            self.idx = -1
         result = self.get_item(self.idx)
         return result
 
@@ -187,5 +188,24 @@ class SelfEvaluatingDataset():
             if hasattr(member, 'tag') and getattr(member, 'tag') == 'metric':
                 tagged_functions.append(member)
         return tagged_functions
+
+    def get_score(self, method_name, metric_name = None, result_name = None):
+        self._aggregate_labels()
+        self.metric_tables = self.compute_metrics(labels = self.labels)
+        # check if there is more than one type of result being computing
+        if len(self.result_names) > 1: 
+            assert result_name is not None
+            table = self.metric_tables[result_name]
+        else:
+            table = self.metric_tables[self.result_names[0]]
+        # check if there is more than one metric computed on the given result
+        if len(table.keys()) > 1:
+            assert metric_name is not None
+            table = table[metric_name]
+        else:
+            table = table[table.keys()[0]]
+        result  = table[method_name]
+        result = float(result)
+        return result
 
     

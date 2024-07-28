@@ -2,9 +2,9 @@
 
 # %% auto 0
 __all__ = ['median_heuristic', 'gaussian_kernel', 'compute_anisotropic_affinities_from_graph',
-           'compute_anisotropic_diffusion_matrix_from_graph', 'pygsp_graph_from_points', 'get_curvature_agnostic_graph',
-           'get_adaptive_graph', 'get_fixed_graph', 'get_knn_graph', 'diffusion_matrix', 'generic_kernel',
-           'diffusion_matrix_from_affinities']
+           'compute_anisotropic_diffusion_matrix_from_graph', 'pygsp_graph_from_points', 'SimpleGraph',
+           'get_curvature_agnostic_graph', 'get_adaptive_graph', 'get_fixed_graph', 'get_knn_graph', 'diffusion_matrix',
+           'generic_kernel', 'diffusion_matrix_from_affinities']
 
 # %% ../nbs/0a0-Kernels.ipynb 7
 import numpy as np
@@ -91,7 +91,15 @@ def pygsp_graph_from_points(X, knn=15):
     return G
 
 # %% ../nbs/0a0-Kernels.ipynb 11
-def get_curvature_agnostic_graph(X, neighbor_scale = 1, k = 1, alpha = 1, self_loops = True):
+from dataclasses import dataclass
+import warnings
+
+@dataclass
+class SimpleGraph:
+    W: np.ndarray
+
+
+def get_curvature_agnostic_graph(X, neighbor_scale = 1, k = 1, alpha = 1, self_loops = True, simple_graph = True):
     W = gaussian_kernel(
         X, 
         kernel_type = "curvature agnostic", 
@@ -101,8 +109,14 @@ def get_curvature_agnostic_graph(X, neighbor_scale = 1, k = 1, alpha = 1, self_l
     )
     # set diagonal of W to zero
     if not self_loops: np.fill_diagonal(W, 0)
-    G = pygsp.graphs.Graph(W)
+    if simple_graph:
+        G = SimpleGraph(W)
+    else:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            G = pygsp.graphs.Graph(W)
     return G
+    
 
 def get_adaptive_graph(X, k = 5, alpha = 1, self_loops = True):
     W = gaussian_kernel(
@@ -112,7 +126,9 @@ def get_adaptive_graph(X, k = 5, alpha = 1, self_loops = True):
         anisotropic_density_normalization = alpha,
     )
     if not self_loops: np.fill_diagonal(W, 0)
-    G = pygsp.graphs.Graph(W)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning, module='pygsp')
+        G = pygsp.graphs.Graph(W)
     return G
 
 def get_fixed_graph(X, sigma = 0.2, alpha = 1, self_loops = True):
@@ -124,10 +140,12 @@ def get_fixed_graph(X, sigma = 0.2, alpha = 1, self_loops = True):
     )
     # set diagonal of W to zero
     if not self_loops: np.fill_diagonal(W, 0)
-    G = pygsp.graphs.Graph(W)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning, module='pygsp')
+        G = pygsp.graphs.Graph(W)
     return G
 
-# %% ../nbs/0a0-Kernels.ipynb 13
+# %% ../nbs/0a0-Kernels.ipynb 17
 from sklearn.neighbors import kneighbors_graph
 def get_knn_graph(
         X:np.ndarray,
@@ -145,7 +163,7 @@ def get_knn_graph(
     else:
         return W
 
-# %% ../nbs/0a0-Kernels.ipynb 16
+# %% ../nbs/0a0-Kernels.ipynb 20
 import numpy as np
 from sklearn.metrics import pairwise_distances
 from sklearn.preprocessing import normalize
@@ -171,7 +189,7 @@ def diffusion_matrix(
     P = normalize(W, norm="l1", axis=1)
     return P
 
-# %% ../nbs/0a0-Kernels.ipynb 51
+# %% ../nbs/0a0-Kernels.ipynb 55
 import jax
 import jax.numpy as jnp
 
@@ -186,7 +204,7 @@ def generic_kernel(
     W = D @ W @ D
     return W
 
-# %% ../nbs/0a0-Kernels.ipynb 52
+# %% ../nbs/0a0-Kernels.ipynb 56
 def diffusion_matrix_from_affinities(
         W
 ):

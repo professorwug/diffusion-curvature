@@ -173,3 +173,4 @@ token
 
 # Quarto
 **/.quarto/
+.aider*
