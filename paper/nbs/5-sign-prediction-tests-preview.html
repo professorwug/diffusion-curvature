@@ -219,7 +219,7 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <p>::: {#cell-1 .cell 0=‘d’ 1=‘e’ 2=‘f’ 3=‘a’ 4=‘u’ 5=‘l’ 6=‘t’ 7=‘<em>’ 8=’e’ 9=’x’ 10=’p’ 11=’ ’ 12=’b’ 13=’e’ 14=’n’ 15=’c’ 16=’h’ 17=’m’ 18=’a’ 19=’r’ 20=’k’ 21=’i’ 22=’n’ 23=’g’ 24=’.’ 25=’s’ 26=’i’ 27=’g’ 28=’n’ 29=’</em>’ 30=‘p’ 31=‘r’ 32=‘e’ 33=‘d’ 34=‘i’ 35=‘c’ 36=‘t’ 37=‘i’ 38=‘o’ 39=‘n’ 40=’ ’ 41=‘h’ 42=‘i’ 43=‘d’ 44=‘e’ execution_count=3}</p>
+       <p>::: {#cell-1 .cell 0=‘d’ 1=‘e’ 2=‘f’ 3=‘a’ 4=‘u’ 5=‘l’ 6=‘t’ 7=‘<em>’ 8=’e’ 9=’x’ 10=’p’ 11=’ ’ 12=’b’ 13=’e’ 14=’n’ 15=’c’ 16=’h’ 17=’m’ 18=’a’ 19=’r’ 20=’k’ 21=’i’ 22=’n’ 23=’g’ 24=’.’ 25=’s’ 26=’i’ 27=’g’ 28=’n’ 29=’</em>’ 30=‘p’ 31=‘r’ 32=‘e’ 33=‘d’ 34=‘i’ 35=‘c’ 36=‘t’ 37=‘i’ 38=‘o’ 39=‘n’ 40=’ ’ 41=‘h’ 42=‘i’ 43=‘d’ 44=‘e’}</p>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Standard libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -265,7 +265,7 @@
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>jax.devices()</span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co"># jax.default_device = jax.devices("cpu")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display">
 <pre><code>[cuda(id=0), cuda(id=1)]</code></pre>
 </div>
 <p>:::</p>
@@ -275,11 +275,11 @@
 <p>Here we employ saddles and spheres of increasing dimension to test our model’s ability to detect sign.</p>
 <section id="machinery" class="level1">
 <h1>Machinery</h1>
-<p>::: {#cell-5 .cell 0=‘e’ 1=‘x’ 2=‘p’ 3=‘o’ 4=‘r’ 5=‘t’ execution_count=4}</p>
+<p>::: {#cell-5 .cell 0=‘e’ 1=‘x’ 2=‘p’ 3=‘o’ 4=‘r’ 5=‘t’}</p>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dims <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>num_pointclouds <span class="op">=</span> <span class="dv">20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>:::</p>
-<p>::: {#cell-6 .cell 0=‘e’ 1=‘x’ 2=‘p’ 3=‘o’ 4=‘r’ 5=‘t’ execution_count=9}</p>
+<p>::: {#cell-6 .cell 0=‘e’ 1=‘x’ 2=‘p’ 3=‘o’ 4=‘r’ 5=‘t’}</p>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm.auto <span class="im">import</span> tqdm, trange</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastcore.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> diffusion_curvature</span>
@@ -323,7 +323,7 @@
 <span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    SS1.save_results()</span>
 <span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> SS1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>:::</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-7" class="cell" data-execution_count="10">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-7" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>SS1 <span class="op">=</span> run_sadspheres()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Loaded evaluations on methods ['ground truth', 'Diffusion Curvature (Entropic)', 'Diffusion Curvature (Wasserstein)', 'Hickok &amp; Blumberg', 'Diffusion Curvature (Trajectory Normalized w/ Anisotropy)', 'Diffusion Curvature (Trajectory Normalized w/ Smaller Bandwidth)', 'Diffusion Curvature (TN w/ k = 1 consistent adaptive n 18 t 84)', 'Diffusion Curvature (TN w/ k = 1 consistent adaptive n 40 t 84)', 'Diffusion Curvature (TN w/ k = 1 consistent adaptive n 80 t 84)', 'Diffusion Curvature (TN w/ k = 1 consistent adaptive n 120 t 84)', 'Diffusion Curvature (TN w/ ca n 120 t 84 trials 10)']</code></pre>
@@ -334,7 +334,7 @@
 </script>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-8" class="cell" data-execution_count="14">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-8" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>to_delete <span class="op">=</span> [<span class="st">'Diffusion Curvature (Trajectory Normalized w/ Anisotropy)'</span>, <span class="st">'Diffusion Curvature (Trajectory Normalized w/ Smaller Bandwidth)'</span>, <span class="st">'Diffusion Curvature (TN w/ k = 1 consistent adaptive n 18 t 84)'</span>, <span class="st">'Diffusion Curvature (TN w/ k = 1 consistent adaptive n 40 t 84)'</span>, <span class="st">'Diffusion Curvature (TN w/ k = 1 consistent adaptive n 80 t 84)'</span>, <span class="st">'Diffusion Curvature (TN w/ k = 1 consistent adaptive n 120 t 84)'</span>, <span class="st">'Diffusion Curvature (TN w/ ca n 120 t 84 trials 10)'</span>, <span class="st">'Diffusion Curvature (Entropic)'</span>, <span class="st">'Diffusion Curvature (Wasserstein)'</span>]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name <span class="kw">in</span> to_delete:</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    SS1.delete_saved_method(name)</span>
@@ -351,7 +351,7 @@ Deleted method from saved results
 Deleted method from saved results</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-9" class="cell" data-execution_count="15">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-9" class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SS1.table()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>ks
@@ -360,14 +360,14 @@ ground truth          1.000000       1.000
 Hickok &amp; Blumberg     0.031123       0.600
 Diffusion Curvature   0.754211       0.965</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display">
 <pre><code>{'ks':                      pearson_r  sign_score
  ground truth          1.000000       1.000
  Hickok &amp; Blumberg     0.031123       0.600
  Diffusion Curvature   0.754211       0.965}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-fig-sadspheres" class="cell" data-execution_count="16">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-fig-sadspheres" class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>SS1._aggregate_labels()</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>SS1.plot_by_dimension()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -383,19 +383,19 @@ Figure&nbsp;1: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Di
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [43]:</pre></div><div id="cell-11" class="cell" data-execution_count="43">
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-11" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SS1.metric_tables[<span class="st">'ks'</span>][SS1.metric_tables[<span class="st">'ks'</span>].keys()[<span class="dv">0</span>]][<span class="st">'ground truth'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display">
 <pre><code>1.0</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-12" class="cell" data-execution_count="5">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-12" class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>SS1.get_score(<span class="st">'Hickok &amp; Blumberg'</span>, <span class="st">'pearson_r'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display">
 <pre><code>0.0311233206615215</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-13" class="cell" data-scrolled="true" data-execution_count="8">
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-13" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># graph_former = partial(get_curvature_agnostic_graph, k = dim*2, )</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> diffusion_curvature.kernels <span class="im">import</span> tune_curvature_agnostic_kernel</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>graph_former <span class="op">=</span> partial(get_fixed_graph, sigma <span class="op">=</span> <span class="fl">0.2</span>, alpha <span class="op">=</span> <span class="dv">1</span>)</span>
@@ -443,7 +443,7 @@ Figure&nbsp;1: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Di
 </section>
 <section id="parameter-optimization" class="level1">
 <h1>Parameter Optimization</h1>
-<p>::: {#cell-15 .cell 0=‘e’ 1=‘x’ 2=‘p’ 3=‘o’ 4=‘r’ 5=‘t’ execution_count=19}</p>
+<p>::: {#cell-15 .cell 0=‘e’ 1=‘x’ 2=‘p’ 3=‘o’ 4=‘r’ 5=‘t’}</p>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> optuna</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -525,7 +525,7 @@ Figure&nbsp;1: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Di
 <span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Best hyperparameters: "</span>, study.best_params)</span>
 <span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Best score: "</span>, study.best_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>:::</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-16" class="cell" data-scrolled="true" data-execution_count="20">
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-16" class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># testing</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>optimize_parameters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -564,7 +564,7 @@ index is  -1</code></pre>
 <pre><code>KeyboardInterrupt: </code></pre>
 </div>
 </div></div>
-<p>::: {#cell-17 .cell 0=‘e’ 1=‘x’ 2=‘p’ 3=‘o’ 4=‘r’ 5=‘t’ execution_count=22}</p>
+<p>::: {#cell-17 .cell 0=‘e’ 1=‘x’ 2=‘p’ 3=‘o’ 4=‘r’ 5=‘t’}</p>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">@call_parse</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main(</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    search_parameters <span class="op">=</span> <span class="va">False</span></span>
@@ -574,7 +574,7 @@ index is  -1</code></pre>
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        run_sadspheres()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>:::</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div id="cell-18" class="cell" data-execution_count="17">
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-18" class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>nbdev_export</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="hidden" aria-hidden="true">
@@ -990,7 +990,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

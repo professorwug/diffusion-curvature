@@ -2,7 +2,7 @@
 name = "diffusion_curvature"
 version = "0.1.1"
 requires-python = ">=3.11"
-dependencies = ["scikit-dimension", "tadasets", "thread-dev"]
+dependencies = ["scikit-dimension", "tadasets", "thread-dev", "great-tables"]
 
 [tool.pixi.project]
 channels = ["nvidia", "conda-forge", "fastai", "pytorch"] 

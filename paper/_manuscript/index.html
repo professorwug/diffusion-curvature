@@ -278,7 +278,7 @@ window.Quarto = {
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="readme-paper-preview.html"><i class="bi bi-journal-code"></i>Publishing from Zetteldev with Quarto Manuscripts</a></li><li><a href="index-ricci-preview.html"><i class="bi bi-journal-code"></i>A Heat Diffusion-based Ricci Curvature and Applications to GNNs</a></li><li><a href="../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2-Toy-Manifolds-Benchmark-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/5-sign-prediction-tests-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="readme-paper-preview.html"><i class="bi bi-journal-code"></i>Publishing from Zetteldev with Quarto Manuscripts</a></li><li><a href="index-ricci-preview.html"><i class="bi bi-journal-code"></i>A Heat Diffusion-based Ricci Curvature and Applications to GNNs</a></li><li><a href="../nbs/3d-diffusion-trajectory-distance-normalization-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2-Toy-Manifolds-Benchmark-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/5-sign-prediction-tests-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li></ul></div></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
@@ -519,12 +519,28 @@ H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
 </section>
 <section id="diffusion-trajectory-alignment" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="diffusion-trajectory-alignment"><span class="header-section-number">3.3.2</span> Diffusion Trajectory Alignment</h3>
-<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This trajectory has the advantage of erasing any differences caused by the speed of diffusion. Instead, we can use the distance along that trajectory <em>Diffusion Trajectory Distance</em>) to align the scales of diffusion between two graphs. As illustrated in Figure WAWA, by comparing the diffusion energies of several graphs across their diffusion trajectory distances. Making the same comparison across times is uninformative - and misleadingly suggests that the plane CHECK is the most negatively curved. <em>Diffusion Trajectory Alignment</em>, however, reveals the correct relation between the surfaces.</p>
+<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>This trajectory has the advantage of erasing any differences caused by the speed of diffusion. Instead, we can use the distance along that trajectory <em>Diffusion Trajectory Distance</em>) to align the scales of diffusion between two graphs. As illustrated in <a href="#fig-curvature-curves" class="quarto-xref">Figure&nbsp;1</a>, by comparing the diffusion energies of several graphs across their diffusion trajectory distances. Making the same comparison across times is uninformative - and misleadingly suggests that the sphere is the most negatively curved. <em>Diffusion Trajectory Alignment</em>, however, reveals the correct relation between the surfaces.</p>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-curvature-curves" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-curvature-curves" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Line plots of diffusion energies.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-curvature-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/..-nbs-3d-diffusion-trajectory-distance-normalization-fig-curvature-curves-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="index_files/figure-html/..-nbs-3d-diffusion-trajectory-distance-normalization-fig-curvature-curves-output-2.png" class="img-fluid figure-img" alt="Line plots of diffusion energies."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-curvature-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Diffusion energies across multiple scales on a 4-dimensional saddle, plane, and sphere (all 3-manifolds). When comparing directly between times, there is no clear separation of curvatures. Aligning diffusions by diffusion trajectory distance reveals curvature.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-1" href="../nbs/3d-diffusion-trajectory-distance-normalization-preview.html#cell-fig-curvature-curves">Source: Standard libraries</a></div>
 <p>Applying diffusion trajectory alignment to our diffusion energies also has the happy effect of focusing our measurement on the most relevant scales of diffusion. When using diffusion times, one must be careful to select a time that is neither too small nor too large. Make <span class="math inline">\(t\)</span> too small, and the diffusion might have barely differentiated itself from a dirac. Make <span class="math inline">\(t\)</span> too large, and the diffusion might have progressed to the uninformative steady-state distribution. With the diffusion trajectory distance, all of the undesirably large <span class="math inline">\(t\)</span>’s are compressed into a narrow range of distances – the diffusion trajectory limits to the steady state distribution, and the diffusion trajectory distances that correspond to it are all within some <span class="math inline">\(\epsilon\)</span> of the maximum diffusion trajectory distance. Hence, any diffusion trajectory distance between its minimum and maximum values corresponds to an interesting scale of diffusion.</p>
 <p>With the alignment help of the diffusion trajectory distance, we can now motivate our path-integral definition of diffusion energy (<a href="#def-diffusion-energy-path-integral" class="quarto-xref">Definition&nbsp;4</a>): <span class="math display">\[
 l_{X}(x, d)= \int_{t=0}^{T(d)} D\left(\delta_x, p_x^X(t)\right) g_p\left(\frac{d p_x^X(t)}{d t}, \frac{ d p_x^X(t) }{d t} \right)
 \]</span></p>
-<p>Recall that <span class="math inline">\(D(\delta_{x}, p_{x}^X(t))\)</span> is the snapshot diffusion energy (<strong>?@def-diffusion-energy-snapshot</strong>) at time <span class="math inline">\(t\)</span>. This is integrated with respect to the diffusion trajectory distance, here formulated via a Riemannian metric on the probability simplex. The parameter <span class="math inline">\(T\)</span> controls how local the measurement of diffusion energy is. As <span class="math inline">\(T\)</span> approaches <span class="math inline">\(\infty\)</span>, the diffusion approaches the steady state across the entire graph, and the diffusion energy measures a global curvature. Smaller <span class="math inline">\(T\)</span>’s yield more localized measurements of curvature. In practice, <span class="math inline">\(T\)</span> is set via some <span class="math inline">\(T(d)\)</span> that translates diffusion trajectory distances into the corresponding times.</p>
+<p>Recall that <span class="math inline">\(D(\delta_{x}, p_{x}^X(t))\)</span> is the snapshot diffusion energy (<a href="#def-energy-of-diffusion" class="quarto-xref">Definition&nbsp;3</a>) at time <span class="math inline">\(t\)</span>. This is integrated with respect to the diffusion trajectory distance, here formulated via a Riemannian metric on the probability simplex. The parameter <span class="math inline">\(T\)</span> controls how local the measurement of diffusion energy is. As <span class="math inline">\(T\)</span> approaches <span class="math inline">\(\infty\)</span>, the diffusion approaches the steady state across the entire graph, and the diffusion energy measures a global curvature. Smaller <span class="math inline">\(T\)</span>’s yield more localized measurements of curvature. In practice, <span class="math inline">\(T\)</span> is set via some <span class="math inline">\(T(d)\)</span> that translates diffusion trajectory distances into the corresponding times.</p>
 <p>The diffusion energy can be thought of as an integral of the geodesic distance from a distribution to a dirac along the distributions in a given diffusion trajectory. Imagine a long, bent noodle; while traveling along the noodle, we integrate the distances from each point on the noodle to its base point. If these geodesic distances corresponded to travel back along the diffusion trajectory, or back down the noodle – e.g.&nbsp;if the diffusion trajectory took the shortest path between the dirac and each subsequent distribution – then the diffusion energy would be equal across all manifolds. The extent to which this fails, and the diffusion trajectory takes a ‘lazier’ path than optimal, reveals the curvature.</p>
 <p>This measurement of diffusion energy can now be converted into a signed <em>diffusion curvature</em> via <a href="#def-diffusion-curvature" class="quarto-xref">Definition&nbsp;5</a>:</p>
 <p><span class="math display">\[
@@ -570,93 +586,93 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y)
 <section id="results" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
 <p>Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined <em>accidentally</em> <span class="citation" data-cites="steinerberger2022CurvatureGraphsEquilibrium bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-steinerberger2022CurvatureGraphsEquilibrium" role="doc-biblioref">Steinerberger 2022</a>; <a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span>! The challenge is to make one’s definition robust to the bogeymen of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok &amp; Blumberg’s, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most <em>fail entirely</em> in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.</p>
-<p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;1</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> places this in the context of existing methods.</p>
+<p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;2</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> places this in the context of existing methods.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-2-manifolds" class="cell">
+<div id="cell-fig-2-manifolds" class="cell" data-execution_count="95">
 <div class="cell-output cell-output-display">
 <div id="fig-2-manifolds" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+<a href="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<a class="quarto-notebook-link" id="nblink-1" href="../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds-preview.html#cell-fig-2-manifolds">Source: Standard libraries</a></div>
-<p>Though the correlation is strong – passing the ‘sniff test’ – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-2-manifolds-visual-comparison" class="cell">
-<div class="cell-output cell-output-display">
-<div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-2" href="../nbs/2-Toy-Manifolds-Benchmark-preview.html#cell-fig-2-manifolds-visual-comparison">Source: Standard libraries</a></div>
-<p>The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, <em>what matters?</em> Most methods don’t care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%</p>
-<p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> perform well on well-sampled noiseless toy manifolds. In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;3</a>, we see the results of adding Gaussian noise to each manifold.</p>
+<a class="quarto-notebook-link" id="nblink-2" href="../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds-preview.html#cell-fig-2-manifolds">Source: Standard libraries</a></div>
+<p>Though the correlation is strong – passing the ‘sniff test’ – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-2-manifolds-noise-table" class="cell">
+<div id="cell-fig-2-manifolds-visual-comparison" class="cell" data-execution_count="44">
+<div class="cell-output cell-output-display">
+<div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-3" href="../nbs/2-Toy-Manifolds-Benchmark-preview.html#cell-fig-2-manifolds-visual-comparison">Source: Standard libraries</a></div>
+<p>The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, <em>what matters?</em> Most methods don’t care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%</p>
+<p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> perform well on well-sampled noiseless toy manifolds. In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;4</a>, we see the results of adding Gaussian noise to each manifold.</p>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-2-manifolds-noise-table" class="cell" data-execution_count="59">
 <div id="fig-2-manifolds-noise-table" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-noise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
-<div id="cnramwscbt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="yyhqyhumce" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#cnramwscbt table {
+#yyhqyhumce table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#cnramwscbt thead, tbody, tfoot, tr, td, th { border-style: none; }
- tr { background-color: transparent; }
-#cnramwscbt p { margin: 0; padding: 0; }
- #cnramwscbt .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #cnramwscbt .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #cnramwscbt .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #cnramwscbt .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #cnramwscbt .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cnramwscbt .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #cnramwscbt .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #cnramwscbt .gt_column_spanner_outer:first-child { padding-left: 0; }
- #cnramwscbt .gt_column_spanner_outer:last-child { padding-right: 0; }
- #cnramwscbt .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #cnramwscbt .gt_spanner_row { border-bottom-style: hidden; }
- #cnramwscbt .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #cnramwscbt .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #cnramwscbt .gt_from_md> :first-child { margin-top: 0; }
- #cnramwscbt .gt_from_md> :last-child { margin-bottom: 0; }
- #cnramwscbt .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #cnramwscbt .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #cnramwscbt .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #cnramwscbt .gt_row_group_first td { border-top-width: 2px; }
- #cnramwscbt .gt_row_group_first th { border-top-width: 2px; }
- #cnramwscbt .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cnramwscbt .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #cnramwscbt .gt_left { text-align: left; }
- #cnramwscbt .gt_center { text-align: center; }
- #cnramwscbt .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #cnramwscbt .gt_font_normal { font-weight: normal; }
- #cnramwscbt .gt_font_bold { font-weight: bold; }
- #cnramwscbt .gt_font_italic { font-style: italic; }
- #cnramwscbt .gt_super { font-size: 65%; }
- #cnramwscbt .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #cnramwscbt .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#yyhqyhumce thead, tbody, tfoot, tr, td, th { border-style: none !important; }
+ tr { background-color: transparent !important; }
+#yyhqyhumce p { margin: 0 !important; padding: 0 !important; }
+ #yyhqyhumce .gt_table { display: table !important; border-collapse: collapse !important; line-height: normal !important; margin-left: auto !important; margin-right: auto !important; color: #333333 !important; font-size: 16px !important; font-weight: normal !important; font-style: normal !important; background-color: #FFFFFF !important; width: auto !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #A8A8A8 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #A8A8A8 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_caption { padding-top: 4px !important; padding-bottom: 4px !important; }
+ #yyhqyhumce .gt_title { color: #333333 !important; font-size: 125% !important; font-weight: initial !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; border-bottom-color: #FFFFFF !important; border-bottom-width: 0 !important; }
+ #yyhqyhumce .gt_subtitle { color: #333333 !important; font-size: 85% !important; font-weight: initial !important; padding-top: 3px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; border-top-color: #FFFFFF !important; border-top-width: 0 !important; }
+ #yyhqyhumce .gt_heading { background-color: #FFFFFF !important; text-align: center !important; border-bottom-color: #FFFFFF !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_bottom_border { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_col_headings { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_col_heading { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; overflow-x: hidden !important; }
+ #yyhqyhumce .gt_column_spanner_outer { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; padding-top: 0 !important; padding-bottom: 0 !important; padding-left: 4px !important; padding-right: 4px !important; }
+ #yyhqyhumce .gt_column_spanner_outer:first-child { padding-left: 0 !important; }
+ #yyhqyhumce .gt_column_spanner_outer:last-child { padding-right: 0 !important; }
+ #yyhqyhumce .gt_column_spanner { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; overflow-x: hidden !important; display: inline-block !important; width: 100% !important; }
+ #yyhqyhumce .gt_spanner_row { border-bottom-style: hidden !important; }
+ #yyhqyhumce .gt_group_heading { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; text-align: left !important; }
+ #yyhqyhumce .gt_empty_group_heading { padding: 0.5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: middle !important; }
+ #yyhqyhumce .gt_from_md> :first-child { margin-top: 0 !important; }
+ #yyhqyhumce .gt_from_md> :last-child { margin-bottom: 0 !important; }
+ #yyhqyhumce .gt_row { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; margin: 10px !important; border-top-style: solid !important; border-top-width: 1px !important; border-top-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; overflow-x: hidden !important; }
+ #yyhqyhumce .gt_stub { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #yyhqyhumce .gt_stub_row_group { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; vertical-align: top !important; }
+ #yyhqyhumce .gt_row_group_first td { border-top-width: 2px !important; }
+ #yyhqyhumce .gt_row_group_first th { border-top-width: 2px !important; }
+ #yyhqyhumce .gt_table_body { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_sourcenotes { color: #333333 !important; background-color: #FFFFFF !important; border-bottom-style: none !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_sourcenote { font-size: 90% !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; text-align: left !important; }
+ #yyhqyhumce .gt_left { text-align: left !important; }
+ #yyhqyhumce .gt_center { text-align: center !important; }
+ #yyhqyhumce .gt_right { text-align: right !important; font-variant-numeric: tabular-nums !important; }
+ #yyhqyhumce .gt_font_normal { font-weight: normal !important; }
+ #yyhqyhumce .gt_font_bold { font-weight: bold !important; }
+ #yyhqyhumce .gt_font_italic { font-style: italic !important; }
+ #yyhqyhumce .gt_super { font-size: 65% !important; }
+ #yyhqyhumce .gt_footnote_marks { font-size: 75% !important; vertical-align: 0.4em !important; position: initial !important; }
+ #yyhqyhumce .gt_asterisk { font-size: 100% !important; vertical-align: 0 !important; }
  
 </style>
 
@@ -724,24 +740,24 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.757</td>
-<td class="gt_row gt_right">0.813</td>
-<td class="gt_row gt_right">0.854</td>
-<td class="gt_row gt_right">0.889</td>
-<td class="gt_row gt_right">0.963</td>
+<td class="gt_row gt_right">0.855</td>
+<td class="gt_row gt_right">0.846</td>
+<td class="gt_row gt_right">0.861</td>
 <td class="gt_row gt_right">0.976</td>
-<td class="gt_row gt_right">0.952</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.722</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.363</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.327</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.383</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.513</td>
-<td class="gt_row gt_right">0.349</td>
-<td class="gt_row gt_right">0.620</td>
-<td class="gt_row gt_right">0.683</td>
-<td class="gt_row gt_right">0.933</td>
-<td class="gt_row gt_right">1.070</td>
-<td class="gt_row gt_right">1.102</td>
+<td class="gt_row gt_right">0.957</td>
+<td class="gt_row gt_right">0.878</td>
+<td class="gt_row gt_right">0.957</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.941</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.659</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.291</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.345</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.473</td>
+<td class="gt_row gt_right">0.371</td>
+<td class="gt_row gt_right">0.606</td>
+<td class="gt_row gt_right">0.423</td>
+<td class="gt_row gt_right">0.879</td>
+<td class="gt_row gt_right">1.046</td>
+<td class="gt_row gt_right">1.148</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
@@ -812,29 +828,29 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
 <td class="gt_row gt_right">0.918</td>
-<td class="gt_row gt_right">0.935</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.954</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.957</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.948</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.931</td>
-<td class="gt_row gt_right">0.739</td>
-<td class="gt_row gt_right">0.800</td>
-<td class="gt_row gt_right">0.801</td>
-<td class="gt_row gt_right">0.764</td>
-<td class="gt_row gt_right">0.707</td>
-<td class="gt_row gt_right">0.636</td>
-<td class="gt_row gt_right">0.004</td>
-<td class="gt_row gt_right">−0.003</td>
-<td class="gt_row gt_right">0.002</td>
-<td class="gt_row gt_right">−0.002</td>
-<td class="gt_row gt_right">0.009</td>
-<td class="gt_row gt_right">0.011</td>
+<td class="gt_row gt_right">0.927</td>
+<td class="gt_row gt_right">0.916</td>
+<td class="gt_row gt_right">0.872</td>
+<td class="gt_row gt_right">0.789</td>
+<td class="gt_row gt_right">0.633</td>
+<td class="gt_row gt_right">0.713</td>
+<td class="gt_row gt_right">0.777</td>
+<td class="gt_row gt_right">0.798</td>
+<td class="gt_row gt_right">0.760</td>
+<td class="gt_row gt_right">0.701</td>
+<td class="gt_row gt_right">0.631</td>
+<td class="gt_row gt_right">0.626</td>
+<td class="gt_row gt_right">0.595</td>
+<td class="gt_row gt_right">0.550</td>
+<td class="gt_row gt_right">0.539</td>
+<td class="gt_row gt_right">0.499</td>
+<td class="gt_row gt_right">0.448</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.954</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.955</td>
-<td class="gt_row gt_right">0.945</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.945</td>
 <td class="gt_row gt_right">0.903</td>
 <td class="gt_row gt_right">0.856</td>
 <td class="gt_row gt_right">0.791</td>
@@ -856,9 +872,9 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <td class="gt_row gt_right">0.948</td>
 <td class="gt_row gt_right">0.942</td>
 <td class="gt_row gt_right">0.931</td>
-<td class="gt_row gt_right">0.909</td>
-<td class="gt_row gt_right">0.873</td>
-<td class="gt_row gt_right">0.838</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.909</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.873</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.838</td>
 <td class="gt_row gt_right">0.838</td>
 <td class="gt_row gt_right">0.834</td>
 <td class="gt_row gt_right">0.809</td>
@@ -898,24 +914,24 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.916</td>
-<td class="gt_row gt_right">0.954</td>
-<td class="gt_row gt_right">0.988</td>
-<td class="gt_row gt_right">1.024</td>
-<td class="gt_row gt_right">1.110</td>
-<td class="gt_row gt_right">1.130</td>
-<td class="gt_row gt_right">1.102</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.900</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.632</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.642</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.574</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.628</td>
-<td class="gt_row gt_right">0.760</td>
-<td class="gt_row gt_right">0.888</td>
-<td class="gt_row gt_right">0.921</td>
-<td class="gt_row gt_right">1.074</td>
-<td class="gt_row gt_right">1.186</td>
-<td class="gt_row gt_right">1.218</td>
+<td class="gt_row gt_right">1.033</td>
+<td class="gt_row gt_right">1.025</td>
+<td class="gt_row gt_right">1.039</td>
+<td class="gt_row gt_right">1.152</td>
+<td class="gt_row gt_right">1.136</td>
+<td class="gt_row gt_right">1.070</td>
+<td class="gt_row gt_right">1.095</td>
+<td class="gt_row gt_right" style="font-weight: bold">1.073</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.863</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.633</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.646</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.655</td>
+<td class="gt_row gt_right">0.732</td>
+<td class="gt_row gt_right">0.837</td>
+<td class="gt_row gt_right">0.766</td>
+<td class="gt_row gt_right">0.984</td>
+<td class="gt_row gt_right">1.109</td>
+<td class="gt_row gt_right">1.200</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
@@ -968,31 +984,31 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-noise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Performance of methods under noise on 2-Manifolds with Noise.
+Figure&nbsp;4: Performance of methods under noise on 2-Manifolds with Noise.
 </figcaption>
 </figure>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-3" href="../nbs/2-Toy-Manifolds-Benchmark-preview.html#cell-fig-2-manifolds-noise-table">Source: Standard libraries</a></div>
+<a class="quarto-notebook-link" id="nblink-4" href="../nbs/2-Toy-Manifolds-Benchmark-preview.html#cell-fig-2-manifolds-noise-table">Source: Standard libraries</a></div>
 <section id="differentiating-sign-in-high-dimensions" class="level3" data-number="4.0.1">
 <h3 data-number="4.0.1" class="anchored" data-anchor-id="differentiating-sign-in-high-dimensions"><span class="header-section-number">4.0.1</span> Differentiating Sign in High Dimensions</h3>
 <p>Most existing methods only quantify their performance in high dimensions on one or two test cases.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-sadspheres" class="cell" data-execution_count="16">
+<div id="cell-fig-sadspheres" class="cell">
 <div class="cell-output cell-output-display">
 <div id="fig-sadspheres" class="quarto-figure quarto-figure-center quarto-float anchored" alt="...">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
+<a href="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
+Figure&nbsp;5: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-4" href="../nbs/5-sign-prediction-tests-preview.html#cell-fig-sadspheres">Source: Standard libraries</a></div>
+<a class="quarto-notebook-link" id="nblink-5" href="../nbs/5-sign-prediction-tests-preview.html#cell-fig-sadspheres">Source: Standard libraries</a></div>
 </section>
 <section id="loss-landscapes" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">4.1</span> Loss Landscapes</h2>
@@ -1054,9 +1070,10 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
 </div>
 </div>
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Diffusion energies across multiple scales on a 4-dimensional saddle, plane, and sphere (all 3-manifolds). When comparing directly between times, there is no clear separation of curvatures. Aligning diffusions by diffusion trajectory distance reveals curvature.</span>
 <span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;5: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.</span>
 </div>
 </section>
 
@@ -1499,7 +1516,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","openEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

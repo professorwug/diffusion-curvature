@@ -612,12 +612,43 @@ H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
 </section>
 <section id="diffusion-trajectory-alignment" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="diffusion-trajectory-alignment"><span class="header-section-number">3.3.2</span> Diffusion Trajectory Alignment</h3>
-<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This trajectory has the advantage of erasing any differences caused by the speed of diffusion. Instead, we can use the distance along that trajectory <em>Diffusion Trajectory Distance</em>) to align the scales of diffusion between two graphs. As illustrated in Figure WAWA, by comparing the diffusion energies of several graphs across their diffusion trajectory distances. Making the same comparison across times is uninformative - and misleadingly suggests that the plane CHECK is the most negatively curved. <em>Diffusion Trajectory Alignment</em>, however, reveals the correct relation between the surfaces.</p>
+<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>This trajectory has the advantage of erasing any differences caused by the speed of diffusion. Instead, we can use the distance along that trajectory <em>Diffusion Trajectory Distance</em>) to align the scales of diffusion between two graphs. As illustrated in <a href="#fig-curvature-curves" class="quarto-xref">Figure&nbsp;1</a>, by comparing the diffusion energies of several graphs across their diffusion trajectory distances. Making the same comparison across times is uninformative - and misleadingly suggests that the sphere is the most negatively curved. <em>Diffusion Trajectory Alignment</em>, however, reveals the correct relation between the surfaces.</p>
+<div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/3d-diffusion-trajectory-distance-normalization.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-curvature-curves">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-fig-curvature-curves" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>graph_former <span class="op">=</span> partial(get_curvature_agnostic_graph, k <span class="op">=</span> <span class="dv">2</span>, neighbor_scale <span class="op">=</span> <span class="dv">3</span>, alpha<span class="op">=</span><span class="dv">0</span>, self_loops<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Saddle, Sphere, Plane <span class="op">=</span> sample_ssp_dcs(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    n_points <span class="op">=</span> <span class="dv">2000</span>, dim <span class="op">=</span> <span class="dv">3</span>, graph_former <span class="op">=</span> graph_former, laziness_method <span class="op">=</span> <span class="st">'Entropic'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>show_curvature_curves(Saddle, Plane, Sphere, num_ts<span class="op">=</span><span class="dv">50</span>, title <span class="op">=</span> <span class="st">"Diffusion Energy over Multiple Scales of Diffusion"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2024-07-16 18:06:34,634:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-07-16 18:06:38,534:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-07-16 18:06:40,016:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-07-16 18:06:44,008:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-07-16 18:06:45,773:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!
+2024-07-16 18:06:49,520:[WARNING](pygsp.graphs.graph.check_weights): The main diagonal of the weight matrix is not 0!</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-curvature-curves" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Line plots of diffusion energies.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-curvature-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/..-nbs-3d-diffusion-trajectory-distance-normalization-fig-curvature-curves-output-2.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/..-nbs-3d-diffusion-trajectory-distance-normalization-fig-curvature-curves-output-2.png" class="img-fluid figure-img" alt="Line plots of diffusion energies."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-curvature-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Diffusion energies across multiple scales on a 4-dimensional saddle, plane, and sphere (all 3-manifolds). When comparing directly between times, there is no clear separation of curvatures. Aligning diffusions by diffusion trajectory distance reveals curvature.
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
 <p>Applying diffusion trajectory alignment to our diffusion energies also has the happy effect of focusing our measurement on the most relevant scales of diffusion. When using diffusion times, one must be careful to select a time that is neither too small nor too large. Make <span class="math inline">\(t\)</span> too small, and the diffusion might have barely differentiated itself from a dirac. Make <span class="math inline">\(t\)</span> too large, and the diffusion might have progressed to the uninformative steady-state distribution. With the diffusion trajectory distance, all of the undesirably large <span class="math inline">\(t\)</span>’s are compressed into a narrow range of distances – the diffusion trajectory limits to the steady state distribution, and the diffusion trajectory distances that correspond to it are all within some <span class="math inline">\(\epsilon\)</span> of the maximum diffusion trajectory distance. Hence, any diffusion trajectory distance between its minimum and maximum values corresponds to an interesting scale of diffusion.</p>
 <p>With the alignment help of the diffusion trajectory distance, we can now motivate our path-integral definition of diffusion energy (<a href="#def-diffusion-energy-path-integral" class="quarto-xref">Definition&nbsp;4</a>): <span class="math display">\[
 l_{X}(x, d)= \int_{t=0}^{T(d)} D\left(\delta_x, p_x^X(t)\right) g_p\left(\frac{d p_x^X(t)}{d t}, \frac{ d p_x^X(t) }{d t} \right)
 \]</span></p>
-<p>Recall that <span class="math inline">\(D(\delta_{x}, p_{x}^X(t))\)</span> is the snapshot diffusion energy (<strong>?@def-diffusion-energy-snapshot</strong>) at time <span class="math inline">\(t\)</span>. This is integrated with respect to the diffusion trajectory distance, here formulated via a Riemannian metric on the probability simplex. The parameter <span class="math inline">\(T\)</span> controls how local the measurement of diffusion energy is. As <span class="math inline">\(T\)</span> approaches <span class="math inline">\(\infty\)</span>, the diffusion approaches the steady state across the entire graph, and the diffusion energy measures a global curvature. Smaller <span class="math inline">\(T\)</span>’s yield more localized measurements of curvature. In practice, <span class="math inline">\(T\)</span> is set via some <span class="math inline">\(T(d)\)</span> that translates diffusion trajectory distances into the corresponding times.</p>
+<p>Recall that <span class="math inline">\(D(\delta_{x}, p_{x}^X(t))\)</span> is the snapshot diffusion energy (<a href="#def-energy-of-diffusion" class="quarto-xref">Definition&nbsp;3</a>) at time <span class="math inline">\(t\)</span>. This is integrated with respect to the diffusion trajectory distance, here formulated via a Riemannian metric on the probability simplex. The parameter <span class="math inline">\(T\)</span> controls how local the measurement of diffusion energy is. As <span class="math inline">\(T\)</span> approaches <span class="math inline">\(\infty\)</span>, the diffusion approaches the steady state across the entire graph, and the diffusion energy measures a global curvature. Smaller <span class="math inline">\(T\)</span>’s yield more localized measurements of curvature. In practice, <span class="math inline">\(T\)</span> is set via some <span class="math inline">\(T(d)\)</span> that translates diffusion trajectory distances into the corresponding times.</p>
 <p>The diffusion energy can be thought of as an integral of the geodesic distance from a distribution to a dirac along the distributions in a given diffusion trajectory. Imagine a long, bent noodle; while traveling along the noodle, we integrate the distances from each point on the noodle to its base point. If these geodesic distances corresponded to travel back along the diffusion trajectory, or back down the noodle – e.g.&nbsp;if the diffusion trajectory took the shortest path between the dirac and each subsequent distribution – then the diffusion energy would be equal across all manifolds. The extent to which this fails, and the diffusion trajectory takes a ‘lazier’ path than optimal, reveals the curvature.</p>
 <p>This measurement of diffusion energy can now be converted into a signed <em>diffusion curvature</em> via <a href="#def-diffusion-curvature" class="quarto-xref">Definition&nbsp;5</a>:</p>
 <p><span class="math display">\[
@@ -663,66 +694,66 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y)
 <section id="results" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
 <p>Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined <em>accidentally</em> <span class="citation" data-cites="steinerberger2022CurvatureGraphsEquilibrium bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-steinerberger2022CurvatureGraphsEquilibrium" role="doc-biblioref">Steinerberger 2022</a>; <a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span>! The challenge is to make one’s definition robust to the bogeymen of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok &amp; Blumberg’s, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most <em>fail entirely</em> in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.</p>
-<p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;1</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> places this in the context of existing methods.</p>
+<p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;2</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> places this in the context of existing methods.</p>
 <div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds">
-<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-fig-2-manifolds" class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming Xs, labels, ground_truth_labels, and key_names are defined</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>key_names <span class="op">=</span> [<span class="st">'Torus'</span>, <span class="st">'Saddle'</span>, <span class="st">'Ellipsoid'</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> diffusion_ks</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ground_truth_labels <span class="op">=</span> Ks</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of seaborn</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes with 2 rows and 3 columns</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">12</span>), subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'3d'</span>} <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&lt;</span> <span class="st">'3.4.0'</span> <span class="cf">else</span> <span class="va">None</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, key <span class="kw">in</span> <span class="bu">enumerate</span>(key_names):</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3D scatter plot for the first row</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    lim <span class="op">=</span> np.<span class="bu">max</span>(np.linalg.norm(Xs[key], axis<span class="op">=</span><span class="dv">1</span>))</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&gt;=</span> <span class="st">'3.4.0'</span>:</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        axs[<span class="dv">0</span>, i].remove()</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        axs[<span class="dv">0</span>, i] <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>, <span class="dv">3</span>, i<span class="op">+</span><span class="dv">1</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_xlim3d(left<span class="op">=-</span>lim, right<span class="op">=</span>lim)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_ylim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_zlim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    scatter3d <span class="op">=</span> axs[<span class="dv">0</span>, i].scatter(Xs[key][:, <span class="dv">0</span>], Xs[key][:, <span class="dv">1</span>], Xs[key][:, <span class="dv">2</span>], c<span class="op">=</span>labels[key], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].set_title(<span class="ss">f'</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">15</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot for the second row, colored by labels</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].remove()</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i] <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>, <span class="dv">3</span>, i<span class="op">+</span><span class="dv">4</span>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    scatter2d <span class="op">=</span> axs[<span class="dv">1</span>, i].scatter(ground_truth_labels[key], labels[key], c<span class="op">=</span>labels[key], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[1, i].set_title(f'')</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].set_xlabel(<span class="st">'Gaussian Curvature'</span>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].set_ylabel(<span class="st">'Diffusion Curvature'</span>)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the origin lines in 2D scatter plots</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # Add colorbar for each subplot</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter3d, ax=axs[0, i], fraction=0.046, pad=0.04)</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter2d, ax=axs[1, i], fraction=0.046, pad=0.04)</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Diffusion Curvature on 2 Manifolds"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [95]:</pre></div><div id="cell-fig-2-manifolds" class="cell" data-execution_count="95">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming Xs, labels, ground_truth_labels, and key_names are defined</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>key_names <span class="op">=</span> [<span class="st">'Torus'</span>, <span class="st">'Saddle'</span>, <span class="st">'Ellipsoid'</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> diffusion_ks</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>ground_truth_labels <span class="op">=</span> Ks</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of seaborn</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes with 2 rows and 3 columns</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">12</span>), subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'3d'</span>} <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&lt;</span> <span class="st">'3.4.0'</span> <span class="cf">else</span> <span class="va">None</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, key <span class="kw">in</span> <span class="bu">enumerate</span>(key_names):</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3D scatter plot for the first row</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    lim <span class="op">=</span> np.<span class="bu">max</span>(np.linalg.norm(Xs[key], axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&gt;=</span> <span class="st">'3.4.0'</span>:</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        axs[<span class="dv">0</span>, i].remove()</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        axs[<span class="dv">0</span>, i] <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>, <span class="dv">3</span>, i<span class="op">+</span><span class="dv">1</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_xlim3d(left<span class="op">=-</span>lim, right<span class="op">=</span>lim)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_ylim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].axes.set_zlim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    scatter3d <span class="op">=</span> axs[<span class="dv">0</span>, i].scatter(Xs[key][:, <span class="dv">0</span>], Xs[key][:, <span class="dv">1</span>], Xs[key][:, <span class="dv">2</span>], c<span class="op">=</span>labels[key], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">0</span>, i].set_title(<span class="ss">f'</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot for the second row, colored by labels</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].remove()</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i] <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>, <span class="dv">3</span>, i<span class="op">+</span><span class="dv">4</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    scatter2d <span class="op">=</span> axs[<span class="dv">1</span>, i].scatter(ground_truth_labels[key], labels[key], c<span class="op">=</span>labels[key], cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[1, i].set_title(f'')</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].set_xlabel(<span class="st">'Gaussian Curvature'</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].set_ylabel(<span class="st">'Diffusion Curvature'</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the origin lines in 2D scatter plots</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    axs[<span class="dv">1</span>, i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # Add colorbar for each subplot</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter3d, ax=axs[0, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter2d, ax=axs[1, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Diffusion Curvature on 2 Manifolds"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-2-manifolds" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+<a href="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
+Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </figcaption>
 </figure>
 </div>
@@ -731,86 +762,86 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 <p>Though the correlation is strong – passing the ‘sniff test’ – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature.</p>
 <div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/2-Toy-Manifolds-Benchmark.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds-visual-comparison">
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming Xs, labels, ground_truth_labels, and key_names are defined</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>key_names <span class="op">=</span> [<span class="st">'Torus'</span>, <span class="st">'Saddle'</span>, <span class="st">'Ellipsoid'</span>]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> curvatures</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ground_truth_labels <span class="op">=</span> Ks</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of seaborn</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>fig_shape <span class="op">=</span> (<span class="bu">len</span>(curvatures.keys()) <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(key_names))</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>method_colors <span class="op">=</span> [<span class="st">'green'</span>, <span class="st">'olive'</span>, <span class="st">'navy'</span>, <span class="st">'orange'</span>, <span class="st">'purple'</span>]</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(method_colors) <span class="op">==</span> <span class="bu">len</span>(curvatures.keys())</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>ordered_keys <span class="op">=</span> curvatures.keys() <span class="co">#['Gaussian', 'Adal-PCA', 'Unsigned Diffusion Curvature', 'Hickok &amp; Blumberg']</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">set</span>(ordered_keys) <span class="op">==</span> <span class="bu">set</span>(curvatures.keys())</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes with 2 rows and 3 columns</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], figsize<span class="op">=</span>(fig_shape[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span>, fig_shape[<span class="dv">1</span>]<span class="op">*</span><span class="dv">5</span>), subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'3d'</span>} <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&lt;</span> <span class="st">'3.4.0'</span> <span class="cf">else</span> <span class="va">None</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, key <span class="kw">in</span> <span class="bu">enumerate</span>(key_names):</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3D scatter plot for the first row</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    lim <span class="op">=</span> np.<span class="bu">max</span>(np.linalg.norm(Xs[key], axis<span class="op">=</span><span class="dv">1</span>))</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if plt.matplotlib.__version__ &gt;= '3.4.0':</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the curvature for each method</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        axs[j, i].remove()</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        axs[j, i] <span class="op">=</span> fig.add_subplot(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], i <span class="op">+</span> j<span class="op">*</span>fig_shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_xlim3d(left<span class="op">=-</span>lim, right<span class="op">=</span>lim)</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_ylim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_zlim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_xticks([])</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_yticks([])</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_zticks([])</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>        scatter3d <span class="op">=</span> axs[j, i].scatter(Xs[key][:, <span class="dv">0</span>], Xs[key][:, <span class="dv">1</span>], Xs[key][:, <span class="dv">2</span>], c<span class="op">=</span>scaled_labels, cmap <span class="op">=</span> <span class="st">'coolwarm'</span>)</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>            axs[j, i].set_title(<span class="ss">f'</span><span class="sc">{</span>method_name<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">15</span>, c <span class="op">=</span> method_colors[j])</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot for the second row, colored by labels</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i].remove()</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i] = fig.add_subplot(fig_shape[0], fig_shape[1], i+4)</span></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># min max scaling</span></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        scatter2d <span class="op">=</span> axs[j<span class="op">+</span><span class="dv">1</span>, i].scatter(ground_truth_labels[key], scaled_labels, c <span class="op">=</span> method_colors[k], s <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        axs[j<span class="op">+</span><span class="dv">1</span>,i].set_aspect(<span class="st">'equal'</span>)</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[1, i].set_title(f'')</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_xlabel(<span class="st">'Gaussian Curvature'</span>)</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_ylabel(<span class="st">'Estimated Curvature'</span>)</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the origin lines in 2D scatter plots</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # Add colorbar for each subplot</span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter3d, ax=axs[0, i], fraction=0.046, pad=0.04)</span></span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter2d, ax=axs[1, i], fraction=0.046, pad=0.04)</span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Estimated Gaussian Curvatures of 2-Manifolds"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [44]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming Xs, labels, ground_truth_labels, and key_names are defined</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>key_names <span class="op">=</span> [<span class="st">'Torus'</span>, <span class="st">'Saddle'</span>, <span class="st">'Ellipsoid'</span>]</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> curvatures</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>ground_truth_labels <span class="op">=</span> Ks</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of seaborn</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>fig_shape <span class="op">=</span> (<span class="bu">len</span>(curvatures.keys()) <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(key_names))</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>method_colors <span class="op">=</span> [<span class="st">'green'</span>, <span class="st">'olive'</span>, <span class="st">'navy'</span>, <span class="st">'orange'</span>, <span class="st">'purple'</span>]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(method_colors) <span class="op">==</span> <span class="bu">len</span>(curvatures.keys())</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>ordered_keys <span class="op">=</span> curvatures.keys() <span class="co">#['Gaussian', 'Adal-PCA', 'Unsigned Diffusion Curvature', 'Hickok &amp; Blumberg']</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">set</span>(ordered_keys) <span class="op">==</span> <span class="bu">set</span>(curvatures.keys())</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes with 2 rows and 3 columns</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], figsize<span class="op">=</span>(fig_shape[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span>, fig_shape[<span class="dv">1</span>]<span class="op">*</span><span class="dv">5</span>), subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'3d'</span>} <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&lt;</span> <span class="st">'3.4.0'</span> <span class="cf">else</span> <span class="va">None</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, key <span class="kw">in</span> <span class="bu">enumerate</span>(key_names):</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3D scatter plot for the first row</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    lim <span class="op">=</span> np.<span class="bu">max</span>(np.linalg.norm(Xs[key], axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if plt.matplotlib.__version__ &gt;= '3.4.0':</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the curvature for each method</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        axs[j, i].remove()</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        axs[j, i] <span class="op">=</span> fig.add_subplot(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], i <span class="op">+</span> j<span class="op">*</span>fig_shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_xlim3d(left<span class="op">=-</span>lim, right<span class="op">=</span>lim)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_ylim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_zlim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_xticks([])</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_yticks([])</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_zticks([])</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        scatter3d <span class="op">=</span> axs[j, i].scatter(Xs[key][:, <span class="dv">0</span>], Xs[key][:, <span class="dv">1</span>], Xs[key][:, <span class="dv">2</span>], c<span class="op">=</span>scaled_labels, cmap <span class="op">=</span> <span class="st">'coolwarm'</span>)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>            axs[j, i].set_title(<span class="ss">f'</span><span class="sc">{</span>method_name<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">15</span>, c <span class="op">=</span> method_colors[j])</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot for the second row, colored by labels</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i].remove()</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i] = fig.add_subplot(fig_shape[0], fig_shape[1], i+4)</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># min max scaling</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        scatter2d <span class="op">=</span> axs[j<span class="op">+</span><span class="dv">1</span>, i].scatter(ground_truth_labels[key], scaled_labels, c <span class="op">=</span> method_colors[k], s <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        axs[j<span class="op">+</span><span class="dv">1</span>,i].set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[1, i].set_title(f'')</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_xlabel(<span class="st">'Gaussian Curvature'</span>)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_ylabel(<span class="st">'Estimated Curvature'</span>)</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the origin lines in 2D scatter plots</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # Add colorbar for each subplot</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter3d, ax=axs[0, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter2d, ax=axs[1, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Estimated Gaussian Curvatures of 2-Manifolds"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+<a href="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
+Figure&nbsp;3: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </figcaption>
 </figure>
 </div>
@@ -818,106 +849,106 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div></div>
 </div>
 <p>The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, <em>what matters?</em> Most methods don’t care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%</p>
-<p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> perform well on well-sampled noiseless toy manifolds. In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;3</a>, we see the results of adding Gaussian noise to each manifold.</p>
+<p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> perform well on well-sampled noiseless toy manifolds. In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;4</a>, we see the results of adding Gaussian noise to each manifold.</p>
 <div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/2-Toy-Manifolds-Benchmark.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds-noise-table">
-<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-fig-2-manifolds-noise-table" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, style, loc, exibble</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> sp500</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> metric_df</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the data by metric for proper sorting and display</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.sort_values(by<span class="op">=</span>[<span class="st">'Metric'</span>, <span class="st">'Model'</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the table with row groups</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> (</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    GT(df, rowname_col<span class="op">=</span><span class="st">"Model"</span>, groupname_col<span class="op">=</span><span class="st">"Metric"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Curvature under Noise"</span>, subtitle<span class="op">=</span><span class="st">"2-Manifolds with Noise"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Model &amp; Metric"</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        Model<span class="op">=</span><span class="st">"Model"</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        Metric<span class="op">=</span><span class="st">"Metric"</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{col: col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Model"</span>, <span class="st">"Metric"</span>]}</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Torus"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Torus"</span> <span class="kw">in</span> col])</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Ellipsoid"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Ellipsoid"</span> <span class="kw">in</span> col])</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Saddle"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Saddle"</span> <span class="kw">in</span> col])</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    .fmt_number(columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Model"</span>, <span class="st">"Metric"</span>]], decimals<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to apply styles to the best values</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_best_value_styles(df, table):</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric <span class="kw">in</span> df[<span class="st">'Metric'</span>].unique():</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        metric_df <span class="op">=</span> df[df[<span class="st">'Metric'</span>] <span class="op">==</span> metric]</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> df.columns[<span class="dv">2</span>:]:</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> metric <span class="op">==</span> <span class="st">'PCC'</span>:</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> metric_df[col].<span class="bu">max</span>()</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:  <span class="co"># For RMSE and other metrics where lower is better</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> metric_df[col].<span class="bu">min</span>()</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            best_indices <span class="op">=</span> metric_df[metric_df[col] <span class="op">==</span> best_value].index.tolist()</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> index <span class="kw">in</span> best_indices:</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                table <span class="op">=</span> table.tab_style(</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                    style<span class="op">=</span>style.text(weight<span class="op">=</span><span class="st">"bold"</span>),</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                    locations<span class="op">=</span>loc.body(columns<span class="op">=</span>[col], rows<span class="op">=</span>[index])</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> table</span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the styles</span></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> apply_best_value_styles(df, table)</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the table (assuming in Jupyter Notebook)</span></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>display(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [59]:</pre></div><div id="cell-fig-2-manifolds-noise-table" class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, style, loc, exibble</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> sp500</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> metric_df</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the data by metric for proper sorting and display</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.sort_values(by<span class="op">=</span>[<span class="st">'Metric'</span>, <span class="st">'Model'</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the table with row groups</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> (</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    GT(df, rowname_col<span class="op">=</span><span class="st">"Model"</span>, groupname_col<span class="op">=</span><span class="st">"Metric"</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Curvature under Noise"</span>, subtitle<span class="op">=</span><span class="st">"2-Manifolds with Noise"</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Model &amp; Metric"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        Model<span class="op">=</span><span class="st">"Model"</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        Metric<span class="op">=</span><span class="st">"Metric"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{col: col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Model"</span>, <span class="st">"Metric"</span>]}</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Torus"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Torus"</span> <span class="kw">in</span> col])</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Ellipsoid"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Ellipsoid"</span> <span class="kw">in</span> col])</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Saddle"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Saddle"</span> <span class="kw">in</span> col])</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    .fmt_number(columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Model"</span>, <span class="st">"Metric"</span>]], decimals<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to apply styles to the best values</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_best_value_styles(df, table):</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric <span class="kw">in</span> df[<span class="st">'Metric'</span>].unique():</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        metric_df <span class="op">=</span> df[df[<span class="st">'Metric'</span>] <span class="op">==</span> metric]</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> df.columns[<span class="dv">2</span>:]:</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> metric <span class="op">==</span> <span class="st">'PCC'</span>:</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> metric_df[col].<span class="bu">max</span>()</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:  <span class="co"># For RMSE and other metrics where lower is better</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> metric_df[col].<span class="bu">min</span>()</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>            best_indices <span class="op">=</span> metric_df[metric_df[col] <span class="op">==</span> best_value].index.tolist()</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> index <span class="kw">in</span> best_indices:</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                table <span class="op">=</span> table.tab_style(</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>                    style<span class="op">=</span>style.text(weight<span class="op">=</span><span class="st">"bold"</span>),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>                    locations<span class="op">=</span>loc.body(columns<span class="op">=</span>[col], rows<span class="op">=</span>[index])</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> table</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the styles</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> apply_best_value_styles(df, table)</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the table (assuming in Jupyter Notebook)</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>display(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-2-manifolds-noise-table" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-noise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
-<div id="cnramwscbt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="yyhqyhumce" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#cnramwscbt table {
+#yyhqyhumce table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#cnramwscbt thead, tbody, tfoot, tr, td, th { border-style: none; }
- tr { background-color: transparent; }
-#cnramwscbt p { margin: 0; padding: 0; }
- #cnramwscbt .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #cnramwscbt .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #cnramwscbt .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #cnramwscbt .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #cnramwscbt .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cnramwscbt .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #cnramwscbt .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #cnramwscbt .gt_column_spanner_outer:first-child { padding-left: 0; }
- #cnramwscbt .gt_column_spanner_outer:last-child { padding-right: 0; }
- #cnramwscbt .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #cnramwscbt .gt_spanner_row { border-bottom-style: hidden; }
- #cnramwscbt .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #cnramwscbt .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #cnramwscbt .gt_from_md> :first-child { margin-top: 0; }
- #cnramwscbt .gt_from_md> :last-child { margin-bottom: 0; }
- #cnramwscbt .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #cnramwscbt .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #cnramwscbt .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #cnramwscbt .gt_row_group_first td { border-top-width: 2px; }
- #cnramwscbt .gt_row_group_first th { border-top-width: 2px; }
- #cnramwscbt .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cnramwscbt .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #cnramwscbt .gt_left { text-align: left; }
- #cnramwscbt .gt_center { text-align: center; }
- #cnramwscbt .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #cnramwscbt .gt_font_normal { font-weight: normal; }
- #cnramwscbt .gt_font_bold { font-weight: bold; }
- #cnramwscbt .gt_font_italic { font-style: italic; }
- #cnramwscbt .gt_super { font-size: 65%; }
- #cnramwscbt .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #cnramwscbt .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#yyhqyhumce thead, tbody, tfoot, tr, td, th { border-style: none !important; }
+ tr { background-color: transparent !important; }
+#yyhqyhumce p { margin: 0 !important; padding: 0 !important; }
+ #yyhqyhumce .gt_table { display: table !important; border-collapse: collapse !important; line-height: normal !important; margin-left: auto !important; margin-right: auto !important; color: #333333 !important; font-size: 16px !important; font-weight: normal !important; font-style: normal !important; background-color: #FFFFFF !important; width: auto !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #A8A8A8 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #A8A8A8 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_caption { padding-top: 4px !important; padding-bottom: 4px !important; }
+ #yyhqyhumce .gt_title { color: #333333 !important; font-size: 125% !important; font-weight: initial !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; border-bottom-color: #FFFFFF !important; border-bottom-width: 0 !important; }
+ #yyhqyhumce .gt_subtitle { color: #333333 !important; font-size: 85% !important; font-weight: initial !important; padding-top: 3px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; border-top-color: #FFFFFF !important; border-top-width: 0 !important; }
+ #yyhqyhumce .gt_heading { background-color: #FFFFFF !important; text-align: center !important; border-bottom-color: #FFFFFF !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_bottom_border { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_col_headings { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_col_heading { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; overflow-x: hidden !important; }
+ #yyhqyhumce .gt_column_spanner_outer { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; padding-top: 0 !important; padding-bottom: 0 !important; padding-left: 4px !important; padding-right: 4px !important; }
+ #yyhqyhumce .gt_column_spanner_outer:first-child { padding-left: 0 !important; }
+ #yyhqyhumce .gt_column_spanner_outer:last-child { padding-right: 0 !important; }
+ #yyhqyhumce .gt_column_spanner { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; overflow-x: hidden !important; display: inline-block !important; width: 100% !important; }
+ #yyhqyhumce .gt_spanner_row { border-bottom-style: hidden !important; }
+ #yyhqyhumce .gt_group_heading { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; text-align: left !important; }
+ #yyhqyhumce .gt_empty_group_heading { padding: 0.5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: middle !important; }
+ #yyhqyhumce .gt_from_md> :first-child { margin-top: 0 !important; }
+ #yyhqyhumce .gt_from_md> :last-child { margin-bottom: 0 !important; }
+ #yyhqyhumce .gt_row { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; margin: 10px !important; border-top-style: solid !important; border-top-width: 1px !important; border-top-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; overflow-x: hidden !important; }
+ #yyhqyhumce .gt_stub { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #yyhqyhumce .gt_stub_row_group { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; vertical-align: top !important; }
+ #yyhqyhumce .gt_row_group_first td { border-top-width: 2px !important; }
+ #yyhqyhumce .gt_row_group_first th { border-top-width: 2px !important; }
+ #yyhqyhumce .gt_table_body { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_sourcenotes { color: #333333 !important; background-color: #FFFFFF !important; border-bottom-style: none !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_sourcenote { font-size: 90% !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; text-align: left !important; }
+ #yyhqyhumce .gt_left { text-align: left !important; }
+ #yyhqyhumce .gt_center { text-align: center !important; }
+ #yyhqyhumce .gt_right { text-align: right !important; font-variant-numeric: tabular-nums !important; }
+ #yyhqyhumce .gt_font_normal { font-weight: normal !important; }
+ #yyhqyhumce .gt_font_bold { font-weight: bold !important; }
+ #yyhqyhumce .gt_font_italic { font-style: italic !important; }
+ #yyhqyhumce .gt_super { font-size: 65% !important; }
+ #yyhqyhumce .gt_footnote_marks { font-size: 75% !important; vertical-align: 0.4em !important; position: initial !important; }
+ #yyhqyhumce .gt_asterisk { font-size: 100% !important; vertical-align: 0 !important; }
  
 </style>
 
@@ -985,24 +1016,24 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.757</td>
-<td class="gt_row gt_right">0.813</td>
-<td class="gt_row gt_right">0.854</td>
-<td class="gt_row gt_right">0.889</td>
-<td class="gt_row gt_right">0.963</td>
+<td class="gt_row gt_right">0.855</td>
+<td class="gt_row gt_right">0.846</td>
+<td class="gt_row gt_right">0.861</td>
 <td class="gt_row gt_right">0.976</td>
-<td class="gt_row gt_right">0.952</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.722</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.363</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.327</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.383</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.513</td>
-<td class="gt_row gt_right">0.349</td>
-<td class="gt_row gt_right">0.620</td>
-<td class="gt_row gt_right">0.683</td>
-<td class="gt_row gt_right">0.933</td>
-<td class="gt_row gt_right">1.070</td>
-<td class="gt_row gt_right">1.102</td>
+<td class="gt_row gt_right">0.957</td>
+<td class="gt_row gt_right">0.878</td>
+<td class="gt_row gt_right">0.957</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.941</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.659</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.291</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.345</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.473</td>
+<td class="gt_row gt_right">0.371</td>
+<td class="gt_row gt_right">0.606</td>
+<td class="gt_row gt_right">0.423</td>
+<td class="gt_row gt_right">0.879</td>
+<td class="gt_row gt_right">1.046</td>
+<td class="gt_row gt_right">1.148</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
@@ -1073,29 +1104,29 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
 <td class="gt_row gt_right">0.918</td>
-<td class="gt_row gt_right">0.935</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.954</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.957</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.948</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.931</td>
-<td class="gt_row gt_right">0.739</td>
-<td class="gt_row gt_right">0.800</td>
-<td class="gt_row gt_right">0.801</td>
-<td class="gt_row gt_right">0.764</td>
-<td class="gt_row gt_right">0.707</td>
-<td class="gt_row gt_right">0.636</td>
-<td class="gt_row gt_right">0.004</td>
-<td class="gt_row gt_right">−0.003</td>
-<td class="gt_row gt_right">0.002</td>
-<td class="gt_row gt_right">−0.002</td>
-<td class="gt_row gt_right">0.009</td>
-<td class="gt_row gt_right">0.011</td>
+<td class="gt_row gt_right">0.927</td>
+<td class="gt_row gt_right">0.916</td>
+<td class="gt_row gt_right">0.872</td>
+<td class="gt_row gt_right">0.789</td>
+<td class="gt_row gt_right">0.633</td>
+<td class="gt_row gt_right">0.713</td>
+<td class="gt_row gt_right">0.777</td>
+<td class="gt_row gt_right">0.798</td>
+<td class="gt_row gt_right">0.760</td>
+<td class="gt_row gt_right">0.701</td>
+<td class="gt_row gt_right">0.631</td>
+<td class="gt_row gt_right">0.626</td>
+<td class="gt_row gt_right">0.595</td>
+<td class="gt_row gt_right">0.550</td>
+<td class="gt_row gt_right">0.539</td>
+<td class="gt_row gt_right">0.499</td>
+<td class="gt_row gt_right">0.448</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.954</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.955</td>
-<td class="gt_row gt_right">0.945</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.945</td>
 <td class="gt_row gt_right">0.903</td>
 <td class="gt_row gt_right">0.856</td>
 <td class="gt_row gt_right">0.791</td>
@@ -1117,9 +1148,9 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <td class="gt_row gt_right">0.948</td>
 <td class="gt_row gt_right">0.942</td>
 <td class="gt_row gt_right">0.931</td>
-<td class="gt_row gt_right">0.909</td>
-<td class="gt_row gt_right">0.873</td>
-<td class="gt_row gt_right">0.838</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.909</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.873</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.838</td>
 <td class="gt_row gt_right">0.838</td>
 <td class="gt_row gt_right">0.834</td>
 <td class="gt_row gt_right">0.809</td>
@@ -1159,24 +1190,24 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.916</td>
-<td class="gt_row gt_right">0.954</td>
-<td class="gt_row gt_right">0.988</td>
-<td class="gt_row gt_right">1.024</td>
-<td class="gt_row gt_right">1.110</td>
-<td class="gt_row gt_right">1.130</td>
-<td class="gt_row gt_right">1.102</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.900</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.632</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.642</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.574</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.628</td>
-<td class="gt_row gt_right">0.760</td>
-<td class="gt_row gt_right">0.888</td>
-<td class="gt_row gt_right">0.921</td>
-<td class="gt_row gt_right">1.074</td>
-<td class="gt_row gt_right">1.186</td>
-<td class="gt_row gt_right">1.218</td>
+<td class="gt_row gt_right">1.033</td>
+<td class="gt_row gt_right">1.025</td>
+<td class="gt_row gt_right">1.039</td>
+<td class="gt_row gt_right">1.152</td>
+<td class="gt_row gt_right">1.136</td>
+<td class="gt_row gt_right">1.070</td>
+<td class="gt_row gt_right">1.095</td>
+<td class="gt_row gt_right" style="font-weight: bold">1.073</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.863</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.633</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.646</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.655</td>
+<td class="gt_row gt_right">0.732</td>
+<td class="gt_row gt_right">0.837</td>
+<td class="gt_row gt_right">0.766</td>
+<td class="gt_row gt_right">0.984</td>
+<td class="gt_row gt_right">1.109</td>
+<td class="gt_row gt_right">1.200</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
@@ -1229,7 +1260,7 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-noise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Performance of methods under noise on 2-Manifolds with Noise.
+Figure&nbsp;4: Performance of methods under noise on 2-Manifolds with Noise.
 </figcaption>
 </figure>
 </div>
@@ -1239,17 +1270,17 @@ Figure&nbsp;3: Performance of methods under noise on 2-Manifolds with Noise.
 <h3 data-number="4.0.1" class="anchored" data-anchor-id="differentiating-sign-in-high-dimensions"><span class="header-section-number">4.0.1</span> Differentiating Sign in High Dimensions</h3>
 <p>Most existing methods only quantify their performance in high dimensions on one or two test cases.</p>
 <div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/5-sign-prediction-tests.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-sadspheres">
-<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-fig-sadspheres" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>SS1._aggregate_labels()</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>SS1.plot_by_dimension()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-sadspheres" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>SS1._aggregate_labels()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>SS1.plot_by_dimension()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-sadspheres" class="quarto-figure quarto-figure-center quarto-float anchored" alt="...">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
+<a href="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-4" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
+Figure&nbsp;5: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
 </figcaption>
 </figure>
 </div>
@@ -1317,9 +1348,10 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
 </div>
 </div>
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Diffusion energies across multiple scales on a 4-dimensional saddle, plane, and sphere (all 3-manifolds). When comparing directly between times, there is no clear separation of curvatures. Aligning diffusions by diffusion trajectory distance reveals curvature.</span>
 <span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;5: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.</span>
 </div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
@@ -1738,7 +1770,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
