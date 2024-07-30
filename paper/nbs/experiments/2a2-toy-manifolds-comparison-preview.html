@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
     <meta charset="utf-8">
-    <meta name="generator" content="quarto-1.4.551">
+    <meta name="generator" content="quarto-1.4.554">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -220,7 +220,7 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <p>::: {#cell-1 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’}</p>
+       <p>::: {#cell-1 .cell 0=‘h’ 1=‘i’ 2=‘d’ 3=‘e’ execution_count=66}</p>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Standard libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
@@ -259,20 +259,11 @@
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-2" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>X, ks <span class="op">=</span> ellipsoid(<span class="dv">2000</span>, seed<span class="op">=</span><span class="dv">19323</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>array([[ 2.00397824, -0.41691384,  0.71437483],
-       [ 1.27475224, -0.11175413,  0.90350592],
-       [-1.91620722,  0.99866728,  0.58539095],
-       ...,
-       [-2.97769204, -0.03548212,  0.12042399],
-       [ 2.35053893, -0.31803095,  0.60068419],
-       [-0.5358212 , -1.86937732, -0.30733797]])</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload</code></pre>
 </div>
-</div></div>
+<p>:::</p>
 <blockquote class="blockquote">
 <p>Which will emerge victorious?</p>
 </blockquote>
@@ -280,131 +271,159 @@
 <section id="machinery" class="level1">
 <h1>Machinery</h1>
 <p>Load up the results:</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-7" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>curvatures <span class="op">=</span> {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ground Truth Curvature'</span> : np.load(<span class="st">"../../results/toy_datasets_ground_truth_curvatures_1000.npz"</span>),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Diffusion Curvature'</span> : np.load(<span class="st">"../../results/toy_dataset_entropic_fixed_subtraction.npz"</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Unsigned Diffusion Curvature'</span> : np.load(<span class="st">"../../results/toy_dataset_neurips_laziness_no_comparison.npz"</span>),</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'AdaL-PCA' : np.load("../../results/toy_dataset_toy_datasets_principal_curvature_heuristic.npz"),</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AdaL-PCA'</span> : np.load(<span class="st">"../../results/toy_dataset_toy_datasets_principal_curvature_heuristic_filtered.npz"</span>), <span class="co"># outlier points filtered out</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'AdaL-PCA' : np.load("../../results/toy_dataset_toy_datasets_principal_curvature_no_heuristic_08_15.npz"),</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Unsigned Diffusion Curvature'</span> : np.load(<span class="st">"../../results/toy_dataset_neurips_laziness_no_comparison.npz"</span>),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Hickok &amp; Blumberg'</span> : np.load(<span class="st">"../../results/toy_dataset_toy_datasets_hickock_curvature_r3.14.npz"</span>),</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>scaled_curvatures <span class="op">=</span> <span class="bu">dict</span>(curvatures)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [67]:</pre></div><div id="cell-6" class="cell" data-execution_count="67">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>curvatures <span class="op">=</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ground Truth Curvature'</span> : np.load(<span class="st">"../../results/toy_data_saved_1000_more_noise_curvatures.npz"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Diffusion Curvature'</span> : np.load(<span class="st">"../../results/toy_dataset_entropic_fixed_subtraction.npz"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'Unsigned Diffusion Curvature' : np.load("../../results/toy_dataset_neurips_laziness_no_comparison.npz"),</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'AdaL-PCA' : np.load("../../results/toy_dataset_toy_datasets_principal_curvature_heuristic.npz"),</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'AdaL-PCA' : np.load("../../results/toy_dataset_toy_datasets_principal_curvature_heuristic_filtered.npz"), # outlier points filtered out</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'AdaL-PCA' : np.load("../../results/toy_dataset_toy_datasets_principal_curvature_no_heuristic_08_15.npz"),</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 'Unsigned Diffusion Curvature' : np.load("../../results/toy_dataset_neurips_laziness_no_comparison.npz"),</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Hickok &amp; Blumberg'</span> : np.load(<span class="st">"../../results/toy_dataset_toy_datasets_hickock_curvature_r3.14.npz"</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Ollivier Ricci Curvature'</span> : np.load(<span class="st">"../../results/toy_dataset_toy_datasets_ollivier_ricci_knn_50.npz"</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Forman Ricci Curvature'</span> : np.load(<span class="st">'../../results/toy_dataset_toy_datasets_forman_ricci_k_50.npz'</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>scaled_curvatures <span class="op">=</span> <span class="bu">dict</span>(curvatures)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <p>And the data</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-9" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Xs <span class="op">=</span> np.load(<span class="st">"../../results/toy_data_saved_1000.npz"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>Ks <span class="op">=</span> np.load(<span class="st">"../../results/toy_datasets_ground_truth_curvatures_1000.npz"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [68]:</pre></div><div id="cell-8" class="cell" data-execution_count="68">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Establish Datasets</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>load_from_saved <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"../../results/toy_data_saved_1000_more_noise"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> load_from_saved:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    Xs <span class="op">=</span> np.load(filename <span class="op">+</span> <span class="st">'.npz'</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    Ks <span class="op">=</span> np.load(filename <span class="op">+</span> <span class="st">'_curvatures.npz'</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    n_points <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    Xs <span class="op">=</span> {}</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    Ks <span class="op">=</span> {}</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    Xs[<span class="st">'Torus'</span>], Ks[<span class="st">'Torus'</span>] <span class="op">=</span> torus(n_points, use_guide_points<span class="op">=</span><span class="va">False</span>, seed<span class="op">=</span><span class="dv">19323</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    Xs[<span class="st">'plane'</span>] <span class="op">=</span> np.hstack([plane(n_points, dim<span class="op">=</span><span class="dv">2</span>),np.zeros((n_points,<span class="dv">1</span>))])</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    Ks[<span class="st">'plane'</span>] <span class="op">=</span> np.zeros(<span class="bu">len</span>(Xs[<span class="st">'plane'</span>]))</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    Xs[<span class="st">'Saddle'</span>], Ks[<span class="st">'Saddle'</span>] <span class="op">=</span> paraboloid(n_points, use_guide_points<span class="op">=</span><span class="va">False</span>, seed<span class="op">=</span><span class="dv">19323</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    Xs[<span class="st">'Sphere'</span>], Ks[<span class="st">'Sphere'</span>] <span class="op">=</span> sphere(n_points,)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    Xs[<span class="st">'Ellipsoid'</span>], Ks[<span class="st">'Ellipsoid'</span>] <span class="op">=</span> ellipsoid(n_points, seed<span class="op">=</span><span class="dv">19323</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    Xs[<span class="st">'Hyperboloid'</span>], Ks[<span class="st">'Hyperboloid'</span>] <span class="op">=</span> hyperboloid(n_points, seed<span class="op">=</span><span class="dv">19323</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Noised Versions</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> noise_scale <span class="kw">in</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>]: <span class="co"># [0.05, 0.1, 0.15, 0.2, 0.25]: </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        Xs[<span class="ss">f'Torus noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>], Ks[<span class="ss">f'Torus noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> torus(n_points, use_guide_points<span class="op">=</span><span class="va">False</span>, seed<span class="op">=</span><span class="dv">19323</span>, noise <span class="op">=</span> noise_scale)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Xs['plane noise = {noise_scale}'] = np.hstack([plane(n_points, dim=2),np.zeros((n_points,1))])</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Ks['plane noise = {noise_scale}'] = np.zeros(len(Xs['plane']))</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        Xs[<span class="ss">f'Saddle noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>], Ks[<span class="ss">f'Saddle noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> paraboloid(n_points, use_guide_points<span class="op">=</span><span class="va">False</span>, seed<span class="op">=</span><span class="dv">19323</span>, noise <span class="op">=</span> noise_scale)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Xs['sphere = {noise_scale}'], Ks['sphere = {noise_scale}'] = sphere(n_points,)</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        Xs[<span class="ss">f'Ellipsoid noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>], Ks[<span class="ss">f'Ellipsoid noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> ellipsoid(n_points, seed<span class="op">=</span><span class="dv">19323</span>, noise <span class="op">=</span> noise_scale)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        Xs[<span class="ss">f'hyperboloid noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>], Ks[<span class="ss">f'hyperboloid noise = </span><span class="sc">{</span>noise_scale<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> hyperboloid(n_points, seed<span class="op">=</span><span class="dv">19323</span>, noise <span class="op">=</span> noise_scale)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    np.savez(filename <span class="op">+</span> <span class="st">'.npz'</span>, <span class="op">**</span>Xs)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    np.savez(filename <span class="op">+</span> <span class="st">'_curvatures.npz'</span>, <span class="op">**</span>Ks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-10" class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Xs[<span class="st">'Ellipsoid'</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
+<div class="cell-container"><div class="cell-decorator"><pre>In [69]:</pre></div><div id="cell-9" class="cell" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Xs[<span class="st">'Ellipsoid'</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="69">
 <pre><code>(1000, 3)</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-11" class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Establish Datasets</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># n_points = 2000</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs = {}</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ks = {}</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['Torus'], Ks['Torus'] = torus(n_points, use_guide_points=False, seed=19323)</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['Saddle'], Ks['Saddle'] = paraboloid(n_points, use_guide_points=False, seed=19323)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['sphere'], Ks['sphere'] = sphere(n_points,)</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['Ellipsoid'], Ks['Ellipsoid'] = ellipsoid(n_points, seed=19323)</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['hyperboloid'], Ks['hyperboloid'] = hyperboloid(n_points, seed=19323)</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # Noised Versions</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># for noise_scale in [0.1, 0.2, 0.3, 0.4, 0.5]:</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'Torus noise = {noise_scale}'], Ks[f'Torus noise = {noise_scale}'] = torus(n_points, use_guide_points=False, seed=19323, noise = noise_scale)</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Xs['plane noise = {noise_scale}'] = np.hstack([plane(n_points, dim=2),np.zeros((n_points,1))])</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Ks['plane noise = {noise_scale}'] = np.zeros(len(Xs['plane']))</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'Saddle noise = {noise_scale}'], Ks[f'Saddle noise = {noise_scale}'] = paraboloid(n_points, use_guide_points=False, seed=19323, noise = noise_scale)</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Xs['sphere = {noise_scale}'], Ks['sphere = {noise_scale}'] = sphere(n_points,)</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'Ellipsoid noise = {noise_scale}'], Ks[f'Ellipsoid noise = {noise_scale}'] = ellipsoid(n_points, seed=19323, noise = noise_scale)</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'hyperboloid noise = {noise_scale}'], Ks[f'hyperboloid noise = {noise_scale}'] = hyperboloid(n_points, seed=19323, noise = noise_scale)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [70]:</pre></div><div id="cell-10" class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Establish Datasets</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># n_points = 2000</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs = {}</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ks = {}</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['Torus'], Ks['Torus'] = torus(n_points, use_guide_points=False, seed=19323)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['Saddle'], Ks['Saddle'] = paraboloid(n_points, use_guide_points=False, seed=19323)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['sphere'], Ks['sphere'] = sphere(n_points,)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['Ellipsoid'], Ks['Ellipsoid'] = ellipsoid(n_points, seed=19323)</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Xs['hyperboloid'], Ks['hyperboloid'] = hyperboloid(n_points, seed=19323)</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # Noised Versions</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># for noise_scale in [0.1, 0.2, 0.3, 0.4, 0.5]:</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'Torus noise = {noise_scale}'], Ks[f'Torus noise = {noise_scale}'] = torus(n_points, use_guide_points=False, seed=19323, noise = noise_scale)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Xs['plane noise = {noise_scale}'] = np.hstack([plane(n_points, dim=2),np.zeros((n_points,1))])</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Ks['plane noise = {noise_scale}'] = np.zeros(len(Xs['plane']))</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'Saddle noise = {noise_scale}'], Ks[f'Saddle noise = {noise_scale}'] = paraboloid(n_points, use_guide_points=False, seed=19323, noise = noise_scale)</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Xs['sphere = {noise_scale}'], Ks['sphere = {noise_scale}'] = sphere(n_points,)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'Ellipsoid noise = {noise_scale}'], Ks[f'Ellipsoid noise = {noise_scale}'] = ellipsoid(n_points, seed=19323, noise = noise_scale)</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     Xs[f'hyperboloid noise = {noise_scale}'], Ks[f'hyperboloid noise = {noise_scale}'] = hyperboloid(n_points, seed=19323, noise = noise_scale)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-12" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>curvatures[<span class="st">'Hickok &amp; Blumberg'</span>][<span class="st">'Torus'</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
+<div class="cell-container"><div class="cell-decorator"><pre>In [71]:</pre></div><div id="cell-11" class="cell" data-execution_count="71">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>curvatures[<span class="st">'Hickok &amp; Blumberg'</span>][<span class="st">'Torus'</span>].shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="71">
 <pre><code>(1000,)</code></pre>
 </div>
 </div></div>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming Xs, labels, ground_truth_labels, and key_names are defined</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>key_names <span class="op">=</span> [<span class="st">'Torus'</span>, <span class="st">'Saddle'</span>, <span class="st">'Ellipsoid'</span>]</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> curvatures</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>ground_truth_labels <span class="op">=</span> Ks</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of seaborn</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>fig_shape <span class="op">=</span> (<span class="bu">len</span>(curvatures.keys()) <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(key_names))</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>method_colors <span class="op">=</span> [<span class="st">'green'</span>, <span class="st">'olive'</span>, <span class="st">'navy'</span>, <span class="st">'orange'</span>, <span class="st">'purple'</span>]</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(method_colors) <span class="op">==</span> <span class="bu">len</span>(curvatures.keys())</span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>ordered_keys <span class="op">=</span> curvatures.keys() <span class="co">#['Gaussian', 'Adal-PCA', 'Unsigned Diffusion Curvature', 'Hickok &amp; Blumberg']</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">set</span>(ordered_keys) <span class="op">==</span> <span class="bu">set</span>(curvatures.keys())</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes with 2 rows and 3 columns</span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], figsize<span class="op">=</span>(fig_shape[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span>, fig_shape[<span class="dv">1</span>]<span class="op">*</span><span class="dv">5</span>), subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'3d'</span>} <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&lt;</span> <span class="st">'3.4.0'</span> <span class="cf">else</span> <span class="va">None</span>)</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, key <span class="kw">in</span> <span class="bu">enumerate</span>(key_names):</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3D scatter plot for the first row</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    lim <span class="op">=</span> np.<span class="bu">max</span>(np.linalg.norm(Xs[key], axis<span class="op">=</span><span class="dv">1</span>))</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if plt.matplotlib.__version__ &gt;= '3.4.0':</span></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the curvature for each method</span></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>        axs[j, i].remove()</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>        axs[j, i] <span class="op">=</span> fig.add_subplot(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], i <span class="op">+</span> j<span class="op">*</span>fig_shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_xlim3d(left<span class="op">=-</span>lim, right<span class="op">=</span>lim)</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_ylim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_zlim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_xticks([])</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_yticks([])</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_zticks([])</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>        scatter3d <span class="op">=</span> axs[j, i].scatter(Xs[key][:, <span class="dv">0</span>], Xs[key][:, <span class="dv">1</span>], Xs[key][:, <span class="dv">2</span>], c<span class="op">=</span>scaled_labels, cmap <span class="op">=</span> <span class="st">'coolwarm'</span>)</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> <span class="dv">1</span>:</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>            axs[j, i].set_title(<span class="ss">f'</span><span class="sc">{</span>method_name<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">15</span>, c <span class="op">=</span> method_colors[j])</span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot for the second row, colored by labels</span></span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i].remove()</span></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i] = fig.add_subplot(fig_shape[0], fig_shape[1], i+4)</span></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># min max scaling</span></span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>        scatter2d <span class="op">=</span> axs[j<span class="op">+</span><span class="dv">1</span>, i].scatter(ground_truth_labels[key], scaled_labels, c <span class="op">=</span> method_colors[k], s <span class="op">=</span> <span class="dv">1</span>)</span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>        axs[j<span class="op">+</span><span class="dv">1</span>,i].set_aspect(<span class="st">'equal'</span>)</span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[1, i].set_title(f'')</span></span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_xlabel(<span class="st">'Gaussian Curvature'</span>)</span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_ylabel(<span class="st">'Estimated Curvature'</span>)</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the origin lines in 2D scatter plots</span></span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # Add colorbar for each subplot</span></span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter3d, ax=axs[0, i], fraction=0.046, pad=0.04)</span></span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter2d, ax=axs[1, i], fraction=0.046, pad=0.04)</span></span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Estimated Gaussian Curvatures of 2-Manifolds"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [72]:</pre></div><div id="cell-fig-2-manifolds-visual-comparison" class="cell" data-execution_count="72">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming Xs, labels, ground_truth_labels, and key_names are defined</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># For example:</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>key_names <span class="op">=</span> [<span class="st">'Torus'</span>, <span class="st">'Saddle'</span>, <span class="st">'Ellipsoid'</span>]</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> curvatures</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>ground_truth_labels <span class="op">=</span> Ks</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the style of seaborn</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">"whitegrid"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>fig_shape <span class="op">=</span> (<span class="bu">len</span>(curvatures.keys()) <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(key_names))</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>method_colors <span class="op">=</span> [<span class="st">'green'</span>, <span class="st">'olive'</span>, <span class="st">'navy'</span>, <span class="st">'orange'</span>, <span class="st">'purple'</span>]</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">len</span>(method_colors) <span class="op">==</span> <span class="bu">len</span>(curvatures.keys())</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>ordered_keys <span class="op">=</span> curvatures.keys() <span class="co">#['Gaussian', 'Adal-PCA', 'Unsigned Diffusion Curvature', 'Hickok &amp; Blumberg']</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">set</span>(ordered_keys) <span class="op">==</span> <span class="bu">set</span>(curvatures.keys())</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and axes with 2 rows and 3 columns</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], figsize<span class="op">=</span>(fig_shape[<span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span>, fig_shape[<span class="dv">1</span>]<span class="op">*</span><span class="dv">5</span>), subplot_kw<span class="op">=</span>{<span class="st">'projection'</span>: <span class="st">'3d'</span>} <span class="cf">if</span> plt.matplotlib.__version__ <span class="op">&lt;</span> <span class="st">'3.4.0'</span> <span class="cf">else</span> <span class="va">None</span>)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, key <span class="kw">in</span> <span class="bu">enumerate</span>(key_names):</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3D scatter plot for the first row</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    lim <span class="op">=</span> np.<span class="bu">max</span>(np.linalg.norm(Xs[key], axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if plt.matplotlib.__version__ &gt;= '3.4.0':</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the curvature for each method</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        axs[j, i].remove()</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        axs[j, i] <span class="op">=</span> fig.add_subplot(fig_shape[<span class="dv">0</span>], fig_shape[<span class="dv">1</span>], i <span class="op">+</span> j<span class="op">*</span>fig_shape[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">1</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_xlim3d(left<span class="op">=-</span>lim, right<span class="op">=</span>lim)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_ylim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        axs[j, i].axes.set_zlim3d(bottom<span class="op">=-</span>lim, top<span class="op">=</span>lim)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_xticks([])</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_yticks([])</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        axs[j, i].set_zticks([])</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>        scatter3d <span class="op">=</span> axs[j, i].scatter(Xs[key][:, <span class="dv">0</span>], Xs[key][:, <span class="dv">1</span>], Xs[key][:, <span class="dv">2</span>], c<span class="op">=</span>scaled_labels, cmap <span class="op">=</span> <span class="st">'coolwarm'</span>)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>            axs[j, i].set_title(<span class="ss">f'</span><span class="sc">{</span>method_name<span class="sc">}</span><span class="ss">'</span>,fontsize<span class="op">=</span><span class="dv">15</span>, c <span class="op">=</span> method_colors[j])</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scatter plot for the second row, colored by labels</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i].remove()</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[j+1, i] = fig.add_subplot(fig_shape[0], fig_shape[1], i+4)</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k, method_name <span class="kw">in</span> <span class="bu">enumerate</span>(ordered_keys):</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># min max scaling</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> labels[method_name][key]</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>        scaled_labels <span class="op">=</span> scaled_labels <span class="op">/</span> (<span class="bu">max</span>(scaled_labels) <span class="op">-</span> <span class="bu">min</span>(scaled_labels))</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>        scatter2d <span class="op">=</span> axs[j<span class="op">+</span><span class="dv">1</span>, i].scatter(ground_truth_labels[key], scaled_labels, c <span class="op">=</span> method_colors[k], s <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>        axs[j<span class="op">+</span><span class="dv">1</span>,i].set_aspect(<span class="st">'equal'</span>)</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># axs[1, i].set_title(f'')</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_xlabel(<span class="st">'Gaussian Curvature'</span>)</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].set_ylabel(<span class="st">'Estimated Curvature'</span>)</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Highlight the origin lines in 2D scatter plots</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>    axs[j<span class="op">+</span><span class="dv">1</span>, i].axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># # Add colorbar for each subplot</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter3d, ax=axs[0, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fig.colorbar(scatter2d, ax=axs[1, i], fraction=0.046, pad=0.04)</span></span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Estimated Gaussian Curvatures of 2-Manifolds"</span>, fontsize<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
@@ -418,527 +437,401 @@ Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-15" class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Xs[<span class="st">'Ellipsoid'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>array([[ 0.63842898, -0.41691384, -0.95459822],
-       [-1.08160955,  0.99866728,  0.78783205],
-       [-2.40019712, -0.81698673, -0.43934956],
-       ...,
-       [ 0.35009997,  1.90351948,  0.28378602],
-       [-1.95352695,  0.5126914 , -0.71432287],
-       [-1.21028093, -1.18071427,  0.69908878]])</code></pre>
-</div>
-</div></div>
 </section>
 <section id="table" class="level1">
 <h1>Table</h1>
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-17" class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [73]:</pre></div><div id="cell-15" class="cell" data-execution_count="73">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-18" class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> root_mse_between(labels, method, dataset):</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    computed <span class="op">=</span> labels[method][dataset]</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt(mean_squared_error(truth, computed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [74]:</pre></div><div id="cell-16" class="cell" data-execution_count="74">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> root_mse_between(labels, method, dataset):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    computed <span class="op">=</span> labels[method][dataset]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt(mean_squared_error(truth, computed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-19" class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> energy_distance</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> energy_between(labels, method, dataset):</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    computed <span class="op">=</span> labels[method][dataset]</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> energy_distance(truth, computed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [75]:</pre></div><div id="cell-17" class="cell" data-execution_count="75">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> energy_distance</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> energy_between(labels, method, dataset):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    computed <span class="op">=</span> labels[method][dataset]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> energy_distance(truth, computed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-20" class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pearson_correlation_between(labels, method, dataset):</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    computed <span class="op">=</span> labels[method][dataset]</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    rho, confidence <span class="op">=</span> pearsonr(truth, computed)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [76]:</pre></div><div id="cell-18" class="cell" data-execution_count="76">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pearson_correlation_between(labels, method, dataset):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    truth <span class="op">=</span> labels[<span class="st">'Ground Truth Curvature'</span>][dataset]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    computed <span class="op">=</span> labels[method][dataset]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    rho, confidence <span class="op">=</span> pearsonr(truth, computed)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> rho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-21" class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>noise_scales <span class="op">=</span> [<span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>, <span class="fl">0.25</span>]</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dataset_names <span class="op">=</span> [<span class="st">'Torus'</span>] <span class="op">+</span> [<span class="ss">f'Torus noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales] <span class="op">+</span> [<span class="st">'Saddle'</span>] <span class="op">+</span> [<span class="ss">f'Saddle noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales] <span class="op">+</span> [<span class="st">'Ellipsoid'</span>] <span class="op">+</span> [<span class="ss">f'Ellipsoid noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales]</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>metrics_collected <span class="op">=</span> {</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'RMSE'</span>:{}, <span class="st">'ED'</span>:{}, <span class="st">'PCC'</span>:{}</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> method <span class="kw">in</span> labels.keys():</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> method <span class="op">==</span> <span class="st">'Ground Truth Curvature'</span>: </span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(method)</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        metrics_collected[<span class="st">'RMSE'</span>][method] <span class="op">=</span> {}</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        metrics_collected[<span class="st">'ED'</span>][method] <span class="op">=</span> {}</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        metrics_collected[<span class="st">'PCC'</span>][method] <span class="op">=</span> {}</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> dname <span class="kw">in</span> dataset_names:</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>                metrics_collected[<span class="st">'RMSE'</span>][method][dname] <span class="op">=</span> root_mse_between(curvatures, method, dname)</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>                metrics_collected[<span class="st">'ED'</span>][method][dname] <span class="op">=</span> energy_between(curvatures, method, dname)</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>                metrics_collected[<span class="st">'PCC'</span>][method][dname] <span class="op">=</span> pearson_correlation_between(curvatures, method, dname)</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> <span class="pp">KeyError</span>:</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>                <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [79]:</pre></div><div id="cell-19" class="cell" data-execution_count="79">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>noise_scales <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dataset_names <span class="op">=</span> [<span class="st">'Torus'</span>] <span class="op">+</span> [<span class="ss">f'Torus noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales] <span class="op">+</span> [<span class="st">'Saddle'</span>] <span class="op">+</span> [<span class="ss">f'Saddle noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales] <span class="op">+</span> [<span class="st">'Ellipsoid'</span>] <span class="op">+</span> [<span class="ss">f'Ellipsoid noise = </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> x <span class="kw">in</span> noise_scales]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>metrics_collected <span class="op">=</span> {</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'RMSE'</span>:{}, <span class="st">'ED'</span>:{}, <span class="st">'PCC'</span>:{}</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> method <span class="kw">in</span> labels.keys():</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> method <span class="op">==</span> <span class="st">'Ground Truth Curvature'</span>: </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(method)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># metrics_collected['RMSE'][method] = {}</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        metrics_collected[<span class="st">'ED'</span>][method] <span class="op">=</span> {}</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        metrics_collected[<span class="st">'PCC'</span>][method] <span class="op">=</span> {}</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> dname <span class="kw">in</span> dataset_names:</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>                <span class="co"># metrics_collected['RMSE'][method][dname] = root_mse_between(curvatures, method, dname)</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>                metrics_collected[<span class="st">'ED'</span>][method][dname] <span class="op">=</span> energy_between(curvatures, method, dname)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>                metrics_collected[<span class="st">'PCC'</span>][method][dname] <span class="op">=</span> pearson_correlation_between(curvatures, method, dname)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> <span class="pp">KeyError</span>:</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"no such dname </span><span class="sc">{</span>dname<span class="sc">}</span><span class="ss"> for </span><span class="sc">{</span>method<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>                <span class="cf">pass</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Diffusion Curvature
-Unsigned Diffusion Curvature
-AdaL-PCA
-Hickok &amp; Blumberg</code></pre>
+Hickok &amp; Blumberg
+Ollivier Ricci Curvature
+Forman Ricci Curvature</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-22" class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>root_mse_between(curvatures, <span class="st">'Hickok &amp; Blumberg'</span>, <span class="st">'Torus'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
+<div class="cell-container"><div class="cell-decorator"><pre>In [80]:</pre></div><div id="cell-21" class="cell" data-execution_count="80">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>root_mse_between(curvatures, <span class="st">'Hickok &amp; Blumberg'</span>, <span class="st">'Torus'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="80">
 <pre><code>1.3590765614253006</code></pre>
 </div>
 </div></div>
-<p><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code></p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-24" class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'RMSE'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>{'Diffusion Curvature': {'Torus': 1.0460202196442228,
-  'Torus noise = 0.05': 1.049243413612388,
-  'Torus noise = 0.1': 1.0527980111124997,
-  'Torus noise = 0.15': 1.0567384935899182,
-  'Torus noise = 0.2': 1.0640107366623106,
-  'Torus noise = 0.25': 1.0674477886925686,
-  'Saddle': 0.9884773193911943,
-  'Saddle noise = 0.05': 0.9667851109656882,
-  'Saddle noise = 0.1': 0.9461563864867284,
-  'Saddle noise = 0.15': 0.946086573977571,
-  'Saddle noise = 0.2': 0.9273826931087096,
-  'Saddle noise = 0.25': 0.9213057463679875,
-  'Ellipsoid': 0.8363240046931492,
-  'Ellipsoid noise = 0.05': 0.8487988315616136,
-  'Ellipsoid noise = 0.1': 0.8554624707365525,
-  'Ellipsoid noise = 0.15': 0.8706177428655153,
-  'Ellipsoid noise = 0.2': 0.878686376631768,
-  'Ellipsoid noise = 0.25': 0.8840094834321106},
- 'Unsigned Diffusion Curvature': {'Torus': 0.8943585466700803,
-  'Torus noise = 0.05': 0.8919689391909543,
-  'Torus noise = 0.1': 0.8995194295549708,
-  'Torus noise = 0.15': 0.9025236984417024,
-  'Torus noise = 0.2': 0.9035206651033714,
-  'Torus noise = 0.25': 0.9065933226791171,
-  'Saddle': 1.2952193664657523,
-  'Saddle noise = 0.05': 1.295471967223931,
-  'Saddle noise = 0.1': 1.3093714284020872,
-  'Saddle noise = 0.15': 1.3227818850415176,
-  'Saddle noise = 0.2': 1.3324969266395292,
-  'Saddle noise = 0.25': 1.3227259129712323,
-  'Ellipsoid': 0.597799457937825,
-  'Ellipsoid noise = 0.05': 0.6049134898343539,
-  'Ellipsoid noise = 0.1': 0.6156048158517344,
-  'Ellipsoid noise = 0.15': 0.6184490784150336,
-  'Ellipsoid noise = 0.2': 0.6171607567115747,
-  'Ellipsoid noise = 0.25': 0.6238431511791414},
- 'AdaL-PCA': {'Torus': 0.7905700978435937,
-  'Torus noise = 0.05': 0.9806275181718459,
-  'Torus noise = 0.1': 1.7017837942363958,
-  'Torus noise = 0.15': 2.040606444287437,
-  'Torus noise = 0.2': 2.6755425767388537,
-  'Torus noise = 0.25': 2.651646020467047,
-  'Saddle': 0.5966535233839613,
-  'Saddle noise = 0.05': 157.15145179493663,
-  'Saddle noise = 0.1': 83.54357625625143,
-  'Saddle noise = 0.15': 48.49916250297099,
-  'Saddle noise = 0.2': 29.631065973827525,
-  'Saddle noise = 0.25': 21.95077399772847,
-  'Ellipsoid': 0.6808457693342963,
-  'Ellipsoid noise = 0.05': 3.7070996549869464,
-  'Ellipsoid noise = 0.1': 6.693845783847647,
-  'Ellipsoid noise = 0.15': 7.432934238107848,
-  'Ellipsoid noise = 0.2': 6.795221348214839,
-  'Ellipsoid noise = 0.25': 6.4018964322345635},
- 'Hickok &amp; Blumberg': {'Torus': 1.3590765614253006,
-  'Torus noise = 0.05': 1.2559616556562752,
-  'Torus noise = 0.1': 0.928243185167349,
-  'Torus noise = 0.15': 0.6703155743563535,
-  'Torus noise = 0.2': 0.6007971886066514,
-  'Torus noise = 0.25': 0.6755302717120315,
-  'Saddle': 3.1079552670763086,
-  'Saddle noise = 0.05': 2.4199579852936255,
-  'Saddle noise = 0.1': 1.9123849934680435,
-  'Saddle noise = 0.15': 3.333692651031172,
-  'Saddle noise = 0.2': 4.246204360808727,
-  'Saddle noise = 0.25': 4.744920247874323,
-  'Ellipsoid': 0.9828793809635176,
-  'Ellipsoid noise = 0.05': 0.7939410451747277,
-  'Ellipsoid noise = 0.1': 0.5468853809516319,
-  'Ellipsoid noise = 0.15': 0.7912424453864855,
-  'Ellipsoid noise = 0.2': 1.2216300925091366,
-  'Ellipsoid noise = 0.25': 1.6613846776494354}}</code></pre>
+<div class="cell-container"><div class="cell-decorator"><pre>In [81]:</pre></div><div id="cell-22" class="cell" data-execution_count="81">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'RMSE'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="81">
+<pre><code>{}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-25" class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'ED'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>{'Diffusion Curvature': {'Torus': 0.8525297413122042,
-  'Torus noise = 0.05': 0.8573076662269208,
-  'Torus noise = 0.1': 0.8614849743189963,
-  'Torus noise = 0.15': 0.8652935831252904,
-  'Torus noise = 0.2': 0.8737276828428167,
-  'Torus noise = 0.25': 0.8764148087540199,
-  'Saddle': 0.8352356963150924,
-  'Saddle noise = 0.05': 0.7979142936086537,
-  'Saddle noise = 0.1': 0.7537901965658877,
-  'Saddle noise = 0.15': 0.7470891066575561,
-  'Saddle noise = 0.2': 0.7020227067238126,
-  'Saddle noise = 0.25': 0.6841108768403074,
-  'Ellipsoid': 0.5773901505629668,
-  'Ellipsoid noise = 0.05': 0.6126492917746579,
-  'Ellipsoid noise = 0.1': 0.6301278217325069,
-  'Ellipsoid noise = 0.15': 0.667819248297134,
-  'Ellipsoid noise = 0.2': 0.686189385833022,
-  'Ellipsoid noise = 0.25': 0.697563532357479},
- 'Unsigned Diffusion Curvature': {'Torus': 0.5734058099110984,
-  'Torus noise = 0.05': 0.5719564768144003,
-  'Torus noise = 0.1': 0.56898172318435,
-  'Torus noise = 0.15': 0.5671103821203981,
-  'Torus noise = 0.2': 0.5662169351088289,
-  'Torus noise = 0.25': 0.5658959385208114,
-  'Saddle': 1.1802822924544905,
-  'Saddle noise = 0.05': 1.1804057682529525,
-  'Saddle noise = 0.1': 1.1904858967128558,
-  'Saddle noise = 0.15': 1.1992073030710952,
-  'Saddle noise = 0.2': 1.2017161098724933,
-  'Saddle noise = 0.25': 1.1899359182850304,
-  'Ellipsoid': 0.18116238285725225,
-  'Ellipsoid noise = 0.05': 0.18670453102350726,
-  'Ellipsoid noise = 0.1': 0.1942011489699464,
-  'Ellipsoid noise = 0.15': 0.19870158678771024,
-  'Ellipsoid noise = 0.2': 0.1877998455408347,
-  'Ellipsoid noise = 0.25': 0.19121020258807056},
- 'AdaL-PCA': {'Torus': 0.6710713777673143,
-  'Torus noise = 0.05': 0.6948987249417321,
-  'Torus noise = 0.1': 0.8624184148230342,
-  'Torus noise = 0.15': 1.0529529413054564,
-  'Torus noise = 0.2': 1.2578238928580172,
-  'Torus noise = 0.25': 1.345687817665302,
-  'Saddle': 0.5464391871664627,
-  'Saddle noise = 0.05': 5.179152950400703,
-  'Saddle noise = 0.1': 6.9032245031031145,
-  'Saddle noise = 0.15': 5.926859098494771,
-  'Saddle noise = 0.2': 5.0193352027395495,
-  'Saddle noise = 0.25': 4.513325007778283,
-  'Ellipsoid': 0.2974682823164955,
-  'Ellipsoid noise = 0.05': 0.5956940129754204,
-  'Ellipsoid noise = 0.1': 1.0359106491365015,
-  'Ellipsoid noise = 0.15': 1.6101083650276766,
-  'Ellipsoid noise = 0.2': 1.9440118452763868,
-  'Ellipsoid noise = 0.25': 2.0869429912647175},
+<div class="cell-container"><div class="cell-decorator"><pre>In [82]:</pre></div><div id="cell-23" class="cell" data-execution_count="82">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'ED'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="82">
+<pre><code>{'Diffusion Curvature': {'Torus': 0.7740658266594376,
+  'Torus noise = 0.1': 0.867022809002684,
+  'Torus noise = 0.2': 0.9376026047242412,
+  'Torus noise = 0.3': 1.0657236095135834,
+  'Torus noise = 0.4': 1.0286043337856654,
+  'Torus noise = 0.5': 1.0802844806070007,
+  'Saddle': 0.8288120709948275,
+  'Saddle noise = 0.1': 0.5169964473837296,
+  'Saddle noise = 0.2': 0.23448069055934675,
+  'Saddle noise = 0.3': 0.3549692062446602,
+  'Saddle noise = 0.4': 0.4502585670831864,
+  'Saddle noise = 0.5': 0.560606218749792,
+  'Ellipsoid': 0.3310375924823877,
+  'Ellipsoid noise = 0.1': 0.6674219361129565,
+  'Ellipsoid noise = 0.2': 1.1164256100964751,
+  'Ellipsoid noise = 0.3': 1.1355828892798994,
+  'Ellipsoid noise = 0.4': 1.2604351597491663,
+  'Ellipsoid noise = 0.5': 1.2754519155194124},
  'Hickok &amp; Blumberg': {'Torus': 0.9612837972966679,
-  'Torus noise = 0.05': 0.8651349865277895,
   'Torus noise = 0.1': 0.556147994862657,
-  'Torus noise = 0.15': 0.3652052621269624,
   'Torus noise = 0.2': 0.3528856750399482,
-  'Torus noise = 0.25': 0.4089468659252984,
+  'Torus noise = 0.3': 0.44427292445851274,
+  'Torus noise = 0.4': 0.4103032233254465,
+  'Torus noise = 0.5': 0.3806963612504302,
   'Saddle': 2.1380550751438636,
-  'Saddle noise = 0.05': 1.7406643060480462,
   'Saddle noise = 0.1': 0.9528215026790867,
-  'Saddle noise = 0.15': 1.072021961812425,
   'Saddle noise = 0.2': 1.4545029035791932,
-  'Saddle noise = 0.25': 1.7259308053826534,
+  'Saddle noise = 0.3': 1.9015412465297683,
+  'Saddle noise = 0.4': 1.9962766656158395,
+  'Saddle noise = 0.5': 2.1299715309419454,
   'Ellipsoid': 1.070103743034086,
-  'Ellipsoid noise = 0.05': 0.8751411304139627,
   'Ellipsoid noise = 0.1': 0.3193291603738991,
-  'Ellipsoid noise = 0.15': 0.5934025376947268,
   'Ellipsoid noise = 0.2': 1.054809916751789,
-  'Ellipsoid noise = 0.25': 1.304638006485671}}</code></pre>
+  'Ellipsoid noise = 0.3': 1.4235836131780133,
+  'Ellipsoid noise = 0.4': 1.4260484107786802,
+  'Ellipsoid noise = 0.5': 1.368540122769171},
+ 'Ollivier Ricci Curvature': {'Torus': 0.8448975681226621,
+  'Torus noise = 0.1': 0.8366587247494154,
+  'Torus noise = 0.2': 0.8261279699121946,
+  'Torus noise = 0.3': 0.8183457705387851,
+  'Torus noise = 0.4': 0.814467869099614,
+  'Torus noise = 0.5': 0.8136745062827576,
+  'Saddle': 0.7918699645191665,
+  'Saddle noise = 0.1': 0.8468635386459535,
+  'Saddle noise = 0.2': 0.8429689406893808,
+  'Saddle noise = 0.3': 0.8289943317254246,
+  'Saddle noise = 0.4': 0.8193577076741976,
+  'Saddle noise = 0.5': 0.816313283365529,
+  'Ellipsoid': 0.5870697021731268,
+  'Ellipsoid noise = 0.1': 0.5509080257234377,
+  'Ellipsoid noise = 0.2': 0.5065416414437294,
+  'Ellipsoid noise = 0.3': 0.48539404283999443,
+  'Ellipsoid noise = 0.4': 0.47964208367467426,
+  'Ellipsoid noise = 0.5': 0.4800690876480174},
+ 'Forman Ricci Curvature': {'Torus': 6.832062433345175,
+  'Torus noise = 0.1': 6.7257189409393625,
+  'Torus noise = 0.2': 6.507926216537984,
+  'Torus noise = 0.3': 6.209864699721531,
+  'Torus noise = 0.4': 5.851935308494685,
+  'Torus noise = 0.5': 5.448809719655968,
+  'Saddle': 8.307402638072475,
+  'Saddle noise = 0.1': 8.432248017590693,
+  'Saddle noise = 0.2': 8.88813958658402,
+  'Saddle noise = 0.3': 9.155215660034598,
+  'Saddle noise = 0.4': 9.17548224487197,
+  'Saddle noise = 0.5': 9.013209380200994,
+  'Ellipsoid': 7.692817872487123,
+  'Ellipsoid noise = 0.1': 7.643479135422179,
+  'Ellipsoid noise = 0.2': 7.4978131592052835,
+  'Ellipsoid noise = 0.3': 7.330065143845161,
+  'Ellipsoid noise = 0.4': 7.093284418027929,
+  'Ellipsoid noise = 0.5': 6.756190975026902}}</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div id="cell-26" class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'PCC'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>{'Diffusion Curvature': {'Torus': 0.976824069472391,
-  'Torus noise = 0.05': 0.9766554590998108,
-  'Torus noise = 0.1': 0.9778295098788748,
-  'Torus noise = 0.15': 0.9713233182600294,
-  'Torus noise = 0.2': 0.9577290652166607,
-  'Torus noise = 0.25': 0.9399089113151682,
-  'Saddle': 0.8533497782976275,
-  'Saddle noise = 0.05': 0.8494040578187324,
-  'Saddle noise = 0.1': 0.8248595421689614,
-  'Saddle noise = 0.15': 0.7770981362319288,
-  'Saddle noise = 0.2': 0.7119684344107111,
-  'Saddle noise = 0.25': 0.6352892831447903,
-  'Ellipsoid': 0.668847306551479,
-  'Ellipsoid noise = 0.05': 0.660280141054572,
-  'Ellipsoid noise = 0.1': 0.6492336488981361,
-  'Ellipsoid noise = 0.15': 0.6346327738796707,
-  'Ellipsoid noise = 0.2': 0.6173490993131386,
-  'Ellipsoid noise = 0.25': 0.5966660390799717},
- 'Unsigned Diffusion Curvature': {'Torus': 0.9481193182381812,
-  'Torus noise = 0.05': 0.9418341797945845,
-  'Torus noise = 0.1': 0.9312416021266787,
-  'Torus noise = 0.15': 0.9085075006279271,
-  'Torus noise = 0.2': 0.8730379981547388,
-  'Torus noise = 0.25': 0.8379689523089695,
-  'Saddle': 0.8380026567861575,
-  'Saddle noise = 0.05': 0.8341780426005184,
-  'Saddle noise = 0.1': 0.8093598985394691,
-  'Saddle noise = 0.15': 0.7645354832043381,
-  'Saddle noise = 0.2': 0.7030932716573075,
-  'Saddle noise = 0.25': 0.6292240950399636,
-  'Ellipsoid': 0.5945589137552307,
-  'Ellipsoid noise = 0.05': 0.5825642737767202,
-  'Ellipsoid noise = 0.1': 0.5583150525998575,
-  'Ellipsoid noise = 0.15': 0.5476153628543337,
-  'Ellipsoid noise = 0.2': 0.5507283285023771,
-  'Ellipsoid noise = 0.25': 0.5366786503720204},
- 'AdaL-PCA': {'Torus': 0.9418342861237213,
-  'Torus noise = 0.05': 0.5618844421066612,
-  'Torus noise = 0.1': 0.1532873682233706,
-  'Torus noise = 0.15': 0.06864650155981816,
-  'Torus noise = 0.2': 0.07819808196427949,
-  'Torus noise = 0.25': 0.03279248667206587,
-  'Saddle': 0.7396965706504889,
-  'Saddle noise = 0.05': 0.03543620261425413,
-  'Saddle noise = 0.1': 0.007493953387057498,
-  'Saddle noise = 0.15': 0.04688203414316737,
-  'Saddle noise = 0.2': 0.09609898713425272,
-  'Saddle noise = 0.25': 0.17907628146479518,
-  'Ellipsoid': 0.5611947908350309,
-  'Ellipsoid noise = 0.05': -0.10238187360458216,
-  'Ellipsoid noise = 0.1': -0.02826522666772372,
-  'Ellipsoid noise = 0.15': 0.03975643506529558,
-  'Ellipsoid noise = 0.2': 0.08525847089230666,
-  'Ellipsoid noise = 0.25': 0.09147684842840456},
+<div class="cell-container"><div class="cell-decorator"><pre>In [83]:</pre></div><div id="cell-24" class="cell" data-execution_count="83">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>metrics_collected[<span class="st">'PCC'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="83">
+<pre><code>{'Diffusion Curvature': {'Torus': 0.9211373039466606,
+  'Torus noise = 0.1': 0.9508405158083564,
+  'Torus noise = 0.2': 0.9584977988369827,
+  'Torus noise = 0.3': 0.9227958011625403,
+  'Torus noise = 0.4': 0.8619257583577243,
+  'Torus noise = 0.5': 0.7918940147392998,
+  'Saddle': 0.753273282456445,
+  'Saddle noise = 0.1': 0.7664653550440301,
+  'Saddle noise = 0.2': 0.6730828551904157,
+  'Saddle noise = 0.3': 0.5362164343788511,
+  'Saddle noise = 0.4': 0.4256353544116588,
+  'Saddle noise = 0.5': 0.33854201910899373,
+  'Ellipsoid': 0.6248415260956578,
+  'Ellipsoid noise = 0.1': 0.588868421119645,
+  'Ellipsoid noise = 0.2': 0.6139538178140781,
+  'Ellipsoid noise = 0.3': 0.6173478749634128,
+  'Ellipsoid noise = 0.4': 0.5688907443222231,
+  'Ellipsoid noise = 0.5': 0.5205119497849594},
  'Hickok &amp; Blumberg': {'Torus': 0.9541433506262154,
-  'Torus noise = 0.05': 0.9547448174863847,
   'Torus noise = 0.1': 0.9450637731080545,
-  'Torus noise = 0.15': 0.9027032471433253,
   'Torus noise = 0.2': 0.8555159097148427,
-  'Torus noise = 0.25': 0.7911918939026727,
+  'Torus noise = 0.3': 0.7373888515237562,
+  'Torus noise = 0.4': 0.6576712606309219,
+  'Torus noise = 0.5': 0.5828978181697375,
   'Saddle': 0.9920179001920848,
-  'Saddle noise = 0.05': 0.9659210978145201,
   'Saddle noise = 0.1': 0.9035160239777216,
-  'Saddle noise = 0.15': 0.828035242856634,
   'Saddle noise = 0.2': 0.7491967260584577,
-  'Saddle noise = 0.25': 0.6639092832411666,
+  'Saddle noise = 0.3': 0.5884930826880337,
+  'Saddle noise = 0.4': 0.46241945527068806,
+  'Saddle noise = 0.5': 0.3551362372736837,
   'Ellipsoid': 0.7274351578683468,
-  'Ellipsoid noise = 0.05': 0.7344814885727449,
   'Ellipsoid noise = 0.1': 0.7058285236024547,
-  'Ellipsoid noise = 0.15': 0.6403175643627516,
   'Ellipsoid noise = 0.2': 0.5748093595392746,
-  'Ellipsoid noise = 0.25': 0.5212241276382766}}</code></pre>
+  'Ellipsoid noise = 0.3': 0.46848414033535707,
+  'Ellipsoid noise = 0.4': 0.3813733780588084,
+  'Ellipsoid noise = 0.5': 0.3384807700790907},
+ 'Ollivier Ricci Curvature': {'Torus': 0.6867682690696109,
+  'Torus noise = 0.1': 0.6771538323477136,
+  'Torus noise = 0.2': 0.6359689303444711,
+  'Torus noise = 0.3': 0.6241409890756275,
+  'Torus noise = 0.4': 0.5982009995892928,
+  'Torus noise = 0.5': 0.5586684959382181,
+  'Saddle': 0.5656996766553776,
+  'Saddle noise = 0.1': 0.48408906537658314,
+  'Saddle noise = 0.2': 0.5584324919585688,
+  'Saddle noise = 0.3': 0.5050822361404088,
+  'Saddle noise = 0.4': 0.4242705530238479,
+  'Saddle noise = 0.5': 0.3353566080083577,
+  'Ellipsoid': 0.5955030222309421,
+  'Ellipsoid noise = 0.1': 0.559925508234407,
+  'Ellipsoid noise = 0.2': 0.4881824934102769,
+  'Ellipsoid noise = 0.3': 0.45245957528689823,
+  'Ellipsoid noise = 0.4': 0.4268356926660333,
+  'Ellipsoid noise = 0.5': 0.3855562691188849},
+ 'Forman Ricci Curvature': {'Torus': 0.5576138965960422,
+  'Torus noise = 0.1': 0.5746601305035782,
+  'Torus noise = 0.2': 0.5979641319930489,
+  'Torus noise = 0.3': 0.5936867737703888,
+  'Torus noise = 0.4': 0.5592015267820507,
+  'Torus noise = 0.5': 0.5244783214237626,
+  'Saddle': 0.46581190890819424,
+  'Saddle noise = 0.1': 0.48234916348082574,
+  'Saddle noise = 0.2': 0.522000231413269,
+  'Saddle noise = 0.3': 0.4565208572570332,
+  'Saddle noise = 0.4': 0.39637638643847334,
+  'Saddle noise = 0.5': 0.32500712751188815,
+  'Ellipsoid': 0.41188035023006614,
+  'Ellipsoid noise = 0.1': 0.37292281392826465,
+  'Ellipsoid noise = 0.2': 0.3315427140909083,
+  'Ellipsoid noise = 0.3': 0.3433461907563717,
+  'Ellipsoid noise = 0.4': 0.33761262408381343,
+  'Ellipsoid noise = 0.5': 0.3138351905113151}}</code></pre>
 </div>
 </div></div>
-<p><code>=======</code></p>
-<p><code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; fadda59 (Great tables reproduction of toy manifold table)</code></p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-29" class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the LaTeX table structure</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_latex_table(metrics):</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    header <span class="op">=</span> <span class="vs">r"""\begin</span><span class="sc">{tabular}</span><span class="vs">{lc|cccccc|cccccc|cccccc}</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="vs">\toprule</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="vs">\multirow</span><span class="sc">{2}</span><span class="vs">{*}{\textbf</span><span class="sc">{Model}</span><span class="vs">} &amp; \multirow</span><span class="sc">{2}</span><span class="vs">{*}{\textbf</span><span class="sc">{Metric}</span><span class="vs">} &amp; \multicolumn</span><span class="sc">{6}</span><span class="vs">{c|}{\textbf</span><span class="sc">{Torus}</span><span class="vs">} &amp; \multicolumn</span><span class="sc">{6}</span><span class="vs">{c|}{\textbf</span><span class="sc">{Ellipsoid}</span><span class="vs">} &amp; \multicolumn</span><span class="sc">{6}{c}</span><span class="vs">{\textbf</span><span class="sc">{Saddle}</span><span class="vs">} \\</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="vs">&amp; &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; \multicolumn</span><span class="sc">{1}</span><span class="vs">{c|}</span><span class="sc">{0.25}</span><span class="vs"> &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; \multicolumn</span><span class="sc">{1}</span><span class="vs">{c|}</span><span class="sc">{0.25}</span><span class="vs"> &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; 0.25 \\</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="vs">\midrule</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="vs">"""</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    footer <span class="op">=</span> <span class="vs">r"\bottomrule\n\end</span><span class="sc">{tabular}</span><span class="vs">"</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Start building the table content</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    table_content <span class="op">=</span> header</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Function to find the best values for bolding</span></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> find_best_values(data, surfaces, noises, metric):</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>        best_values <span class="op">=</span> {}</span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> surface <span class="kw">in</span> surfaces:</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> noise <span class="kw">in</span> noises:</span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>                key <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>surface<span class="sc">}</span><span class="ss"> noise = </span><span class="sc">{</span>noise<span class="sc">}</span><span class="ss">"</span> <span class="cf">if</span> noise <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> surface</span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>                values <span class="op">=</span> [model_data.get(key, <span class="bu">float</span>(<span class="st">'-inf'</span>) <span class="cf">if</span> metric <span class="op">==</span> <span class="st">'PCC'</span> <span class="cf">else</span> <span class="bu">float</span>(<span class="st">'inf'</span>)) <span class="cf">for</span> model_data <span class="kw">in</span> data.values()]</span>
-<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> <span class="bu">max</span>(values) <span class="cf">if</span> metric <span class="op">==</span> <span class="st">'PCC'</span> <span class="cf">else</span> <span class="bu">min</span>(values)</span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>                best_values[(surface, noise)] <span class="op">=</span> best_value</span>
-<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> best_values</span>
-<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Iterate over each metric</span></span>
-<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric, models <span class="kw">in</span> metrics.items():</span>
-<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>        best_values <span class="op">=</span> find_best_values(models, [<span class="st">"Torus"</span>, <span class="st">"Ellipsoid"</span>, <span class="st">"Saddle"</span>], [<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>, <span class="fl">0.25</span>], metric)</span>
-<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Iterate over each model</span></span>
-<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> model, data <span class="kw">in</span> models.items():</span>
-<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>            model_escaped <span class="op">=</span> model.replace(<span class="st">'&amp;'</span>, <span class="vs">r'\&amp;'</span>)  <span class="co"># Escape '&amp;' in model names</span></span>
-<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>            table_content <span class="op">+=</span> <span class="ss">f"</span><span class="sc">{</span>model_escaped<span class="sc">}</span><span class="ss"> &amp; </span><span class="sc">{</span>metric<span class="sc">}</span><span class="ss"> "</span></span>
-<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> surface <span class="kw">in</span> [<span class="st">"Torus"</span>, <span class="st">"Ellipsoid"</span>, <span class="st">"Saddle"</span>]:</span>
-<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> noise <span class="kw">in</span> [<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.2</span>, <span class="fl">0.25</span>]:</span>
-<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>                    key <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>surface<span class="sc">}</span><span class="ss"> noise = </span><span class="sc">{</span>noise<span class="sc">}</span><span class="ss">"</span> <span class="cf">if</span> noise <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> surface</span>
-<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>                    value <span class="op">=</span> data.get(key, <span class="st">""</span>)</span>
-<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> value:</span>
-<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># Check if the value is the best and should be bolded</span></span>
-<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> value <span class="op">==</span> best_values[(surface, noise)]:</span>
-<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>                            table_content <span class="op">+=</span> <span class="ss">f"&amp; </span><span class="ch">\\</span><span class="ss">textbf</span><span class="ch">{{</span><span class="sc">{</span>value<span class="sc">:.3f}</span><span class="ch">}}</span><span class="ss"> "</span></span>
-<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">else</span>:</span>
-<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>                            table_content <span class="op">+=</span> <span class="ss">f"&amp; </span><span class="sc">{</span>value<span class="sc">:.3f}</span><span class="ss"> "</span></span>
-<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">else</span>:</span>
-<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>                        table_content <span class="op">+=</span> <span class="st">"&amp; - "</span></span>
-<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>            table_content <span class="op">+=</span> <span class="vs">r"\\"</span></span>
-<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>            table_content <span class="op">+=</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span></span>
-<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>        table_content <span class="op">+=</span> <span class="vs">r"\midrule"</span> <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span></span>
-<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>    table_content <span class="op">+=</span> footer</span>
-<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> table_content</span>
-<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the LaTeX table</span></span>
-<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a>latex_table <span class="op">=</span> create_latex_table(metrics_collected)</span>
-<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the LaTeX table</span></span>
-<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(latex_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>\begin{tabular}{lc|cccccc|cccccc|cccccc}
-\toprule
-\multirow{2}{*}{\textbf{Model}} &amp; \multirow{2}{*}{\textbf{Metric}} &amp; \multicolumn{6}{c|}{\textbf{Torus}} &amp; \multicolumn{6}{c|}{\textbf{Ellipsoid}} &amp; \multicolumn{6}{c}{\textbf{Saddle}} \\
-&amp; &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; \multicolumn{1}{c|}{0.25} &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; \multicolumn{1}{c|}{0.25} &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; 0.25 \\
-\midrule
-Diffusion Curvature &amp; RMSE &amp; 0.916 &amp; 0.954 &amp; 0.988 &amp; 1.024 &amp; 1.110 &amp; 1.130 &amp; 0.760 &amp; 0.888 &amp; 0.921 &amp; 1.074 &amp; 1.186 &amp; 1.218 &amp; 1.102 &amp; \textbf{0.900} &amp; \textbf{0.632} &amp; \textbf{0.642} &amp; \textbf{0.574} &amp; \textbf{0.628} \\
-Unsigned Diffusion Curvature &amp; RMSE &amp; 0.894 &amp; \textbf{0.892} &amp; \textbf{0.900} &amp; 0.903 &amp; 0.904 &amp; 0.907 &amp; \textbf{0.598} &amp; \textbf{0.605} &amp; 0.616 &amp; \textbf{0.618} &amp; \textbf{0.617} &amp; \textbf{0.624} &amp; 1.295 &amp; 1.295 &amp; 1.309 &amp; 1.323 &amp; 1.332 &amp; 1.323 \\
-AdaL-PCA &amp; RMSE &amp; \textbf{0.791} &amp; 0.981 &amp; 1.702 &amp; 2.041 &amp; 2.676 &amp; 2.652 &amp; 0.681 &amp; 3.707 &amp; 6.694 &amp; 7.433 &amp; 6.795 &amp; 6.402 &amp; \textbf{0.597} &amp; 157.151 &amp; 83.544 &amp; 48.499 &amp; 29.631 &amp; 21.951 \\
-Hickok \&amp; Blumberg &amp; RMSE &amp; 1.359 &amp; 1.256 &amp; 0.928 &amp; \textbf{0.670} &amp; \textbf{0.601} &amp; \textbf{0.676} &amp; 0.983 &amp; 0.794 &amp; \textbf{0.547} &amp; 0.791 &amp; 1.222 &amp; 1.661 &amp; 3.108 &amp; 2.420 &amp; 1.912 &amp; 3.334 &amp; 4.246 &amp; 4.745 \\
-\midrule
-Diffusion Curvature &amp; ED &amp; 0.757 &amp; 0.813 &amp; 0.854 &amp; 0.889 &amp; 0.963 &amp; 0.976 &amp; 0.349 &amp; 0.620 &amp; 0.683 &amp; 0.933 &amp; 1.070 &amp; 1.102 &amp; 0.952 &amp; \textbf{0.722} &amp; \textbf{0.363} &amp; \textbf{0.327} &amp; \textbf{0.383} &amp; \textbf{0.513} \\
-Unsigned Diffusion Curvature &amp; ED &amp; \textbf{0.573} &amp; \textbf{0.572} &amp; 0.569 &amp; 0.567 &amp; 0.566 &amp; 0.566 &amp; \textbf{0.181} &amp; \textbf{0.187} &amp; \textbf{0.194} &amp; \textbf{0.199} &amp; \textbf{0.188} &amp; \textbf{0.191} &amp; 1.180 &amp; 1.180 &amp; 1.190 &amp; 1.199 &amp; 1.202 &amp; 1.190 \\
-AdaL-PCA &amp; ED &amp; 0.671 &amp; 0.695 &amp; 0.862 &amp; 1.053 &amp; 1.258 &amp; 1.346 &amp; 0.297 &amp; 0.596 &amp; 1.036 &amp; 1.610 &amp; 1.944 &amp; 2.087 &amp; \textbf{0.546} &amp; 5.179 &amp; 6.903 &amp; 5.927 &amp; 5.019 &amp; 4.513 \\
-Hickok \&amp; Blumberg &amp; ED &amp; 0.961 &amp; 0.865 &amp; \textbf{0.556} &amp; \textbf{0.365} &amp; \textbf{0.353} &amp; \textbf{0.409} &amp; 1.070 &amp; 0.875 &amp; 0.319 &amp; 0.593 &amp; 1.055 &amp; 1.305 &amp; 2.138 &amp; 1.741 &amp; 0.953 &amp; 1.072 &amp; 1.455 &amp; 1.726 \\
-\midrule
-Diffusion Curvature &amp; PCC &amp; 0.918 &amp; 0.935 &amp; \textbf{0.954} &amp; \textbf{0.957} &amp; \textbf{0.948} &amp; \textbf{0.931} &amp; 0.004 &amp; -0.003 &amp; 0.002 &amp; -0.002 &amp; 0.009 &amp; 0.011 &amp; 0.739 &amp; 0.800 &amp; 0.801 &amp; 0.764 &amp; 0.707 &amp; 0.636 \\
-Unsigned Diffusion Curvature &amp; PCC &amp; 0.948 &amp; 0.942 &amp; 0.931 &amp; 0.909 &amp; 0.873 &amp; 0.838 &amp; 0.595 &amp; 0.583 &amp; 0.558 &amp; 0.548 &amp; 0.551 &amp; \textbf{0.537} &amp; 0.838 &amp; 0.834 &amp; 0.809 &amp; 0.765 &amp; 0.703 &amp; 0.629 \\
-AdaL-PCA &amp; PCC &amp; 0.942 &amp; 0.562 &amp; 0.153 &amp; 0.069 &amp; 0.078 &amp; 0.033 &amp; 0.561 &amp; -0.102 &amp; -0.028 &amp; 0.040 &amp; 0.085 &amp; 0.091 &amp; 0.740 &amp; 0.035 &amp; 0.007 &amp; 0.047 &amp; 0.096 &amp; 0.179 \\
-Hickok \&amp; Blumberg &amp; PCC &amp; \textbf{0.954} &amp; \textbf{0.955} &amp; 0.945 &amp; 0.903 &amp; 0.856 &amp; 0.791 &amp; \textbf{0.727} &amp; \textbf{0.734} &amp; \textbf{0.706} &amp; \textbf{0.640} &amp; \textbf{0.575} &amp; 0.521 &amp; \textbf{0.992} &amp; \textbf{0.966} &amp; \textbf{0.904} &amp; \textbf{0.828} &amp; \textbf{0.749} &amp; \textbf{0.664} \\
-\midrule
-\bottomrule\n\end{tabular}</code></pre>
-</div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [85]:</pre></div><div id="cell-25" class="cell" data-execution_count="85">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># # Define the LaTeX table structure</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># def create_latex_table(metrics):</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     header = r"""\begin{tabular}{lc|cccccc|cccccc|cccccc}</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co"># \toprule</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># \multirow{2}{*}{\textbf{Model}} &amp; \multirow{2}{*}{\textbf{Metric}} &amp; \multicolumn{6}{c|}{\textbf{Torus}} &amp; \multicolumn{6}{c|}{\textbf{Ellipsoid}} &amp; \multicolumn{6}{c}{\textbf{Saddle}} \\</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># &amp; &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; \multicolumn{1}{c|}{0.25} &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; \multicolumn{1}{c|}{0.25} &amp; 0.0 &amp; 0.05 &amp; 0.10 &amp; 0.15 &amp; 0.20 &amp; 0.25 \\</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># \midrule</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co"># """</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     footer = r"\bottomrule\n\end{tabular}"</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Start building the table content</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     table_content = header</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Function to find the best values for bolding</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     def find_best_values(data, surfaces, noises, metric):</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">#         best_values = {}</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co">#         for surface in surfaces:</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co">#             for noise in noises:</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co">#                 key = f"{surface} noise = {noise}" if noise &gt; 0 else surface</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co">#                 values = [model_data.get(key, float('-inf') if metric == 'PCC' else float('inf')) for model_data in data.values()]</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="co">#                 best_value = max(values) if metric == 'PCC' else min(values)</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="co">#                 best_values[(surface, noise)] = best_value</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="co">#         return best_values</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Iterate over each metric</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     for metric, models in metrics.items():</span></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a><span class="co">#         best_values = find_best_values(models, ["Torus", "Ellipsoid", "Saddle"], [0, 0.05, 0.1, 0.15, 0.2, 0.25], metric)</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Iterate over each model</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a><span class="co">#         for model, data in models.items():</span></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="co">#             model_escaped = model.replace('&amp;', r'\&amp;')  # Escape '&amp;' in model names</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="co">#             table_content += f"{model_escaped} &amp; {metric} "</span></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a><span class="co">#             for surface in ["Torus", "Ellipsoid", "Saddle"]:</span></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a><span class="co">#                 for noise in [0, 0.05, 0.1, 0.15, 0.2, 0.25]:</span></span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a><span class="co">#                     key = f"{surface} noise = {noise}" if noise &gt; 0 else surface</span></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a><span class="co">#                     value = data.get(key, "")</span></span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a><span class="co">#                     if value:</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a><span class="co">#                         # Check if the value is the best and should be bolded</span></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="co">#                         if value == best_values[(surface, noise)]:</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a><span class="co">#                             table_content += f"&amp; \\textbf</span><span class="re">{{{</span><span class="co">value:.3f</span><span class="re">}}}</span><span class="co"> "</span></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a><span class="co">#                         else:</span></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a><span class="co">#                             table_content += f"&amp; {value:.3f} "</span></span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a><span class="co">#                     else:</span></span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a><span class="co">#                         table_content += "&amp; - "</span></span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a><span class="co">#             table_content += r"\\"</span></span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a><span class="co">#             table_content += "\n"</span></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a><span class="co">#         table_content += r"\midrule" + "\n"</span></span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a><span class="co">#     table_content += footer</span></span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a><span class="co">#     return table_content</span></span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a><span class="co"># # Generate the LaTeX table</span></span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a><span class="co"># latex_table = create_latex_table(metrics_collected)</span></span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a><span class="co"># # Print the LaTeX table</span></span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a><span class="co"># print(latex_table)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-30" class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display one part of the table, with all of the metrics for one method for one dataset</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>\begin{tabular}{lc<span class="op">|</span>cccccc<span class="op">|</span>cccccc<span class="op">|</span>cccccc}</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>\toprule</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>\multirow{<span class="dv">2</span>}{<span class="op">*</span>}{\textbf{Model}} <span class="op">&amp;</span> \multirow{<span class="dv">2</span>}{<span class="op">*</span>}{\textbf{Metric}} <span class="op">&amp;</span> \multicolumn{<span class="dv">6</span>}{c<span class="op">|</span>}{\textbf{Torus}} <span class="op">&amp;</span> \multicolumn{<span class="dv">6</span>}{c<span class="op">|</span>}{\textbf{Ellipsoid}} <span class="op">&amp;</span> \multicolumn{<span class="dv">6</span>}{c}{\textbf{Hyperboloid}} \<span class="op">\</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> <span class="op">&amp;</span> <span class="fl">0.0</span> <span class="op">&amp;</span> <span class="fl">0.1</span> <span class="op">&amp;</span> <span class="fl">0.2</span> <span class="op">&amp;</span> <span class="fl">0.3</span> <span class="op">&amp;</span> <span class="fl">0.4</span> <span class="op">&amp;</span> \multicolumn{<span class="dv">1</span>}{c<span class="op">|</span>}{<span class="fl">0.5</span>} <span class="op">&amp;</span> <span class="fl">0.0</span> <span class="op">&amp;</span> <span class="fl">0.1</span> <span class="op">&amp;</span> <span class="fl">0.2</span> <span class="op">&amp;</span> <span class="fl">0.3</span> <span class="op">&amp;</span> <span class="fl">0.4</span> <span class="op">&amp;</span> \multicolumn{<span class="dv">1</span>}{c<span class="op">|</span>}{<span class="fl">0.5</span>} <span class="op">&amp;</span> <span class="fl">0.0</span> <span class="op">&amp;</span> <span class="fl">0.1</span> <span class="op">&amp;</span> <span class="fl">0.2</span> <span class="op">&amp;</span> <span class="fl">0.3</span> <span class="op">&amp;</span> <span class="fl">0.4</span> <span class="op">&amp;</span> <span class="fl">0.5</span> \<span class="op">\</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>\midrule</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> RMSE <span class="op">&amp;</span> \textbf{<span class="fl">0.462</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.391</span>} <span class="op">&amp;</span> \textbf{<span class="fl">2.023</span>} <span class="op">&amp;</span> \textbf{<span class="fl">2.056</span>} <span class="op">&amp;</span> \textbf{<span class="fl">2.060</span>} <span class="op">&amp;</span> \textbf{<span class="fl">2.048</span>} <span class="op">&amp;</span> <span class="fl">0.430</span> <span class="op">&amp;</span> \textbf{<span class="fl">0.849</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.564</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.760</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.988</span>} <span class="op">&amp;</span> \textbf{<span class="fl">2.061</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.293</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.400</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.567</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.673</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.753</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.776</span>} \<span class="op">\</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>AdaL<span class="op">-</span>PCA <span class="op">&amp;</span> ED <span class="op">&amp;</span> \textbf{<span class="fl">0.462</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.725</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.026</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.071</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.076</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.059</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.251</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.277</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.832</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.296</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.565</span>} <span class="op">&amp;</span> \textbf{<span class="fl">1.643</span>} <span class="op">&amp;</span> <span class="fl">0.321</span> <span class="op">&amp;</span> \textbf{<span class="fl">0.405</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.538</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.674</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.757</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.787</span>} \<span class="op">\</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> PCC <span class="op">&amp;</span> \textbf{<span class="fl">0.996</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.865</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.633</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.550</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.440</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.408</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.988</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.325</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.124</span>} <span class="op">&amp;</span> <span class="op">-</span><span class="fl">0.153</span> <span class="op">&amp;</span> <span class="op">-</span><span class="fl">0.131</span> <span class="op">&amp;</span> <span class="op">-</span><span class="fl">0.018</span> <span class="op">&amp;</span> \textbf{<span class="fl">0.747</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.603</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.481</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.428</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.386</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.363</span>} \<span class="op">\</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>\midrule</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>\multirow{<span class="dv">2</span>}{<span class="op">*</span>}{Hickok et al. \cite{hickok2023intrinsic}} <span class="op">&amp;</span> RMSE <span class="op">&amp;</span> <span class="fl">1.302</span> <span class="op">&amp;</span> <span class="fl">7.489</span> <span class="op">&amp;</span> <span class="fl">15.914</span> <span class="op">&amp;</span> <span class="fl">19.143</span> <span class="op">&amp;</span> <span class="fl">19.971</span> <span class="op">&amp;</span> <span class="fl">19.944</span> <span class="op">&amp;</span> \textbf{<span class="fl">0.388</span>} <span class="op">&amp;</span> <span class="fl">6.730</span> <span class="op">&amp;</span> <span class="fl">15.647</span> <span class="op">&amp;</span> <span class="fl">20.135</span> <span class="op">&amp;</span> <span class="fl">21.007</span> <span class="op">&amp;</span> <span class="fl">20.852</span> <span class="op">&amp;</span> <span class="fl">2.025</span> <span class="op">&amp;</span> <span class="fl">4.032</span> <span class="op">&amp;</span> <span class="fl">10.077</span> <span class="op">&amp;</span> <span class="fl">12.829</span> <span class="op">&amp;</span> <span class="fl">13.532</span> <span class="op">&amp;</span> <span class="fl">13.230</span> \<span class="op">\</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> ED <span class="op">&amp;</span> <span class="fl">0.646</span> <span class="op">&amp;</span> <span class="fl">3.076</span> <span class="op">&amp;</span> <span class="fl">4.772</span> <span class="op">&amp;</span> <span class="fl">5.171</span> <span class="op">&amp;</span> <span class="fl">5.168</span> <span class="op">&amp;</span> <span class="fl">5.041</span> <span class="op">&amp;</span> <span class="fl">0.361</span> <span class="op">&amp;</span> <span class="fl">3.407</span> <span class="op">&amp;</span> <span class="fl">5.075</span> <span class="op">&amp;</span> <span class="fl">5.576</span> <span class="op">&amp;</span> <span class="fl">5.541</span> <span class="op">&amp;</span> <span class="fl">5.391</span> <span class="op">&amp;</span> <span class="fl">1.154</span> <span class="op">&amp;</span> <span class="fl">1.981</span> <span class="op">&amp;</span> <span class="fl">3.588</span> <span class="op">&amp;</span> <span class="fl">4.065</span> <span class="op">&amp;</span> <span class="fl">4.069</span> <span class="op">&amp;</span> <span class="fl">3.908</span> \<span class="op">\</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>\midrule</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>Diffusion Curvature <span class="op">&amp;</span> PCC <span class="op">&amp;</span> <span class="fl">0.445</span> <span class="op">&amp;</span> <span class="fl">0.270</span> <span class="op">&amp;</span> <span class="fl">0.304</span> <span class="op">&amp;</span> <span class="fl">0.308</span> <span class="op">&amp;</span> <span class="fl">0.273</span> <span class="op">&amp;</span> <span class="fl">0.243</span> <span class="op">&amp;</span> <span class="fl">0.149</span> <span class="op">&amp;</span> <span class="fl">0.057</span> <span class="op">&amp;</span> <span class="fl">0.002</span> <span class="op">&amp;</span> \textbf{<span class="fl">0.017</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.044</span>} <span class="op">&amp;</span> \textbf{<span class="fl">0.048</span>} <span class="op">&amp;</span> <span class="fl">0.398</span> <span class="op">&amp;</span> <span class="fl">0.333</span> <span class="op">&amp;</span> <span class="fl">0.282</span> <span class="op">&amp;</span> <span class="fl">0.336</span> <span class="op">&amp;</span> <span class="fl">0.342</span> <span class="op">&amp;</span> <span class="fl">0.327</span>\<span class="op">\</span></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>\bottomrule</span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>\end{tabular}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [86]:</pre></div><div id="cell-26" class="cell" data-execution_count="86">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten the nested dictionary</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> metric, models <span class="kw">in</span> metrics_collected.items():</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> model, results <span class="kw">in</span> models.items():</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> {<span class="st">'Model'</span>: model, <span class="st">'Metric'</span>: metric}</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        row.update(results)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        data.append(row)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>metric_df <span class="op">=</span> pd.DataFrame(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-31" class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flatten the nested dictionary</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> metric, models <span class="kw">in</span> metrics_collected.items():</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> model, results <span class="kw">in</span> models.items():</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> {<span class="st">'Model'</span>: model, <span class="st">'Metric'</span>: metric}</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        row.update(results)</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        data.append(row)</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>metric_df <span class="op">=</span> pd.DataFrame(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-fig-2-manifolds-noise-table" class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, style, loc, exibble</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> sp500</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> metric_df</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the data by metric for proper sorting and display</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.sort_values(by<span class="op">=</span>[<span class="st">'Metric'</span>, <span class="st">'Model'</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the table with row groups</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> (</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    GT(df, rowname_col<span class="op">=</span><span class="st">"Model"</span>, groupname_col<span class="op">=</span><span class="st">"Metric"</span>)</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Curvature under Noise"</span>, subtitle<span class="op">=</span><span class="st">"2-Manifolds with Noise"</span>)</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Model &amp; Metric"</span>)</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>        Model<span class="op">=</span><span class="st">"Model"</span>,</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>        Metric<span class="op">=</span><span class="st">"Metric"</span>,</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{col: col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Model"</span>, <span class="st">"Metric"</span>]}</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Torus"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Torus"</span> <span class="kw">in</span> col])</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Ellipsoid"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Ellipsoid"</span> <span class="kw">in</span> col])</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Saddle"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Saddle"</span> <span class="kw">in</span> col])</span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    .fmt_number(columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Model"</span>, <span class="st">"Metric"</span>]], decimals<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to apply styles to the best values</span></span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_best_value_styles(df, table):</span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric <span class="kw">in</span> df[<span class="st">'Metric'</span>].unique():</span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>        metric_df <span class="op">=</span> df[df[<span class="st">'Metric'</span>] <span class="op">==</span> metric]</span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> df.columns[<span class="dv">2</span>:]:</span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> metric <span class="op">==</span> <span class="st">'PCC'</span>:</span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> metric_df[col].<span class="bu">max</span>()</span>
-<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:  <span class="co"># For RMSE and other metrics where lower is better</span></span>
-<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> metric_df[col].<span class="bu">min</span>()</span>
-<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>            best_indices <span class="op">=</span> metric_df[metric_df[col] <span class="op">==</span> best_value].index.tolist()</span>
-<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> index <span class="kw">in</span> best_indices:</span>
-<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>                table <span class="op">=</span> table.tab_style(</span>
-<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>                    style<span class="op">=</span>style.text(weight<span class="op">=</span><span class="st">"bold"</span>),</span>
-<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>                    locations<span class="op">=</span>loc.body(columns<span class="op">=</span>[col], rows<span class="op">=</span>[index])</span>
-<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> table</span>
-<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the styles</span></span>
-<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> apply_best_value_styles(df, table)</span>
-<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the table (assuming in Jupyter Notebook)</span></span>
-<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a>display(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [88]:</pre></div><div id="cell-fig-2-manifolds-noise-table" class="cell" data-execution_count="88">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, style, loc, exibble</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables.data <span class="im">import</span> sp500</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> metric_df</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the data by metric for proper sorting and display</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.sort_values(by<span class="op">=</span>[<span class="st">'Metric'</span>, <span class="st">'Model'</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the table with row groups</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> (</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    GT(df, rowname_col<span class="op">=</span><span class="st">"Model"</span>, groupname_col<span class="op">=</span><span class="st">"Metric"</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    .tab_header(title<span class="op">=</span><span class="st">"Curvature under Noise"</span>, subtitle<span class="op">=</span><span class="st">"2-Manifolds with Noise"</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    .tab_stubhead(label<span class="op">=</span><span class="st">"Model &amp; Metric"</span>)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    .cols_label(</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        Model<span class="op">=</span><span class="st">"Model"</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>        Metric<span class="op">=</span><span class="st">"Metric"</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{col: col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Model"</span>, <span class="st">"Metric"</span>]}</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Torus"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Torus"</span> <span class="kw">in</span> col])</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Ellipsoid"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Ellipsoid"</span> <span class="kw">in</span> col])</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    .tab_spanner(label<span class="op">=</span><span class="st">"Saddle"</span>, columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> <span class="st">"Saddle"</span> <span class="kw">in</span> col])</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    .fmt_number(columns<span class="op">=</span>[col <span class="cf">for</span> col <span class="kw">in</span> df.columns <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"Model"</span>, <span class="st">"Metric"</span>]], decimals<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to apply styles to the best values</span></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_best_value_styles(df, table):</span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> metric <span class="kw">in</span> df[<span class="st">'Metric'</span>].unique():</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>        metric_df <span class="op">=</span> df[df[<span class="st">'Metric'</span>] <span class="op">==</span> metric]</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> col <span class="kw">in</span> df.columns[<span class="dv">2</span>:]:</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> metric <span class="op">==</span> <span class="st">'PCC'</span>:</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> metric_df[col].<span class="bu">max</span>()</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:  <span class="co"># For RMSE and other metrics where lower is better</span></span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>                best_value <span class="op">=</span> metric_df[col].<span class="bu">min</span>()</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>            best_indices <span class="op">=</span> metric_df[metric_df[col] <span class="op">==</span> best_value].index.tolist()</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> index <span class="kw">in</span> best_indices:</span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>                table <span class="op">=</span> table.tab_style(</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>                    style<span class="op">=</span>style.text(weight<span class="op">=</span><span class="st">"bold"</span>),</span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>                    locations<span class="op">=</span>loc.body(columns<span class="op">=</span>[col], rows<span class="op">=</span>[index])</span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> table</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the styles</span></span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> apply_best_value_styles(df, table)</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the table (assuming in Jupyter Notebook)</span></span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>display(table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-2-manifolds-noise-table" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-noise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
-<div id="cnramwscbt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ttargjgnre" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#cnramwscbt table {
+#ttargjgnre table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#cnramwscbt thead, tbody, tfoot, tr, td, th { border-style: none; }
+#ttargjgnre thead, tbody, tfoot, tr, td, th { border-style: none; }
  tr { background-color: transparent; }
-#cnramwscbt p { margin: 0; padding: 0; }
- #cnramwscbt .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #cnramwscbt .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #cnramwscbt .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #cnramwscbt .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #cnramwscbt .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cnramwscbt .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #cnramwscbt .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #cnramwscbt .gt_column_spanner_outer:first-child { padding-left: 0; }
- #cnramwscbt .gt_column_spanner_outer:last-child { padding-right: 0; }
- #cnramwscbt .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #cnramwscbt .gt_spanner_row { border-bottom-style: hidden; }
- #cnramwscbt .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #cnramwscbt .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #cnramwscbt .gt_from_md> :first-child { margin-top: 0; }
- #cnramwscbt .gt_from_md> :last-child { margin-bottom: 0; }
- #cnramwscbt .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #cnramwscbt .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #cnramwscbt .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #cnramwscbt .gt_row_group_first td { border-top-width: 2px; }
- #cnramwscbt .gt_row_group_first th { border-top-width: 2px; }
- #cnramwscbt .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #cnramwscbt .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #cnramwscbt .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #cnramwscbt .gt_left { text-align: left; }
- #cnramwscbt .gt_center { text-align: center; }
- #cnramwscbt .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #cnramwscbt .gt_font_normal { font-weight: normal; }
- #cnramwscbt .gt_font_bold { font-weight: bold; }
- #cnramwscbt .gt_font_italic { font-style: italic; }
- #cnramwscbt .gt_super { font-size: 65%; }
- #cnramwscbt .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #cnramwscbt .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#ttargjgnre p { margin: 0; padding: 0; }
+ #ttargjgnre .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
+ #ttargjgnre .gt_caption { padding-top: 4px; padding-bottom: 4px; }
+ #ttargjgnre .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
+ #ttargjgnre .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
+ #ttargjgnre .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #ttargjgnre .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #ttargjgnre .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
+ #ttargjgnre .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
+ #ttargjgnre .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
+ #ttargjgnre .gt_column_spanner_outer:first-child { padding-left: 0; }
+ #ttargjgnre .gt_column_spanner_outer:last-child { padding-right: 0; }
+ #ttargjgnre .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
+ #ttargjgnre .gt_spanner_row { border-bottom-style: hidden; }
+ #ttargjgnre .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
+ #ttargjgnre .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
+ #ttargjgnre .gt_from_md> :first-child { margin-top: 0; }
+ #ttargjgnre .gt_from_md> :last-child { margin-bottom: 0; }
+ #ttargjgnre .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
+ #ttargjgnre .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
+ #ttargjgnre .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
+ #ttargjgnre .gt_row_group_first td { border-top-width: 2px; }
+ #ttargjgnre .gt_row_group_first th { border-top-width: 2px; }
+ #ttargjgnre .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
+ #ttargjgnre .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
+ #ttargjgnre .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
+ #ttargjgnre .gt_left { text-align: left; }
+ #ttargjgnre .gt_center { text-align: center; }
+ #ttargjgnre .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
+ #ttargjgnre .gt_font_normal { font-weight: normal; }
+ #ttargjgnre .gt_font_bold { font-weight: bold; }
+ #ttargjgnre .gt_font_italic { font-style: italic; }
+ #ttargjgnre .gt_super { font-size: 65%; }
+ #ttargjgnre .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
+ #ttargjgnre .gt_asterisk { font-size: 100%; vertical-align: 0; }
  
 </style>
 
@@ -960,23 +853,23 @@ Hickok \&amp; Blumberg &amp; PCC &amp; \textbf{0.954} &amp; \textbf{0.955} &amp;
 </tr>
 <tr class="even gt_col_headings">
 <td id="Torus" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus</td>
-<td id="Torus noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.05</td>
 <td id="Torus noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.1</td>
-<td id="Torus noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.15</td>
 <td id="Torus noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.2</td>
-<td id="Torus noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.25</td>
+<td id="Torus noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.3</td>
+<td id="Torus noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.4</td>
+<td id="Torus noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.5</td>
 <td id="Saddle" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle</td>
-<td id="Saddle noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.05</td>
 <td id="Saddle noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.1</td>
-<td id="Saddle noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.15</td>
 <td id="Saddle noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.2</td>
-<td id="Saddle noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.25</td>
+<td id="Saddle noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.3</td>
+<td id="Saddle noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.4</td>
+<td id="Saddle noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.5</td>
 <td id="Ellipsoid" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid</td>
-<td id="Ellipsoid noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.05</td>
 <td id="Ellipsoid noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.1</td>
-<td id="Ellipsoid noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.15</td>
 <td id="Ellipsoid noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.2</td>
-<td id="Ellipsoid noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.25</td>
+<td id="Ellipsoid noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.3</td>
+<td id="Ellipsoid noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.4</td>
+<td id="Ellipsoid noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.5</td>
 </tr>
 </tbody>
 <tbody class="gt_table_body">
@@ -984,262 +877,175 @@ Hickok \&amp; Blumberg &amp; PCC &amp; \textbf{0.954} &amp; \textbf{0.955} &amp;
 <td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">ED</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
-<td class="gt_row gt_right">0.671</td>
-<td class="gt_row gt_right">0.695</td>
-<td class="gt_row gt_right">0.862</td>
-<td class="gt_row gt_right">1.053</td>
-<td class="gt_row gt_right">1.258</td>
-<td class="gt_row gt_right">1.346</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.546</td>
-<td class="gt_row gt_right">5.179</td>
-<td class="gt_row gt_right">6.903</td>
-<td class="gt_row gt_right">5.927</td>
-<td class="gt_row gt_right">5.019</td>
-<td class="gt_row gt_right">4.513</td>
-<td class="gt_row gt_right">0.297</td>
-<td class="gt_row gt_right">0.596</td>
-<td class="gt_row gt_right">1.036</td>
-<td class="gt_row gt_right">1.610</td>
-<td class="gt_row gt_right">1.944</td>
-<td class="gt_row gt_right">2.087</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.774</td>
+<td class="gt_row gt_right">0.867</td>
+<td class="gt_row gt_right">0.938</td>
+<td class="gt_row gt_right">1.066</td>
+<td class="gt_row gt_right">1.029</td>
+<td class="gt_row gt_right">1.080</td>
+<td class="gt_row gt_right">0.829</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.517</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.234</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.355</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.450</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.561</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.331</td>
+<td class="gt_row gt_right">0.667</td>
+<td class="gt_row gt_right">1.116</td>
+<td class="gt_row gt_right">1.136</td>
+<td class="gt_row gt_right">1.260</td>
+<td class="gt_row gt_right">1.275</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.757</td>
-<td class="gt_row gt_right">0.813</td>
-<td class="gt_row gt_right">0.854</td>
-<td class="gt_row gt_right">0.889</td>
-<td class="gt_row gt_right">0.963</td>
-<td class="gt_row gt_right">0.976</td>
-<td class="gt_row gt_right">0.952</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.722</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.363</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.327</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.383</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.513</td>
-<td class="gt_row gt_right">0.349</td>
-<td class="gt_row gt_right">0.620</td>
-<td class="gt_row gt_right">0.683</td>
-<td class="gt_row gt_right">0.933</td>
-<td class="gt_row gt_right">1.070</td>
-<td class="gt_row gt_right">1.102</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Forman Ricci Curvature</td>
+<td class="gt_row gt_right">6.832</td>
+<td class="gt_row gt_right">6.726</td>
+<td class="gt_row gt_right">6.508</td>
+<td class="gt_row gt_right">6.210</td>
+<td class="gt_row gt_right">5.852</td>
+<td class="gt_row gt_right">5.449</td>
+<td class="gt_row gt_right">8.307</td>
+<td class="gt_row gt_right">8.432</td>
+<td class="gt_row gt_right">8.888</td>
+<td class="gt_row gt_right">9.155</td>
+<td class="gt_row gt_right">9.175</td>
+<td class="gt_row gt_right">9.013</td>
+<td class="gt_row gt_right">7.693</td>
+<td class="gt_row gt_right">7.643</td>
+<td class="gt_row gt_right">7.498</td>
+<td class="gt_row gt_right">7.330</td>
+<td class="gt_row gt_right">7.093</td>
+<td class="gt_row gt_right">6.756</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
 <td class="gt_row gt_right">0.961</td>
-<td class="gt_row gt_right">0.865</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.556</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.365</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.353</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.409</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.444</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.410</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.381</td>
 <td class="gt_row gt_right">2.138</td>
-<td class="gt_row gt_right">1.741</td>
 <td class="gt_row gt_right">0.953</td>
-<td class="gt_row gt_right">1.072</td>
 <td class="gt_row gt_right">1.455</td>
-<td class="gt_row gt_right">1.726</td>
+<td class="gt_row gt_right">1.902</td>
+<td class="gt_row gt_right">1.996</td>
+<td class="gt_row gt_right">2.130</td>
 <td class="gt_row gt_right">1.070</td>
-<td class="gt_row gt_right">0.875</td>
-<td class="gt_row gt_right">0.319</td>
-<td class="gt_row gt_right">0.593</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.319</td>
 <td class="gt_row gt_right">1.055</td>
-<td class="gt_row gt_right">1.305</td>
+<td class="gt_row gt_right">1.424</td>
+<td class="gt_row gt_right">1.426</td>
+<td class="gt_row gt_right">1.369</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.573</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.572</td>
-<td class="gt_row gt_right">0.569</td>
-<td class="gt_row gt_right">0.567</td>
-<td class="gt_row gt_right">0.566</td>
-<td class="gt_row gt_right">0.566</td>
-<td class="gt_row gt_right">1.180</td>
-<td class="gt_row gt_right">1.180</td>
-<td class="gt_row gt_right">1.190</td>
-<td class="gt_row gt_right">1.199</td>
-<td class="gt_row gt_right">1.202</td>
-<td class="gt_row gt_right">1.190</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.181</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.187</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.194</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.199</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.188</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.191</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Ollivier Ricci Curvature</td>
+<td class="gt_row gt_right">0.845</td>
+<td class="gt_row gt_right">0.837</td>
+<td class="gt_row gt_right">0.826</td>
+<td class="gt_row gt_right">0.818</td>
+<td class="gt_row gt_right">0.814</td>
+<td class="gt_row gt_right">0.814</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.792</td>
+<td class="gt_row gt_right">0.847</td>
+<td class="gt_row gt_right">0.843</td>
+<td class="gt_row gt_right">0.829</td>
+<td class="gt_row gt_right">0.819</td>
+<td class="gt_row gt_right">0.816</td>
+<td class="gt_row gt_right">0.587</td>
+<td class="gt_row gt_right">0.551</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.507</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.485</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.480</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.480</td>
 </tr>
 <tr class="even gt_group_heading_row">
 <td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">PCC</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
-<td class="gt_row gt_right">0.942</td>
-<td class="gt_row gt_right">0.562</td>
-<td class="gt_row gt_right">0.153</td>
-<td class="gt_row gt_right">0.069</td>
-<td class="gt_row gt_right">0.078</td>
-<td class="gt_row gt_right">0.033</td>
-<td class="gt_row gt_right">0.740</td>
-<td class="gt_row gt_right">0.035</td>
-<td class="gt_row gt_right">0.007</td>
-<td class="gt_row gt_right">0.047</td>
-<td class="gt_row gt_right">0.096</td>
-<td class="gt_row gt_right">0.179</td>
-<td class="gt_row gt_right">0.561</td>
-<td class="gt_row gt_right">−0.102</td>
-<td class="gt_row gt_right">−0.028</td>
-<td class="gt_row gt_right">0.040</td>
-<td class="gt_row gt_right">0.085</td>
-<td class="gt_row gt_right">0.091</td>
-</tr>
-<tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.918</td>
-<td class="gt_row gt_right">0.935</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.954</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.957</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.948</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.931</td>
-<td class="gt_row gt_right">0.739</td>
-<td class="gt_row gt_right">0.800</td>
-<td class="gt_row gt_right">0.801</td>
-<td class="gt_row gt_right">0.764</td>
-<td class="gt_row gt_right">0.707</td>
-<td class="gt_row gt_right">0.636</td>
-<td class="gt_row gt_right">0.004</td>
-<td class="gt_row gt_right">−0.003</td>
-<td class="gt_row gt_right">0.002</td>
-<td class="gt_row gt_right">−0.002</td>
-<td class="gt_row gt_right">0.009</td>
-<td class="gt_row gt_right">0.011</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.954</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.955</td>
-<td class="gt_row gt_right">0.945</td>
-<td class="gt_row gt_right">0.903</td>
-<td class="gt_row gt_right">0.856</td>
-<td class="gt_row gt_right">0.791</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.992</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.966</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.904</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.828</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.749</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.664</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.727</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.734</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.706</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.640</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.575</td>
-<td class="gt_row gt_right">0.521</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
-<td class="gt_row gt_right">0.948</td>
-<td class="gt_row gt_right">0.942</td>
-<td class="gt_row gt_right">0.931</td>
-<td class="gt_row gt_right">0.909</td>
-<td class="gt_row gt_right">0.873</td>
-<td class="gt_row gt_right">0.838</td>
-<td class="gt_row gt_right">0.838</td>
-<td class="gt_row gt_right">0.834</td>
-<td class="gt_row gt_right">0.809</td>
-<td class="gt_row gt_right">0.765</td>
-<td class="gt_row gt_right">0.703</td>
-<td class="gt_row gt_right">0.629</td>
-<td class="gt_row gt_right">0.595</td>
-<td class="gt_row gt_right">0.583</td>
-<td class="gt_row gt_right">0.558</td>
-<td class="gt_row gt_right">0.548</td>
-<td class="gt_row gt_right">0.551</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.537</td>
-</tr>
-<tr class="odd gt_group_heading_row">
-<td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">RMSE</td>
-</tr>
-<tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.791</td>
-<td class="gt_row gt_right">0.981</td>
-<td class="gt_row gt_right">1.702</td>
-<td class="gt_row gt_right">2.041</td>
-<td class="gt_row gt_right">2.676</td>
-<td class="gt_row gt_right">2.652</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.597</td>
-<td class="gt_row gt_right">157.151</td>
-<td class="gt_row gt_right">83.544</td>
-<td class="gt_row gt_right">48.499</td>
-<td class="gt_row gt_right">29.631</td>
-<td class="gt_row gt_right">21.951</td>
-<td class="gt_row gt_right">0.681</td>
-<td class="gt_row gt_right">3.707</td>
-<td class="gt_row gt_right">6.694</td>
-<td class="gt_row gt_right">7.433</td>
-<td class="gt_row gt_right">6.795</td>
-<td class="gt_row gt_right">6.402</td>
-</tr>
-<tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.916</td>
-<td class="gt_row gt_right">0.954</td>
-<td class="gt_row gt_right">0.988</td>
-<td class="gt_row gt_right">1.024</td>
-<td class="gt_row gt_right">1.110</td>
-<td class="gt_row gt_right">1.130</td>
-<td class="gt_row gt_right">1.102</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.900</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.632</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.642</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.574</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.628</td>
-<td class="gt_row gt_right">0.760</td>
-<td class="gt_row gt_right">0.888</td>
 <td class="gt_row gt_right">0.921</td>
-<td class="gt_row gt_right">1.074</td>
-<td class="gt_row gt_right">1.186</td>
-<td class="gt_row gt_right">1.218</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.951</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.958</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.923</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.862</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.792</td>
+<td class="gt_row gt_right">0.753</td>
+<td class="gt_row gt_right">0.766</td>
+<td class="gt_row gt_right">0.673</td>
+<td class="gt_row gt_right">0.536</td>
+<td class="gt_row gt_right">0.426</td>
+<td class="gt_row gt_right">0.339</td>
+<td class="gt_row gt_right">0.625</td>
+<td class="gt_row gt_right">0.589</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.614</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.617</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.569</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.521</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
-<td class="gt_row gt_right">1.359</td>
-<td class="gt_row gt_right">1.256</td>
-<td class="gt_row gt_right">0.928</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.670</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.601</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.676</td>
-<td class="gt_row gt_right">3.108</td>
-<td class="gt_row gt_right">2.420</td>
-<td class="gt_row gt_right">1.912</td>
-<td class="gt_row gt_right">3.334</td>
-<td class="gt_row gt_right">4.246</td>
-<td class="gt_row gt_right">4.745</td>
-<td class="gt_row gt_right">0.983</td>
-<td class="gt_row gt_right">0.794</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.547</td>
-<td class="gt_row gt_right">0.791</td>
-<td class="gt_row gt_right">1.222</td>
-<td class="gt_row gt_right">1.661</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Forman Ricci Curvature</td>
+<td class="gt_row gt_right">0.558</td>
+<td class="gt_row gt_right">0.575</td>
+<td class="gt_row gt_right">0.598</td>
+<td class="gt_row gt_right">0.594</td>
+<td class="gt_row gt_right">0.559</td>
+<td class="gt_row gt_right">0.524</td>
+<td class="gt_row gt_right">0.466</td>
+<td class="gt_row gt_right">0.482</td>
+<td class="gt_row gt_right">0.522</td>
+<td class="gt_row gt_right">0.457</td>
+<td class="gt_row gt_right">0.396</td>
+<td class="gt_row gt_right">0.325</td>
+<td class="gt_row gt_right">0.412</td>
+<td class="gt_row gt_right">0.373</td>
+<td class="gt_row gt_right">0.332</td>
+<td class="gt_row gt_right">0.343</td>
+<td class="gt_row gt_right">0.338</td>
+<td class="gt_row gt_right">0.314</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
-<td class="gt_row gt_right">0.894</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.892</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.900</td>
-<td class="gt_row gt_right">0.903</td>
-<td class="gt_row gt_right">0.904</td>
-<td class="gt_row gt_right">0.907</td>
-<td class="gt_row gt_right">1.295</td>
-<td class="gt_row gt_right">1.295</td>
-<td class="gt_row gt_right">1.309</td>
-<td class="gt_row gt_right">1.323</td>
-<td class="gt_row gt_right">1.332</td>
-<td class="gt_row gt_right">1.323</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.598</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.605</td>
-<td class="gt_row gt_right">0.616</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.618</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.617</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.624</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.954</td>
+<td class="gt_row gt_right">0.945</td>
+<td class="gt_row gt_right">0.856</td>
+<td class="gt_row gt_right">0.737</td>
+<td class="gt_row gt_right">0.658</td>
+<td class="gt_row gt_right">0.583</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.992</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.904</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.749</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.588</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.462</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.355</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.727</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.706</td>
+<td class="gt_row gt_right">0.575</td>
+<td class="gt_row gt_right">0.468</td>
+<td class="gt_row gt_right">0.381</td>
+<td class="gt_row gt_right">0.338</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Ollivier Ricci Curvature</td>
+<td class="gt_row gt_right">0.687</td>
+<td class="gt_row gt_right">0.677</td>
+<td class="gt_row gt_right">0.636</td>
+<td class="gt_row gt_right">0.624</td>
+<td class="gt_row gt_right">0.598</td>
+<td class="gt_row gt_right">0.559</td>
+<td class="gt_row gt_right">0.566</td>
+<td class="gt_row gt_right">0.484</td>
+<td class="gt_row gt_right">0.558</td>
+<td class="gt_row gt_right">0.505</td>
+<td class="gt_row gt_right">0.424</td>
+<td class="gt_row gt_right">0.335</td>
+<td class="gt_row gt_right">0.596</td>
+<td class="gt_row gt_right">0.560</td>
+<td class="gt_row gt_right">0.488</td>
+<td class="gt_row gt_right">0.452</td>
+<td class="gt_row gt_right">0.427</td>
+<td class="gt_row gt_right">0.386</td>
 </tr>
 </tbody>
 </table>
@@ -1255,8 +1061,8 @@ Figure&nbsp;2: Performance of methods under noise on 2-Manifolds with Noise.
 </figure>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-33" class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>metric_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-28" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>metric_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <div>
@@ -1332,9 +1138,9 @@ Figure&nbsp;2: Performance of methods under noise on 2-Manifolds with Noise.
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
 <p>Hey!</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-36" class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>X, ks <span class="op">=</span> ellipsoid(n_points, seed<span class="op">=</span><span class="dv">19323</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-31" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>X, ks <span class="op">=</span> ellipsoid(n_points, seed<span class="op">=</span><span class="dv">19323</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([[ 2.00397824, -0.41691384,  0.71437483],
        [ 1.27475224, -0.11175413,  0.90350592],
@@ -1758,7 +1564,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
