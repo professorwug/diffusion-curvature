@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,7 +11,7 @@
 <meta name="author" content="Yanlei Zhang">
 <meta name="author" content="Ian Adelstein">
 <meta name="author" content="Smita Krishnaswamy">
-<meta name="dcterms.date" content="2024-05-24">
+<meta name="dcterms.date" content="2024-07-30">
 <meta name="keywords" content="Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds">
 
 <title>Diffusion Curvature for Fast, Point-wise, Noise-Resistant Geometric Featurization of Graphs and Pointclouds</title>
@@ -112,10 +112,10 @@ window.Quarto = {
 <meta name="citation_author" content="Yanlei Zhang">
 <meta name="citation_author" content="Ian Adelstein">
 <meta name="citation_author" content="Smita Krishnaswamy">
-<meta name="citation_publication_date" content="2024-05-24">
-<meta name="citation_cover_date" content="2024-05-24">
+<meta name="citation_publication_date" content="2024-07-30">
+<meta name="citation_cover_date" content="2024-07-30">
 <meta name="citation_year" content="2024">
-<meta name="citation_online_date" content="2024-05-24">
+<meta name="citation_online_date" content="2024-07-30">
 <meta name="citation_language" content="en">
 <meta name="citation_journal_title" content="IEEE TPAMI">
 <meta name="citation_reference" content="citation_title=Bishop–Gromov inequality;,citation_abstract=In mathematics, the Bishop–Gromov inequality is a comparison theorem in Riemannian geometry, named after Richard L. Bishop and Mikhail Gromov. It is closely related to Myers’ theorem, and is the key point in the proof of Gromov’s compactness theorem.;,citation_publication_date=2021-12-08;,citation_cover_date=2021-12-08;,citation_year=2021;,citation_fulltext_html_url=https://en.wikipedia.org/w/index.php?title=Bishop%E2%80%93Gromov_inequality&amp;amp;amp;oldid=1059331416;,citation_language=en-US;,citation_journal_title=Wikipedia;">
@@ -211,7 +211,7 @@ window.Quarto = {
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">May 24, 2024</p>
+              <p class="date">July 30, 2024</p>
             </div>
           </div>
           
@@ -254,13 +254,13 @@ window.Quarto = {
   </ul></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="header-section-number">3</span> Methods</a>
   <ul class="collapse">
-  <li><a href="#bounding-diffusion-laziness-by-ollivier-ricci-curvature" id="toc-bounding-diffusion-laziness-by-ollivier-ricci-curvature" class="nav-link" data-scroll-target="#bounding-diffusion-laziness-by-ollivier-ricci-curvature"><span class="header-section-number">3.1</span> Bounding diffusion laziness by Ollivier-Ricci curvature</a></li>
+  <li><a href="#diffusion-energy-is-bounded-by-ollivier-ricci-curvature" id="toc-diffusion-energy-is-bounded-by-ollivier-ricci-curvature" class="nav-link" data-scroll-target="#diffusion-energy-is-bounded-by-ollivier-ricci-curvature"><span class="header-section-number">3.1</span> Diffusion Energy is bounded by Ollivier-Ricci curvature</a></li>
   <li><a href="#a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" id="toc-a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" class="nav-link" data-scroll-target="#a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison"><span class="header-section-number">3.2</span> A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison</a></li>
   <li><a href="#comparing-diffusion-across-point-clouds" id="toc-comparing-diffusion-across-point-clouds" class="nav-link" data-scroll-target="#comparing-diffusion-across-point-clouds"><span class="header-section-number">3.3</span> Comparing Diffusion Across Point Clouds</a>
   <ul class="collapse">
-  <li><a href="#standard-methods-of-graph-construction-obscure-geometric-information" id="toc-standard-methods-of-graph-construction-obscure-geometric-information" class="nav-link" data-scroll-target="#standard-methods-of-graph-construction-obscure-geometric-information"><span class="header-section-number">3.3.1</span> Standard methods of graph construction obscure geometric information</a></li>
-  <li><a href="#the-curvature-agnostic-kernel" id="toc-the-curvature-agnostic-kernel" class="nav-link" data-scroll-target="#the-curvature-agnostic-kernel"><span class="header-section-number">3.3.2</span> The Curvature Agnostic Kernel</a></li>
-  <li><a href="#a-simple-euclidean-comparison-space" id="toc-a-simple-euclidean-comparison-space" class="nav-link" data-scroll-target="#a-simple-euclidean-comparison-space"><span class="header-section-number">3.3.3</span> A Simple Euclidean Comparison Space</a></li>
+  <li><a href="#problem-setting-motivation" id="toc-problem-setting-motivation" class="nav-link" data-scroll-target="#problem-setting-motivation"><span class="header-section-number">3.3.1</span> Problem Setting &amp; Motivation</a></li>
+  <li><a href="#diffusion-trajectory-alignment" id="toc-diffusion-trajectory-alignment" class="nav-link" data-scroll-target="#diffusion-trajectory-alignment"><span class="header-section-number">3.3.2</span> Diffusion Trajectory Alignment</a></li>
+  <li><a href="#the-curvature-agnostic-kernel-automatic-bandwidth-tuning" id="toc-the-curvature-agnostic-kernel-automatic-bandwidth-tuning" class="nav-link" data-scroll-target="#the-curvature-agnostic-kernel-automatic-bandwidth-tuning"><span class="header-section-number">3.3.3</span> The Curvature-Agnostic Kernel &amp; Automatic Bandwidth Tuning</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4</span> Results</a>
@@ -273,11 +273,12 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#foreman-ricci-curvature" id="toc-foreman-ricci-curvature" class="nav-link" data-scroll-target="#foreman-ricci-curvature"><span class="header-section-number">5.1</span> Foreman Ricci Curvature</a></li>
   <li><a href="#hickock-blumbergs-volume-comparison-curvature" id="toc-hickock-blumbergs-volume-comparison-curvature" class="nav-link" data-scroll-target="#hickock-blumbergs-volume-comparison-curvature"><span class="header-section-number">5.2</span> Hickock &amp; Blumberg’s Volume Comparison Curvature</a></li>
+  <li><a href="#sritharan" id="toc-sritharan" class="nav-link" data-scroll-target="#sritharan"><span class="header-section-number">5.3</span> Sritharan</a></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="index-ricci-preview.html"><i class="bi bi-journal-code"></i>A Heat Diffusion-based Ricci Curvature and Applications to GNNs</a></li><li><a href="readme-paper-preview.html"><i class="bi bi-journal-code"></i>Publishing from Zetteldev with Quarto Manuscripts</a></li><li><a href="../nbs/experiments/2a-Toy-Manifolds-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/experiments/2a2-toy-manifolds-comparison-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/experiments/2f-sign-prediction-tests-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="readme-paper-preview.html"><i class="bi bi-journal-code"></i>Publishing from Zetteldev with Quarto Manuscripts</a></li><li><a href="index-ricci-preview.html"><i class="bi bi-journal-code"></i>A Heat Diffusion-based Ricci Curvature and Applications to GNNs</a></li><li><a href="../nbs/3d-diffusion-trajectory-distance-normalization-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2-Toy-Manifolds-Benchmark-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/5-sign-prediction-tests-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li></ul></div></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
@@ -291,11 +292,15 @@ window.Quarto = {
 <!-- Latex formatting tweaks -->
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>One of the most ubiquitous subjects of analysis in data science is the humble point cloud. The points, by themselves, are high dimensional and noisy; it is up to the data scientist to wring sense out of them. Per the Manifold Hypothesis, we assume the points were sampled on or near the surface of a low-dimensional manifold embedded in high-dimensional Euclidean space. Manifold learning methods, like t-SNE, PHATE, and Diffusion Maps, endeavor to recover salient features of the underlying manifold, like geodesic distances, population clusterings, and dimension, from its high-dimensional noisy sampling <span class="citation" data-cites="maaten2008VisualizingDataUsing moon2019VisualizingStructureTransitions coifman2006DiffusionMaps">(<a href="#ref-maaten2008VisualizingDataUsing" role="doc-biblioref">Maaten and Hinton 2008</a>; <a href="#ref-moon2019VisualizingStructureTransitions" role="doc-biblioref">Moon et al. 2019</a>; <a href="#ref-coifman2006DiffusionMaps" role="doc-biblioref">Coifman and Lafon 2006</a>)</span>.</p>
-<p>Curvature is a particularly troublesome geometric property to translate into the discrete, sampled realm. In smooth Riemannian manifolds, curvature is a <em>local</em> phenomenon. It can be obtained by fitting osculating circles of radius limiting to zero, or computed from the manifold’s Hessian, using the Second Fundamental Form. None of these translate into the discrete realm. In a sampled manifold, taking a local limit is impossible – one can’t “zoom in” past the sampling of points – and we don’t have access to the parametrization of the manifold or its tangent bundle, without computationally costly and potentially error-prone estimation. Moreover, as our sampling is likely noisy, the curvature can only be recovered over a sufficiently large neighborhood of points to counter the spurious geometric artifacts created noisy sampling. Thus, in the discrete realm, curvature becomes a “semi-local” phenomenon, in which neither the smallest nor larger scales can be trusted.</p>
-<p>There are elegant generalizations of classical curvature to discrete spaces that overcome many of these roadblocks. Ollivier’s <em>Coarse Ricci Curvature</em> (CRC) employs optimal transport theory to relate the behavior of a discrete neighborhood to its smooth counterpart <span class="citation" data-cites="ollivier2009RicciCurvatureMarkov">(<a href="#ref-ollivier2009RicciCurvatureMarkov" role="doc-biblioref">Ollivier 2009</a>)</span>. Sturm’s <em>displacement convexity of entropy</em> (DCE) measures the proliferation of midpoints in positive curvature <span class="citation" data-cites="sturm2006GeometryMetricMeasure">(<a href="#ref-sturm2006GeometryMetricMeasure" role="doc-biblioref">Sturm 2006</a>)</span>. Both methods use optimal transport as the basis of their “semi-local” measurement. Rather than trying to zoom in on a point, they define curvature between pairs of points, approximating, at a coarse scale, a Ricci tangent vector.</p>
-<p>Although these techniques are theoretically elegant, general, and applicable to any metric measure space, the setting of noisily sampled point clouds is practically challenging for CRC and DCE. Both methods rely on the graph’s shortest-path lengths as an approximation of the manifold’s ground distance - a perilous assumption when dealing with noisy data. And for large datasets, optimal transport calculations can be computationally prohibitive.</p>
-<p>In this paper, we develop Diffusion Curvature, a fast curvature estimate derived solely from the graph diffusion matrix. We first introduced the ideas behind Diffusion Curvature in <span class="citation" data-cites="bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span>, in which we demonstrated its ability to produce an unsigned magnitude of curvature estimation for toy datasets and single-cell data, and proved a correspondence between the ratios of scalar curvature and diffusion curvature. We now present a refined definition which produces <em>signed</em> curvature values and prove bounds relating Diffusion Curvature to Ollivier’s coarse Ricci Curvature. We demonstrate Diffusion Curvature’s robustness to noise and sampling artifacts, and position our technique as an adaptation of coarse Ricci curvature particularly suitable for point cloud data.</p>
+<p>In this age of overwhelmingly abundant data, those racing to make sense of it all have developed an appreciation for theories and metaphors from the once hopelessly abstract mathematical fields of topology and Riemannian geometry. Endowing noisy, sparse, high-dimensional real-world data with geometric and topological features is helpful in two ways: it empirically improves the performance of black-box machine learning models; and, in cases like cellular differentiation, it also helps <em>us</em> interpret the data. What’s more, by anchoring these models and their inputs to well-established theories, it can bring analytical light to a theoretically-impoverished field.</p>
+<p>As a case in point, consider the emerging subfield of <em>Topological Data Analysis</em> (TDA). While graph neural networks struggle with problems of over-smoothing and over-squashing, TDA endows graph or pointcloud data with global topological features with provable guarantees. (LIST SUCCESSES OF TDA.) Behind this success is <em>persistence homology</em>, a sort of ‘Rosetta Stone’ between the mathematical theories of analytically-specified manifolds, and the messy realities of actual data. Persistence homology gives a framework for extracting the most salient topological features from amidst the noise and sparsity of real-world point clouds. (MORE SUCCESSES)</p>
+<p>We await the geometric equivalent of this topological Renaissance. While TDA can describe the shape of the data in its entirety, there’s a need for more local descriptions of data geometry. Forget the data as a whole; what’s happening around <em>this point</em>, in <em>this neighborhood</em>? Topological analysis only assumes hierarchies of sets. But for many types of point cloud data, e.g.&nbsp;those arising from time-varying systems like cellular development or neuronal activity, notions of angle, distance, and volume have meaning. In other words, in our field’s famous ‘Manifold Hypothesis’ we’re often assuming a <em>Riemannian</em> manifold: samples from some continuous underlying object that can be analyzed at infinitesimal scales.</p>
+<p>However, translating the language of Riemannian geometry to the discrete, sampled realm is troublesome. Nowhere is this more evident than curvature. It’s among the most basic of geometric properties, underlying volumes, distances, and geodesics. Where TDA captures global structure, curvature epitomizes the description of local structure. Classical definitions, however, are hard to reconcile with reality; many involve some infinitesimal shrinking, e.g.&nbsp;by fitting osculating circles of radius limiting to zero, or comparing volumes of balls converging to a point. Other definitions involve even more complex objects, like tangent bundles or local parameterizations of the manifold. In the discrete, sampled realm, taking such a local limit is impossible – one can’t ‘zoom in’ past the known samples. Moreover, in contrast to Riemannian manifolds, noisy samplings are <em>least</em> trustworthy at the local level – which is precisely where we wish to measure geometric information.</p>
+<p>There have been several attempts to bridge curvature to the discrete realm. (BRIEF DESCRIPTIONS OF PREVIOUS WORK) Ollivier-Ricci Curvature and Forman Ricci curvature use optimal transport to define an edge-wise Ricci curvature at any given scale. Hickok &amp; Blumberg define a point cloud curvature by estimating graph volumes over time, and fitting a quadratic to recover a scalar curvature. Sritharan et al.&nbsp;and, recently, Zhang et al.&nbsp;(CITATIONS PLEASE) approximate tangent planes with localized PCA, and track the movement of these planes to recover sectional curvatures. These curvatures have been found to exceed the WL-expressivity of graph neural networks, and when used to augment GNNs, improve their performance (CITE BASTION). They have also been used to study cellular differentiation, image data, etc…</p>
+<p>With so many existing curvature methods, why introduce another one? Indeed, we came to this area interested only in using curvature to aid our study of complex high-dimensional systems like neural networks’ loss landscapes. However, our experimentation with existing methods suggested that, while existing methods have many elegant ideas, their techniques are in practice unreliable. The optimal-transport curvatures, like Ollivier Ricci, were designed for networks, and have poor resilience to the noise ubiquitous in point-cloud data. Many techniques rely on shortest-path distances, which are themselves easily corrupted by noise. And all techniques have parameters which must be carefully tuned, and – as our experiments found – give not just noisy, but <em>backwards</em> results if mistuned. And how <em>can</em> one tune these parameters, when the ground truth curvature of interest is unknown? The success of TDA is partially attributable to how easily a domain practitioner can apply it to their problem of interest; persistence homology has few parameters and tunes itself. The field of graph curvature has no such Rosetta Stone for adapting geometric theory to the messy world of practice.</p>
+<p>What might such a Rosetta Stone be? One candidate, with a long track-record of producing robust geometric features from high-dimensional, noisy data is <em>diffusion geometry</em>. The basic object in this framework is the random walk, or diffusion operator. When iterated, this operator endows each point with a probability distribution which is extremely robust to noise and spurious connections. In this way, a point cloud can be lifted into a <em>statistical manifold</em>: the original, unreliable sampling coordinates supplanted with diffusion probabilities. By manipulating these diffusion probabilities in various ways, one can define several varieties of ‘diffusion distances’. These distances can give rise to low-dimensional embedding and visualization techniques, like PHATE and HeatGeo. One can even bring in the Riemannian tool of pullback metrics to endow the point cloud with a Riemannian metric. Unsurprisingly, diffusion probabilities also contain information about curvature. In (CITE ORIGINAL PAPER), we presented a preliminary technique for extracting curvature from the ‘laziness’ of the diffusion operator. This fledgling method proved extremely robust to noise, though still somewhat sensitive to its parameters, and being an unsigned correlate, was unable to differentiate positive from negative curvature.</p>
+<p>Here, we describe a significantly refined version of these ideas, which we christen <em>Diffusion Curvature</em>. It inherits the noise resilience of diffusion geometry, and, in a style reminiscent of persistence homology, further improves this resilience by incorporating many scales of diffusion into one measure. The result is far easier for the domain practitioner to use, having only one parameter, to which it is extremely robust. Moreover, we prove connections between diffusion curvature and the field’s bulwark, Ollivier-Ricci curvature, positioning diffusion curvature as a point-wise adaptation of Ollivier-Ricci curvature especially suitable for pointcloud data. We also describe a new technique for comparing diffusions across differently-sampled graphs and point clouds, with which diffusion curvature can distinguish between negative, flat, and positively curved spaces. Indeed, in our experiments, diffusion curvature appears both the most resilient to noise and the most capable of distinguishing negative from positive curvatures in high dimensions. This motivates the hypothesis that diffusion geometry is a uniquely capable ‘Rosetta Stone’ for translating Riemannian geometry into the sampled realm.</p>
+<p>In sum, our contributions are: 1. <em>Diffusion Curvature</em>, a fast, noise-resistant and signed scalar curvature for point cloud data which is also natively differentiable. 2. Theoretical connections between the diffusion geometry underlying diffusion curvature and Ollivier-Ricci curvature, which enables adaptation of Ollivier’s results in metric measure theory to other realms of diffusion geometry. 3. <em>Diffusion Trajectory Normalization</em>, a technique for comparing diffusions across manifolds.</p>
 </section>
 <section id="background" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Background</h1>
@@ -386,53 +391,47 @@ W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
 </section>
 <section id="methods" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Methods</h1>
-<p>The Coarse Ricci Curvature and Displacement Convexity of Entropy are both based on an invariant property of flat spaces, the deviation from which allows for a measure of curvature even without a clear definition of factors which normally interfere with curvature, like dimension. However, the elegance of these invariance-based definitions comes at a computational cost. Both methods require optimal transport calculations for (a subset) of each pair of edges, a complexity growing with <span class="math inline">\(O(n^2)\)</span>. Additionally, the transport distance based on the graph shortest-path distance is highly susceptible to noise.</p>
-<p>This motivates our formulation of graph curvature, which uses a <em>comparison</em> between spaces in lieu of an invariant. This gives <em>Diffusion Curvature</em> a number of nice properties:</p>
-<ol type="1">
-<li><p><strong>Point-wise, instead of edge-wise</strong>. In many applications, knowledge of the Ricci curvatures is unnecessarily detailed. Diffusion curvature answers the question: <em>is the region around this point positively or negatively curved, and in what magnitude, relative to other points on the manifold?</em></p></li>
-<li><p><strong>Diffusion-based denoising</strong>. When edges may be spurious, and random sampling creates deceptive pockets of density, Diffusion Curvature inherits the denoising properties of the diffusion operator.</p></li>
-<li><p><strong>Extremely fast</strong>. Designed for point clouds with millions of points, the pointwise Diffusion Curvature of the entire dataset can be calculated with a handful of sparse matrix multiplications. In addition, Diffusion Curvature can be <em>GPU accelerated</em>. This combination allows computing in minutes what takes existing methods hours.</p></li>
-<li><p><strong>Differentiable</strong>. Diffusion Curvature natively supports backpropogation, and can easily be incorporated into a loss function for a neural network, e.g.&nbsp;to regularize a latent space to have low (or high) curvature. We provide a PyTorch implementation of the algorithm for this purpose.</p></li>
-</ol>
-<p>The core intuition of Diffusion Curvature is that the <em>laziness</em> of random walks on a graph is a proxy for the curvature of the underlying manifold. Picture a “random walker” drunkenly traversing a sphere. If he manages, over the course of several steps, to wander to the opposite pole, he has many ways of getting back to where he started. By contrast, if he begins on the top of a (negatively curved) saddle and wanders down one side, any path aside from exactly retracing his steps incurs a steep distance penalty. On the sphere, the random walker is more likely to find his way home: his walks are “lazier”.</p>
-<p>Our previous paper <span class="citation" data-cites="bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span> measured this laziness directly, as the return probability within a k-neighborhood of the starting point. This required tuning the parameter <span class="math inline">\(k\)</span>, and neglected the information provided by the random walk probabilities outside of this k-neighborhood. We now refine this definition in two ways.</p>
-<p>First, we refine our previous definition of diffusion laziness using the Wasserstein distance between a dirac <span class="math inline">\(\delta_{x}\)</span> and its <span class="math inline">\(t\)</span> step diffusion <span class="math inline">\(p_{X}^t(x)\)</span>,</p>
-<div id="def-laziness-of-diffusion" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 3 (Diffusion Laziness)</strong></span> The <span class="math inline">\(W_1\)</span> Laziness of a diffusion <span class="math inline">\(p_{X}^t(x)\)</span> is <span class="math display">\[
-- W_1\left(\delta_x, p_X^t(x)\right)
+<p>We consider a measure space <span class="math inline">\((X,p)\)</span> equipped with a random walk, e.g.&nbsp;a point cloud and a diffusion operator derived as above. In this section, we define a new notion of curvature deriving from this random walk.</p>
+<p>The core intuition of Diffusion Curvature is that the <em>laziness</em> of random walks on a graph is a proxy for the curvature of the underlying manifold. Picture a “random walker” drunkenly traversing a sphere. If he manages, over the course of several steps, to wander to the opposite pole, he has many ways of getting back to where he started. By contrast, if he begins on the top of a (negatively-curved) saddle and wanders down one side, any path aside from exactly retracing his steps incurs a steep penalty in extra distance. On the sphere, the random walker is more likely to find his way home: his walks are “lazier”.</p>
+<p>Our previous paper <span class="citation" data-cites="bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span> measured this laziness directly, as the return probability within a k-neighborhood of the starting point. This required tuning the parameter <span class="math inline">\(k\)</span>, and neglected the information provided by probabilities outside of this neighborhood.</p>
+<p>We refine our previous definition of diffusion laziness by replacing the neighborhood-sum with a distributional distance measure <span class="math inline">\(D\)</span> between a dirac <span class="math inline">\(\delta_{x}\)</span> and its <span class="math inline">\(t\)</span>-step diffusion <span class="math inline">\(p_{x}^X(t)\)</span>. This provides a more sensitive and parameter-free measure of how ‘spread out’ the diffusion is.</p>
+<div id="def-energy-of-diffusion" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 3 (Diffusion Energy Snapshot)</strong></span> Given some distributional distance <span class="math inline">\(D\)</span>, the <span class="math inline">\(D\)</span>-energy snapshot of a diffusion <span class="math inline">\(p_{x}^X(t)\)</span> is <span class="math display">\[
+l_{X}(x,t) := D\left(\delta_x, p_x^X(t)\right)
 \]</span></p>
 </div>
-<p>This provides a more sensitive and parameter-free measure of the ‘spread’ of diffusion.</p>
-<p>Second, by comparing the laziness of diffusion between our manifold and one of known curvature, we make our method signed.</p>
-<div id="def-diffusion-curvature" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 4 (Diffusion Curvature)</strong></span> Given samples <span class="math inline">\(X \subseteq M\)</span> and a flattening map <span class="math inline">\(\Phi: X \rightarrow \mathbb{R}^d\)</span>, the <span class="math inline">\(t\)</span>-step <em>Diffusion Curvature</em> of <span class="math inline">\(x\)</span> is <span class="math display">\[
-k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
-\]</span></p>
-</div>
-<ul class="task-list">
-<li><label><input type="checkbox">Use an arbitrary distance? Or a p-Wasserstein?</label></li>
-</ul>
-<p>where <span class="math inline">\(p_X^t\)</span> is the t-step random walk over <span class="math inline">\(X\)</span>, and <span class="math inline">\(p_{\Phi(X)}^t\)</span> is the same over the flattened points <span class="math inline">\(\Phi(X)\)</span>. Depending on the ground distance used for the Wasserstein-1 transport distance, and the definition of flattening map employed, one obtains any of a family of diffusion curvatures.</p>
-<p>Our best results come a very simple formulation of both, where the ground distance is chosen such that <span class="math inline">\(W_{1}\)</span> becomes the Shannon Entropy, and our flattening map simply uniformly samples points from the Euclidean space <span class="math inline">\(\mathbb{R}^d\)</span> of the same dimension as <span class="math inline">\(M\)</span>. This produces what we’ll call the <em>Entropic Diffusion Curvature</em>,</p>
-<div id="def-entropic-diffusion-curvature" class="theorem definition">
-<p><span class="theorem-title"><strong>Definition 5 (Entropic Diffusion Curvature)</strong></span> The Entropic Diffusion Curvature of a t-step diffusion on points sampled from manifold <span class="math inline">\(\mathcal{M}\)</span> with intrinsic dimension <span class="math inline">\(d\)</span> and markov matrix <span class="math inline">\(P^t\)</span>, is <span class="math display">\[
-\kappa^e_{t}(x_{i}) = H(P^t[i]) - H(P_{E}^t[i])
-\]</span></p>
-<p>where <span class="math inline">\(H\)</span> is the Shannon Entropy, and <span class="math inline">\(P_{E}^t\)</span> is the diffusion matrix of the Euclidean comparison space <span class="math inline">\(\mathbb{R}^d\)</span>.</p>
-</div>
-<p>This evokes the use of entropy to measure heat diffusion.</p>
-<p>This definition rests on two claims: that the laziness of diffusion reveals the (unsigned) magnitude of curvature, and that by comparing diffusion across manifolds, we can convert this into a signed curvature. The next two sections will analyze this first claim. We first analyze diffusion laziness within Ollivier’s framework of metric measure theory, and bound the diffusion laziness from above by the Ollivier-Ricci curvature. We then provide a motivating example recovering a Bishop-Gromov type volume comparison from our entropic definition. Finally, we describe our method for constructing a comparison space with locally-indistinguishable diffusion to the given manifold.</p>
-<section id="bounding-diffusion-laziness-by-ollivier-ricci-curvature" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="bounding-diffusion-laziness-by-ollivier-ricci-curvature"><span class="header-section-number">3.1</span> Bounding diffusion laziness by Ollivier-Ricci curvature</h2>
-<p>Although diffusion curvature was designed for sampled manifolds, it extends naturally to the realm of more general graphs. Indeed, diffusion curvature can be seen as an node-wise adaptation of Ollivier Ricci curvature, the theoretically richest and highest performing edge-wise graph curvature [citations to Bastian’s paper on ORC expressivity]. Here we review the definitions of Ollivier-Ricci curvature and present theoretical connections between it and diffusion curvature. These motivate the use of diffusion curvature as substitute for Ollivier Ricci curvature on large, or noisy graphs where the latter method stumbles. [Present some of these in experiments]</p>
-<p>Ollivier Ricci curvature is based in optimal transport, formalizing the classical intuition that in spaces of positive curvature, “spheres are closer than their centers”. In place of spheres, Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1 distance with the shortest-path metric. Given points <span class="math inline">\(x,y\)</span> in the metric space, with 1-step diffusions <span class="math inline">\(m_{x}\)</span> and <span class="math inline">\(m_{y}\)</span>, the Ollivier Ricci curvature of the edge between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is: <span class="math display">\[\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}\]</span></p>
-<p>Local curvature always involves some comparison. Here, the comparison is between the manifold’s optimal transport distance (the numerator), and the Euclidean optimal transport distance (which, helpfully, is just the distance in the denominator. You’ll notice the similarity to diffusion curvature (<a href="#def-diffusion-curvature" class="quarto-xref">Definition&nbsp;4</a>), which replaces the <span class="math inline">\(W_{1}\)</span> distance between two diffused distributions with the <span class="math inline">\(W_{1}\)</span> laziness of a single diffusion (<a href="#def-laziness-of-diffusion" class="quarto-xref">Definition&nbsp;3</a>), and replaces the quotient with a difference. We do this for both the manifold (Ollivier’s numerator) and a Euclidean comparison space (Ollivier’s denominator).</p>
+<p>By <span class="math inline">\(p_{x}^X(t)\)</span>, we indicate the <span class="math inline">\(t\)</span>-step diffusion of the dirac <span class="math inline">\(\delta_{x}\)</span> centered at <span class="math inline">\(x \in X\)</span>, using the diffusion operator for the measure space <span class="math inline">\(X\)</span>. We use the term ‘Diffusion Energy’ in reference to our previous work (CITE), which measured curvature via ‘Diffusion Laziness’. That laziness measurement increased with positive curvature; diffusion energy does the opposite, increasing with more negative curvature.</p>
+<p>The distributional distance <span class="math inline">\(D\)</span> may be the Wasserstein-1 distance, as with Ollivier-Ricci curvature; it may be the Jensen-Shannon Distance, evoking the classical use of entropy to measure the diffusion of heat; or it may be some other domain-specific form chosen for a particular metric measure space.</p>
+<p>This measure of diffusion energy provides a snapshot of curvature at single diffusion time. However, this curvature is unsigned, and sensitive to the choice of <span class="math inline">\(t\)</span>. Moreover, as we’ll discuss, differences in graph construction cause the times associated with the diffusion operators from different spaces to change at different speeds. This makes it hard to compare the geometric information gleaned from the diffusion operator across manifolds.</p>
+<p>Instead of these static and fickle snapshots of a diffusion process, we consider the process in its entirety. As <span class="math inline">\(t\)</span> ranges from 0 to <span class="math inline">\(\infty\)</span>, the diffusions <span class="math inline">\(p_{x}^X(t)\)</span> can be viewed as a trajectory on the <span class="math inline">\(n\)</span>-dimensional probability simplex, where <span class="math inline">\(n\)</span> is the number of points in <span class="math inline">\(X\)</span>. Given a distributional distance and its generating Riemannian metric, we can define Diffusion Curvature as the path integral of diffusion energy along this trajectory.</p>
+<div id="def-diffusion-energy-path-integral" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 4 (Diffusion Energy)</strong></span> Given a metric <span class="math inline">\(g_{p}\)</span> on the statistical manifold of diffusion probabilities, and the distributional distance <span class="math inline">\(D\)</span> it generates the Diffusion Energy of a point <span class="math inline">\(x \in X\)</span> is</p>
 <p><span class="math display">\[
-k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
+l_{X}(x, d)= \int_{t=0}^{T(d)} D\left(\delta_x, p_x^X(t)\right) g_p\left(\frac{d p_x^X(t)}{d t}, \frac{ d p_x^X(t) }{d t} \right)
 \]</span></p>
-<p>The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by <span class="math inline">\(W_{1}(\delta_{x},m_{x}^t)\)</span>. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:</p>
-<div id="prp-coarse-ricci-curvature-bounds-diffusion-laziness" class="theorem proposition">
-<p><span class="theorem-title"><strong>Proposition 2 (Coarse Ricci Curvature Bounds Diffusion Laziness)</strong></span> Let <span class="math inline">\((X,d,m)\)</span> be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some <span class="math inline">\(k\)</span> such that <span class="math inline">\(\kappa(x,y) \geq k\)</span> for all <span class="math inline">\(x,y \in X\)</span>. The Wasserstein Spread of Diffusion of a <span class="math inline">\(t\)</span> step diffusion in <span class="math inline">\(X\)</span> is bounded above by <span class="math display">\[
+<p>where <span class="math inline">\(T(d)\)</span> is a function that converts between the calculated <em>Diffusion Trajectory Distances</em> <span class="math inline">\(d\)</span> and diffusion times <span class="math inline">\(t\)</span>.</p>
+</div>
+<p>In practice, we don’t have an infinitesimal parameterization of <span class="math inline">\(p_{x}^X\)</span>, so approximate this with the algorithm in BOX WAWA: we compute <span class="math inline">\(T\)</span> scales of diffusion (e.g.&nbsp;50), sum the distributional distances between each scale to estimate the path integral, and then use a trapezoidal approximation of the integral of <span class="math inline">\(L_{x}(t)\)</span> with respect to the distances along the trajectory.</p>
+<p>By viewing the energy integrated along a diffusion trajectory, we eliminate many of the differences between diffusions on different spaces. This enables the computation of a <em>signed</em> curvature, by taking the difference of diffusion energies from a given space and a comparison space of known Euclidean curvature and equal dimension to <span class="math inline">\(X\)</span>. In practice, we construct the comparison space as uniform samples from <span class="math inline">\(\mathbb{R}^d\)</span>, where <span class="math inline">\(d\)</span> is the intrinsic dimension of <span class="math inline">\(X\)</span>.</p>
+<div id="def-diffusion-curvature" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 5 (Diffusion Curvature)</strong></span> Given points <span class="math inline">\(X \subseteq \mathcal{M}\)</span>, where <span class="math inline">\(\mathcal{M}\)</span> is a Riemannian manifold of dimension <span class="math inline">\(d\)</span>, the <em>Diffusion Curvature</em> of <span class="math inline">\(x \in X\)</span> is</p>
+<p><span class="math display">\[
+k_(x, d) = l_{X}(x, d) - l_{X}(x, d)
+\]</span> where <span class="math inline">\(E \subseteq \mathbb{R}^d\)</span> is a collection of uniformly sampled points from <span class="math inline">\(\mathbb{R}^d\)</span>.</p>
+</div>
+<p>The usefulness of this definition rests upon two claims:</p>
+<ol type="1">
+<li>That diffusion energy is indeed a measure of (unsigned) curvature</li>
+<li>That our integration along diffusion trajectories enables this energy to be compared across point clouds with different diffusion processes.</li>
+</ol>
+<p>The next two sections will analyze this first claim. We first analyze diffusion energy within Ollivier’s framework of metric measure theory, and bound the diffusion energy from above by the Ollivier-Ricci curvature. We then provide a motivating example recovering a Bishop-Gromov type volume comparison from the diffusion curvature with an entropic distance.</p>
+<p>Finally, we support the second claim with illustrations of point clouds which diffusion trajectories can uniquely compare. We also describe how common techniques of constructing graphs from point clouds can obscure geometric information, and propose a ‘curvature-agnostic kernel’ to facilitate more geometrically-faithful graph construction.</p>
+<section id="diffusion-energy-is-bounded-by-ollivier-ricci-curvature" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="diffusion-energy-is-bounded-by-ollivier-ricci-curvature"><span class="header-section-number">3.1</span> Diffusion Energy is bounded by Ollivier-Ricci curvature</h2>
+<p>Ollivier Ricci curvature measures the extent to which ‘spheres are closer than their centers’, using graph diffusions to create spheres, and optimal transport to measure distances. Diffusion energy uses both ingredients. But whereas Ollivier Ricci curvature takes the Wasserstein distance between spheres of the same size, Diffusion energy takes the distance between successive sizes of the same sphere.</p>
+<p>This simplification makes Diffusion energy more localized and much computationally lighter. Here we demonstrate that it also retains the theoretical guarantees of Ollivier Ricci curvature, and might be though of as a natural node-wise adaptation of Ollivier Ricci curvature.</p>
+<div id="prp-coarse-ricci-curvature-bounds-diffusion-energy" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposition 2 (Coarse Ricci Curvature Bounds Diffusion Energy)</strong></span> Let <span class="math inline">\((X,d,m)\)</span> be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some <span class="math inline">\(k\)</span> such that <span class="math inline">\(\kappa(x,y) \geq k\)</span> for all <span class="math inline">\(x,y \in X\)</span>. The diffusion energy of a <span class="math inline">\(t\)</span> step diffusion in <span class="math inline">\(X\)</span> is bounded above by <span class="math display">\[
 W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
 \]</span></p>
 <p>In particular, if <span class="math inline">\(k&gt;0\)</span> then <span class="math inline">\(W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}\)</span>, and if <span class="math inline">\(k=0\)</span>, then <span class="math inline">\(W_{1}(\delta_{x},m_{x}^t) \leq tW_1\left(\delta_x,m_x\right)\)</span>.</p>
@@ -471,25 +470,18 @@ W_{1}(\delta_{x},m_{x}^t) \leq \frac{W_1\left(\delta_x,m_x\right)}{k}
 \]</span></p>
 <p>If <span class="math inline">\(k=0\)</span>, then obviously <span class="math inline">\(\sum_{i}^t (1-k)^i = t\)</span>.</p>
 </div>
-<p>The above asserts that the “spread” of diffusion is bounded from above by the Ollivier Ricci curvature of the region. To turn this measurement of spread into a signed curvature, we have only to introduce a comparison: the dimensional constant of the Euclidean spread of diffusion, <span class="math inline">\(W_{1}^E(\delta_{x},m_{x}^t)\)</span>. Using Proposition 1, we can directly bound <span class="math inline">\(k_{D}\)</span> in terms of the Ollivier Ricci curvature:</p>
-<p><span class="math display">\[
-1 - \frac{W^M_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}}{W_{1}^E(\delta_{x},m_{x}^t)} \leq k_{D}
-\]</span></p>
-<p>A simple approximation of <span class="math inline">\(W_{1}^E(\delta_{x},m_{x}^t)\)</span> is obtained by scaling the spread of a single-step diffusion by a factor of t, i.e.&nbsp;<span class="math inline">\(tW_{1}^E(\delta_{x},m_{x})\)</span>. Using this, and noting that <span class="math inline">\(W_{1}^E(\delta_{x},m_{x}) \approx W_{1}^M(\delta_{x},m_{x})\)</span>,</p>
-<p><span class="math display">\[
-1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
-\]</span></p>
+<p>The above shows that the diffusion energy <span class="math inline">\(l_{W_1}\)</span> has an upper-bound given by the Ollivier Ricci curvature. We expect that the higher a manifold’s curvature, the lower <span class="math inline">\(l_{W_{1}}\)</span> should be. This is formalized by Proposition 1: the higher the Ollivier-Ricci curvature of a manifold, the smaller its diffusion energy. This result motivates the use of diffusion curvature as a point-wise adaptation of Ollivier-Ricci curvature.</p>
 </section>
 <section id="a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="a-motivating-example-entropic-diffusion-curvature-recovers-a-bishop-gromov-volume-comparison"><span class="header-section-number">3.2</span> A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison</h2>
 <p>Among the most obvious manifestations of curvature is differences in volume: the higher the curvature, the smaller the volume of geodesic balls of the same radius. In the continuous setting, this is expressed by <a href="#thm-bishop-gromov" class="quarto-xref">Theorem&nbsp;1</a>.</p>
 <p>One route to discrete curvature is thus estimating volumes; this is the route taken by <span class="citation" data-cites="hickok2023IntrinsicApproachScalarCurvature">Hickok and Blumberg (<a href="#ref-hickok2023IntrinsicApproachScalarCurvature" role="doc-biblioref">2023</a>)</span>. However, standard methods of estimating volumes in discrete, sampled spaces like point clouds or graphs rely on more complex geometric quantities, like density estimation or approximated geodesic distances, which are not only susceptible to noise, but often themselves dependent on the curvature!<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> One wonders: can we use the tools of diffusion geometry to robustly estimate volume?</p>
-<p>Indeed, this is one way to interpret diffusion laziness: as an inverse volume measurement. <span class="citation" data-cites="huguet2023HeatDiffusionPerspective">Huguet et al. (<a href="#ref-huguet2023HeatDiffusionPerspective" role="doc-biblioref">2023</a>)</span> motivates this with a result from Saloff Costes et al. <span class="citation" data-cites="saloff-coste2010HeatKernelIts">(<a href="#ref-saloff-coste2010HeatKernelIts" role="doc-biblioref">Saloff-Coste 2010</a>)</span>. For manifold satisfying the Parabolic Harnock Inequality (e.g.&nbsp;all manifolds of positive curvature), heat diffusion <span class="math inline">\(m_{x}^t\)</span> on the manifold is bounded by</p>
+<p>Indeed, this is one way to interpret diffusion energy: as an inverse volume measurement. <span class="citation" data-cites="huguet2023HeatDiffusionPerspective">Huguet et al. (<a href="#ref-huguet2023HeatDiffusionPerspective" role="doc-biblioref">2023</a>)</span> motivates this with a result from Saloff Costes et al. <span class="citation" data-cites="saloff-coste2010HeatKernelIts">(<a href="#ref-saloff-coste2010HeatKernelIts" role="doc-biblioref">Saloff-Coste 2010</a>)</span>. For manifold satisfying the Parabolic Harnock Inequality (e.g.&nbsp;all manifolds of positive curvature), heat diffusion <span class="math inline">\(m_{x}^t\)</span> on the manifold is bounded by</p>
 <p><span class="math display">\[
 \frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
 \]</span></p>
 <p>In other words, heat diffusion on non-Euclidean manifolds behaves approximately like Euclidean heat diffusion scaled by the local volume.</p>
-<p>Powering the diffusion matrix approximates heat diffusion [cite Coifman]. We can thus relate our measure of the ‘spread’ or ‘laziness’ of this diffusion to the manifold’s volume.</p>
+<p>Powering the diffusion matrix approximates heat diffusion [cite Coifman]. We can thus relate our measure of the ‘spread’ or ‘energy’ of this diffusion to the manifold’s volume.</p>
 <p>The Shannon entropy of the diffusion <span class="math inline">\(m_{x}\)</span> over the bounded neighborhood of <span class="math inline">\(X\)</span> with non-zero diffusion mass, can be written <span class="math display">\[
 H\left(m_x^t\right)=-\int_{y_\epsilon x} m_x^t(y) \ln \left(m_x^t(y)\right)
 \]</span> Here we use Shannon’s differential entropy.Though this formulation encounters pathologies on unbounded domains, it approximates the entropy a signal on a sampled region as the number of samples goes to infinity.</p>
@@ -515,12 +507,50 @@ H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
 </section>
 <section id="comparing-diffusion-across-point-clouds" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="comparing-diffusion-across-point-clouds"><span class="header-section-number">3.3</span> Comparing Diffusion Across Point Clouds</h2>
-<p>For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature via a comparison between spaces.</p>
-<p>In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is <em>assumed</em> that the scale differs between and possibly even <em>within</em> a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the ‘size’ of one’s ‘measuring stick’ could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed <em>most</em> in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.</p>
-<p>Our challenge is to construct a Euclidean comparison space on which diffusion locally behaves the same as on our given point cloud. We first motivate the need for taking special care with the graph construction, illustrating how naive approaches obscure geometric information. We then describe two simple workarounds.</p>
-<p>A caveat here: while the (unsigned) diffusion laziness is easily applicable to arbitrary graphs, the methods we describe below for constructing a comparison space and obtaining a (signed) diffusion curvature only apply to point clouds. We suspect there are equivalent methods applicable to general graphs, but we focus on the point cloud setting.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<section id="standard-methods-of-graph-construction-obscure-geometric-information" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="standard-methods-of-graph-construction-obscure-geometric-information"><span class="header-section-number">3.3.1</span> Standard methods of graph construction obscure geometric information</h3>
+<section id="problem-setting-motivation" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="problem-setting-motivation"><span class="header-section-number">3.3.1</span> Problem Setting &amp; Motivation</h3>
+<p>For a single graph, the energy of diffusion is linked to graph volume and theoretically bounded by curvature. Within a given graph, the lower the curvature, the higher the diffusion energy. As shown above, we can draw analogy to Bishop-Gromov to convert this unsigned magnitude-of-curvature estimation to a signed curvature via a comparison between spaces.</p>
+<p>A comparison like this is at the heart of many discrete curvatures. Ollivier-Ricci compares the transport distance between two distributions with the transport distance on a flat space. Hickok and Blumberg compare the approximate the volume of balls on a given point cloud with the Euclidean volume of balls with the same radius. In these definitions, the use of more complex geometric constructs (distances, volumes, densities) grants the Euclidean comparison an analytic form. Our definition makes a different trade-off: it doesn’t depend on the error-prone approximations of those higher-order phenomena, but it doesn’t benefit from their theoretical simplicity.</p>
+<p>To put it bluntly, there’s no analytical form of, e.g.&nbsp;the diffusion energy snapshot in <span class="math inline">\(\mathbb{R}^8\)</span> at <span class="math inline">\(t=25\)</span> because there’s no single translation between <span class="math inline">\(\mathbb{R}^8\)</span> and one of the “discrete measure space with a random walk” our definition operates on. There are many different ways of uniformly sampling <span class="math inline">\(N\)</span> points from <span class="math inline">\(\mathbb{R}^d\)</span> – and there are many ways of turning those points into a graph. But different samplings, and different modes of graph construction result in different <em>speeds of diffusion</em> on the graph, rendering direct comparison of diffusion energies difficult.</p>
+<p>For example, imagine constructing two <span class="math inline">\(k\)</span>-nearest neighbor graphs with a different value of <span class="math inline">\(k\)</span> for each pointcloud. In the graph constructed with a larger <span class="math inline">\(k\)</span>, diffusion will happen more quickly because everything is more tightly connected. The diffusion energy of a point on this graph, at any given <span class="math inline">\(t\)</span>, will appear much higher than its sister graph – even if both were constructed from the same space! The vagaries of graph construction have obscured the underlying geometry of the manifold.</p>
+<p>An immediate workaround is to try to bypass this obstruction by constructing graphs in <em>exactly</em> the same manner from both our target points and comparison points. One might use a <span class="math inline">\(k\)</span>nn graph with identical <span class="math inline">\(k\)</span>’s, or an adaptive kernel which sets the bandwidth locally based on the distance to each nearest neighbor. We experimented with this approach extensively, and came to the unexpected conclusion that the interplay between curvature and distance makes it extremely hard to create a kernel with the same relative bandwidth in spaces of differing curvatures. Specifically, the local Euclidean distance used by standard graph construction techniques like the k-neighbor adaptive kernel becomes less reliable the greater the magnitude of curvature. Thus, not only are comparisons between spaces compromised, but even the geometric information within a space is obscured by a gratuitously fluctuating kernel bandwidth. We explore this in more detail in the next section, and propose a simple change which lessens these symptoms.</p>
+<p>However, the underlying ‘disease’ remains: although we assume our point clouds are sampled manifolds, there’s no one-to-one translation between these manifolds and the measure spaces with random walks diffusion geometry operates on. Different samplings and different means of graph construction all create different random walks. Trying to homogenize these random walks via careful graph construction relies on geometric information, like distances, that we don’t (yet) have – and tries to wage war against the notoriously fickle process of sampling. Far better than trying to homogenize these random walks on the level of <em>graph construction</em> would be a method that can reliably compare diffusions <em>across</em> graphs.</p>
+<p>This problem, of reliably comparing diffusions across graphs, has wide applicability. … research needed here … Other techniques partially address this by considering <em>multiscale diffusions</em>. The <em>multiscale diffusion distance</em> takes a weighted average across powers of diffusion. Diffusion Earth Mover’s Distance extends this to an optimal transport measure based on the differences distributions diffused at multiple scales. The <em>Graph scattering transform</em> produces a rich set of features for comparing graphs derived from differences between powers of diffusion. And many graph neural networks are built upon flavors of message passing which resemble graph diffusion, while others have been modeled on graph scattering. All of these methods come with a caveat: if compared across graphs, discrepancies in graph construction will manifest as spurious differences in graph geometry.</p>
+</section>
+<section id="diffusion-trajectory-alignment" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="diffusion-trajectory-alignment"><span class="header-section-number">3.3.2</span> Diffusion Trajectory Alignment</h3>
+<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>This trajectory has the advantage of erasing any differences caused by the speed of diffusion. Instead, we can use the distance along that trajectory <em>Diffusion Trajectory Distance</em>) to align the scales of diffusion between two graphs. As illustrated in <a href="#fig-curvature-curves" class="quarto-xref">Figure&nbsp;1</a>, by comparing the diffusion energies of several graphs across their diffusion trajectory distances. Making the same comparison across times is uninformative - and misleadingly suggests that the sphere is the most negatively curved. <em>Diffusion Trajectory Alignment</em>, however, reveals the correct relation between the surfaces.</p>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-curvature-curves" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-curvature-curves" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Line plots of diffusion energies.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-curvature-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/..-nbs-3d-diffusion-trajectory-distance-normalization-fig-curvature-curves-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="index_files/figure-html/..-nbs-3d-diffusion-trajectory-distance-normalization-fig-curvature-curves-output-2.png" class="img-fluid figure-img" alt="Line plots of diffusion energies."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-curvature-curves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Diffusion energies across multiple scales on a 4-dimensional saddle, plane, and sphere (all 3-manifolds). When comparing directly between times, there is no clear separation of curvatures. Aligning diffusions by diffusion trajectory distance reveals curvature.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-1" href="../nbs/3d-diffusion-trajectory-distance-normalization-preview.html#cell-fig-curvature-curves">Source: Standard libraries</a></div>
+<p>Applying diffusion trajectory alignment to our diffusion energies also has the happy effect of focusing our measurement on the most relevant scales of diffusion. When using diffusion times, one must be careful to select a time that is neither too small nor too large. Make <span class="math inline">\(t\)</span> too small, and the diffusion might have barely differentiated itself from a dirac. Make <span class="math inline">\(t\)</span> too large, and the diffusion might have progressed to the uninformative steady-state distribution. With the diffusion trajectory distance, all of the undesirably large <span class="math inline">\(t\)</span>’s are compressed into a narrow range of distances – the diffusion trajectory limits to the steady state distribution, and the diffusion trajectory distances that correspond to it are all within some <span class="math inline">\(\epsilon\)</span> of the maximum diffusion trajectory distance. Hence, any diffusion trajectory distance between its minimum and maximum values corresponds to an interesting scale of diffusion.</p>
+<p>With the alignment help of the diffusion trajectory distance, we can now motivate our path-integral definition of diffusion energy (<a href="#def-diffusion-energy-path-integral" class="quarto-xref">Definition&nbsp;4</a>): <span class="math display">\[
+l_{X}(x, d)= \int_{t=0}^{T(d)} D\left(\delta_x, p_x^X(t)\right) g_p\left(\frac{d p_x^X(t)}{d t}, \frac{ d p_x^X(t) }{d t} \right)
+\]</span></p>
+<p>Recall that <span class="math inline">\(D(\delta_{x}, p_{x}^X(t))\)</span> is the snapshot diffusion energy (<a href="#def-energy-of-diffusion" class="quarto-xref">Definition&nbsp;3</a>) at time <span class="math inline">\(t\)</span>. This is integrated with respect to the diffusion trajectory distance, here formulated via a Riemannian metric on the probability simplex. The parameter <span class="math inline">\(T\)</span> controls how local the measurement of diffusion energy is. As <span class="math inline">\(T\)</span> approaches <span class="math inline">\(\infty\)</span>, the diffusion approaches the steady state across the entire graph, and the diffusion energy measures a global curvature. Smaller <span class="math inline">\(T\)</span>’s yield more localized measurements of curvature. In practice, <span class="math inline">\(T\)</span> is set via some <span class="math inline">\(T(d)\)</span> that translates diffusion trajectory distances into the corresponding times.</p>
+<p>The diffusion energy can be thought of as an integral of the geodesic distance from a distribution to a dirac along the distributions in a given diffusion trajectory. Imagine a long, bent noodle; while traveling along the noodle, we integrate the distances from each point on the noodle to its base point. If these geodesic distances corresponded to travel back along the diffusion trajectory, or back down the noodle – e.g.&nbsp;if the diffusion trajectory took the shortest path between the dirac and each subsequent distribution – then the diffusion energy would be equal across all manifolds. The extent to which this fails, and the diffusion trajectory takes a ‘lazier’ path than optimal, reveals the curvature.</p>
+<p>This measurement of diffusion energy can now be converted into a signed <em>diffusion curvature</em> via <a href="#def-diffusion-curvature" class="quarto-xref">Definition&nbsp;5</a>:</p>
+<p><span class="math display">\[
+k_(x, d) = l_{X}(x, d) - l_{X}(x, d)
+\]</span> This corresponds to taking the area under each of the curves in Fig. WAWA, up to some trajectory distance <span class="math inline">\(d\)</span>, and subtracting them.</p>
+<p>In practice, we don’t have access to a metric <span class="math inline">\(g_{p}\)</span> on the probability simplex; this space is too high-dimensional, and we lack a continuous parameterization of graph diffusion. Instead, we approximate this integral by measuring the distances between subsequent diffusions (performed for every integer <span class="math inline">\(1 \leq t \leq T(d)\)</span>). This approximates the diffusion trajectory distances for each scale of diffusion. We then use the trapezoidal rule to approximate the integral of diffusion energies with respect to these trajectory distances. This is summarized by Algorithm 1 REFERENCE WAWA.</p>
+</section>
+<section id="the-curvature-agnostic-kernel-automatic-bandwidth-tuning" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="the-curvature-agnostic-kernel-automatic-bandwidth-tuning"><span class="header-section-number">3.3.3</span> The Curvature-Agnostic Kernel &amp; Automatic Bandwidth Tuning</h3>
+<p>Diffusion trajectory alignment significantly reduces the interference caused by graph construction, but does not completely eliminate it. Due to our lack of access to a diffusion coordinate space metric, and the approximations used for the diffusion trajectory distance, we find the robustness of our algorithm is significantly improved by a few adjustments to standard graph construction techniques to make them more curvature agnostic.</p>
 <p>To turn a point cloud into a graph, one places a kernel (e.g.&nbsp;a gaussian) at each point, and assigns edges to surrounding points with weights given by the kernel. The main parameter here is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.</p>
 <p>A standard technique for accommodating the variable densities of point cloud data is a <span class="math inline">\(k\)</span>-neighbor <em>adaptive kernel</em>. Here, the bandwidth at each point is set to the squared distance to the <span class="math inline">\(k\)</span>-th nearest neighbor, averaged in some way between the two inputs. Here’s one standard adaptive kernel:</p>
 <p><span class="math display">\[
@@ -533,105 +563,116 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2}}}{d(y, N_{k}(y))}
 <p>Note that that parameter <span class="math inline">\(k\)</span> plays roles in two kinds of adaptation. By setting the bandwidth to some Euclidean distance <span class="math inline">\(d(x,N_{k}(x))\)</span> between data points, it adapts the kernel to the <em>right scale</em> for the point cloud, concentrating its probability within a local neighborhood. It also controls the <em>size</em> of that local neighborhood; typically set between 5 and 15.</p>
 <p>Unfortunately, this adaptive process hinges on the correspondence between the Euclidean distances <span class="math inline">\(d(x,N_{k}(x))\)</span>, and the manifold distances – a correspondence that degrades <em>faster</em> the higher the magnitude of curvature! Consider a highly-curved paraboloid. The Euclidean distance from its center point to its nearest few neighbors is roughly the geodesic distance. But as the neighborhood widens, and the neighbors move higher up the paraboloid, the Euclidean distance now underestimates the true geodesic distance: it cuts across the manifold. This happens in spaces of high positive or high negative curvature.</p>
 <p>As a result, the adaptive kernel constructed in highly curved spaces has a smaller bandwidth than in flat spaces, even using the same kernel parameters. If one directly compares the laziness of diffusion on two such graphs, it will appear lazier than on the flat manifold.</p>
-</section>
-<section id="the-curvature-agnostic-kernel" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="the-curvature-agnostic-kernel"><span class="header-section-number">3.3.2</span> The Curvature Agnostic Kernel</h3>
-</section>
-<section id="a-simple-euclidean-comparison-space" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="a-simple-euclidean-comparison-space"><span class="header-section-number">3.3.3</span> A Simple Euclidean Comparison Space</h3>
+<p>To remedy this, we make a simple adjustment to the standard adaptive kernel. The key is separating the parameter which controls neighborhood size from neighborhood scale. In the adaptive kernel, both are controlled by the parameter <span class="math inline">\(k\)</span>; as discussed above, in spaces of high curvature, the same <span class="math inline">\(k\)</span> creates different scales. Instead, we always set <span class="math inline">\(k = 1\)</span> and use another parameter – <span class="math inline">\(\nu\)</span>, the neighbor-size – to control the variance of the kernel.</p>
+<p><span class="math display">\[
+\begin{aligned}
+k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y))}
++\frac{e^{-\frac{d(x, y)^2}{d(y, N_{k}(x))^2\nu^2}}}{d(x, N_{k}(y)}
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(\nu\)</span> behaves like the kernel bandwidth in the regular fixed Gaussian kernel. We call this the <em>Curvature-Agnostic Kernel</em>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Figure comparing the adaptive to curvature agnostic kernels with diffusion trajectory normalization. Use a stacked image.</label></li>
+</ul>
+<p>Figure WAWA illustrates the increased robustness diffusion trajectory alignment gains from using this curvature-agnostic kernel. The relative ordering of graphs is still achieved by the traditional adaptive kernel, but is significantly denoised by these tweaks.</p>
+<p>The main parameter of the curvature-agnostic kernel is the “neighbor scale” <span class="math inline">\(\nu\)</span>, which sets the kernel bandwidth to the specified multiple of the average distance to the <span class="math inline">\(k\)</span>th-nearest neighbor. As a single parameter, this can be tuned easily. We use as a heuristic the desired median number of points with non-negligible single-step diffusion probability, and perform a binary search over values of <span class="math inline">\(\nu\)</span> until this number is within a desired tolerance.</p>
+<p>We suspect the curvature-agnostic kernel may be generally useful in manifold learning. In any downstream analysis that leverages the graph geometry – be it distance estimation, [CITE HUGUET] or metric learning [CITE US] – this analysis is made easier by a kernel whose bandwidth does not gratuitously fluctuate in regions of high curvature.</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Can we provide experimental results here? Does PHATE or HeatGeo perform better with this kernel?</label></li>
+</ul>
 </section>
 </section>
 </section>
 <section id="results" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
-<p>Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined <em>accidentally</em> <span class="citation" data-cites="steinerberger2022CurvatureGraphsEquilibrium bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-steinerberger2022CurvatureGraphsEquilibrium" role="doc-biblioref">Steinerberger 2022</a>; <a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span>! The challenge is to make one’s definition robust to the bogeyman of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok &amp; Blumberg’s, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most <em>fail entirely</em> in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.</p>
-<p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;1</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> places this in the context of existing methods.</p>
+<p>Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined <em>accidentally</em> <span class="citation" data-cites="steinerberger2022CurvatureGraphsEquilibrium bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-steinerberger2022CurvatureGraphsEquilibrium" role="doc-biblioref">Steinerberger 2022</a>; <a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span>! The challenge is to make one’s definition robust to the bogeymen of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok &amp; Blumberg’s, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most <em>fail entirely</em> in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.</p>
+<p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;2</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> places this in the context of existing methods.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-2-manifolds" class="cell" data-execution_count="38">
+<div id="cell-fig-2-manifolds" class="cell" data-execution_count="95">
 <div class="cell-output cell-output-display">
 <div id="fig-2-manifolds" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/..-nbs-experiments-2a-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+<a href="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="index_files/figure-html/..-nbs-2a-Diffusion-Curvatures-of-Toy-Manifolds-fig-2-manifolds-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<a class="quarto-notebook-link" id="nblink-1" href="../nbs/experiments/2a-Toy-Manifolds-preview.html#cell-fig-2-manifolds">Source: Standard libraries</a></div>
-<p>Though the correlation is strong – passing the ‘sniff test’ – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-2-manifolds-visual-comparison" class="cell" data-execution_count="72">
-<div class="cell-output cell-output-display">
-<div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/..-nbs-experiments-2a2-toy-manifolds-comparison-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-2" href="../nbs/experiments/2a2-toy-manifolds-comparison-preview.html#cell-fig-2-manifolds-visual-comparison">Source: Standard libraries</a></div>
-<p>The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, <em>what matters?</em> Most methods don’t care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%</p>
-<p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;2</a> perform well on well-sampled noiseless toy manifolds. In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;3</a>, we see the results of adding Gaussian noise to each manifold.</p>
+<a class="quarto-notebook-link" id="nblink-2" href="../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds-preview.html#cell-fig-2-manifolds">Source: Standard libraries</a></div>
+<p>Though the correlation is strong – passing the ‘sniff test’ – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature.</p>
 <div class="quarto-embed-nb-cell">
-<div id="cell-fig-2-manifolds-noise-table" class="cell" data-execution_count="88">
+<div id="cell-fig-2-manifolds-visual-comparison" class="cell" data-execution_count="44">
+<div class="cell-output cell-output-display">
+<div id="fig-2-manifolds-visual-comparison" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="index_files/figure-html/..-nbs-2-Toy-Manifolds-Benchmark-fig-2-manifolds-visual-comparison-output-1.png" class="img-fluid figure-img" alt="The Torus, Saddle, Ellipsoid are shown in the first row, colored by the diffusion curvature. The second row shows the scatter plot of the Gaussian curvature vs the diffusion curvature, colored by the diffusion curvature. The origin lines are highlighted in the scatter plots."></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-visual-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-3" href="../nbs/2-Toy-Manifolds-Benchmark-preview.html#cell-fig-2-manifolds-visual-comparison">Source: Standard libraries</a></div>
+<p>The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, <em>what matters?</em> Most methods don’t care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%</p>
+<p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> perform well on well-sampled noiseless toy manifolds. In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;4</a>, we see the results of adding Gaussian noise to each manifold.</p>
+<div class="quarto-embed-nb-cell">
+<div id="cell-fig-2-manifolds-noise-table" class="cell" data-execution_count="59">
 <div id="fig-2-manifolds-noise-table" class="cell-output cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-manifolds-noise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div>
-<div id="ttargjgnre" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="yyhqyhumce" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>
-#ttargjgnre table {
+#yyhqyhumce table {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
 
-#ttargjgnre thead, tbody, tfoot, tr, td, th { border-style: none; }
- tr { background-color: transparent; }
-#ttargjgnre p { margin: 0; padding: 0; }
- #ttargjgnre .gt_table { display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 16px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; }
- #ttargjgnre .gt_caption { padding-top: 4px; padding-bottom: 4px; }
- #ttargjgnre .gt_title { color: #333333; font-size: 125%; font-weight: initial; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-color: #FFFFFF; border-bottom-width: 0; }
- #ttargjgnre .gt_subtitle { color: #333333; font-size: 85%; font-weight: initial; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; }
- #ttargjgnre .gt_heading { background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ttargjgnre .gt_bottom_border { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #ttargjgnre .gt_col_headings { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; }
- #ttargjgnre .gt_col_heading { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; }
- #ttargjgnre .gt_column_spanner_outer { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; padding-top: 0; padding-bottom: 0; padding-left: 4px; padding-right: 4px; }
- #ttargjgnre .gt_column_spanner_outer:first-child { padding-left: 0; }
- #ttargjgnre .gt_column_spanner_outer:last-child { padding-right: 0; }
- #ttargjgnre .gt_column_spanner { border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; overflow-x: hidden; display: inline-block; width: 100%; }
- #ttargjgnre .gt_spanner_row { border-bottom-style: hidden; }
- #ttargjgnre .gt_group_heading { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; text-align: left; }
- #ttargjgnre .gt_empty_group_heading { padding: 0.5px; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; vertical-align: middle; }
- #ttargjgnre .gt_from_md> :first-child { margin-top: 0; }
- #ttargjgnre .gt_from_md> :last-child { margin-bottom: 0; }
- #ttargjgnre .gt_row { padding-top: 8px; padding-bottom: 8px; padding-left: 5px; padding-right: 5px; margin: 10px; border-top-style: solid; border-top-width: 1px; border-top-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: middle; overflow-x: hidden; }
- #ttargjgnre .gt_stub { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; }
- #ttargjgnre .gt_stub_row_group { color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: initial; text-transform: inherit; border-right-style: solid; border-right-width: 2px; border-right-color: #D3D3D3; padding-left: 5px; padding-right: 5px; vertical-align: top; }
- #ttargjgnre .gt_row_group_first td { border-top-width: 2px; }
- #ttargjgnre .gt_row_group_first th { border-top-width: 2px; }
- #ttargjgnre .gt_table_body { border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; }
- #ttargjgnre .gt_sourcenotes { color: #333333; background-color: #FFFFFF; border-bottom-style: none; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; }
- #ttargjgnre .gt_sourcenote { font-size: 90%; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; text-align: left; }
- #ttargjgnre .gt_left { text-align: left; }
- #ttargjgnre .gt_center { text-align: center; }
- #ttargjgnre .gt_right { text-align: right; font-variant-numeric: tabular-nums; }
- #ttargjgnre .gt_font_normal { font-weight: normal; }
- #ttargjgnre .gt_font_bold { font-weight: bold; }
- #ttargjgnre .gt_font_italic { font-style: italic; }
- #ttargjgnre .gt_super { font-size: 65%; }
- #ttargjgnre .gt_footnote_marks { font-size: 75%; vertical-align: 0.4em; position: initial; }
- #ttargjgnre .gt_asterisk { font-size: 100%; vertical-align: 0; }
+#yyhqyhumce thead, tbody, tfoot, tr, td, th { border-style: none !important; }
+ tr { background-color: transparent !important; }
+#yyhqyhumce p { margin: 0 !important; padding: 0 !important; }
+ #yyhqyhumce .gt_table { display: table !important; border-collapse: collapse !important; line-height: normal !important; margin-left: auto !important; margin-right: auto !important; color: #333333 !important; font-size: 16px !important; font-weight: normal !important; font-style: normal !important; background-color: #FFFFFF !important; width: auto !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #A8A8A8 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #A8A8A8 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_caption { padding-top: 4px !important; padding-bottom: 4px !important; }
+ #yyhqyhumce .gt_title { color: #333333 !important; font-size: 125% !important; font-weight: initial !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; border-bottom-color: #FFFFFF !important; border-bottom-width: 0 !important; }
+ #yyhqyhumce .gt_subtitle { color: #333333 !important; font-size: 85% !important; font-weight: initial !important; padding-top: 3px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; border-top-color: #FFFFFF !important; border-top-width: 0 !important; }
+ #yyhqyhumce .gt_heading { background-color: #FFFFFF !important; text-align: center !important; border-bottom-color: #FFFFFF !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_bottom_border { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_col_headings { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_col_heading { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; overflow-x: hidden !important; }
+ #yyhqyhumce .gt_column_spanner_outer { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; padding-top: 0 !important; padding-bottom: 0 !important; padding-left: 4px !important; padding-right: 4px !important; }
+ #yyhqyhumce .gt_column_spanner_outer:first-child { padding-left: 0 !important; }
+ #yyhqyhumce .gt_column_spanner_outer:last-child { padding-right: 0 !important; }
+ #yyhqyhumce .gt_column_spanner { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; overflow-x: hidden !important; display: inline-block !important; width: 100% !important; }
+ #yyhqyhumce .gt_spanner_row { border-bottom-style: hidden !important; }
+ #yyhqyhumce .gt_group_heading { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; text-align: left !important; }
+ #yyhqyhumce .gt_empty_group_heading { padding: 0.5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: middle !important; }
+ #yyhqyhumce .gt_from_md> :first-child { margin-top: 0 !important; }
+ #yyhqyhumce .gt_from_md> :last-child { margin-bottom: 0 !important; }
+ #yyhqyhumce .gt_row { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; margin: 10px !important; border-top-style: solid !important; border-top-width: 1px !important; border-top-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; overflow-x: hidden !important; }
+ #yyhqyhumce .gt_stub { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #yyhqyhumce .gt_stub_row_group { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; vertical-align: top !important; }
+ #yyhqyhumce .gt_row_group_first td { border-top-width: 2px !important; }
+ #yyhqyhumce .gt_row_group_first th { border-top-width: 2px !important; }
+ #yyhqyhumce .gt_table_body { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_sourcenotes { color: #333333 !important; background-color: #FFFFFF !important; border-bottom-style: none !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; }
+ #yyhqyhumce .gt_sourcenote { font-size: 90% !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; text-align: left !important; }
+ #yyhqyhumce .gt_left { text-align: left !important; }
+ #yyhqyhumce .gt_center { text-align: center !important; }
+ #yyhqyhumce .gt_right { text-align: right !important; font-variant-numeric: tabular-nums !important; }
+ #yyhqyhumce .gt_font_normal { font-weight: normal !important; }
+ #yyhqyhumce .gt_font_bold { font-weight: bold !important; }
+ #yyhqyhumce .gt_font_italic { font-style: italic !important; }
+ #yyhqyhumce .gt_super { font-size: 65% !important; }
+ #yyhqyhumce .gt_footnote_marks { font-size: 75% !important; vertical-align: 0.4em !important; position: initial !important; }
+ #yyhqyhumce .gt_asterisk { font-size: 100% !important; vertical-align: 0 !important; }
  
 </style>
 
@@ -653,23 +694,23 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </tr>
 <tr class="even gt_col_headings">
 <td id="Torus" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus</td>
+<td id="Torus noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.05</td>
 <td id="Torus noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.1</td>
+<td id="Torus noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.15</td>
 <td id="Torus noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.2</td>
-<td id="Torus noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.3</td>
-<td id="Torus noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.4</td>
-<td id="Torus noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.5</td>
+<td id="Torus noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Torus noise = 0.25</td>
 <td id="Saddle" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle</td>
+<td id="Saddle noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.05</td>
 <td id="Saddle noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.1</td>
+<td id="Saddle noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.15</td>
 <td id="Saddle noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.2</td>
-<td id="Saddle noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.3</td>
-<td id="Saddle noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.4</td>
-<td id="Saddle noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.5</td>
+<td id="Saddle noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Saddle noise = 0.25</td>
 <td id="Ellipsoid" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid</td>
+<td id="Ellipsoid noise = 0.05" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.05</td>
 <td id="Ellipsoid noise = 0.1" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.1</td>
+<td id="Ellipsoid noise = 0.15" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.15</td>
 <td id="Ellipsoid noise = 0.2" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.2</td>
-<td id="Ellipsoid noise = 0.3" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.3</td>
-<td id="Ellipsoid noise = 0.4" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.4</td>
-<td id="Ellipsoid noise = 0.5" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.5</td>
+<td id="Ellipsoid noise = 0.25" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Ellipsoid noise = 0.25</td>
 </tr>
 </tbody>
 <tbody class="gt_table_body">
@@ -677,175 +718,262 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">ED</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.774</td>
-<td class="gt_row gt_right">0.867</td>
-<td class="gt_row gt_right">0.938</td>
-<td class="gt_row gt_right">1.066</td>
-<td class="gt_row gt_right">1.029</td>
-<td class="gt_row gt_right">1.080</td>
-<td class="gt_row gt_right">0.829</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.517</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.234</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.355</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.450</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.561</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.331</td>
-<td class="gt_row gt_right">0.667</td>
-<td class="gt_row gt_right">1.116</td>
-<td class="gt_row gt_right">1.136</td>
-<td class="gt_row gt_right">1.260</td>
-<td class="gt_row gt_right">1.275</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
+<td class="gt_row gt_right">0.671</td>
+<td class="gt_row gt_right">0.695</td>
+<td class="gt_row gt_right">0.862</td>
+<td class="gt_row gt_right">1.053</td>
+<td class="gt_row gt_right">1.258</td>
+<td class="gt_row gt_right">1.346</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.546</td>
+<td class="gt_row gt_right">5.179</td>
+<td class="gt_row gt_right">6.903</td>
+<td class="gt_row gt_right">5.927</td>
+<td class="gt_row gt_right">5.019</td>
+<td class="gt_row gt_right">4.513</td>
+<td class="gt_row gt_right">0.297</td>
+<td class="gt_row gt_right">0.596</td>
+<td class="gt_row gt_right">1.036</td>
+<td class="gt_row gt_right">1.610</td>
+<td class="gt_row gt_right">1.944</td>
+<td class="gt_row gt_right">2.087</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Forman Ricci Curvature</td>
-<td class="gt_row gt_right">6.832</td>
-<td class="gt_row gt_right">6.726</td>
-<td class="gt_row gt_right">6.508</td>
-<td class="gt_row gt_right">6.210</td>
-<td class="gt_row gt_right">5.852</td>
-<td class="gt_row gt_right">5.449</td>
-<td class="gt_row gt_right">8.307</td>
-<td class="gt_row gt_right">8.432</td>
-<td class="gt_row gt_right">8.888</td>
-<td class="gt_row gt_right">9.155</td>
-<td class="gt_row gt_right">9.175</td>
-<td class="gt_row gt_right">9.013</td>
-<td class="gt_row gt_right">7.693</td>
-<td class="gt_row gt_right">7.643</td>
-<td class="gt_row gt_right">7.498</td>
-<td class="gt_row gt_right">7.330</td>
-<td class="gt_row gt_right">7.093</td>
-<td class="gt_row gt_right">6.756</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
+<td class="gt_row gt_right">0.855</td>
+<td class="gt_row gt_right">0.846</td>
+<td class="gt_row gt_right">0.861</td>
+<td class="gt_row gt_right">0.976</td>
+<td class="gt_row gt_right">0.957</td>
+<td class="gt_row gt_right">0.878</td>
+<td class="gt_row gt_right">0.957</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.941</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.659</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.291</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.345</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.473</td>
+<td class="gt_row gt_right">0.371</td>
+<td class="gt_row gt_right">0.606</td>
+<td class="gt_row gt_right">0.423</td>
+<td class="gt_row gt_right">0.879</td>
+<td class="gt_row gt_right">1.046</td>
+<td class="gt_row gt_right">1.148</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
 <td class="gt_row gt_right">0.961</td>
+<td class="gt_row gt_right">0.865</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.556</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.365</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.353</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.444</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.410</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.381</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.409</td>
 <td class="gt_row gt_right">2.138</td>
+<td class="gt_row gt_right">1.741</td>
 <td class="gt_row gt_right">0.953</td>
+<td class="gt_row gt_right">1.072</td>
 <td class="gt_row gt_right">1.455</td>
-<td class="gt_row gt_right">1.902</td>
-<td class="gt_row gt_right">1.996</td>
-<td class="gt_row gt_right">2.130</td>
+<td class="gt_row gt_right">1.726</td>
 <td class="gt_row gt_right">1.070</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.319</td>
+<td class="gt_row gt_right">0.875</td>
+<td class="gt_row gt_right">0.319</td>
+<td class="gt_row gt_right">0.593</td>
 <td class="gt_row gt_right">1.055</td>
-<td class="gt_row gt_right">1.424</td>
-<td class="gt_row gt_right">1.426</td>
-<td class="gt_row gt_right">1.369</td>
+<td class="gt_row gt_right">1.305</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Ollivier Ricci Curvature</td>
-<td class="gt_row gt_right">0.845</td>
-<td class="gt_row gt_right">0.837</td>
-<td class="gt_row gt_right">0.826</td>
-<td class="gt_row gt_right">0.818</td>
-<td class="gt_row gt_right">0.814</td>
-<td class="gt_row gt_right">0.814</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.792</td>
-<td class="gt_row gt_right">0.847</td>
-<td class="gt_row gt_right">0.843</td>
-<td class="gt_row gt_right">0.829</td>
-<td class="gt_row gt_right">0.819</td>
-<td class="gt_row gt_right">0.816</td>
-<td class="gt_row gt_right">0.587</td>
-<td class="gt_row gt_right">0.551</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.507</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.485</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.480</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.480</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.573</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.572</td>
+<td class="gt_row gt_right">0.569</td>
+<td class="gt_row gt_right">0.567</td>
+<td class="gt_row gt_right">0.566</td>
+<td class="gt_row gt_right">0.566</td>
+<td class="gt_row gt_right">1.180</td>
+<td class="gt_row gt_right">1.180</td>
+<td class="gt_row gt_right">1.190</td>
+<td class="gt_row gt_right">1.199</td>
+<td class="gt_row gt_right">1.202</td>
+<td class="gt_row gt_right">1.190</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.181</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.187</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.194</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.199</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.188</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.191</td>
 </tr>
 <tr class="even gt_group_heading_row">
 <td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">PCC</td>
 </tr>
 <tr class="odd">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
-<td class="gt_row gt_right">0.921</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.951</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.958</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.923</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.862</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.792</td>
-<td class="gt_row gt_right">0.753</td>
-<td class="gt_row gt_right">0.766</td>
-<td class="gt_row gt_right">0.673</td>
-<td class="gt_row gt_right">0.536</td>
-<td class="gt_row gt_right">0.426</td>
-<td class="gt_row gt_right">0.339</td>
-<td class="gt_row gt_right">0.625</td>
-<td class="gt_row gt_right">0.589</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.614</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.617</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.569</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.521</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
+<td class="gt_row gt_right">0.942</td>
+<td class="gt_row gt_right">0.562</td>
+<td class="gt_row gt_right">0.153</td>
+<td class="gt_row gt_right">0.069</td>
+<td class="gt_row gt_right">0.078</td>
+<td class="gt_row gt_right">0.033</td>
+<td class="gt_row gt_right">0.740</td>
+<td class="gt_row gt_right">0.035</td>
+<td class="gt_row gt_right">0.007</td>
+<td class="gt_row gt_right">0.047</td>
+<td class="gt_row gt_right">0.096</td>
+<td class="gt_row gt_right">0.179</td>
+<td class="gt_row gt_right">0.561</td>
+<td class="gt_row gt_right">−0.102</td>
+<td class="gt_row gt_right">−0.028</td>
+<td class="gt_row gt_right">0.040</td>
+<td class="gt_row gt_right">0.085</td>
+<td class="gt_row gt_right">0.091</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Forman Ricci Curvature</td>
-<td class="gt_row gt_right">0.558</td>
-<td class="gt_row gt_right">0.575</td>
-<td class="gt_row gt_right">0.598</td>
-<td class="gt_row gt_right">0.594</td>
-<td class="gt_row gt_right">0.559</td>
-<td class="gt_row gt_right">0.524</td>
-<td class="gt_row gt_right">0.466</td>
-<td class="gt_row gt_right">0.482</td>
-<td class="gt_row gt_right">0.522</td>
-<td class="gt_row gt_right">0.457</td>
-<td class="gt_row gt_right">0.396</td>
-<td class="gt_row gt_right">0.325</td>
-<td class="gt_row gt_right">0.412</td>
-<td class="gt_row gt_right">0.373</td>
-<td class="gt_row gt_right">0.332</td>
-<td class="gt_row gt_right">0.343</td>
-<td class="gt_row gt_right">0.338</td>
-<td class="gt_row gt_right">0.314</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
+<td class="gt_row gt_right">0.918</td>
+<td class="gt_row gt_right">0.927</td>
+<td class="gt_row gt_right">0.916</td>
+<td class="gt_row gt_right">0.872</td>
+<td class="gt_row gt_right">0.789</td>
+<td class="gt_row gt_right">0.633</td>
+<td class="gt_row gt_right">0.713</td>
+<td class="gt_row gt_right">0.777</td>
+<td class="gt_row gt_right">0.798</td>
+<td class="gt_row gt_right">0.760</td>
+<td class="gt_row gt_right">0.701</td>
+<td class="gt_row gt_right">0.631</td>
+<td class="gt_row gt_right">0.626</td>
+<td class="gt_row gt_right">0.595</td>
+<td class="gt_row gt_right">0.550</td>
+<td class="gt_row gt_right">0.539</td>
+<td class="gt_row gt_right">0.499</td>
+<td class="gt_row gt_right">0.448</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.954</td>
-<td class="gt_row gt_right">0.945</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.955</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.945</td>
+<td class="gt_row gt_right">0.903</td>
 <td class="gt_row gt_right">0.856</td>
-<td class="gt_row gt_right">0.737</td>
-<td class="gt_row gt_right">0.658</td>
-<td class="gt_row gt_right">0.583</td>
+<td class="gt_row gt_right">0.791</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.992</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.966</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.904</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.828</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.749</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.588</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.462</td>
-<td class="gt_row gt_right" style="font-weight: bold">0.355</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.664</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.727</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.734</td>
 <td class="gt_row gt_right" style="font-weight: bold">0.706</td>
-<td class="gt_row gt_right">0.575</td>
-<td class="gt_row gt_right">0.468</td>
-<td class="gt_row gt_right">0.381</td>
-<td class="gt_row gt_right">0.338</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.640</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.575</td>
+<td class="gt_row gt_right">0.521</td>
 </tr>
 <tr class="even">
-<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Ollivier Ricci Curvature</td>
-<td class="gt_row gt_right">0.687</td>
-<td class="gt_row gt_right">0.677</td>
-<td class="gt_row gt_right">0.636</td>
-<td class="gt_row gt_right">0.624</td>
-<td class="gt_row gt_right">0.598</td>
-<td class="gt_row gt_right">0.559</td>
-<td class="gt_row gt_right">0.566</td>
-<td class="gt_row gt_right">0.484</td>
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
+<td class="gt_row gt_right">0.948</td>
+<td class="gt_row gt_right">0.942</td>
+<td class="gt_row gt_right">0.931</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.909</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.873</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.838</td>
+<td class="gt_row gt_right">0.838</td>
+<td class="gt_row gt_right">0.834</td>
+<td class="gt_row gt_right">0.809</td>
+<td class="gt_row gt_right">0.765</td>
+<td class="gt_row gt_right">0.703</td>
+<td class="gt_row gt_right">0.629</td>
+<td class="gt_row gt_right">0.595</td>
+<td class="gt_row gt_right">0.583</td>
 <td class="gt_row gt_right">0.558</td>
-<td class="gt_row gt_right">0.505</td>
-<td class="gt_row gt_right">0.424</td>
-<td class="gt_row gt_right">0.335</td>
-<td class="gt_row gt_right">0.596</td>
-<td class="gt_row gt_right">0.560</td>
-<td class="gt_row gt_right">0.488</td>
-<td class="gt_row gt_right">0.452</td>
-<td class="gt_row gt_right">0.427</td>
-<td class="gt_row gt_right">0.386</td>
+<td class="gt_row gt_right">0.548</td>
+<td class="gt_row gt_right">0.551</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.537</td>
+</tr>
+<tr class="odd gt_group_heading_row">
+<td colspan="19" class="gt_group_heading" data-quarto-table-cell-role="th">RMSE</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">AdaL-PCA</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.791</td>
+<td class="gt_row gt_right">0.981</td>
+<td class="gt_row gt_right">1.702</td>
+<td class="gt_row gt_right">2.041</td>
+<td class="gt_row gt_right">2.676</td>
+<td class="gt_row gt_right">2.652</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.597</td>
+<td class="gt_row gt_right">157.151</td>
+<td class="gt_row gt_right">83.544</td>
+<td class="gt_row gt_right">48.499</td>
+<td class="gt_row gt_right">29.631</td>
+<td class="gt_row gt_right">21.951</td>
+<td class="gt_row gt_right">0.681</td>
+<td class="gt_row gt_right">3.707</td>
+<td class="gt_row gt_right">6.694</td>
+<td class="gt_row gt_right">7.433</td>
+<td class="gt_row gt_right">6.795</td>
+<td class="gt_row gt_right">6.402</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Diffusion Curvature</td>
+<td class="gt_row gt_right">1.033</td>
+<td class="gt_row gt_right">1.025</td>
+<td class="gt_row gt_right">1.039</td>
+<td class="gt_row gt_right">1.152</td>
+<td class="gt_row gt_right">1.136</td>
+<td class="gt_row gt_right">1.070</td>
+<td class="gt_row gt_right">1.095</td>
+<td class="gt_row gt_right" style="font-weight: bold">1.073</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.863</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.633</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.646</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.655</td>
+<td class="gt_row gt_right">0.732</td>
+<td class="gt_row gt_right">0.837</td>
+<td class="gt_row gt_right">0.766</td>
+<td class="gt_row gt_right">0.984</td>
+<td class="gt_row gt_right">1.109</td>
+<td class="gt_row gt_right">1.200</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Hickok &amp; Blumberg</td>
+<td class="gt_row gt_right">1.359</td>
+<td class="gt_row gt_right">1.256</td>
+<td class="gt_row gt_right">0.928</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.670</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.601</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.676</td>
+<td class="gt_row gt_right">3.108</td>
+<td class="gt_row gt_right">2.420</td>
+<td class="gt_row gt_right">1.912</td>
+<td class="gt_row gt_right">3.334</td>
+<td class="gt_row gt_right">4.246</td>
+<td class="gt_row gt_right">4.745</td>
+<td class="gt_row gt_right">0.983</td>
+<td class="gt_row gt_right">0.794</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.547</td>
+<td class="gt_row gt_right">0.791</td>
+<td class="gt_row gt_right">1.222</td>
+<td class="gt_row gt_right">1.661</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left gt_stub" data-quarto-table-cell-role="th">Unsigned Diffusion Curvature</td>
+<td class="gt_row gt_right">0.894</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.892</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.900</td>
+<td class="gt_row gt_right">0.903</td>
+<td class="gt_row gt_right">0.904</td>
+<td class="gt_row gt_right">0.907</td>
+<td class="gt_row gt_right">1.295</td>
+<td class="gt_row gt_right">1.295</td>
+<td class="gt_row gt_right">1.309</td>
+<td class="gt_row gt_right">1.323</td>
+<td class="gt_row gt_right">1.332</td>
+<td class="gt_row gt_right">1.323</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.598</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.605</td>
+<td class="gt_row gt_right">0.616</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.618</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.617</td>
+<td class="gt_row gt_right" style="font-weight: bold">0.624</td>
 </tr>
 </tbody>
 </table>
@@ -856,12 +984,12 @@ Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-manifolds-noise-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Performance of methods under noise on 2-Manifolds with Noise.
+Figure&nbsp;4: Performance of methods under noise on 2-Manifolds with Noise.
 </figcaption>
 </figure>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-3" href="../nbs/experiments/2a2-toy-manifolds-comparison-preview.html#cell-fig-2-manifolds-noise-table">Source: Standard libraries</a></div>
+<a class="quarto-notebook-link" id="nblink-4" href="../nbs/2-Toy-Manifolds-Benchmark-preview.html#cell-fig-2-manifolds-noise-table">Source: Standard libraries</a></div>
 <section id="differentiating-sign-in-high-dimensions" class="level3" data-number="4.0.1">
 <h3 data-number="4.0.1" class="anchored" data-anchor-id="differentiating-sign-in-high-dimensions"><span class="header-section-number">4.0.1</span> Differentiating Sign in High Dimensions</h3>
 <p>Most existing methods only quantify their performance in high dimensions on one or two test cases.</p>
@@ -871,16 +999,16 @@ Figure&nbsp;3: Performance of methods under noise on 2-Manifolds with Noise.
 <div id="fig-sadspheres" class="quarto-figure quarto-figure-center quarto-float anchored" alt="...">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/..-nbs-experiments-2f-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
+<a href="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4"><img src="index_files/figure-html/..-nbs-5-sign-prediction-tests-fig-sadspheres-output-1.png" class="img-fluid figure-img" alt="..."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sadspheres-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
+Figure&nbsp;5: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<a class="quarto-notebook-link" id="nblink-4" href="../nbs/experiments/2f-sign-prediction-tests-preview.html#cell-fig-sadspheres">Source: Standard libraries</a></div>
+<a class="quarto-notebook-link" id="nblink-5" href="../nbs/5-sign-prediction-tests-preview.html#cell-fig-sadspheres">Source: Standard libraries</a></div>
 </section>
 <section id="loss-landscapes" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">4.1</span> Loss Landscapes</h2>
@@ -896,6 +1024,9 @@ Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Di
 </section>
 <section id="hickock-blumbergs-volume-comparison-curvature" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="hickock-blumbergs-volume-comparison-curvature"><span class="header-section-number">5.2</span> Hickock &amp; Blumberg’s Volume Comparison Curvature</h2>
+</section>
+<section id="sritharan" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sritharan"><span class="header-section-number">5.3</span> Sritharan</h2>
 </section>
 </section>
 <section id="conclusion" class="level1" data-number="6">
@@ -919,9 +1050,6 @@ Hickok, Abigail, and Andrew J. Blumberg. 2023. <span>“An <span>Intrinsic Appro
 <div id="ref-huguet2023HeatDiffusionPerspective" class="csl-entry" role="listitem">
 Huguet, Guillaume, Alexander Tong, Edward De Brouwer, Yanlei Zhang, Guy Wolf, Ian Adelstein, and Smita Krishnaswamy. 2023. <span>“A <span>Heat Diffusion Perspective</span> on <span>Geodesic Preserving Dimensionality Reduction</span>.”</span> May 30, 2023. <a href="https://doi.org/10.48550/arXiv.2305.19043">https://doi.org/10.48550/arXiv.2305.19043</a>.
 </div>
-<div id="ref-maaten2008VisualizingDataUsing" class="csl-entry" role="listitem">
-Maaten, Laurens van der, and Geoffrey Hinton. 2008. <span>“Visualizing <span>Data</span> Using t-<span>SNE</span>.”</span> <em>Journal of Machine Learning Research</em> 9 (86): 2579–2605. <a href="http://jmlr.org/papers/v9/vandermaaten08a.html">http://jmlr.org/papers/v9/vandermaaten08a.html</a>.
-</div>
 <div id="ref-moon2019VisualizingStructureTransitions" class="csl-entry" role="listitem">
 Moon, Kevin R., David van Dijk, Zheng Wang, Scott Gigante, Daniel B. Burkhardt, William S. Chen, Kristina Yim, et al. 2019. <span>“Visualizing Structure and Transitions in High-Dimensional Biological Data.”</span> <em>Nature Biotechnology</em> 37 (12, 12): 1482–92. <a href="https://doi.org/10.1038/s41587-019-0336-3">https://doi.org/10.1038/s41587-019-0336-3</a>.
 </div>
@@ -934,9 +1062,6 @@ Saloff-Coste, Laurent. 2010. <span>“The Heat Kernel and Its Estimates.”</spa
 <div id="ref-steinerberger2022CurvatureGraphsEquilibrium" class="csl-entry" role="listitem">
 Steinerberger, Stefan. 2022. <span>“Curvature on <span>Graphs</span> via <span>Equilibrium Measures</span>.”</span> September 5, 2022. <a href="https://doi.org/10.48550/arXiv.2202.01658">https://doi.org/10.48550/arXiv.2202.01658</a>.
 </div>
-<div id="ref-sturm2006GeometryMetricMeasure" class="csl-entry" role="listitem">
-Sturm, Karl-Theodor. 2006. <span>“On the Geometry of Metric Measure Spaces.”</span> <em>Acta Mathematica</em> 196 (1): 65–131. <a href="https://doi.org/10.1007/s11511-006-0002-8">https://doi.org/10.1007/s11511-006-0002-8</a>.
-</div>
 <div id="ref-tong2021DiffusionEarthMovera" class="csl-entry" role="listitem">
 Tong, Alexander Y., Guillaume Huguet, Amine Natik, Kincaid Macdonald, Manik Kuchroo, Ronald Coifman, Guy Wolf, and Smita Krishnaswamy. 2021. <span>“Diffusion <span>Earth Mover</span>’s <span>Distance</span> and <span>Distribution Embeddings</span>.”</span> In <em>Proceedings of the 38th <span>International Conference</span> on <span>Machine Learning</span></em>, 10336–46. PMLR. <a href="https://proceedings.mlr.press/v139/tong21a.html">https://proceedings.mlr.press/v139/tong21a.html</a>.
 </div>
@@ -945,9 +1070,10 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
 </div>
 </div>
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Diffusion energies across multiple scales on a 4-dimensional saddle, plane, and sphere (all 3-manifolds). When comparing directly between times, there is no clear separation of curvatures. Aligning diffusions by diffusion trajectory distance reveals curvature.</span>
 <span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.</span>
+<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.</span>
+<span class="glightbox-desc lightbox-desc-4">Figure&nbsp;5: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Diffusion Curvature robustly distinguishes between the signs of the data, even in high dimensions, and with relative sparsity.</span>
 </div>
 </section>
 
@@ -956,7 +1082,7 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
 
 <ol>
 <li id="fn1"><p>Consider kernel density estimation, where one places gaussians on each data point and sums up the probability assigned to each area. The higher the curvature, the higher the reported density, since at the end of an ellipsoid the gaussians have greater overlap with each other than in its center – even though the intrinsic density of the surface is uniform.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>For instance, one could construct a comparison graph which matched the 1-step diffusion laziness of the input graph, after suitable denoising.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This simplex corresponds to the ‘diffusion coordinates’ used by Coifman, as well as the setting of Fasina’s diffusion-based Fisher Information metric (CITE). <a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{macdonald2024,
   author = {MacDonald, Kincaid and Bhaskar, Dhananjay and Zhang, Yanlei
@@ -964,7 +1090,7 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
   title = {Diffusion {Curvature} for {Fast,} {Point-wise,}
     {Noise-Resistant} {Geometric} {Featurization} of {Graphs} and
     {Pointclouds}},
-  date = {2024-05-24},
+  date = {2024-07-30},
   langid = {en},
   abstract = {For a number of years now work has been proceeding in
     order to bring to perfection the crudely conceived idea of a machine
@@ -977,7 +1103,7 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
 MacDonald, Kincaid, Dhananjay Bhaskar, Yanlei Zhang, Ian Adelstein, and
 Smita Krishnaswamy. 2024. <span>“Diffusion Curvature for Fast,
 Point-Wise, Noise-Resistant Geometric Featurization of Graphs and
-Pointclouds.”</span> IEEE TPAMI. May 24, 2024.
+Pointclouds.”</span> IEEE TPAMI. July 30, 2024.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1390,7 +1516,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","openEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

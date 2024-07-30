@@ -170,3 +170,9 @@ token
 # Jupyter cache - storing notebook state to avoid unneeded re-executions
 .jupyter_cache
 .nova
+
+# Quarto
+**/.quarto/
+
+.aider*
+.thread-dev
