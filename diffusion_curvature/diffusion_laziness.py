@@ -126,6 +126,7 @@ class DiffusionLaziness():
         self,
         diffusion_type:DIFFUSION_TYPES = "diffusion matrix",
         laziness_method:LAZINESS_METHODS = "Entropic",
+        smoothing = 2, 
     ):
         store_attr()
 
@@ -144,6 +145,7 @@ class DiffusionLaziness():
         ts = deepcopy(ts)
         if isinstance(ts, int): ts = [ts]
         if D is None: ts += [t_dist]
+        if self.smoothing: ts = [self.smoothing] + ts
         W = jnp.array(W)
         # get powers of diffusion
         match self.diffusion_type:
@@ -160,13 +162,29 @@ class DiffusionLaziness():
                 laziness_fn = jax.vmap(wasserstein_spread_of_diffusion)
             case "Entropic":
                 laziness_fn = jax.vmap(entropy_of_diffusion, (0), 0)
-        if D is None: diffusions = Pts[:-1] # the last Pt is for heat 
+        self.ts = ts
+        diffusions = Pts
+
+        if D is None: 
+            diffusions = diffusions[:-1] # the last Pt is for heat 
+            self.ts = self.ts[:-1]
+        if self.smoothing is not None:
+            self.smoothing_P = diffusions[0]
+            diffusions = diffusions[1:]
+            self.ts = self.ts[1:]
+
+
         if idx is not None: diffusions = [d[idx][None,:] for d in diffusions]
-        self.ts = ts[:-1]
+
         self.ls = laziness_fn(jnp.stack(diffusions)).T 
         self.ds = diffusion_distances_along_trajectory(diffusions).T
         if len(self.ts) > 1: laziness_under_curve = trapezoidal_rule(self.ds, self.ls)
         else:                laziness_under_curve = self.ls
+
+        if self.smoothing and idx is None: # TODO there are probably more intelligent ways to do this smoothing
+            # Local averaging to counter the effects local density
+            average_laziness = self.smoothing_P @ laziness_under_curve
+            laziness_under_curve = average_laziness.squeeze()
         return laziness_under_curve
     
     def integrate_laziness_with_bounds(self, min_d, max_d, idxs=None):
@@ -183,6 +201,7 @@ class DiffusionLaziness():
         valid_ls = jnp.where(mask, ls_filtered, jnp.nan)
         
         results = trapezoidal_rule(valid_ds, valid_ls)
+
         return results
         
 
@@ -210,10 +229,9 @@ def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", als
                     dc_name = name
         if dc_name is None:
             dc_name = "Unknown"
-        if isinstance(dc, DiffusionLaziness):
-            t_values, distances, curvatures = dc.ts, dc.ds[idx], dc.ls[idx]
-        else:
-            t_values, distances, curvatures = dc.manifold_lazy_est.ts, dc.manifold_lazy_est.ds[idx], dc.manifold_lazy_est.ls[idx]
+        t_values, distances, curvatures = dc.ts, dc.ds[idx], dc.ls[idx]
+        # else:
+        #     t_values, distances, curvatures = dc.manifold_lazy_est.ts, dc.manifold_lazy_est.ds[idx], dc.manifold_lazy_est.ls[idx]
         axs[1].plot(distances, curvatures, label=dc_name)
         if also_plot_against_time: axs[0].plot(t_values, curvatures, label=dc_name)
         
@@ -229,7 +247,7 @@ def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", als
     axs[1].legend()
     plt.show()
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 70
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 71
 def compare_curvature_across_datasets(
     *diffusion_lazinesses,
     idxs:List  = None # list of idxs to compare. Can also be a list of lists of idxs, one per DiffusionLaziness
@@ -252,7 +270,6 @@ def compare_curvature_across_datasets(
     
     max_ds = jnp.array([jnp.max(md) for md in mean_ds])
     minmax_ds = jnp.min(max_ds)
-
     if isinstance(idxs[0], List) or isinstance(idxs[0], jax.Array):
         bounded_integrals = [diffusion_lazinesses[i].integrate_laziness_with_bounds(0, minmax_ds, idxs=idxs[i]) for i in range(len(diffusion_lazinesses))]
     else:

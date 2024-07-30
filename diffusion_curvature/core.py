@@ -456,8 +456,9 @@ class DiffusionCurvature2():
             graph_former = None,
             dimest = None, # Dimension estimator to use. If none, defaults to kNN.
             distance_t = None, 
-            comparison_space_trials = 1,
+            comparison_space_trials = 10,
             comparison_space_file = "../data/entropies_averaged.h5",
+            smoothing = 2,
             verbose = False,
     ):
         store_attr()
@@ -466,10 +467,12 @@ class DiffusionCurvature2():
         self.manifold_lazy_est = DiffusionLaziness(
             diffusion_type = diffusion_type,
             laziness_method = laziness_method,
+            smoothing = smoothing,
         )
         self.comparison_lazy_est = DiffusionLaziness(
             diffusion_type = diffusion_type,
             laziness_method = laziness_method,
+            smoothing = smoothing,
         )
         
         
