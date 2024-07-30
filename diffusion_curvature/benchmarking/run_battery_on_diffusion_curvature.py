@@ -4,24 +4,25 @@
 __all__ = ['battery_file', 'k', 'neighbor_scale', 'alpha', 'ts', 'name_of_run', 'curvature_fn', 'main', 'compute_correlations',
            'result_table', 'compute_sign_score']
 
-# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 2
+# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 3
 # parameters for run
-# battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_dikey.h5"
-battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_LowD_HighSampled.h5" # for test runs
-k = 1 # for curvature agnostic kernel
+battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_dikey.h5"
+# battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_LowD_HighSampled.h5" # for test runs
+k = 80 # for curvature agnostic kernel
 neighbor_scale = 2 # for curvature agnostic kernel
-alpha = 0 
+alpha = 0
 ts = list(range(1,80))
 
-name_of_run = f"DC2_with_idx_k-{k}_ns-{neighbor_scale}_alpha-{alpha}_maxt-{max(ts)}_lowdhighsamples"
+name_of_run = f"DC2_with_idx_k-{k}_alpha-{alpha}_maxt-{max(ts)}"
 print(name_of_run)
 
-# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 4
+# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 5
 from ..core import DiffusionCurvature2
-from ..kernels import get_curvature_agnostic_graph
+from ..kernels import get_curvature_agnostic_graph, tune_curvature_agnostic_kernel
 
-def curvature_fn(X, dim, k=k, neighbor_scale = neighbor_scale, ts = ts, alpha = alpha):
-    graph_former = partial(get_curvature_agnostic_graph, k = k, neighbor_scale = neighbor_scale, alpha = alpha)
+def curvature_fn(X, dim, k = k, ts = ts, alpha = alpha, ns = neighbor_scale):
+    graph_former, ns = tune_curvature_agnostic_kernel(X, k, tolerance = 1, max_iterations = 100, alpha = alpha)
+    # graph_former = partial(get_curvature_agnostic_graph, k = k, neighbor_scale = neighbor_scale, alpha = alpha)
     DC = DiffusionCurvature2(
         diffusion_type = "diffusion matrix",
         laziness_method="Entropic",
@@ -33,7 +34,8 @@ def curvature_fn(X, dim, k=k, neighbor_scale = neighbor_scale, ts = ts, alpha = 
     )
     return k.item()
 
-# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 5
+# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 6
+from ..utils import jax_set_best_gpu
 from tqdm.auto import tqdm, trange
 from .curvature_colosseum import compute_curvature_on_battery
 from fastcore.all import *
@@ -41,6 +43,7 @@ import deepdish
 
 @call_parse
 def main():
+    jax_set_best_gpu()
     # load curvature battery
     CC = deepdish.io.load(battery_file)
 
@@ -53,7 +56,7 @@ def main():
         deepdish.io.save(f"/home/piriac/data/diffusion_curvature/computed_diffusion_curvatures_core_{name_of_run}.h5", computed_curvatures)
     return CC, computed_curvatures
 
-# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 9
+# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 10
 # compute the pearson correlations between the computed curvature and the true curvature
 def compute_correlations(
         computed_curvature, # the computed curvature
@@ -76,7 +79,7 @@ def compute_correlations(
                 correlations[d][c][noise_level]['p'] = p
     return correlations
 
-# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 12
+# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 13
 # Make a latex table of the correlations, both r and p values, with dimension in the rows and noise level in the columns
 def result_table(
         correlations, # dictionary of correlations
@@ -95,7 +98,7 @@ def result_table(
     print(table)
     return table
 
-# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 18
+# %% ../../nbs/4a-curvature-colosseum-with-diffusion-curvature.ipynb 19
 def compute_sign_score(
         computed_curvature, # the computed curvature
         CC, # the battery dictionary

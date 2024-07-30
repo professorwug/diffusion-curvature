@@ -4,7 +4,8 @@
 __all__ = ['median_heuristic', 'gaussian_kernel', 'compute_anisotropic_affinities_from_graph',
            'compute_anisotropic_diffusion_matrix_from_graph', 'pygsp_graph_from_points', 'SimpleGraph',
            'get_curvature_agnostic_graph', 'get_adaptive_graph', 'get_fixed_graph', 'get_knn_graph', 'diffusion_matrix',
-           'diffusion_matrix_from_graph', 'num_in_first_scale_of_diffusion', 'tune_curvature_agnostic_kernel']
+           'diffusion_matrix_from_affinities', 'diffusion_matrix_from_graph', 'num_in_first_scale_of_diffusion',
+           'tune_curvature_agnostic_kernel']
 
 # %% ../nbs/0a0-Kernels.ipynb 7
 import numpy as np
@@ -99,7 +100,7 @@ class SimpleGraph:
     W: np.ndarray
 
 
-def get_curvature_agnostic_graph(X, neighbor_scale = 1, k = 1, alpha = 1, self_loops = True, simple_graph = True):
+def get_curvature_agnostic_graph(X, neighbor_scale = 1, k = 1, alpha = 0, self_loops = True, simple_graph = True):
     W = gaussian_kernel(
         X, 
         kernel_type = "curvature agnostic", 
@@ -190,27 +191,38 @@ def diffusion_matrix(
     return P
 
 # %% ../nbs/0a0-Kernels.ipynb 21
+import jax.numpy as jnp
+def diffusion_matrix_from_affinities(
+        W
+):
+    W = W + jnp.eye(len(W))*1e-8
+    D = jnp.diag(1/jnp.sum(W,axis=1))
+    P = D @ W
+    return P
+
 def diffusion_matrix_from_graph(
         G
 ):
-    return diffusion_matrix(A = G.W)
+    return diffusion_matrix_from_affinities(G.W)
 
 # %% ../nbs/0a0-Kernels.ipynb 56
 import jax
 from functools import partial
 
+@jax.jit
 def num_in_first_scale_of_diffusion(
         P:jax.Array, # diffusion matrix
         eps:float = 1e-10, # only counts points with diffusion mass greater than this
 ):
     P_e = (P > eps).astype(int)
     nums = jnp.sum(P_e, axis=1)
-    return jnp.median(nums).item() # the median is hopefully more robust to outlier points in really dense pockets.
+    return jnp.median(nums) # the median is hopefully more robust to outlier points in really dense pockets.
 
 # %% ../nbs/0a0-Kernels.ipynb 57
-def tune_curvature_agnostic_kernel(X:np.ndarray, num_in_first_scale:int, tolerance:int = 5, eps:float = 1e-10):
-        def try_kernel_with_neighbor_scale(X, ns):
-                kernel = partial(get_curvature_agnostic_graph, neighbor_scale = ns)
+import warnings
+def tune_curvature_agnostic_kernel(X:np.ndarray, num_in_first_scale:int, tolerance:int = 5, eps:float = 1e-10, max_iterations = 1000, **kwargs):
+        def try_kernel_with_neighbor_scale(X, ns, **kwargs):
+                kernel = partial(get_curvature_agnostic_graph, neighbor_scale = ns, **kwargs)
                 G = kernel(X)
                 P = diffusion_matrix_from_graph(G)
                 num = num_in_first_scale_of_diffusion(P, eps)
@@ -220,10 +232,13 @@ def tune_curvature_agnostic_kernel(X:np.ndarray, num_in_first_scale:int, toleran
         upper_bound = 10
         best_ns = None
         best_num = float('inf')
+        total_runs = 0
         
-        while abs(best_num - num_in_first_scale) > tolerance:
+        while abs(best_num - num_in_first_scale) > tolerance and total_runs < max_iterations:
+                total_runs += 1
                 ns = (lower_bound + upper_bound) / 2
-                num, kernel = try_kernel_with_neighbor_scale(X, ns)
+                num, kernel = try_kernel_with_neighbor_scale(X, ns, **kwargs)
+                num = num.item()
                 
                 if num > num_in_first_scale:
                         upper_bound = ns
@@ -233,6 +248,8 @@ def tune_curvature_agnostic_kernel(X:np.ndarray, num_in_first_scale:int, toleran
                 if abs(num - num_in_first_scale) < abs(best_num - num_in_first_scale):
                         best_ns = ns
                         best_num = num
+        if total_runs >= max_iterations and abs(best_num - num_in_first_scale) > tolerance:
+            warnings.warn(f"Kernel bandwidth selection did not converge. Desired {num_in_first_scale} pts. in first diffusion but only found {best_num}.")
         
         _, best_kernel = try_kernel_with_neighbor_scale(X, best_ns)
         return best_kernel, best_ns
