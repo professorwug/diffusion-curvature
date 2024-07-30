@@ -2,9 +2,10 @@
 
 # %% auto 0
 __all__ = ['median_heuristic', 'gaussian_kernel', 'compute_anisotropic_affinities_from_graph',
-           'compute_anisotropic_diffusion_matrix_from_graph', 'pygsp_graph_from_points', 'get_curvature_agnostic_graph',
-           'get_adaptive_graph', 'get_fixed_graph', 'get_knn_graph', 'diffusion_matrix', 'generic_kernel',
-           'diffusion_matrix_from_affinities']
+           'compute_anisotropic_diffusion_matrix_from_graph', 'pygsp_graph_from_points', 'SimpleGraph',
+           'get_curvature_agnostic_graph', 'get_adaptive_graph', 'get_fixed_graph', 'get_knn_graph', 'diffusion_matrix',
+           'diffusion_matrix_from_affinities', 'diffusion_matrix_from_graph', 'num_in_first_scale_of_diffusion',
+           'tune_curvature_agnostic_kernel']
 
 # %% ../nbs/0a0-Kernels.ipynb 7
 import numpy as np
@@ -91,7 +92,15 @@ def pygsp_graph_from_points(X, knn=15):
     return G
 
 # %% ../nbs/0a0-Kernels.ipynb 11
-def get_curvature_agnostic_graph(X, neighbor_scale = 1, k = 1, alpha = 1, self_loops = True):
+from dataclasses import dataclass
+import warnings
+
+@dataclass
+class SimpleGraph:
+    W: np.ndarray
+
+
+def get_curvature_agnostic_graph(X, neighbor_scale = 1, k = 1, alpha = 0, self_loops = True, simple_graph = True):
     W = gaussian_kernel(
         X, 
         kernel_type = "curvature agnostic", 
@@ -101,8 +110,14 @@ def get_curvature_agnostic_graph(X, neighbor_scale = 1, k = 1, alpha = 1, self_l
     )
     # set diagonal of W to zero
     if not self_loops: np.fill_diagonal(W, 0)
-    G = pygsp.graphs.Graph(W)
+    if simple_graph:
+        G = SimpleGraph(W)
+    else:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            G = pygsp.graphs.Graph(W)
     return G
+    
 
 def get_adaptive_graph(X, k = 5, alpha = 1, self_loops = True):
     W = gaussian_kernel(
@@ -112,7 +127,9 @@ def get_adaptive_graph(X, k = 5, alpha = 1, self_loops = True):
         anisotropic_density_normalization = alpha,
     )
     if not self_loops: np.fill_diagonal(W, 0)
-    G = pygsp.graphs.Graph(W)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning, module='pygsp')
+        G = pygsp.graphs.Graph(W)
     return G
 
 def get_fixed_graph(X, sigma = 0.2, alpha = 1, self_loops = True):
@@ -124,10 +141,12 @@ def get_fixed_graph(X, sigma = 0.2, alpha = 1, self_loops = True):
     )
     # set diagonal of W to zero
     if not self_loops: np.fill_diagonal(W, 0)
-    G = pygsp.graphs.Graph(W)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=UserWarning, module='pygsp')
+        G = pygsp.graphs.Graph(W)
     return G
 
-# %% ../nbs/0a0-Kernels.ipynb 13
+# %% ../nbs/0a0-Kernels.ipynb 17
 from sklearn.neighbors import kneighbors_graph
 def get_knn_graph(
         X:np.ndarray,
@@ -145,7 +164,7 @@ def get_knn_graph(
     else:
         return W
 
-# %% ../nbs/0a0-Kernels.ipynb 16
+# %% ../nbs/0a0-Kernels.ipynb 20
 import numpy as np
 from sklearn.metrics import pairwise_distances
 from sklearn.preprocessing import normalize
@@ -171,22 +190,8 @@ def diffusion_matrix(
     P = normalize(W, norm="l1", axis=1)
     return P
 
-# %% ../nbs/0a0-Kernels.ipynb 51
-import jax
+# %% ../nbs/0a0-Kernels.ipynb 21
 import jax.numpy as jnp
-
-def generic_kernel(
-        D, # distance matrix
-        sigma, # kernel bandwidth
-        anisotropic_density_normalization, 
-
-):  
-    W = (1/(sigma*np.sqrt(2*jnp.pi)))*jnp.exp((-D**2)/(2*sigma**2))
-    D = jnp.diag(1/((jnp.sum(W,axis=1)+1e-8)**anisotropic_density_normalization))
-    W = D @ W @ D
-    return W
-
-# %% ../nbs/0a0-Kernels.ipynb 52
 def diffusion_matrix_from_affinities(
         W
 ):
@@ -194,3 +199,58 @@ def diffusion_matrix_from_affinities(
     D = jnp.diag(1/jnp.sum(W,axis=1))
     P = D @ W
     return P
+
+def diffusion_matrix_from_graph(
+        G
+):
+    return diffusion_matrix_from_affinities(G.W)
+
+# %% ../nbs/0a0-Kernels.ipynb 56
+import jax
+from functools import partial
+
+@jax.jit
+def num_in_first_scale_of_diffusion(
+        P:jax.Array, # diffusion matrix
+        eps:float = 1e-10, # only counts points with diffusion mass greater than this
+):
+    P_e = (P > eps).astype(int)
+    nums = jnp.sum(P_e, axis=1)
+    return jnp.median(nums) # the median is hopefully more robust to outlier points in really dense pockets.
+
+# %% ../nbs/0a0-Kernels.ipynb 57
+import warnings
+def tune_curvature_agnostic_kernel(X:np.ndarray, num_in_first_scale:int, tolerance:int = 5, eps:float = 1e-10, max_iterations = 1000, **kwargs):
+        def try_kernel_with_neighbor_scale(X, ns, **kwargs):
+                kernel = partial(get_curvature_agnostic_graph, neighbor_scale = ns, **kwargs)
+                G = kernel(X)
+                P = diffusion_matrix_from_graph(G)
+                num = num_in_first_scale_of_diffusion(P, eps)
+                return num, kernel
+        
+        lower_bound = 0
+        upper_bound = 10
+        best_ns = None
+        best_num = float('inf')
+        total_runs = 0
+        
+        while abs(best_num - num_in_first_scale) > tolerance and total_runs < max_iterations:
+                total_runs += 1
+                ns = (lower_bound + upper_bound) / 2
+                num, kernel = try_kernel_with_neighbor_scale(X, ns, **kwargs)
+                num = num.item()
+                
+                if num > num_in_first_scale:
+                        upper_bound = ns
+                else:
+                        lower_bound = ns
+                
+                if abs(num - num_in_first_scale) < abs(best_num - num_in_first_scale):
+                        best_ns = ns
+                        best_num = num
+        if total_runs >= max_iterations and abs(best_num - num_in_first_scale) > tolerance:
+            warnings.warn(f"Kernel bandwidth selection did not converge. Desired {num_in_first_scale} pts. in first diffusion but only found {best_num}.")
+        
+        _, best_kernel = try_kernel_with_neighbor_scale(X, best_ns)
+        return best_kernel, best_ns
+

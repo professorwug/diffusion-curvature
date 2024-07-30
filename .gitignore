@@ -174,5 +174,5 @@ token
 # Quarto
 **/.quarto/
 
-/.thread-dev-
+.aider*
 .thread-dev

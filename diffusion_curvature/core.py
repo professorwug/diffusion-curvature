@@ -23,7 +23,6 @@ from jax.experimental import sparse
 
 # Graph operations, laziness, measures
 from .graphs import diff_aff, diff_op
-from .kernels import diffusion_matrix_from_affinities
 from .heat_diffusion import heat_diffusion_on_signal, kronecker_delta, jax_power_matrix, heat_diffusion_from_dirac
 from .diffusion_laziness import wasserstein_spread_of_diffusion, entropy_of_diffusion
 from .distances import phate_distances
@@ -442,6 +441,7 @@ def fill_diagonal(a, val):
 
 # %% ../nbs/0c-Core.ipynb 9
 from .diffusion_laziness import DiffusionLaziness, compare_curvature_across_datasets
+from .kernels import tune_curvature_agnostic_kernel
 
 class DiffusionCurvature2():
     DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
@@ -455,13 +455,8 @@ class DiffusionCurvature2():
             comparison_method: _COMPARISON_METHOD = 'Subtraction', # Either ['Ollivier', 'Subtraction']
             graph_former = None,
             dimest = None, # Dimension estimator to use. If none, defaults to kNN.
-            points_per_cluster = None, # Number of points to use in each cluster when constructing comparison spaces. Each comparison space takes about 20sec to construct, and has different sampling and dimension. If 1, constructs a different comparison space for each point; if None, constructs just one comparison space.
-            comparison_space_size_factor = 1, # Number of points in comparison space is the number of points in the original space divided by this factor.
-            use_grid=False, # If True, uses a grid of points as the comparison space. If False, uses a random sample of points.            
-            max_flattening_epochs=50,     
-            aperture = 20, # if using Laziness flattening, this controls the size of neighborhood over which the return probability is averaged.
-            smoothing=1,
-            distance_t = None,
+            distance_t = None, 
+            comparison_space_trials = 1,
             comparison_space_file = "../data/entropies_averaged.h5",
             verbose = False,
     ):
@@ -477,7 +472,6 @@ class DiffusionCurvature2():
             laziness_method = laziness_method,
         )
         
-        if graph_former is None: self.graph_former = partial(get_adaptive_graph, k = 5, alpha = 1)
         
         if self.dimest is None:
             self.dimest = skdim.id.KNN()
@@ -509,7 +503,10 @@ class DiffusionCurvature2():
     ):
         # build graph
         if t is not None: ts = [t]
-        self.X = X
+        self.X = X 
+
+        if self.graph_former is None:
+            self.graph_former, _ = tune_curvature_agnostic_kernel(X, 80, tolerance = 5)
         self.G = self.graph_former(X)
 
         # fit points
@@ -523,18 +520,21 @@ class DiffusionCurvature2():
 
         if unsigned:
             return ls_manifold
-
+        
         # build comparison space
-        Rn = plane(n = len(X), dim=dim)
-        G_euclidean = self.graph_former(Rn)
-        # fit comparison space
-        ls_euclidean_raw = self.comparison_lazy_est.fit_transform(
-            G_euclidean,
-            ts, 
-            idx = 0,
-            D = None,
-            t_dist = t_dist,
-        )
+        ls_euclidean_raw = 0
+        for i in range(self.comparison_space_trials):
+            Rn = plane(n = len(X), dim=dim)
+            G_euclidean = self.graph_former(Rn)
+            # fit comparison space
+            ls_euclidean_raw += self.comparison_lazy_est.fit_transform(
+                G_euclidean,
+                ts, 
+                idx = 0,
+                D = None,
+                t_dist = t_dist,
+            )
+        ls_euclidean_raw /= self.comparison_space_trials
 
         # integrate with bounds across spaces.
         comparison_idxs = jnp.arange(len(X)) if idx is None else [idx]
