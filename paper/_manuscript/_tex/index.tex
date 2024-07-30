@@ -1161,6 +1161,35 @@ perform well on well-sampled noiseless toy manifolds. In Table
 \textbf{?@fig-2-manifolds-noise-table}, we see the results of adding
 Gaussian noise to each manifold.
 
+
+\begin{table*}[htbp]
+\centering
+\resizebox{0.75\textwidth}{!}{
+
+\begin{tabular}{lc|cccccc|cccccc|cccccc}
+\toprule
+\multirow{2}{*}{\textbf{Model}} & \multirow{2}{*}{\textbf{Metric}} & \multicolumn{6}{c|}{\textbf{Torus}} & \multicolumn{6}{c|}{\textbf{Ellipsoid}} & \multicolumn{6}{c}{\textbf{Saddle}} \\
+& & 0.0 & 0.1 & 0.2 & 0.3 & 0.4 & 0.5 & \multicolumn{1}{c|}{0.25} & 0.0 & 0.1 & 0.2 & 0.3 & 0.4 & 0.5 & \multicolumn{1}{c|}{0.25} & 0.0 & 0.1 & 0.2 & 0.3 & 0.4 & 0.5 \\
+\midrule
+Diffusion Curvature & ED & \textbf{0.774} & - & 0.867 & - & 0.938 & - & \textbf{0.331} & - & 0.667 & - & 1.116 & - & 0.829 & - & \textbf{0.517} & - & \textbf{0.234} & - \\
+Hickok \& Blumberg & ED & 0.961 & - & \textbf{0.556} & - & \textbf{0.353} & - & 1.070 & - & \textbf{0.319} & - & 1.055 & - & 2.138 & - & 0.953 & - & 1.455 & - \\
+Ollivier Ricci Curvature & ED & 0.845 & - & 0.837 & - & 0.826 & - & 0.587 & - & 0.551 & - & \textbf{0.507} & - & \textbf{0.792} & - & 0.847 & - & 0.843 & - \\
+Forman Ricci Curvature & ED & 6.832 & - & 6.726 & - & 6.508 & - & 7.693 & - & 7.643 & - & 7.498 & - & 8.307 & - & 8.432 & - & 8.888 & - \\
+\midrule
+Diffusion Curvature & PCC & 0.921 & - & \textbf{0.951} & - & \textbf{0.958} & - & 0.625 & - & 0.589 & - & \textbf{0.614} & - & 0.753 & - & 0.766 & - & 0.673 & - \\
+Hickok \& Blumberg & PCC & \textbf{0.954} & - & 0.945 & - & 0.856 & - & \textbf{0.727} & - & \textbf{0.706} & - & 0.575 & - & \textbf{0.992} & - & \textbf{0.904} & - & \textbf{0.749} & - \\
+Ollivier Ricci Curvature & PCC & 0.687 & - & 0.677 & - & 0.636 & - & 0.596 & - & 0.560 & - & 0.488 & - & 0.566 & - & 0.484 & - & 0.558 & - \\
+Forman Ricci Curvature & PCC & 0.558 & - & 0.575 & - & 0.598 & - & 0.412 & - & 0.373 & - & 0.332 & - & 0.466 & - & 0.482 & - & 0.522 & - \\
+\midrule
+\bottomrule\n\end{tabular}
+
+}
+\caption{\textit{Root Mean Square Error (RMSE), Energy Distance (Eng. Dist), Pearson Correlation Coefficient (Pearson Corr.) of Gaussian/scalar curvature estimation for different noise level. For RMSE and Eng. Dist, smaller is better. For Pearson Correlation, larger is better.}}
+\label{table:RMSE_pcc}
+\end{table*}
+
+
+
 \subsubsection{Differentiating Sign in High
 Dimensions}\label{differentiating-sign-in-high-dimensions}
 
