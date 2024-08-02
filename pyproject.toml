@@ -2,11 +2,11 @@
 name = "diffusion_curvature"
 version = "0.1.1"
 requires-python = ">=3.11"
-dependencies = ["scikit-dimension", "tadasets", "graphriccicurvature"]
+dependencies = ["scikit-dimension", "tadasets", "thread-dev", "great-tables"]
 
 [tool.pixi.project]
 channels = ["nvidia", "conda-forge", "fastai", "pytorch"] 
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-arm64"]
 
 [tool.pixi.dependencies] # Conda dependencies managed by pixi
 # # Common & Ubiquitous
@@ -29,8 +29,10 @@ sympy = ">=1.12,<2"
 plotly = ">=5.18.0,<5.19"
 tqdm = ">=4.66.1,<4.67"
 # Literate Programming
-nbdev = "2.2.10.*"
-fastcore = "1.5.29.*"
+fastcore = "1.5.29.*" # a python dialect optimized for literate programming
+nbdev = "2.2.10.*" # sync code from notebooks into source files, and vice versa
+jupyter-cache = ">=1.0.0,<1.1" # programmatically re-execute notebooks when their dependency files change
+
 # Project Specific
 pygsp = ">=0.5.1,<0.6"
 netCDF4 = ">=1.6.5,<1.7"
@@ -42,7 +44,6 @@ flax = ">=0.8.2,<0.9"
 pot = ">=0.9.3,<0.10"
 networkx = "==2.8.6"
 imageio = ">=2.34.0,<2.35"
-jupyter-cache = ">=1.0.0,<1.1"
 graphtools = ">=1.5.3,<1.6"
 h5py = ">=3.11.0,<3.12"
 lightning = ">=2.2.2,<2.3"
@@ -53,8 +54,8 @@ pykeops = ""
 diffusion_curvature = { path = ".", editable = true }
 
 [tool.pixi.tasks]
-# install the library in editable mode
-postinstall = "python -m ipykernel install --user --name diffusion_curvature-pixi && nbdev_install_hooks"
+# install a jupyter kernel and git hooks to prevent notebook conflicts
+postinstall = "python -m ipykernel install --user --name diffusion_curvature && nbdev_install_hooks"
 # test the installation
 test_import = "python -c 'import diffusion_curvature'"
 # Adding and creating experiments
@@ -66,17 +67,25 @@ nbsync = "nbdev_export" # export code from notebooks into the library
 nbclean = "nbdev_clean" # remove extraneous notebook metadata to reduce git conflicts
 pysync = "nbdev_update" # sync changes from library to notebooks
 docmaker = "nbdev_docs" # build docs
-zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels" # export experiments to markdown with quarto
+zettelmaker = "quarto render nbs/experiments --to gfm --no-execute --output-dir ../zettels --profile zettels" # export experiments to markdown with quarto, for interlinking with a pkm app
 notebooks = "jupyter lab --ip=0.0.0.0"
+notebooks_ai = "tmux new-session -d -s notebooks_ai 'jupyter thread --port 8899'"
 
-[tool.pixi.feature.cuda] # CUDA support; insteall with pixi install -e cuda
-platforms = ["win-64", "linux-64"]
+[tool.pixi.feature.cuda] # CUDA support; install with pixi install -e cuda
+platforms = ["win-64", "linux-64", 'osx-arm64']
 channels = ["nvidia", {channel = "pytorch", priority = -1}]
 system-requirements = {cuda = "12.1"}
-[tool.pixi.feature.cuda.dependencies]
+# [tool.pixi.feature.cuda.dependencies] # presently a bug in pixi requires specifying linux
+[tool.pixi.feature.cuda.target.linux-64.dependencies]
 pytorch-cuda = {version = "12.1.*", channel = "pytorch"}
 [tool.pixi.feature.cuda.tasks]
 jupyter = "jupyter notebook"
+
+
+[tool.pixi.feature.ollivier_ricci]
+platforms = ["win-64", "linux-64", 'osx-arm64']
+[tool.pixi.feature.cuda.dependencies]
+
 
 [tool.pixi.environments]
 cuda = ["cuda"]

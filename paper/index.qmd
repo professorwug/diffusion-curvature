@@ -49,6 +49,8 @@ citation:
     container-title: IEEE TPAMI
 number-sections: true
 ---
+---
+
 <!-- Latex formatting tweaks -->
 ```{=latex}
 \newcommand\Kaly[1]{\textcolor{blue}{Kaly: [[[#1]]]}}
@@ -56,15 +58,29 @@ number-sections: true
 
 # Introduction
 
-One of the most ubiquitous subjects of analysis in data science is the humble point cloud. The points, by themselves, are high dimensional and noisy; it is up to the data scientist to wring sense out of them. Per the Manifold Hypothesis, we assume the points were sampled on or near the surface of a low-dimensional manifold embedded in high-dimensional Euclidean space. Manifold learning methods, like t-SNE, PHATE, and Diffusion Maps, endeavor to recover salient features of the underlying manifold, like geodesic distances, population clusterings, and dimension, from its high-dimensional noisy sampling [@maaten2008VisualizingDataUsing; @moon2019VisualizingStructureTransitions; @coifman2006DiffusionMaps]. 
+The *Manifold Assumption* is among machine learning’s most prolific muses. Given only the knowledge that the local Euclidean distances between raw datapoints are meaningful, the Assumption grants a fount of theoretical intuition, and a growing number of practical methods. It lies behind low-dimensional embedding and visualization techniques like UMAP and PHATE, manifold distance estimators like HeatGeo (CITATIONS), and the entire field of Topological Data Analysis. It also invites one to use that theoretical inspiration to design new practical methods. Doing so, however, requires facing a sort of troll: one must bridge the idealized, analytic spaces of theory with the noisy, discrete world of real data. This is easier in some parts of theory than others. In particular, doing so is harder the more *locally* one tries to apply the Assumption. Global topological features are easier; manifold distances, harder; and manifold *curvatures*, perhaps the hardest of all.
 
-Curvature is a particularly troublesome geometric property to translate into the discrete, sampled realm. In smooth Riemannian manifolds, curvature is a *local* phenomenon. It can be obtained by fitting osculating circles of radius limiting to zero, or computed from the manifold’s Hessian, using the Second Fundamental Form. None of these translate into the discrete realm. In a sampled manifold, taking a local limit is impossible – one can’t “zoom in” past the sampling of points – and we don’t have access to the parametrization of the manifold or its tangent bundle, without computationally costly and potentially error-prone estimation. Moreover, as our sampling is likely noisy, the curvature can only be recovered over a sufficiently large neighborhood of points to counter the spurious geometric artifacts created noisy sampling. Thus, in the discrete realm, curvature becomes a “semi-local” phenomenon, in which neither the smallest nor larger scales can be trusted.
+However, distances or topological descriptors are widely used and have ready utility. One might be excused for asking, “why care about curvatures at all?” A response, becoming more coherent with a raft of new graph and point-cloud curvature methods, is partially for its utility as a hyper-local descriptor of manifold geometry. 
+There are many techniques, from Topological Data Analysis, to distances, or graph or manifold embedding techniques that give global features.  Curvature answers the opposing question: “*around this point, in this neighborhood, what’s happening to the local geometry*?” Such answers are directly interpretable in domains like single-cell biology, where curvature can indicate the extent of cell differentiation. They have also been shown to exceed and enhance the local discriminative powers of Graph Neural Networks (cite Bastian, COMPASS). 
+(ADD other areas of application; reference Hickok & Sritharan). loss landscapes, eg
 
-There are elegant generalizations of classical curvature to discrete spaces that overcome many of these roadblocks. Ollivier’s *Coarse Ricci Curvature* (CRC) employs optimal transport theory to relate the behavior of a discrete neighborhood to its smooth counterpart [@ollivier2009RicciCurvatureMarkov]. Sturm’s *displacement convexity of entropy* (DCE) measures the proliferation of midpoints in positive curvature [@sturm2006GeometryMetricMeasure]. Both methods use optimal transport as the basis of their “semi-local” measurement. Rather than trying to zoom in on a point, they define curvature between pairs of points, approximating, at a coarse scale, a Ricci tangent vector.
+But notions of graph and point-cloud curvature are also particularly poignant for their theoretical implications. On one level, they are attempting to square an impossible circle. While global, topological features have a theoretical tolerance for discrete data, Riemannian geometry is built at the level of *infinitesimal* locality – and curvature is the most local of Riemannian measurements. This is precisely where discrete data is the least reliable. Globally, point clouds can be recognized as manifolds, but zoom in to the locale of individual points, and the inevitable presence of noise and varying densities imbue the discrete manifold with a Heisenberg-like uncertainty: the smaller you go, the less you know of the manifold.
 
-Although these techniques are theoretically elegant, general, and applicable to any metric measure space, the setting of noisily sampled point clouds is practically challenging for CRC and DCE. Both methods rely on the graph’s shortest-path lengths as an approximation of the manifold’s ground distance - a perilous assumption when dealing with noisy data. And for large datasets, optimal transport calculations can be computationally prohibitive.
+Hence the need for that ‘bridge’ – a Rosetta Stone, if you will – between the continuous, analytically-specified spaces of theory and the messy realities of actual data. 
+The several existing discrete curvature methods chiefly use one of two classes of bridge: optimal transport, as in the field’s bulwark, Ollivier-Ricci curvature, and tangent-plane approximation, as used by more niche methods like Sritharan and Adal-PCA (REFINE).
+This choice may seem inconsequential – it’s only curvature, after all – but precisely because curvature is so local, the ability of such a bridge to estimate curvatures qualifies it for a much broader role: as a means to bring *general* geometric ideas into the discrete realm.
 
-In this paper, we develop Diffusion Curvature, a fast curvature estimate derived solely from the graph diffusion matrix. We first introduced the ideas behind Diffusion Curvature in [@bhaskar2022DiffusionCurvatureEstimating], in which we demonstrated its ability to produce an unsigned magnitude of curvature estimation for toy datasets and single-cell data, and proved a correspondence between the ratios of scalar curvature and diffusion curvature. We now present a refined definition which produces *signed* curvature values and prove bounds relating Diffusion Curvature to Ollivier's coarse Ricci Curvature. We demonstrate Diffusion Curvature’s robustness to noise and sampling artifacts, and position our technique as an adaptation of coarse Ricci curvature particularly suitable for point cloud data.
+Here we develop a comprehensive benchmarking suite, and present the first quantitative comparison of discrete curvature methods – probing their tolerance to noise, high dimensions, and parameter perturbations.
+The landscape is, unfortunately, rather dismal. Most existing methods reliably fail to distinguish between negative and positive curvatures in high dimensions, degrade under small quantities of noise, and are highly dependent on the user tuning parameters which the user – not having access to the ground-truth curvatures – has no ability to tune. 
+Graph curvature methods like Ollivier-Ricci and Forman-Ricci are difficult to translate to higher-density point cloud data, and point cloud methods like Sritharan, Hickok, and Adal-PCA depend on higher-order geometric concepts (like volumes and distances) whose estimation depends on curvature.
+This is both discouraging to those practitioners and academics to incorporate curvature estimation in their research, and suggestive of a larger cavity in geometric featurization. None of these existing bridges pass the curvature test.
+
+Perhaps the most well-traveled bridge in other areas of geometric estimation is data diffusion, or as often styled, “Diffusion Geometry”. Beginning in 200WAWA with Coifman & Lafon’s “Diffusion maps”, this bridge operates through repeated operation of a *diffusion operator* which can be thought of either as simulating heat diffusion, or performing a weighted random walk across data points. 
+When iterated, this diffusion process performs a sort of 'integration' of local structure into a set of semi-local features which enable one to escape the confounding factors noise and sparsity. This idea underlies distance estimators like Diffusion Distances and HeatGeo, dimensionality-reduction methods like PHATE and GAGA, and even a deep-learning based inference of the local Riemannian metric (NeuralFIM). More generally, the diffusion-based *graph scattering transform* has inspired new graph neural network architectures with state-of-the-art performance on baselines requiring fine-grained local discrimination. (CHECK. IS THIS TRUE?)
+
+Can this bridge of diffusion geometry pass the ‘curvature test’? Moreover, can it produce a curvature method robust enough to noise, dimension, and parameterization to be practically useful on point cloud data? In PREVIOUS PAPER, we gave a preliminary positive answer with *diffusion laziness curvature*, an unsigned curvature derived from the diffusion operator. This strongly suggested that the powered diffusion operator contains curvature information, but was lacking both in theoretical pedigree and experimental validation on anything beyond 2-dimensional manifolds. In *Diffusion Curvature*, we  present the maturation of this work.
+
+*Diffusion Curvature* is a signed curvature based on diffusion geometry. It is resilient to noise, has only one user-defined  ‘locality’ parameter (to which it is extremely tolerant), and robustly distinguishes between signs in high dimensions and under noise. We prove theoretical connections between diffusion curvature and the field’s bulwark, *Ollivier-Ricci Curvature*, which position diffusion curvature as a point-wise adaptation of Ollivier-Ricci - and further connect diffusion geometry to the optimal transport literature.  More broadly, the success of diffusion-based techniques in determining curvature strongly motivates diffusion geometry as the missing Rosetta Stone between geometric theory and data science practice.
 
 # Background
 
@@ -141,7 +157,6 @@ This is similar to applying a low-pass filter to the graph. As $t$ increases, th
 
 This is a remarkable feature of the diffusion matrix: the ability to “denoise” itself by iterating the random walk over larger time scales. Intuitively, the paths through the data most robustly trafficked by random walkers are those supported by multiple high-probability connections from independent starting points.
 
-
 ## Ollivier-Ricci Curvature
 
 Developed by Yann Ollivier in 2007, *Coarse Ricci Curvature* (or sometimes, “Ollivier Ricci Curvature”) is a direct translation of Ricci curvature to discrete metric spaces like graphs [@ollivier2009RicciCurvatureMarkov]. Several classical properties of Ricci curvature can be extended to the graph setting using Coarse Ricci Curvature. Ollivier has, for instance, proven versions of concentration inequalities, Bonnet Myers (more). Coarse Ricci Curvature has, in this way, become something of a bridge between continuous and coarse geometry. The basis of this bridge is optimal transport, and specifically, the 1-Wasserstein distance.
@@ -167,8 +182,6 @@ What is the analog on a graph of a “small sphere” around a point? Ollivier r
 2. Each $\mu_{x}(\cdot)$ has finite first moment, or *Jump*, i.e. for some $o \in X$ $\int d(o,y) \mu_{x}(y) \, dx < \infty$.
 
 In graphs, Ollivier defines these $\mu_x$ as the probability distributions created by a single-step random walk from the point $x$.
-
-
 
  With a transition probability $\alpha$, and equal probability of moving to each of $x$‘s neighbors on the graph, $\mu_{x}(x) = (1-\alpha)$ and $m_{x}(y) = \alpha$ if $y \in N(x)$ or $0$ otherwise. 
  
@@ -216,85 +229,77 @@ $$
 
 # Methods
 
-The Coarse Ricci Curvature and Displacement Convexity of Entropy are both based on an invariant property of flat spaces, the deviation from which allows for a measure of curvature even without a clear definition of factors which normally interfere with curvature, like dimension. However, the elegance of these invariance-based definitions comes at a computational cost. Both methods require optimal transport calculations for (a subset) of each pair of edges, a complexity growing with $O(n^2)$. Additionally, the transport distance based on the graph shortest-path distance is highly susceptible to noise.
+We consider a measure space $(X,p)$ equipped with a random walk, e.g. a point cloud and a diffusion operator derived as above. In this section, we define a new notion of curvature deriving from this random walk.
 
-This motivates our formulation of graph curvature, which uses a *comparison* between spaces in lieu of an invariant. This gives *Diffusion Curvature* a number of nice properties:
+The core intuition of Diffusion Curvature is that the *laziness* of random walks on a graph is a proxy for the curvature of the underlying manifold. Picture a “random walker” drunkenly traversing a sphere. If he manages, over the course of several steps, to wander to the opposite pole, he has many ways of getting back to where he started. By contrast, if he begins on the top of a (negatively-curved) saddle and wanders down one side, any path aside from exactly retracing his steps incurs a steep penalty in extra distance. On the sphere, the random walker is more likely to find his way home: his walks are “lazier”.
 
-1. **Point-wise, instead of edge-wise**. In many applications, knowledge of the Ricci curvatures is unnecessarily detailed. Diffusion curvature answers the question: *is the region around this point positively or negatively curved, and in what magnitude, relative to other points on the manifold?*
+Our previous paper [@bhaskar2022DiffusionCurvatureEstimating] measured this laziness directly, as the return probability within a k-neighborhood of the starting point. This required tuning the parameter $k$, and neglected the information provided by probabilities outside of this neighborhood.
 
-2. **Diffusion-based denoising**. When edges may be spurious, and random sampling creates deceptive pockets of density, Diffusion Curvature inherits the denoising properties of the diffusion operator.
+We refine our previous definition of diffusion laziness by replacing the neighborhood-sum with a distributional distance measure $D$ between a dirac $\delta_{x}$ and its $t$-step diffusion $p_{x}^X(t)$. This provides a more sensitive and parameter-free measure of how 'spread out' the diffusion is.
 
-3. **Extremely fast**. Designed for point clouds with millions of points, the pointwise Diffusion Curvature of the entire dataset can be calculated with a handful of sparse matrix multiplications. In addition, Diffusion Curvature can be *GPU accelerated*. This combination allows computing in minutes what takes existing methods hours.
-
-4. **Differentiable**. Diffusion Curvature natively supports backpropogation, and can easily be incorporated into a loss function for a neural network, e.g. to regularize a latent space to have low (or high) curvature. We provide a PyTorch implementation of the algorithm for this purpose.
-
-The core intuition of Diffusion Curvature is that the *laziness* of random walks on a graph is a proxy for the curvature of the underlying manifold. Picture a “random walker” drunkenly traversing a sphere. If he manages, over the course of several steps, to wander to the opposite pole, he has many ways of getting back to where he started. By contrast, if he begins on the top of a (negatively curved) saddle and wanders down one side, any path aside from exactly retracing his steps incurs a steep distance penalty. On the sphere, the random walker is more likely to find his way home: his walks are “lazier”.
-
-Our previous paper [@bhaskar2022DiffusionCurvatureEstimating] measured this laziness directly, as the return probability within a k-neighborhood of the starting point. This required tuning the parameter $k$, and neglected the information provided by the random walk probabilities outside of this k-neighborhood. We now refine this definition in two ways.
-
-First, we refine our previous definition of diffusion laziness using the Wasserstein distance between a dirac $\delta_{x}$ and its $t$ step diffusion $p_{X}^t(x)$, 
-
-::: {#def-laziness-of-diffusion}
-#### Diffusion Laziness
-The $W_1$ Laziness of a diffusion $p_{X}^t(x)$ is
+::: {#def-energy-of-diffusion}
+#### Diffusion Energy Snapshot
+Given some distributional distance $D$, the $D$-energy snapshot of a diffusion $p_{x}^X(t)$ is
 $$
-- W_1\left(\delta_x, p_X^t(x)\right)
+l_{X}(x,t) := D\left(\delta_x, p_x^X(t)\right)
 $$
 :::
 
-This provides a more sensitive and parameter-free measure of the 'spread' of diffusion.
+By $p_{x}^X(t)$, we indicate the $t$-step diffusion of the dirac $\delta_{x}$ centered at $x \in X$, using the diffusion operator for the measure space $X$.  We use the term 'Diffusion Energy' in reference to our previous work (CITE), which measured curvature via 'Diffusion Laziness'. That laziness measurement increased with positive curvature; diffusion energy does the opposite, increasing with more negative curvature.
 
-Second, by comparing the laziness of diffusion between our manifold and one of known curvature, we make our method signed.
+The distributional distance $D$ may be the Wasserstein-1 distance, as with Ollivier-Ricci curvature; it may be the Jensen-Shannon Distance, evoking the classical use of entropy to measure the diffusion of heat; or it may be some other domain-specific form chosen for a particular metric measure space.
+
+This measure of diffusion energy provides a snapshot of curvature at single diffusion time. However, this curvature is unsigned, and sensitive to the choice of $t$. Moreover, as we'll discuss, differences in graph construction cause the times associated with the diffusion operators from different spaces to change at different speeds. This makes it hard to compare the geometric information gleaned from the diffusion operator across manifolds.
+
+Instead of these static and fickle snapshots of a diffusion process, we consider the process in its entirety. As $t$ ranges from 0 to $\infty$, the diffusions $p_{x}^X(t)$ can be viewed as a trajectory on the $n$-dimensional probability simplex, where $n$ is the number of points in $X$. Given a distributional distance and its generating Riemannian metric, we can define Diffusion Curvature as the path integral of diffusion energy along this trajectory.
+
+::: {#def-diffusion-energy-path-integral}
+### Diffusion Energy
+
+Given a metric $g_{p}$ on the statistical manifold of diffusion probabilities, and the distributional distance $D$ it generates the Diffusion Energy of a point $x \in X$ is
+
+$$
+l_{X}(x, d)= \int_{t=0}^{T(d)} D\left(\delta_x, p_x^X(t)\right) g_p\left(\frac{d p_x^X(t)}{d t}, \frac{ d p_x^X(t) }{d t} \right)
+$$
+
+where $T(d)$ is a function that converts between the calculated *Diffusion Trajectory Distances* $d$ and diffusion times $t$.
+:::
+
+In practice, we don't have an infinitesimal parameterization of $p_{x}^X$, so approximate this with the algorithm in BOX WAWA: we compute $T$ scales of diffusion (e.g. 50), sum the distributional distances between each scale to estimate the path integral, and then use a trapezoidal approximation of the integral of $L_{x}(t)$ with respect to the distances along the trajectory.
+
+By viewing the energy integrated along a diffusion trajectory, we eliminate many of the differences between diffusions on different spaces. This enables the computation of a *signed* curvature, by taking the difference of diffusion energies from a given space and a comparison space of known Euclidean curvature and equal dimension to $X$. In practice, we construct the comparison space as uniform samples from $\mathbb{R}^d$, where $d$ is the intrinsic dimension of $X$. 
 
 ::: {#def-diffusion-curvature}
-#### Diffusion Curvature
+### Diffusion Curvature
 
-Given samples $X \subseteq M$ and a flattening map $\Phi: X \rightarrow \mathbb{R}^d$, the $t$-step *Diffusion Curvature* of $x$ is
+Given points $X \subseteq \mathcal{M}$, where $\mathcal{M}$ is a Riemannian manifold of dimension $d$, the *Diffusion Curvature* of $x \in X$ is 
+
 $$
-k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
+k_(x, d) = l_{X}(x, d) - l_{X}(x, d)
 $$
+where $E \subseteq \mathbb{R}^d$ is a collection of uniformly sampled points from $\mathbb{R}^d$.
+
 :::
 
-- [ ] Use an arbitrary distance? Or a p-Wasserstein?
+The usefulness of this definition rests upon two claims: 
 
-where $p_X^t$ is the t-step random walk over $X$, and $p_{\Phi(X)}^t$ is the same over the flattened points $\Phi(X)$. Depending on the ground distance used for the Wasserstein-1 transport distance, and the definition of flattening map employed, one obtains any of a family of diffusion curvatures. 
+1. That diffusion energy is indeed a measure of (unsigned) curvature
+2. That our integration along diffusion trajectories enables this energy to be compared across point clouds with different diffusion processes.
 
-Our best results come a very simple formulation of both, where the ground distance is chosen such that $W_{1}$ becomes the Shannon Entropy, and our flattening map simply uniformly samples points from the Euclidean space $\mathbb{R}^d$ of the same dimension as $M$. This produces what we'll call the *Entropic Diffusion Curvature*,
+The next two sections will analyze this first claim. We first analyze diffusion energy within Ollivier's framework of metric measure theory, and bound the diffusion energy from above by the Ollivier-Ricci curvature. We then provide a motivating example recovering a Bishop-Gromov type volume comparison from the diffusion curvature with an entropic distance.
 
-::: {#def-entropic-diffusion-curvature}
-#### Entropic Diffusion Curvature
+Finally, we support the second claim with illustrations of point clouds which diffusion trajectories can uniquely compare. We also describe how common techniques of constructing graphs from point clouds can obscure geometric information, and propose a 'curvature-agnostic kernel' to facilitate more geometrically-faithful graph construction.
 
-The Entropic Diffusion Curvature of a t-step diffusion on points sampled from manifold $\mathcal{M}$ with intrinsic dimension $d$ and markov matrix $P^t$, is
-$$
-\kappa^e_{t}(x_{i}) = H(P^t[i]) - H(P_{E}^t[i])
-$$
+## Diffusion Energy is bounded by Ollivier-Ricci curvature
 
-where $H$ is the Shannon Entropy, and $P_{E}^t$ is the diffusion matrix of the Euclidean comparison space  $\mathbb{R}^d$.
-:::
+Ollivier Ricci curvature measures the extent to which 'spheres are closer than their centers', using graph diffusions to create spheres, and optimal transport to measure distances. Diffusion energy uses both ingredients. But whereas Ollivier Ricci curvature takes the Wasserstein distance between spheres of the same size, Diffusion energy takes the distance between successive sizes of the same sphere.
 
-This evokes the use of entropy to measure heat diffusion.
+This simplification makes Diffusion energy more localized and much computationally lighter. Here we demonstrate that it also retains the theoretical guarantees of Ollivier Ricci curvature, and might be though of as a natural node-wise adaptation of Ollivier Ricci curvature.
 
-This definition rests on two claims: that the laziness of diffusion reveals the (unsigned) magnitude of curvature, and that by comparing diffusion across manifolds, we can convert this into a signed curvature. The next two sections will analyze this first claim. We first analyze diffusion laziness within Ollivier's framework of metric measure theory, and bound the diffusion laziness from above by the Ollivier-Ricci curvature. We then provide a motivating example recovering a Bishop-Gromov type volume comparison from our entropic definition. Finally, we describe our method for constructing a comparison space with locally-indistinguishable diffusion to the given manifold.
+::: {#prp-coarse-ricci-curvature-bounds-diffusion-energy}
+#### Coarse Ricci Curvature Bounds Diffusion Energy
 
-## Bounding diffusion laziness by Ollivier-Ricci curvature
-
-Although diffusion curvature was designed for sampled manifolds, it extends naturally to the realm of more general graphs. Indeed, diffusion curvature can be seen as an node-wise adaptation of Ollivier Ricci curvature, the theoretically richest and highest performing edge-wise graph curvature [citations to Bastian’s paper on ORC expressivity]. Here we review the definitions of Ollivier-Ricci curvature and present theoretical connections between it and diffusion curvature. These motivate the use of diffusion curvature as substitute for Ollivier Ricci curvature on large, or noisy graphs where the latter method stumbles. [Present some of these in experiments]
-
-Ollivier Ricci curvature is based in optimal transport, formalizing the classical intuition that in spaces of positive curvature, “spheres are closer than their centers”. In place of spheres, Ollivier uses diffused diracs; for distance, he uses the Wasserstein-1 distance with the shortest-path metric. Given points $x,y$ in the metric space, with 1-step diffusions $m_{x}$ and $m_{y}$, the Ollivier Ricci curvature of the edge between $x$ and $y$ is:
-$$\kappa(x, y):=1-\frac{W_1\left(m_x, m_y\right)}{d(x, y)}$$
-
-Local curvature always involves some comparison. Here, the comparison is between the manifold’s optimal transport distance (the numerator), and the Euclidean optimal transport distance (which, helpfully, is just the distance in the denominator. You’ll notice the similarity to diffusion curvature ([@def-diffusion-curvature]), which replaces the $W_{1}$ distance between two diffused distributions with the $W_{1}$ laziness of a single diffusion ([@def-laziness-of-diffusion]), and replaces the quotient with a difference. We do this for both the manifold (Ollivier's numerator) and a Euclidean comparison space (Ollivier's denominator).
-
-$$
-k_t(x)=W_1\left(\delta_x, p_{\Phi(x)}^t(x)\right) - W_1\left(\delta_x, p_X^t(x)\right)
-$$
-
-The basis of diffusion curvature’s comparison is the “spread” of diffusion as measured by $W_{1}(\delta_{x},m_{x}^t)$. Intuitively, in regions of positive curvature, diffusion spreads less; neighborhoods with higher interconnectivity make random walks lazier. We can formalize this with reference to Ollivier Ricci curvature:
-
-::: {#prp-coarse-ricci-curvature-bounds-diffusion-laziness}
-#### Coarse Ricci Curvature Bounds Diffusion Laziness
-
-Let $(X,d,m)$ be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some $k$ such that $\kappa(x,y) \geq k$ for all $x,y \in X$. The Wasserstein Spread of Diffusion of a $t$ step diffusion in $X$ is bounded above by
+Let $(X,d,m)$ be a metric space equipped with a random walk, with coarse Ricci curvature bounded from below by some $k$ such that $\kappa(x,y) \geq k$ for all $x,y \in X$. The diffusion energy of a $t$ step diffusion in $X$ is bounded above by
 $$
 W_{1}(\delta_{x}, m_{x}^t) \leq W_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}
 $$
@@ -307,7 +312,6 @@ $$
 W_{1}(\mu \star m, \mu' \star m) \leq (1-k)W_{1}(\mu, \mu')
 $$
 where here $\mu,\mu'$ are two probability distributions and $m$ is a random walk. This provides an easy lemma:
-
 
 ::: {#lem-inductive-contraction-of-measure}
 
@@ -360,19 +364,7 @@ $$
 If $k=0$, then obviously $\sum_{i}^t (1-k)^i = t$.
 :::
 
-The above asserts that the “spread” of diffusion is bounded from above by the Ollivier Ricci curvature of the region. To turn this measurement of spread into a signed curvature, we have only to introduce a comparison: the dimensional constant of the Euclidean spread of diffusion, $W_{1}^E(\delta_{x},m_{x}^t)$. Using Proposition 1, we can directly bound $k_{D}$ in terms of the Ollivier Ricci curvature:
-
-$$
-1 - \frac{W^M_1\left(\delta_x,m_x\right)\frac{(1-(1-k)^t)}{k}}{W_{1}^E(\delta_{x},m_{x}^t)} \leq k_{D}
-$$
-
-A simple approximation of $W_{1}^E(\delta_{x},m_{x}^t)$ is obtained by scaling the spread of a single-step diffusion by a factor of t, i.e. $tW_{1}^E(\delta_{x},m_{x})$. Using this, and noting that $W_{1}^E(\delta_{x},m_{x}) \approx W_{1}^M(\delta_{x},m_{x})$,
-
-$$
-1 - \frac{(1-(1-k)^t)}{tk} \leq k_{D}
-$$
-
-
+The above shows that the diffusion energy $l_{W_1}$ has an upper-bound given by the Ollivier Ricci curvature. We expect that the higher a manifold's curvature, the lower $l_{W_{1}}$ should be. This is formalized by Proposition 1: the higher the Ollivier-Ricci curvature of a manifold, the smaller its diffusion energy. This result motivates the use of diffusion curvature as a point-wise adaptation of Ollivier-Ricci curvature.
 
 ## A Motivating Example: Entropic Diffusion Curvature Recovers a Bishop-Gromov Volume Comparison
 
@@ -380,7 +372,7 @@ Among the most obvious manifestations of curvature is differences in volume: the
 
 One route to discrete curvature is thus estimating volumes; this is the route taken by @hickok2023IntrinsicApproachScalarCurvature. However, standard methods of estimating volumes in discrete, sampled spaces like point clouds or graphs rely on more complex geometric quantities, like density estimation or approximated geodesic distances, which are not only susceptible to noise, but often themselves dependent on the curvature!^[Consider kernel density estimation, where one places gaussians on each data point and sums up the probability assigned to each area. The higher the curvature, the higher the reported density, since at the end of an ellipsoid the gaussians have greater overlap with each other than in its center – even though the intrinsic density of the surface is uniform.] One wonders: can we use the tools of diffusion geometry to robustly estimate volume? 
 
-Indeed, this is one way to interpret diffusion laziness: as an inverse volume measurement. @huguet2023HeatDiffusionPerspective motivates this with a result from Saloff Costes et al. [@saloff-coste2010HeatKernelIts]. For manifold satisfying the Parabolic Harnock Inequality (e.g. all manifolds of positive curvature), heat diffusion $m_{x}^t$ on the manifold is bounded by
+Indeed, this is one way to interpret diffusion energy: as an inverse volume measurement. @huguet2023HeatDiffusionPerspective motivates this with a result from Saloff Costes et al. [@saloff-coste2010HeatKernelIts]. For manifold satisfying the Parabolic Harnock Inequality (e.g. all manifolds of positive curvature), heat diffusion $m_{x}^t$ on the manifold is bounded by
 
 $$
 \frac{c_1}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_2 t}\right) \leq m_{x}^t(y) \leq \frac{c_3}{V(x, \sqrt{t})} \exp \left(-\frac{d(x, y)^2}{c_4 t}\right)
@@ -388,7 +380,7 @@ $$
 
 In other words, heat diffusion on non-Euclidean manifolds behaves approximately like Euclidean heat diffusion scaled by the local volume.
 
-Powering the diffusion matrix approximates heat diffusion [cite Coifman]. We can thus relate our measure of the 'spread' or 'laziness' of this diffusion to the manifold's volume.
+Powering the diffusion matrix approximates heat diffusion [cite Coifman]. We can thus relate our measure of the 'spread' or 'energy' of this diffusion to the manifold's volume.
 
 The Shannon entropy of the diffusion $m_{x}$ over the bounded neighborhood of $X$ with non-zero diffusion mass, can be written
 $$
@@ -430,15 +422,53 @@ This presents us with two comparisons: one between the average volume within $N_
 
 ## Comparing Diffusion Across Point Clouds
 
-For a single graph, the laziness of diffusion is linked to graph volume, and theoretically bounded by curvature: within that graph, the higher the curvature, the higher the diffusion laziness. In analogy to Bishop-Gromov, we can convert this unsigned magnitude-of-curvature estimation to a signed curvature via a comparison between spaces. 
+### Problem Setting & Motivation
 
-In the continuous realm, this is easy: volume on one surface has the same units as volume on another. But in the point cloud setting, there is no common scale; it is *assumed* that the scale differs between and possibly even *within* a point cloud. Moreover, differences in graph construction can make diffusion spread faster independently from the local geometry – much as changing the 'size' of one's 'measuring stick' could give the appearance of larger volumes. Diabolically, common techniques for constructing graphs from variably-sampled data interfere with the speed *most* in areas with high negative or positive curvature, obscuring the geometric information in the diffusion operator.
+For a single graph, the energy of diffusion is linked to graph volume and theoretically bounded by curvature. Within a given graph, the lower the curvature, the higher the diffusion energy. As shown above, we can draw analogy to Bishop-Gromov to convert this unsigned magnitude-of-curvature estimation to a signed curvature via a comparison between spaces. 
 
-Our challenge is to construct a Euclidean comparison space on which diffusion locally behaves the same as on our given point cloud. We first motivate the need for taking special care with the graph construction, illustrating how naive approaches obscure geometric information. We then describe two simple workarounds.
+A comparison like this is at the heart of many discrete curvatures. Ollivier-Ricci compares the transport distance between two distributions with the transport distance on a flat space. Hickok and Blumberg compare the approximate the volume of balls on a given point cloud with the Euclidean volume of balls with the same radius. In these definitions, the use of more complex geometric constructs (distances, volumes, densities) grants the Euclidean comparison an analytic form. Our definition makes a different trade-off: it doesn’t depend on the error-prone approximations of those higher-order phenomena, but it doesn’t benefit from their theoretical simplicity. 
 
-A caveat here: while the (unsigned) diffusion laziness is easily applicable to arbitrary graphs, the methods we describe below for constructing a comparison space and obtaining a (signed) diffusion curvature only apply to point clouds. We suspect there are equivalent methods applicable to general graphs, but we focus on the point cloud setting.^[For instance, one could construct a comparison graph which matched the 1-step diffusion laziness of the input graph, after suitable denoising.]
+To put it bluntly, there’s no analytical form of, e.g. the diffusion energy snapshot in $\mathbb{R}^8$ at $t=25$ because there’s no single translation between $\mathbb{R}^8$ and one of the “discrete measure space with a random walk” our definition operates on. There are many different ways of uniformly sampling $N$ points from $\mathbb{R}^d$ – and there are many ways of turning those points into a graph. But different samplings, and different modes of graph construction result in different *speeds of diffusion* on the graph, rendering direct comparison of diffusion energies difficult.
 
-### Standard methods of graph construction obscure geometric information
+For example, imagine constructing two $k$-nearest neighbor graphs with a different value of $k$ for each pointcloud. In the graph constructed with a larger $k$, diffusion will happen more quickly because everything is more tightly connected. The diffusion energy of a point on this graph, at any given $t$, will appear much higher than its sister graph – even if both were constructed from the same space! The vagaries of graph construction have obscured the underlying geometry of the manifold.
+
+An immediate workaround is to try to bypass this obstruction by constructing graphs in *exactly* the same manner from both our target points and comparison points. One might use a $k$nn graph with identical $k$’s, or an adaptive kernel which sets the bandwidth locally based on the distance to each nearest neighbor. We experimented with this approach extensively, and came to the unexpected conclusion that the interplay between curvature and distance makes it extremely hard to create a kernel with the same relative bandwidth in spaces of differing curvatures. Specifically, the local Euclidean distance used by standard graph construction techniques like the k-neighbor adaptive kernel becomes less reliable the greater the magnitude of curvature. Thus, not only are comparisons between spaces compromised, but even the geometric information within a space is obscured by a gratuitously fluctuating kernel bandwidth. We explore this in more detail in the next section, and propose a simple change which lessens these symptoms.
+
+However, the underlying ‘disease’ remains: although we assume our point clouds are sampled manifolds, there’s no one-to-one translation between these manifolds and the measure spaces with random walks diffusion geometry operates on. Different samplings and different means of graph construction all create different random walks. Trying to homogenize these random walks via careful graph construction relies on geometric information, like distances, that we don’t (yet) have – and tries to wage war against the notoriously fickle process of sampling. Far better than trying to homogenize these random walks on the level of *graph construction* would be a method that can reliably compare diffusions *across* graphs.
+
+This problem, of reliably comparing diffusions across graphs, has wide applicability. 
+… research needed here …
+Other techniques partially address this by considering *multiscale diffusions*. The *multiscale diffusion distance* takes a weighted average across powers of diffusion. Diffusion Earth Mover’s Distance extends this to an optimal transport measure based on the differences distributions diffused at multiple scales. The *Graph scattering transform* produces a rich set of features for comparing graphs derived from differences between powers of diffusion. And many graph neural networks are built upon flavors of message passing which resemble graph diffusion, while others have been modeled on graph scattering. All of these methods come with a caveat: if compared across graphs, discrepancies in graph construction will manifest as spurious differences in graph geometry.
+
+### Diffusion Trajectory Alignment
+
+We consider a new approach to this problem, which replaces the diffusion time $t$ – so heavily dependent on the vagaries of graph construction – with a distance along the *diffusion trajectory*. To obtain this, we view scales of diffusion as points along a trajectory on the $N$-dimensional probability simplex, where $N$ is the number of nodes on the graph.^[This simplex corresponds to the ‘diffusion coordinates’ used by Coifman, as well as the setting of Fasina’s diffusion-based Fisher Information metric (CITE). ]This trajectory has the advantage of erasing any differences caused by the speed of diffusion. Instead, we can use the distance along that trajectory *Diffusion Trajectory Distance*) to align the scales of diffusion between two graphs. As illustrated in [@fig-curvature-curves], by comparing the diffusion energies of several graphs across their diffusion trajectory distances. Making the same comparison across times is uninformative - and misleadingly suggests that the sphere is the most negatively curved. *Diffusion Trajectory Alignment*, however, reveals the correct relation between the surfaces.
+
+{{< embed ../nbs/3d-diffusion-trajectory-distance-normalization.ipynb#fig-curvature-curves >}}
+
+Applying diffusion trajectory alignment to our diffusion energies also has the happy effect of focusing our measurement on the most relevant scales of diffusion. When using diffusion times, one must be careful to select a time that is neither too small nor too large. Make $t$ too small, and the diffusion might have barely differentiated itself from a dirac. Make $t$ too large, and the diffusion might have progressed to the uninformative steady-state distribution. With the diffusion trajectory distance, all of the undesirably large $t$’s are compressed into a narrow range of distances – the diffusion trajectory limits to the steady state distribution, and the diffusion trajectory distances that correspond to it are all within some $\epsilon$ of the maximum diffusion trajectory distance. Hence, any diffusion trajectory distance between its minimum and maximum values corresponds to an interesting scale of diffusion.
+
+With the alignment help of the diffusion trajectory distance, we can now motivate our path-integral definition of diffusion energy ([@def-diffusion-energy-path-integral]):
+$$
+l_{X}(x, d)= \int_{t=0}^{T(d)} D\left(\delta_x, p_x^X(t)\right) g_p\left(\frac{d p_x^X(t)}{d t}, \frac{ d p_x^X(t) }{d t} \right)
+$$
+
+Recall that $D(\delta_{x}, p_{x}^X(t))$ is the snapshot diffusion energy ([@def-energy-of-diffusion]) at time $t$. This is integrated with respect to the diffusion trajectory distance, here formulated via a Riemannian metric on the probability simplex. The parameter $T$ controls how local the measurement of diffusion energy is. As $T$ approaches $\infty$, the diffusion approaches the steady state across the entire graph, and the diffusion energy measures a global curvature. Smaller $T$’s yield more localized measurements of curvature. In practice, $T$ is set via some $T(d)$ that translates diffusion trajectory distances into the corresponding times.
+
+The diffusion energy can be thought of as an integral of the geodesic distance from a distribution to a dirac along the distributions in a given diffusion trajectory. Imagine a long, bent noodle; while traveling along the noodle, we integrate the distances from each point on the noodle to its base point. If these geodesic distances corresponded to travel back along the diffusion trajectory, or back down the noodle – e.g. if the diffusion trajectory took the shortest path between the dirac and each subsequent distribution – then the diffusion energy would be equal across all manifolds. The extent to which this fails, and the diffusion trajectory takes a ‘lazier’ path than optimal, reveals the curvature. 
+
+This measurement of diffusion energy can now be converted into a signed *diffusion curvature* via [@def-diffusion-curvature]: 
+
+$$
+k_(x, d) = l_{X}(x, d) - l_{X}(x, d)
+$$
+This corresponds to taking the area under each of the curves in Fig. WAWA, up to some trajectory distance $d$, and subtracting them.
+
+In practice, we don’t have access to a metric $g_{p}$ on the probability simplex; this space is too high-dimensional, and we lack a continuous parameterization of graph diffusion. Instead, we approximate this integral by measuring the distances between subsequent diffusions (performed for every integer $1 \leq t \leq T(d)$). This approximates the diffusion trajectory distances for each scale of diffusion. We then use the trapezoidal rule to approximate the integral of diffusion energies with respect to these trajectory distances. This is summarized by Algorithm 1 REFERENCE WAWA.
+
+### The Curvature-Agnostic Kernel  & Automatic Bandwidth Tuning
+
+Diffusion trajectory alignment significantly reduces the interference caused by graph construction, but does not completely eliminate it. Due to our lack of access to a diffusion coordinate space metric, and the approximations used for the diffusion trajectory distance, we find the robustness of our algorithm is significantly improved by a few adjustments to standard graph construction techniques to make them more curvature agnostic.
 
 To turn a point cloud into a graph, one places a kernel (e.g. a gaussian) at each point, and assigns edges to surrounding points with weights given by the kernel. The main parameter here is the bandwidth of each kernel: make it too high, and everything is connected; too low, and points are isolated. Moreover, the distances between a point and its neighbors may vary. Where the points are sparse, one wants a higher bandwidth. Where dense, a lower bandwidth.
 
@@ -460,9 +490,7 @@ Consider a highly-curved paraboloid. The Euclidean distance from its center poin
 
 As a result, the adaptive kernel constructed in highly curved spaces has a smaller bandwidth than in flat spaces, even using the same kernel parameters. If one directly compares the laziness of diffusion on two such graphs, it will appear lazier than on the flat manifold. 
 
-### The Curvature Agnostic Kernel
-
-To remedy the above, we make a simple adjustment to the standard adaptive kernel. The key is separating the parameter which controls neighborhood size from neighborhood scale. In the adaptive kernel, both are controlled by the parameter $k$; as discussed above, in spaces of high curvature, the same $k$ creates different scales. Instead, we always set $k = 1$ and use another parameter – $\nu$, the neighbor-size – to control the variance of the kernel.
+To remedy this, we make a simple adjustment to the standard adaptive kernel. The key is separating the parameter which controls neighborhood size from neighborhood scale. In the adaptive kernel, both are controlled by the parameter $k$; as discussed above, in spaces of high curvature, the same $k$ creates different scales. Instead, we always set $k = 1$ and use another parameter – $\nu$, the neighbor-size – to control the variance of the kernel.
 
 $$
 \begin{aligned}
@@ -471,45 +499,74 @@ k(x, y) & =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y))}
 \end{aligned}
 $$
 
-$\nu$ behaves like the kernel bandwidth in the regular fixed Gaussian kernel.
+$\nu$ behaves like the kernel bandwidth in the regular fixed Gaussian kernel. We call this the *Curvature-Agnostic Kernel*.
 
-### A Simple Euclidean Comparison Space
+- [ ] Figure comparing the adaptive to curvature agnostic kernels with diffusion trajectory normalization. Use a stacked image.
 
-Now we describe the ‘flattening map’ $\Phi_{X}: \mathbb{R}^d \to \mathbb{R}^d$ introduced above. Its goal: to transform samples from Euclidean space of the manifold’s intrinsic dimension into the same ‘sampling’ as our point cloud. While developing this method, we tried many types of flattening maps, many involving deep learning and flow models. In the end, a very simple technique proved just as effective.
+Figure WAWA illustrates the increased robustness diffusion trajectory alignment gains from using this curvature-agnostic kernel. The relative ordering of graphs is still achieved by the traditional adaptive kernel, but is significantly denoised by these tweaks.
 
-Given points $X$, we compute the average distance to the $k$th nearest neighbor. $\Phi_{X}$ then scales samples in $\mathbb{R}^d$ to have the same average distance.
+The main parameter of the curvature-agnostic kernel is the “neighbor scale” $\nu$, which sets the kernel bandwidth to the specified multiple of the average distance to the $k$th-nearest neighbor. As a single parameter, this can be tuned easily. We use as a heuristic the desired median number of points with non-negligible single-step diffusion probability, and perform a binary search over values of $\nu$ until this number is within a desired tolerance. 
 
-# Results
+We suspect the curvature-agnostic kernel may be generally useful in manifold learning. In any downstream analysis that leverages the graph geometry – be it distance estimation, [CITE HUGUET] or metric learning [CITE US] – this analysis is made easier by a kernel whose bandwidth does not gratuitously fluctuate in regions of high curvature.
 
-Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined *accidentally* [@steinerberger2022CurvatureGraphsEquilibrium; @bhaskar2022DiffusionCurvatureEstimating]! The challenge is to make one's definition robust to the bogeyman of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok & Blumberg's, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most *fail entirely* in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.
+- [ ] Can we provide experimental results here? Does PHATE or HeatGeo perform better with this kernel?
 
-But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? @fig-2-manifolds shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. @fig-2-manifolds-visual-comparison places this in the context of existing methods.
+# The Curvature Colosseum: A Discrete Curvature Benchmarking Suite
 
-{{< embed ../nbs/experiments/2a-Toy-Manifolds.ipynb#fig-2-manifolds >}}
+The discrete curvature literature lacks a standard benchmark. Previous work has used a combination of evaluations on 2-dimensional toy manifolds (where correctness is visually obvious) and generally one or two bespoke higher-dimensional test cases, on which the target method is extensively tuned – and even then, often has ambiguous results. Comparisons between methods have been scarce. 
 
+Thus, Ollivier-Ricci curvature was introduced mostly on toy-examples. It has since been compared to Forman-Ricci (BASTIAN) ???
+Hickok & Blumberg primarily tested their method on the 2-dimensional torus and sphere. They compared to WAWA. However, their point clouds weren’t uniformly sampled with respect to the manifold geometry - causing some density artifacts. CHECK!
+Sritharan et al. performed the most extensive testing we have seen, with studies of correlation against ground truth and robustness to parameters.
+Zhang et al. compared accuracy at a variety of noise scales to Hickok & Blumberg and to our previous unsigned diffusion laziness curvature, but only on 2-dimensional manifolds.
+
+To overcome these shortcomings, we propose a discrete-curvature benchmarking suite we affectionately dub the ‘Curvature Colosseum.’ It permits standardized comparison between methods on four axes:
+
+1. *Resilience to Noise.* Pearson correlations with ground truth curvature on 2-Dimensional manifolds across noise scales.
+2. *Accuracy on High Dimensions.* Pearson correlations with ground truth curvature on 3-8 dimensional surfaces.
+3. *Sign Prediction*. Ability to distinguish spaces of positive, negative, and zero curvature in dimensions 3-8.
+4. *Sensitivity to Parameterization.* Variance of scores from (1) (2) and (3) across a range of parameter values.%% Likely as a graph, with some area under the curve on a scale of accuracy across parameter space. Can produce heat maps for each method.%% 
+
+Each of the manifolds used above is rejection sampled (CITE SOMEONE) to ensure uniform density with respect to manifold volume. When benchmarking curvature methods from the literature, we use their suggested parameters when available; as a fallback, we perform 100 rounds of WAWA-METHOD hyperparameter search via Optuna.
+
+We provide full implementation details in the appendix. Our code is available at GITHUB LINK, along with a public dashboard of the results at ANOTHER LINK.
+
+The remaining parts of this section detail the results of Diffusion Curvature and its competition on each axis of the Colosseum.
+
+## Performance in Low Dimensions under Noise
+
+ A sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? @fig-2-manifolds shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. @fig-2-manifolds-visual-comparison places this in the context of existing methods.
+
+{{< embed ../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds.ipynb#fig-2-manifolds >}}
 
 Though the correlation is strong – passing the 'sniff test' – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature. 
 
-{{< embed ../nbs/experiments/2a2-toy-manifolds-comparison.ipynb#fig-2-manifolds-visual-comparison >}}
+{{< embed ../nbs/2-Toy-Manifolds-Benchmark.ipynb#fig-2-manifolds-visual-comparison >}}
 
-The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, *what matters?* Most methods don't care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid... %% mean vs gaussian curvature, and uniqueness of definitions%%
+The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, *what matters?* Most methods don't care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%
 
 All of these methods in @fig-2-manifolds-visual-comparison perform well on well-sampled noiseless toy manifolds. In Table [@fig-2-manifolds-noise-table], we see the results of adding Gaussian noise to each manifold.
+<!-- 
+{{< embed ../nbs/2-Toy-Manifolds-Benchmark.ipynb#fig-2-manifolds-noise-table >}} -->
 
-<!-- {{< embed ../nbs/experiments/2a2-toy-manifolds-comparison.ipynb#fig-2-manifolds-noise-table >}} -->
+## Performance in High Dimensions under Noise
 
 
-### Differentiating Sign in High Dimensions
+## Sign Differentiation
 
 Most existing methods only quantify their performance in high dimensions on one or two test cases.
 
-{{< embed ../nbs/experiments/2f-sign-prediction-tests.ipynb#fig-sadspheres >}}
+{{< embed ../nbs/5-sign-prediction-tests.ipynb#fig-sadspheres >}}
 
+## Resilience to Parameters
+
+
+# Applications
 
 ## Loss Landscapes
 
-
 ## Curvature as a TDA Filtration
+
 
 
 # Related Work
@@ -518,9 +575,9 @@ Most existing methods only quantify their performance in high dimensions on one 
 
 ## Hickock & Blumberg's Volume Comparison Curvature
 
+## Sritharan
 
 # Conclusion
-
 
 # References {.unnumbered}
 
