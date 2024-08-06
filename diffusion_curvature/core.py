@@ -41,7 +41,6 @@ from .utils import random_jnparray
 
 import diffusion_curvature
 
-import torch
 
 # import deepdish
 import h5py

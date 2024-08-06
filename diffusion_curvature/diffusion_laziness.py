@@ -2,9 +2,10 @@
 
 # %% auto 0
 __all__ = ['wasserstein_spread_of_diffusion', 'entropy_of_diffusion', 'kl_div', 'js_dist', 'diffusion_distances_along_trajectory',
-           'trapezoidal_rule', 'DiffusionLaziness', 'curvature_curves', 'compare_curvature_across_datasets']
+           'trapezoidal_rule', 'DiffusionLaziness', 'curvature_curves', 'compare_curvature_across_datasets',
+           'compare_curvature_across_datasets_by_maximum_mean_discrepancy']
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 3
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 5
 import jax
 import jax.numpy as jnp
 from jax import jit
@@ -21,7 +22,7 @@ def wasserstein_spread_of_diffusion(
         """
         return jnp.sum(D * Pt, axis=-1)
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 11
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 13
 import jax.scipy
 import jax.numpy as jnp
 
@@ -44,7 +45,7 @@ def entropy_of_diffusion(
         # entropy_of_rows = entropy_of_rows / (-jnp.log(1/jnp.sum(Pt>epsilon, axis=-1)))
         return entropy_of_rows
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 20
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 22
 @jax.jit
 def kl_div(A, B, eps = 1e-12):
     # Calculate Kullback-Leibler divergence
@@ -54,7 +55,7 @@ def kl_div(A, B, eps = 1e-12):
     v = A*(jnp.log(A) - jnp.log(B)) 
     return jnp.sum(v)
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 22
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 24
 @jax.jit
 def js_dist(
     P:jax.Array, 
@@ -75,7 +76,7 @@ def js_dist(
     # Take sqrt to get the JS DISTANCE
     return jnp.sqrt(jnp.abs(result))
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 30
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 32
 from scipy.spatial.distance import jensenshannon
 def diffusion_distances_along_trajectory(diffusions):
     # given a sequence of diffusions, returns the distances between each 
@@ -88,7 +89,7 @@ def diffusion_distances_along_trajectory(diffusions):
         )
     return jnp.stack(distances)
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 34
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 36
 import jax
 import jax.numpy as jnp
 
@@ -113,7 +114,7 @@ def trapezoidal_rule(x, y):
     
     return integral
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 36
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 38
 from typing import Literal
 from .kernels import diffusion_matrix_from_affinities
 from .heat_diffusion import heat_diffusion_from_dirac, powers_of_diffusion
@@ -205,7 +206,7 @@ class DiffusionLaziness():
         return results
         
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 66
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 68
 from functools import partial
 import numpy as np
 import matplotlib.pyplot as plt
@@ -247,7 +248,7 @@ def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", als
     axs[1].legend()
     plt.show()
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 71
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 73
 def compare_curvature_across_datasets(
     *diffusion_lazinesses,
     idxs:List  = None # list of idxs to compare. Can also be a list of lists of idxs, one per DiffusionLaziness
@@ -276,3 +277,67 @@ def compare_curvature_across_datasets(
         bounded_integrals = [DL.integrate_laziness_with_bounds(0, minmax_ds, idxs = idxs) for DL in diffusion_lazinesses]
 
     return bounded_integrals
+
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 77
+def compare_curvature_across_datasets_by_maximum_mean_discrepancy(
+    target_laziness:DiffusionLaziness, # the DiffusionLaziness operator of the manifold
+    comparison_laziness:DiffusionLaziness,
+    idxs:List, # the DiffusionLaziness operator of the comparison space 
+    method: str = "quadratic" # method can be "quadratic" or "piecewise"
+):
+    assert method in ["quadratic", "piecewise"], "method must be 'quadratic' or 'piecewise'"
+
+    from jax.scipy.linalg import lstsq
+
+    def quadratic_regression(x, y):
+        # Fit a quadratic polynomial y = ax^2 + bx + c
+        A = jnp.vstack([x**2, x, jnp.ones_like(x)]).T
+        coeffs, _, _, _ = lstsq(A, y)
+        return coeffs
+
+    def evaluate_quadratic(coeffs, x):
+        return coeffs[0] * x**2 + coeffs[1] * x + coeffs[2]
+
+    # Extract the ds and ls from each, treating them as x and y coordinates to be modeled
+    target_x = target_laziness.ds[idxs] # has shape num_idxs x num_ts
+    target_y = target_laziness.ls[idxs] 
+    comp_x = comparison_laziness.ds
+    comp_y = comparison_laziness.ls
+
+    if method == "quadratic":
+        # Perform quadratic regression on these pairs, creating num_idxs functions target_fns, comp_fns
+        target_coeffs = jax.vmap(quadratic_regression)(target_x, target_y)
+        comp_coeffs = quadratic_regression(comp_x, comp_y)
+
+        # Create a range of x values to evaluate the polynomials
+        x_values = jnp.linspace(jnp.min(target_x), jnp.max(target_x), 500)
+
+        # Evaluate the polynomials
+        target_fns = jax.vmap(lambda coeffs: evaluate_quadratic(coeffs, x_values))(target_coeffs)
+        comp_fn = evaluate_quadratic(comp_coeffs, x_values)
+    else:
+        # Use piecewise linear approximation
+        x_values = jnp.unique(jnp.concatenate([target_x.flatten(), comp_x]))
+        target_fns = jax.vmap(lambda x, y: jnp.interp(x_values, x, y))(target_x, target_y)
+        comp_fn = jnp.interp(x_values, comp_x, comp_y)
+
+    if method == "quadratic":
+        # Find the x value where the mean absolute discrepancy is greatest
+        discrepancies = jnp.abs(target_fns - comp_fn)
+        mean_discrepancies = jnp.mean(discrepancies, axis=0)
+        max_discrepancy_idx = jnp.argmax(mean_discrepancies)
+        max_discrepancy_x = x_values[max_discrepancy_idx]
+
+        # Return the associated y values
+        return max_discrepancy_x, target_fns[:, max_discrepancy_idx], comp_fn[max_discrepancy_idx]
+    else:
+        # Find the x value where the mean absolute discrepancy is greatest
+        discrepancies = jnp.abs(target_fns - comp_fn)
+        mean_discrepancies = jnp.mean(discrepancies, axis=0)
+        max_discrepancy_idx = jnp.argmax(mean_discrepancies)
+        max_discrepancy_x = x_values[max_discrepancy_idx]
+
+        # Return the associated y values
+        return max_discrepancy_x, target_fns[:, max_discrepancy_idx], comp_fn[max_discrepancy_idx]
+    
+    

@@ -10,7 +10,7 @@
     <meta name="author" content="Yanlei Zhang">
     <meta name="author" content="Ian Adelstein">
     <meta name="author" content="Smita Krishnaswamy">
-    <meta name="dcterms.date" content="2024-07-30">
+    <meta name="dcterms.date" content="2024-08-03">
     <meta name="keywords" content="Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds">
 
     <title>Diffusion Curvature for Fast, Point-wise, Noise-Resistant Geometric Featurization of Graphs and Pointclouds</title>
@@ -203,10 +203,10 @@
 <meta name="citation_author" content="Yanlei Zhang">
 <meta name="citation_author" content="Ian Adelstein">
 <meta name="citation_author" content="Smita Krishnaswamy">
-<meta name="citation_publication_date" content="2024-07-30">
-<meta name="citation_cover_date" content="2024-07-30">
+<meta name="citation_publication_date" content="2024-08-03">
+<meta name="citation_cover_date" content="2024-08-03">
 <meta name="citation_year" content="2024">
-<meta name="citation_online_date" content="2024-07-30">
+<meta name="citation_online_date" content="2024-08-03">
 <meta name="citation_language" content="en">
 <meta name="citation_journal_title" content="IEEE TPAMI">
 <meta name="citation_reference" content="citation_title=Bishop–Gromov inequality;,citation_abstract=In mathematics, the Bishop–Gromov inequality is a comparison theorem in Riemannian geometry, named after Richard L. Bishop and Mikhail Gromov. It is closely related to Myers’ theorem, and is the key point in the proof of Gromov’s compactness theorem.;,citation_publication_date=2021-12-08;,citation_cover_date=2021-12-08;,citation_year=2021;,citation_fulltext_html_url=https://en.wikipedia.org/w/index.php?title=Bishop%E2%80%93Gromov_inequality&amp;amp;amp;oldid=1059331416;,citation_language=en-US;,citation_journal_title=Wikipedia;">
@@ -309,7 +309,7 @@
                 <div>
             <div class="quarto-title-meta-heading">Published</div>
             <div class="quarto-title-meta-contents">
-              <p class="date">July 30, 2024</p>
+              <p class="date">August 3, 2024</p>
             </div>
           </div>
           
@@ -361,19 +361,25 @@
   <li><a href="#the-curvature-agnostic-kernel-automatic-bandwidth-tuning" id="toc-the-curvature-agnostic-kernel-automatic-bandwidth-tuning" class="nav-link" data-scroll-target="#the-curvature-agnostic-kernel-automatic-bandwidth-tuning"><span class="header-section-number">3.3.3</span> The Curvature-Agnostic Kernel &amp; Automatic Bandwidth Tuning</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">4</span> Results</a>
+  <li><a href="#the-curvature-colosseum-a-discrete-curvature-benchmarking-suite" id="toc-the-curvature-colosseum-a-discrete-curvature-benchmarking-suite" class="nav-link" data-scroll-target="#the-curvature-colosseum-a-discrete-curvature-benchmarking-suite"><span class="header-section-number">4</span> The Curvature Colosseum: A Discrete Curvature Benchmarking Suite</a>
   <ul class="collapse">
-  <li><a href="#differentiating-sign-in-high-dimensions" id="toc-differentiating-sign-in-high-dimensions" class="nav-link" data-scroll-target="#differentiating-sign-in-high-dimensions"><span class="header-section-number">4.0.1</span> Differentiating Sign in High Dimensions</a></li>
-  <li><a href="#loss-landscapes" id="toc-loss-landscapes" class="nav-link" data-scroll-target="#loss-landscapes"><span class="header-section-number">4.1</span> Loss Landscapes</a></li>
-  <li><a href="#curvature-as-a-tda-filtration" id="toc-curvature-as-a-tda-filtration" class="nav-link" data-scroll-target="#curvature-as-a-tda-filtration"><span class="header-section-number">4.2</span> Curvature as a TDA Filtration</a></li>
+  <li><a href="#performance-in-low-dimensions-under-noise" id="toc-performance-in-low-dimensions-under-noise" class="nav-link" data-scroll-target="#performance-in-low-dimensions-under-noise"><span class="header-section-number">4.1</span> Performance in Low Dimensions under Noise</a></li>
+  <li><a href="#performance-in-high-dimensions-under-noise" id="toc-performance-in-high-dimensions-under-noise" class="nav-link" data-scroll-target="#performance-in-high-dimensions-under-noise"><span class="header-section-number">4.2</span> Performance in High Dimensions under Noise</a></li>
+  <li><a href="#sign-differentiation" id="toc-sign-differentiation" class="nav-link" data-scroll-target="#sign-differentiation"><span class="header-section-number">4.3</span> Sign Differentiation</a></li>
+  <li><a href="#resilience-to-parameters" id="toc-resilience-to-parameters" class="nav-link" data-scroll-target="#resilience-to-parameters"><span class="header-section-number">4.4</span> Resilience to Parameters</a></li>
   </ul></li>
-  <li><a href="#related-work" id="toc-related-work" class="nav-link" data-scroll-target="#related-work"><span class="header-section-number">5</span> Related Work</a>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">5</span> Applications</a>
   <ul class="collapse">
-  <li><a href="#foreman-ricci-curvature" id="toc-foreman-ricci-curvature" class="nav-link" data-scroll-target="#foreman-ricci-curvature"><span class="header-section-number">5.1</span> Foreman Ricci Curvature</a></li>
-  <li><a href="#hickock-blumbergs-volume-comparison-curvature" id="toc-hickock-blumbergs-volume-comparison-curvature" class="nav-link" data-scroll-target="#hickock-blumbergs-volume-comparison-curvature"><span class="header-section-number">5.2</span> Hickock &amp; Blumberg’s Volume Comparison Curvature</a></li>
-  <li><a href="#sritharan" id="toc-sritharan" class="nav-link" data-scroll-target="#sritharan"><span class="header-section-number">5.3</span> Sritharan</a></li>
+  <li><a href="#loss-landscapes" id="toc-loss-landscapes" class="nav-link" data-scroll-target="#loss-landscapes"><span class="header-section-number">5.1</span> Loss Landscapes</a></li>
+  <li><a href="#curvature-as-a-tda-filtration" id="toc-curvature-as-a-tda-filtration" class="nav-link" data-scroll-target="#curvature-as-a-tda-filtration"><span class="header-section-number">5.2</span> Curvature as a TDA Filtration</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
+  <li><a href="#related-work" id="toc-related-work" class="nav-link" data-scroll-target="#related-work"><span class="header-section-number">6</span> Related Work</a>
+  <ul class="collapse">
+  <li><a href="#foreman-ricci-curvature" id="toc-foreman-ricci-curvature" class="nav-link" data-scroll-target="#foreman-ricci-curvature"><span class="header-section-number">6.1</span> Foreman Ricci Curvature</a></li>
+  <li><a href="#hickock-blumbergs-volume-comparison-curvature" id="toc-hickock-blumbergs-volume-comparison-curvature" class="nav-link" data-scroll-target="#hickock-blumbergs-volume-comparison-curvature"><span class="header-section-number">6.2</span> Hickock &amp; Blumberg’s Volume Comparison Curvature</a></li>
+  <li><a href="#sritharan" id="toc-sritharan" class="nav-link" data-scroll-target="#sritharan"><span class="header-section-number">6.3</span> Sritharan</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7</span> Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -382,18 +388,18 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <!-- Latex formatting tweaks -->
+       <hr>
+<!-- Latex formatting tweaks -->
 <section id="introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
-<p>In this age of overwhelmingly abundant data, those racing to make sense of it all have developed an appreciation for theories and metaphors from the once hopelessly abstract mathematical fields of topology and Riemannian geometry. Endowing noisy, sparse, high-dimensional real-world data with geometric and topological features is helpful in two ways: it empirically improves the performance of black-box machine learning models; and, in cases like cellular differentiation, it also helps <em>us</em> interpret the data. What’s more, by anchoring these models and their inputs to well-established theories, it can bring analytical light to a theoretically-impoverished field.</p>
-<p>As a case in point, consider the emerging subfield of <em>Topological Data Analysis</em> (TDA). While graph neural networks struggle with problems of over-smoothing and over-squashing, TDA endows graph or pointcloud data with global topological features with provable guarantees. (LIST SUCCESSES OF TDA.) Behind this success is <em>persistence homology</em>, a sort of ‘Rosetta Stone’ between the mathematical theories of analytically-specified manifolds, and the messy realities of actual data. Persistence homology gives a framework for extracting the most salient topological features from amidst the noise and sparsity of real-world point clouds. (MORE SUCCESSES)</p>
-<p>We await the geometric equivalent of this topological Renaissance. While TDA can describe the shape of the data in its entirety, there’s a need for more local descriptions of data geometry. Forget the data as a whole; what’s happening around <em>this point</em>, in <em>this neighborhood</em>? Topological analysis only assumes hierarchies of sets. But for many types of point cloud data, e.g.&nbsp;those arising from time-varying systems like cellular development or neuronal activity, notions of angle, distance, and volume have meaning. In other words, in our field’s famous ‘Manifold Hypothesis’ we’re often assuming a <em>Riemannian</em> manifold: samples from some continuous underlying object that can be analyzed at infinitesimal scales.</p>
-<p>However, translating the language of Riemannian geometry to the discrete, sampled realm is troublesome. Nowhere is this more evident than curvature. It’s among the most basic of geometric properties, underlying volumes, distances, and geodesics. Where TDA captures global structure, curvature epitomizes the description of local structure. Classical definitions, however, are hard to reconcile with reality; many involve some infinitesimal shrinking, e.g.&nbsp;by fitting osculating circles of radius limiting to zero, or comparing volumes of balls converging to a point. Other definitions involve even more complex objects, like tangent bundles or local parameterizations of the manifold. In the discrete, sampled realm, taking such a local limit is impossible – one can’t ‘zoom in’ past the known samples. Moreover, in contrast to Riemannian manifolds, noisy samplings are <em>least</em> trustworthy at the local level – which is precisely where we wish to measure geometric information.</p>
-<p>There have been several attempts to bridge curvature to the discrete realm. (BRIEF DESCRIPTIONS OF PREVIOUS WORK) Ollivier-Ricci Curvature and Forman Ricci curvature use optimal transport to define an edge-wise Ricci curvature at any given scale. Hickok &amp; Blumberg define a point cloud curvature by estimating graph volumes over time, and fitting a quadratic to recover a scalar curvature. Sritharan et al.&nbsp;and, recently, Zhang et al.&nbsp;(CITATIONS PLEASE) approximate tangent planes with localized PCA, and track the movement of these planes to recover sectional curvatures. These curvatures have been found to exceed the WL-expressivity of graph neural networks, and when used to augment GNNs, improve their performance (CITE BASTION). They have also been used to study cellular differentiation, image data, etc…</p>
-<p>With so many existing curvature methods, why introduce another one? Indeed, we came to this area interested only in using curvature to aid our study of complex high-dimensional systems like neural networks’ loss landscapes. However, our experimentation with existing methods suggested that, while existing methods have many elegant ideas, their techniques are in practice unreliable. The optimal-transport curvatures, like Ollivier Ricci, were designed for networks, and have poor resilience to the noise ubiquitous in point-cloud data. Many techniques rely on shortest-path distances, which are themselves easily corrupted by noise. And all techniques have parameters which must be carefully tuned, and – as our experiments found – give not just noisy, but <em>backwards</em> results if mistuned. And how <em>can</em> one tune these parameters, when the ground truth curvature of interest is unknown? The success of TDA is partially attributable to how easily a domain practitioner can apply it to their problem of interest; persistence homology has few parameters and tunes itself. The field of graph curvature has no such Rosetta Stone for adapting geometric theory to the messy world of practice.</p>
-<p>What might such a Rosetta Stone be? One candidate, with a long track-record of producing robust geometric features from high-dimensional, noisy data is <em>diffusion geometry</em>. The basic object in this framework is the random walk, or diffusion operator. When iterated, this operator endows each point with a probability distribution which is extremely robust to noise and spurious connections. In this way, a point cloud can be lifted into a <em>statistical manifold</em>: the original, unreliable sampling coordinates supplanted with diffusion probabilities. By manipulating these diffusion probabilities in various ways, one can define several varieties of ‘diffusion distances’. These distances can give rise to low-dimensional embedding and visualization techniques, like PHATE and HeatGeo. One can even bring in the Riemannian tool of pullback metrics to endow the point cloud with a Riemannian metric. Unsurprisingly, diffusion probabilities also contain information about curvature. In (CITE ORIGINAL PAPER), we presented a preliminary technique for extracting curvature from the ‘laziness’ of the diffusion operator. This fledgling method proved extremely robust to noise, though still somewhat sensitive to its parameters, and being an unsigned correlate, was unable to differentiate positive from negative curvature.</p>
-<p>Here, we describe a significantly refined version of these ideas, which we christen <em>Diffusion Curvature</em>. It inherits the noise resilience of diffusion geometry, and, in a style reminiscent of persistence homology, further improves this resilience by incorporating many scales of diffusion into one measure. The result is far easier for the domain practitioner to use, having only one parameter, to which it is extremely robust. Moreover, we prove connections between diffusion curvature and the field’s bulwark, Ollivier-Ricci curvature, positioning diffusion curvature as a point-wise adaptation of Ollivier-Ricci curvature especially suitable for pointcloud data. We also describe a new technique for comparing diffusions across differently-sampled graphs and point clouds, with which diffusion curvature can distinguish between negative, flat, and positively curved spaces. Indeed, in our experiments, diffusion curvature appears both the most resilient to noise and the most capable of distinguishing negative from positive curvatures in high dimensions. This motivates the hypothesis that diffusion geometry is a uniquely capable ‘Rosetta Stone’ for translating Riemannian geometry into the sampled realm.</p>
-<p>In sum, our contributions are: 1. <em>Diffusion Curvature</em>, a fast, noise-resistant and signed scalar curvature for point cloud data which is also natively differentiable. 2. Theoretical connections between the diffusion geometry underlying diffusion curvature and Ollivier-Ricci curvature, which enables adaptation of Ollivier’s results in metric measure theory to other realms of diffusion geometry. 3. <em>Diffusion Trajectory Normalization</em>, a technique for comparing diffusions across manifolds.</p>
+<p>The <em>Manifold Assumption</em> is among machine learning’s most prolific muses. Given only the knowledge that the local Euclidean distances between raw datapoints are meaningful, the Assumption grants a fount of theoretical intuition and methodological inspiration. It lies behind low-dimensional embedding and visualization techniques like PHATE, manifold distance estimators like HeatGeo, and the entire field of Topological Data Analysis<span class="citation" data-cites="moon2019VisualizingStructureTransitions">Huguet et al. (<a href="#ref-huguet2023HeatDiffusionPerspective" role="doc-biblioref">2023</a>)</span>. It also invites one to use that theoretical inspiration to design new practical methods. Doing so, however, requires facing a sort of troll: one must bridge the idealized, analytic spaces of theory with the noisy, discrete world of real data. This is easier in some parts of theory than others. In particular, doing so is harder the more <em>locally</em> one tries to apply the Assumption. Global topological features are easier; manifold distances, harder; and manifold <em>curvatures</em>, perhaps the hardest of all.</p>
+<p>But while distances or topological descriptors are widely used and have ready utility, one might be excused for asking “why care about curvatures?” A response, becoming more coherent with a raft of new graph and point-cloud curvature methods, is partially for its utility as a hyper-local descriptor of manifold geometry. There are many techniques, from Topological Data Analysis, to manifold distances estimators or graph or manifold embedding techniques that give global features. Curvature answers the opposing question: “<em>around this point, in this neighborhood, what’s happening to the local geometry</em>?” Such answers are directly interpretable in domains like single-cell biology, where curvature can indicate the extent of cell differentiation. They have also been shown to exceed and enhance the local discriminative powers of Graph Neural Networks (cite Bastian, COMPASS). (ADD other areas of application; reference Hickok &amp; Sritharan). loss landscapes, eg</p>
+<p>But notions of graph and point-cloud curvature are also particularly poignant for their theoretical implications. On one level, they are attempting to square an impossible circle. While global, topological features have a theoretical tolerance for discrete data, Riemannian geometry is built upon measures of <em>infinitesimal</em> locality – and curvature is the most local of Riemannian measurements. This is precisely where discrete data is the least reliable. Globally, point clouds can be recognized as manifolds, but zoom in to the locale of individual points, and the inevitable presence of noise and varying densities imbue the discrete manifold with a Heisenberg-like uncertainty: the smaller you go, the less you know of the local structure.</p>
+<p>Hence the need for that ‘bridge’ – a Rosetta Stone, if you will – between the continuous, analytically-specified spaces of theory and the messy realities of actual data. The several existing discrete curvature methods chiefly use one of two classes of bridge: optimal transport, as in the field’s bulwark, Ollivier-Ricci curvature, and tangent-plane approximation, as used by methods like Sritharan and Adal-PCA (REFINE). This choice may seem inconsequential – it’s only curvature, after all – but precisely because curvature is so local, the ability of such a bridge to estimate curvature qualifies it for a much broader role: as a means to bring <em>general</em> geometric ideas into the discrete realm.</p>
+<p>How effective are these bridges? To explore this, we develop a comprehensive benchmarking suite, and present the first quantitative comparison of discrete curvature methods – probing their tolerance to noise, high dimensions, and parameter perturbations. The landscape is, unfortunately, rather dismal. Most existing methods reliably fail to distinguish between negative and positive curvatures in high dimensions, degrade under small quantities of noise, and are highly dependent on the user tuning parameters which the user – not having access to the ground-truth curvatures – has no ability to tune. Graph curvature methods like Ollivier-Ricci and Forman-Ricci are difficult to translate to higher-density point cloud data, and point cloud methods like Sritharan, Hickok, and Adal-PCA depend on higher-order geometric concepts (like volumes and distances) whose estimation depends on curvature. This is both discouraging to those practitioners and academics to incorporate curvature estimation in their research, and suggestive of a larger cavity in geometric featurization. None of these existing bridges pass the curvature test.</p>
+<p>Perhaps the most well-traveled bridge in other areas of geometric estimation is data diffusion, or as often styled, “Diffusion Geometry”. Beginning in 2006 with Coifman &amp; Lafon’s “Diffusion maps” <span class="citation" data-cites="coifman2006DiffusionMaps">(<a href="#ref-coifman2006DiffusionMaps" role="doc-biblioref">Coifman and Lafon 2006</a>)</span>, this bridge operates through repeated operation of a <em>diffusion operator</em> which can be thought of either as simulating heat diffusion, or performing a weighted random walk across data points. When iterated, this diffusion process performs a sort of ‘integration’ of local structure into a set of semi-local features which enable one to escape the confounding factors noise and sparsity. This idea underlies distance estimators like Diffusion Distances and HeatGeo <span class="citation" data-cites="coifman2006DiffusionMaps">Huguet et al. (<a href="#ref-huguet2023HeatDiffusionPerspective" role="doc-biblioref">2023</a>)</span>, dimensionality-reduction methods like PHATE and GAGA <span class="citation" data-cites="moon2019VisualizingStructureTransitions">(<a href="#ref-moon2019VisualizingStructureTransitions" role="doc-biblioref">Moon et al. 2019</a>)</span>, and even a deep-learning based inference of the local Riemannian metric <span class="citation" data-cites="fasina_neural_2023">(<a href="#ref-fasina_neural_2023" role="doc-biblioref"><strong>fasina_neural_2023?</strong></a>)</span>. More generally, the diffusion-based <em>graph scattering transform</em> has inspired new graph neural network architectures with state-of-the-art performance on baselines requiring fine-grained local discrimination. (CHECK. IS THIS TRUE?)</p>
+<p>Can this bridge of diffusion geometry pass the ‘curvature test’? Moreover, can it produce a curvature method robust enough to noise, dimension, and parameterization to be practically useful on point cloud data? In <span class="citation" data-cites="bhaskar_diffusion_2022">(<a href="#ref-bhaskar_diffusion_2022" role="doc-biblioref"><strong>bhaskar_diffusion_2022?</strong></a>)</span>, we gave a preliminary positive answer with <em>diffusion laziness curvature</em>, an unsigned curvature derived from the diffusion operator. This strongly suggested that the powered diffusion operator contains curvature information, but was lacking both in theoretical pedigree and experimental validation on anything beyond 2-dimensional manifolds. In <em>Diffusion Curvature</em>, we present the maturation of this work.</p>
+<p><em>Diffusion Curvature</em> is a signed curvature based on diffusion geometry. It is resilient to noise, requires no user-tuned parameters, and robustly distinguishes between signs in high dimensions and under noise. We prove theoretical connections between diffusion curvature and the field’s bulwark, <em>Ollivier-Ricci Curvature</em>, which position diffusion curvature as a point-wise adaptation of Ollivier-Ricci - and further connect diffusion geometry to the optimal transport literature. More broadly, the success of diffusion-based techniques in determining curvature strongly motivates diffusion geometry as the missing Rosetta Stone between geometric theory and data science practice.</p>
 </section>
 <section id="background" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Background</h1>
@@ -691,10 +697,23 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y)
 </section>
 </section>
 </section>
-<section id="results" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Results</h1>
-<p>Curvature is an easy quantity to find – indeed, at least two of the many recent curvature methods were defined <em>accidentally</em> <span class="citation" data-cites="steinerberger2022CurvatureGraphsEquilibrium bhaskar2022DiffusionCurvatureEstimating">(<a href="#ref-steinerberger2022CurvatureGraphsEquilibrium" role="doc-biblioref">Steinerberger 2022</a>; <a href="#ref-bhaskar2022DiffusionCurvatureEstimating" role="doc-biblioref">Bhaskar et al. 2022</a>)</span>! The challenge is to make one’s definition robust to the bogeymen of real-world data, especially 1) noise and 2) high dimensions. Our benchmarks of existing methods, including Hickok &amp; Blumberg’s, Ollivier Ricci Curvature, Adal-PCA [and Sritharan], [citations] reveal that all deteriorate quickly under noise, and most <em>fail entirely</em> in high-dimensional data. The dimension-independent, noise-resilient properties of the diffusion operator endow diffusion curvature with good performance on both of these axes.</p>
-<p>But first, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;2</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> places this in the context of existing methods.</p>
+<section id="the-curvature-colosseum-a-discrete-curvature-benchmarking-suite" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> The Curvature Colosseum: A Discrete Curvature Benchmarking Suite</h1>
+<p>The discrete curvature literature lacks a standard benchmark. Previous work has used a combination of evaluations on 2-dimensional toy manifolds (where correctness is visually obvious) and generally one or two bespoke higher-dimensional test cases, on which the target method is extensively tuned – and even then, often has ambiguous results. Comparisons between methods have been scarce.</p>
+<p>Thus, Ollivier-Ricci curvature was introduced mostly on toy-examples. It has since been compared to Forman-Ricci (BASTIAN) ??? Hickok &amp; Blumberg primarily tested their method on the 2-dimensional torus and sphere. They compared to WAWA. However, their point clouds weren’t uniformly sampled with respect to the manifold geometry - causing some density artifacts. CHECK! Sritharan et al.&nbsp;performed the most extensive testing we have seen, with studies of correlation against ground truth and robustness to parameters. Zhang et al.&nbsp;compared accuracy at a variety of noise scales to Hickok &amp; Blumberg and to our previous unsigned diffusion laziness curvature, but only on 2-dimensional manifolds.</p>
+<p>To overcome these shortcomings, we propose a discrete-curvature benchmarking suite we affectionately dub the ‘Curvature Colosseum.’ It permits standardized comparison between methods on four axes:</p>
+<ol type="1">
+<li><em>Resilience to Noise.</em> Pearson correlations with ground truth curvature on 2-Dimensional manifolds across noise scales.</li>
+<li><em>Accuracy on High Dimensions.</em> Pearson correlations with ground truth curvature on 3-8 dimensional surfaces.</li>
+<li><em>Sign Prediction</em>. Ability to distinguish spaces of positive, negative, and zero curvature in dimensions 3-8.</li>
+<li><em>Sensitivity to Parameterization.</em> Variance of scores from (1) (2) and (3) across a range of parameter values.%% Likely as a graph, with some area under the curve on a scale of accuracy across parameter space. Can produce heat maps for each method.%%</li>
+</ol>
+<p>Each of the manifolds used above is rejection sampled (CITE SOMEONE) to ensure uniform density with respect to manifold volume. When benchmarking curvature methods from the literature, we use their suggested parameters when available; as a fallback, we perform 100 rounds of WAWA-METHOD hyperparameter search via Optuna.</p>
+<p>We provide full implementation details in the appendix. Our code is available at GITHUB LINK, along with a public dashboard of the results at ANOTHER LINK.</p>
+<p>The remaining parts of this section detail the results of Diffusion Curvature and its competition on each axis of the Colosseum.</p>
+<section id="performance-in-low-dimensions-under-noise" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="performance-in-low-dimensions-under-noise"><span class="header-section-number">4.1</span> Performance in Low Dimensions under Noise</h2>
+<p>A sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? <a href="#fig-2-manifolds" class="quarto-xref">Figure&nbsp;2</a> shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> places this in the context of existing methods.</p>
 <div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds">
 <div class="cell-container"><div class="cell-decorator"><pre>In [95]:</pre></div><div id="cell-fig-2-manifolds" class="cell" data-execution_count="95">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -851,8 +870,12 @@ Figure&nbsp;3: Diffusion Curvature vs Gaussian Curvature on 2-Manifolds.
 <p>The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, <em>what matters?</em> Most methods don’t care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%</p>
 <p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> perform well on well-sampled noiseless toy manifolds. In Table <strong>?@fig-2-manifolds-noise-table</strong>, we see the results of adding Gaussian noise to each manifold. <!-- 
 {{< embed ../nbs/2-Toy-Manifolds-Benchmark.ipynb#fig-2-manifolds-noise-table >}} --></p>
-<section id="differentiating-sign-in-high-dimensions" class="level3" data-number="4.0.1">
-<h3 data-number="4.0.1" class="anchored" data-anchor-id="differentiating-sign-in-high-dimensions"><span class="header-section-number">4.0.1</span> Differentiating Sign in High Dimensions</h3>
+</section>
+<section id="performance-in-high-dimensions-under-noise" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="performance-in-high-dimensions-under-noise"><span class="header-section-number">4.2</span> Performance in High Dimensions under Noise</h2>
+</section>
+<section id="sign-differentiation" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="sign-differentiation"><span class="header-section-number">4.3</span> Sign Differentiation</h2>
 <p>Most existing methods only quantify their performance in high dimensions on one or two test cases.</p>
 <div class="quarto-embed-nb-cell" data-notebook="/Users/boreas/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/5-sign-prediction-tests.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-sadspheres">
 <div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-sadspheres" class="cell">
@@ -873,27 +896,33 @@ Figure&nbsp;4: Predicted curvatures of Saddles and Spheres in dimensions 2-6. Di
 </div></div>
 </div>
 </section>
-<section id="loss-landscapes" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">4.1</span> Loss Landscapes</h2>
-</section>
-<section id="curvature-as-a-tda-filtration" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="curvature-as-a-tda-filtration"><span class="header-section-number">4.2</span> Curvature as a TDA Filtration</h2>
+<section id="resilience-to-parameters" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="resilience-to-parameters"><span class="header-section-number">4.4</span> Resilience to Parameters</h2>
 </section>
 </section>
-<section id="related-work" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Related Work</h1>
-<section id="foreman-ricci-curvature" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="foreman-ricci-curvature"><span class="header-section-number">5.1</span> Foreman Ricci Curvature</h2>
+<section id="applications" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Applications</h1>
+<section id="loss-landscapes" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">5.1</span> Loss Landscapes</h2>
 </section>
-<section id="hickock-blumbergs-volume-comparison-curvature" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="hickock-blumbergs-volume-comparison-curvature"><span class="header-section-number">5.2</span> Hickock &amp; Blumberg’s Volume Comparison Curvature</h2>
-</section>
-<section id="sritharan" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="sritharan"><span class="header-section-number">5.3</span> Sritharan</h2>
+<section id="curvature-as-a-tda-filtration" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="curvature-as-a-tda-filtration"><span class="header-section-number">5.2</span> Curvature as a TDA Filtration</h2>
 </section>
 </section>
-<section id="conclusion" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Conclusion</h1>
+<section id="related-work" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Related Work</h1>
+<section id="foreman-ricci-curvature" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="foreman-ricci-curvature"><span class="header-section-number">6.1</span> Foreman Ricci Curvature</h2>
+</section>
+<section id="hickock-blumbergs-volume-comparison-curvature" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="hickock-blumbergs-volume-comparison-curvature"><span class="header-section-number">6.2</span> Hickock &amp; Blumberg’s Volume Comparison Curvature</h2>
+</section>
+<section id="sritharan" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="sritharan"><span class="header-section-number">6.3</span> Sritharan</h2>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Conclusion</h1>
 </section>
 <section id="references" class="level1 unnumbered">
 <h1 class="unnumbered">References</h1>
@@ -921,9 +950,6 @@ Ollivier, Yann. 2009. <span>“Ricci Curvature of <span>Markov</span> Chains on 
 </div>
 <div id="ref-saloff-coste2010HeatKernelIts" class="csl-entry" role="listitem">
 Saloff-Coste, Laurent. 2010. <span>“The Heat Kernel and Its Estimates.”</span> In <em>Advanced <span>Studies</span> in <span>Pure Mathematics</span></em>, 405–36. Kyoto University, Japan. <a href="https://doi.org/10.2969/aspm/05710405">https://doi.org/10.2969/aspm/05710405</a>.
-</div>
-<div id="ref-steinerberger2022CurvatureGraphsEquilibrium" class="csl-entry" role="listitem">
-Steinerberger, Stefan. 2022. <span>“Curvature on <span>Graphs</span> via <span>Equilibrium Measures</span>.”</span> September 5, 2022. <a href="https://doi.org/10.48550/arXiv.2202.01658">https://doi.org/10.48550/arXiv.2202.01658</a>.
 </div>
 <div id="ref-tong2021DiffusionEarthMovera" class="csl-entry" role="listitem">
 Tong, Alexander Y., Guillaume Huguet, Amine Natik, Kincaid Macdonald, Manik Kuchroo, Ronald Coifman, Guy Wolf, and Smita Krishnaswamy. 2021. <span>“Diffusion <span>Earth Mover</span>’s <span>Distance</span> and <span>Distribution Embeddings</span>.”</span> In <em>Proceedings of the 38th <span>International Conference</span> on <span>Machine Learning</span></em>, 10336–46. PMLR. <a href="https://proceedings.mlr.press/v139/tong21a.html">https://proceedings.mlr.press/v139/tong21a.html</a>.
@@ -1360,7 +1386,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","selector":".lightbox","descPosition":"bottom","closeEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","loop":false,"closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

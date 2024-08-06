@@ -147,7 +147,6 @@ def random_jnparray(*shape):
 
 # %% ../nbs/0e-Errata.ipynb 11
 import numpy as np
-import torch
 import matplotlib.pyplot as plt
 # visualize the latent embedding space of a pytorch model, colored by a given vector
 def visualize_embedding(
