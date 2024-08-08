@@ -7,7 +7,6 @@ __all__ = ['epsilon_and_tau', 'Gaussian_Curvature_2d', 'adalpca_curvature_of_poi
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
-import torch
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from tqdm import tqdm

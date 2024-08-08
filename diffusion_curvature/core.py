@@ -439,7 +439,7 @@ def fill_diagonal(a, val):
 
 
 # %% ../nbs/0c-Core.ipynb 9
-from .diffusion_laziness import DiffusionLaziness, compare_curvature_across_datasets
+from .diffusion_laziness import DiffusionLaziness, compare_curvature_across_datasets, compare_curvature_across_datasets_by_locality_fraction
 from .kernels import tune_curvature_agnostic_kernel
 
 class DiffusionCurvature2():
@@ -497,6 +497,7 @@ class DiffusionCurvature2():
             X, # input pointcloud
             dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
             ts:int = None, # scales; supply an integer or list of indices, and we'll only calculate their laziness
+            locality_scale = None, # the scale at which to measure curvature, from 0 to 1. 0 is the most local possible, 1 is the most global possible.
             idx=None, # the index at which to compute curvature. If None, computes for all points.
             unsigned = False, # If True, computes unsigned curvature. If False, computes signed curvature.
             D = None, # Supply manifold distances yourself to override their computation. Only used with the Wasserstein laziness method.
@@ -540,8 +541,11 @@ class DiffusionCurvature2():
 
         # integrate with bounds across spaces.
         comparison_idxs = jnp.arange(len(X)) if idx is None else [idx]
-        comparison_integrals = compare_curvature_across_datasets(
-            self.manifold_lazy_est, self.comparison_lazy_est, idxs = [comparison_idxs, [0]]
+        # comparison_integrals = compare_curvature_across_datasets(
+        #     self.manifold_lazy_est, self.comparison_lazy_est, idxs = [comparison_idxs, [0]]
+        # )
+        comparison_integrals = compare_curvature_across_datasets_by_locality_fraction(
+            self.manifold_lazy_est, self.comparison_lazy_est, idxs = comparison_idxs, idxs_comparison=[0], locality_scale = locality_scale
         )
 
         self.ls_manifold = comparison_integrals[0]

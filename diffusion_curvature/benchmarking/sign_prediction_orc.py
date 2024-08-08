@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['method_name', 'run_sadspheres']
 
-# %% ../../nbs/5c-Ollivier-Ricci-and-Foreman-Sign-Prediction-Tests.ipynb 15
+# %% ../../nbs/5c-Ollivier-Ricci-and-Foreman-Sign-Prediction-Tests.ipynb 13
 from tqdm.auto import tqdm, trange
 from fastcore.all import *
 import diffusion_curvature
