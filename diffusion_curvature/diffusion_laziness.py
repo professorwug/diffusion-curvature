@@ -3,9 +3,10 @@
 # %% auto 0
 __all__ = ['wasserstein_spread_of_diffusion', 'entropy_of_diffusion', 'kl_div', 'js_dist', 'diffusion_distances_along_trajectory',
            'trapezoidal_rule', 'DiffusionLaziness', 'curvature_curves', 'compare_curvature_across_datasets',
-           'compare_curvature_across_datasets_by_maximum_mean_discrepancy']
+           'compare_curvature_across_datasets_by_maximum_mean_discrepancy',
+           'compare_curvature_across_datasets_by_locality_fraction']
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 5
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 3
 import jax
 import jax.numpy as jnp
 from jax import jit
@@ -22,7 +23,7 @@ def wasserstein_spread_of_diffusion(
         """
         return jnp.sum(D * Pt, axis=-1)
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 13
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 11
 import jax.scipy
 import jax.numpy as jnp
 
@@ -45,7 +46,7 @@ def entropy_of_diffusion(
         # entropy_of_rows = entropy_of_rows / (-jnp.log(1/jnp.sum(Pt>epsilon, axis=-1)))
         return entropy_of_rows
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 22
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 20
 @jax.jit
 def kl_div(A, B, eps = 1e-12):
     # Calculate Kullback-Leibler divergence
@@ -55,7 +56,7 @@ def kl_div(A, B, eps = 1e-12):
     v = A*(jnp.log(A) - jnp.log(B)) 
     return jnp.sum(v)
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 24
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 22
 @jax.jit
 def js_dist(
     P:jax.Array, 
@@ -76,7 +77,7 @@ def js_dist(
     # Take sqrt to get the JS DISTANCE
     return jnp.sqrt(jnp.abs(result))
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 32
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 30
 from scipy.spatial.distance import jensenshannon
 def diffusion_distances_along_trajectory(diffusions):
     # given a sequence of diffusions, returns the distances between each 
@@ -89,7 +90,7 @@ def diffusion_distances_along_trajectory(diffusions):
         )
     return jnp.stack(distances)
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 36
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 34
 import jax
 import jax.numpy as jnp
 
@@ -114,7 +115,7 @@ def trapezoidal_rule(x, y):
     
     return integral
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 38
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 36
 from typing import Literal
 from .kernels import diffusion_matrix_from_affinities
 from .heat_diffusion import heat_diffusion_from_dirac, powers_of_diffusion
@@ -206,7 +207,7 @@ class DiffusionLaziness():
         return results
         
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 68
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 66
 from functools import partial
 import numpy as np
 import matplotlib.pyplot as plt
@@ -248,7 +249,7 @@ def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", als
     axs[1].legend()
     plt.show()
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 73
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 71
 def compare_curvature_across_datasets(
     *diffusion_lazinesses,
     idxs:List  = None # list of idxs to compare. Can also be a list of lists of idxs, one per DiffusionLaziness
@@ -278,7 +279,7 @@ def compare_curvature_across_datasets(
 
     return bounded_integrals
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 77
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 75
 def compare_curvature_across_datasets_by_maximum_mean_discrepancy(
     target_laziness:DiffusionLaziness, # the DiffusionLaziness operator of the manifold
     comparison_laziness:DiffusionLaziness,
@@ -341,3 +342,45 @@ def compare_curvature_across_datasets_by_maximum_mean_discrepancy(
         return max_discrepancy_x, target_fns[:, max_discrepancy_idx], comp_fn[max_discrepancy_idx]
     
     
+
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 76
+import jax
+import jax.numpy as jnp
+from typing import List
+
+def compare_curvature_across_datasets_by_locality_fraction(
+        target_laziness: DiffusionLaziness, 
+        comparison_laziness: DiffusionLaziness,
+        idxs: List,
+        idxs_comparison:List = None,
+        locality_scale: float = None,
+): 
+    if isinstance(idxs, List): idxs = jnp.array(idxs)
+    if isinstance(idxs_comparison,List): idxs_comparison = jnp.array(idxs_comparison)
+    if idxs_comparison is None: idxs_comparison = idxs
+    ds_dl1 = target_laziness.ds[idxs]
+    ds_dl2 = comparison_laziness.ds[idxs_comparison]
+    ls_dl1 = target_laziness.ls[idxs]
+    ls_dl2 = comparison_laziness.ls[idxs_comparison]
+    
+    def get_interpolated_laziness(locality_scale, testing=False):
+        avg_max_ds = jnp.mean(ds_dl1[:,-1])
+        d = avg_max_ds * locality_scale
+        if d > jnp.min(ds_dl2[:,-1]): 
+            if testing: return 0, 0
+            else: raise ValueError("Locality scale produces a distance which exceeds the comparison space size. Please try a smaller locality scale")
+
+        distance_interp_1 = jax.vmap(lambda x, y: jnp.interp(d, x, y))(ds_dl1, ls_dl1)
+        distance_interp_2 = jax.vmap(lambda x, y: jnp.interp(d, x, y))(ds_dl2, ls_dl2)
+        return distance_interp_1, distance_interp_2
+    
+    def get_mean_difference(locality_scale):
+        d1, d2 = get_interpolated_laziness(locality_scale, testing=True)
+        return jnp.mean(jnp.abs(d1 - d2))
+    
+    if locality_scale is None:
+        possible_scales = jnp.linspace(0.01, 1.0, 20)  # Define a range of possible values
+        mean_differences = jnp.array([get_mean_difference(scale) for scale in possible_scales])
+        locality_scale = possible_scales[jnp.argmax(mean_differences)]
+        print("determined optimal locality scale to be", locality_scale, "with maximal discrepancy",jnp.max(mean_differences))
+    return get_interpolated_laziness(locality_scale)
