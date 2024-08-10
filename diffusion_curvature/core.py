@@ -441,6 +441,7 @@ def fill_diagonal(a, val):
 # %% ../nbs/0c-Core.ipynb 9
 from .diffusion_laziness import DiffusionLaziness, compare_curvature_across_datasets, compare_curvature_across_datasets_by_locality_fraction
 from .kernels import tune_curvature_agnostic_kernel
+import multiprocessing
 
 class DiffusionCurvature2():
     DIFFUSION_TYPES = Literal['diffusion matrix','heat kernel']
@@ -453,7 +454,7 @@ class DiffusionCurvature2():
             laziness_method: _LAZINESS_METHOD = 'Entropic', # Either ['Wasserstein','Entropic', 'Laziness']
             comparison_method: _COMPARISON_METHOD = 'Subtraction', # Either ['Ollivier', 'Subtraction']
             graph_former = None,
-            dimest = None, # Dimension estimator to use. If none, defaults to kNN.
+            estimate_local_dimension:bool = True, # by default, estimates the dimension of each point. If false, estimates global dimension
             distance_t = None, 
             comparison_space_trials = 10,
             comparison_space_file = "../data/entropies_averaged.h5",
@@ -473,10 +474,7 @@ class DiffusionCurvature2():
             laziness_method = laziness_method,
             smoothing = smoothing,
         )
-        
-        
-        if self.dimest is None:
-            self.dimest = skdim.id.KNN()
+    
         
             
     def unsigned_curvature(
@@ -495,13 +493,13 @@ class DiffusionCurvature2():
     def fit(
             self,
             X, # input pointcloud
-            dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
-            ts:int = None, # scales; supply an integer or list of indices, and we'll only calculate their laziness
-            locality_scale = None, # the scale at which to measure curvature, from 0 to 1. 0 is the most local possible, 1 is the most global possible.
+            locality_scale = 0.9, # the scale at which to measure curvature, from 0 to 1. 0 is the most local possible, 1 is the most global possible.
             idx=None, # the index at which to compute curvature. If None, computes for all points.
+            ts:int = list(range(1,40)), # scales; supply an integer or list of indices, and we'll only calculate their laziness
+            dim = None, # the INTRINSIC dimension of your manifold, as an int for global dimension or list of pointwise dimensions; if none, tries to estimate pointwise.
             unsigned = False, # If True, computes unsigned curvature. If False, computes signed curvature.
             D = None, # Supply manifold distances yourself to override their computation. Only used with the Wasserstein laziness method.
-            t_dist:int = 25,
+            # t_dist:int = 25,
             t = None, # alias for ts
     ):
         # build graph
@@ -512,47 +510,74 @@ class DiffusionCurvature2():
             self.graph_former, _ = tune_curvature_agnostic_kernel(X, 80, tolerance = 5)
         self.G = self.graph_former(X)
 
+        if dim is None:
+            if self.estimate_local_dimension:
+                num_cores = multiprocessing.cpu_count()
+                lpca = skdim.id.lPCA().fit_pw(self.X,
+                              n_neighbors = 100,
+                              n_jobs = num_cores - 3)
+                dim = list(lpca.dimension_pw_)
+            else:
+                danco = skdim.id.DANCo().fit(self.X)
+                dim = danco.dimension_
+        if isinstance(dim, int):
+            dim = [dim]*len(X)
+        else:
+            if idx is not None: assert len(dim) == len(idx)
+        unique_dimensions = set(dim)
+        points_by_dim = {}
+        for ud in unique_dimensions:
+            points_by_dim[ud] = np.where(np.array(dim) == ud)[0]
+        
+        
         # fit points
         ls_manifold_raw = self.manifold_lazy_est.fit_transform(
             self.G,
             ts, 
             idx, 
             D, 
-            t_dist
+            # t_dist
         )
+
+        if idx is None:
+            idx = jnp.arange(len(X))
+
+        self.ls_manifold = np.empty(len(idx))
+        self.ls_euclidean = np.empty(len(idx))
 
         if unsigned:
             return ls_manifold_raw
-        
-        # build comparison space
-        ls_euclidean_raw = 0
-        for i in range(self.comparison_space_trials):
-            Rn = plane(n = len(X), dim=dim)
-            G_euclidean = self.graph_former(Rn)
-            # fit comparison space
-            ls_euclidean_raw += self.comparison_lazy_est.fit_transform(
-                G_euclidean,
-                ts, 
-                idx = 0,
-                D = None,
-                t_dist = t_dist,
+
+        for ud in unique_dimensions:
+            dimension_idxs = points_by_dim[ud]
+            print(ud, dimension_idxs)
+            # build comparison space
+            ls_euclidean_raw = 0
+            for i in range(self.comparison_space_trials):
+                Rn = plane(n = len(X), dim=ud)
+                G_euclidean = self.graph_former(Rn)
+                # fit comparison space
+                ls_euclidean_raw += self.comparison_lazy_est.fit_transform(
+                    G_euclidean,
+                    ts, 
+                    idx = 0,
+                    D = None,
+                    # t_dist = t_dist,
+                )
+            ls_euclidean_raw /= self.comparison_space_trials
+            # integrate with bounds across spaces.
+            # comparison_integrals = compare_curvature_across_datasets(
+            #     self.manifold_lazy_est, self.comparison_lazy_est, idxs = [comparison_idxs, [0]]
+            # )
+
+            manifold_l, euclidean_l = compare_curvature_across_datasets_by_locality_fraction(
+                self.manifold_lazy_est, self.comparison_lazy_est, idxs = dimension_idxs, idxs_comparison=[0], locality_scale = locality_scale
             )
-        ls_euclidean_raw /= self.comparison_space_trials
+            self.ls_manifold[dimension_idxs] = manifold_l
+            self.ls_euclidean[dimension_idxs] = euclidean_l
 
-        # integrate with bounds across spaces.
-        comparison_idxs = jnp.arange(len(X)) if idx is None else [idx]
-        # comparison_integrals = compare_curvature_across_datasets(
-        #     self.manifold_lazy_est, self.comparison_lazy_est, idxs = [comparison_idxs, [0]]
-        # )
-        comparison_integrals = compare_curvature_across_datasets_by_locality_fraction(
-            self.manifold_lazy_est, self.comparison_lazy_est, idxs = comparison_idxs, idxs_comparison=[0], locality_scale = locality_scale
-        )
-
-        self.ls_manifold = comparison_integrals[0]
-        self.ls_euclidean = comparison_integrals[1]
-
-        # self.ls_manifold = ls_manifold_raw
-        # self.ls_euclidean = ls_euclidean_raw
+        # self.ls_manifold = comparison_integrals[0]
+        # self.ls_euclidean = comparison_integrals[1]
         
         match self.comparison_method:
             case "Ollivier":
@@ -562,13 +587,13 @@ class DiffusionCurvature2():
             case _:
                 raise ValueError(f'Comparison method must be in {_COMPARISON_METHOD}')    
 
-        
         # The integration wit bounds performed by compare_curvature doesn't smooth
         if self.smoothing and idx is None: # TODO there are probably more intelligent ways to do this smoothing
             # Local averaging to counter the effects local density
             average_laziness = self.manifold_lazy_est.smoothing_P @ ks
             ks = average_laziness.squeeze()
         return ks 
+        
     def fit_transform(
             self,
             X, # input pointcloud

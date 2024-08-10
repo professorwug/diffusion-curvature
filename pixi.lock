@@ -4062,13 +4062,13 @@ packages:
   name: diffusion-curvature
   version: 0.1.1
   path: .
-  sha256: 768aec182af8af8f233c526ad97e4c5f2f9396d66daaa86444287b478e946b69
+  sha256: 320da7948e4a1ce9dd6a3e8fb1caeefee0c1c4862e79b8765a8305531f27be83
   requires_dist:
   - scikit-dimension
   - tadasets
   - thread-dev
   - great-tables
-  requires_python: '>=3.11'
+  requires_python: '>=3.10'
   editable: true
 - kind: conda
   name: distributed

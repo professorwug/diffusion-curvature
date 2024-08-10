@@ -23,7 +23,7 @@ from ..sadspheres import *
 from ..kernels import *
 from ..kernels import tune_curvature_agnostic_kernel
 
-method_name = "Diffusion Curvature (Denoising)"
+method_name = "Diffusion Curvature (Locality Scale 2 - No Denoising - 10 trials)"
 
 def run_sadspheres(
 ):
@@ -44,10 +44,11 @@ def run_sadspheres(
             known_dim_bandwidths[dim] = kernel
         DC = DiffusionCurvature2(
             graph_former = known_dim_bandwidths[dim],
-            comparison_space_trials = 10,
+            comparison_space_trials = 3,
+            smoothing = None,
         )
-        ks = DC.fit(X, dim = X.shape[1] - 1, ts = list(range(1,84)))
-        SS1.update(ks[0].item(), method_name = method_name)
+        ks = DC.fit(X, dim = X.shape[1] - 1, ts = list(range(1,40)), locality_scale = 0.9, idx = 0)
+        SS1.update(ks.item(), method_name = method_name)
     SS1.save_results()
     return SS1
 
