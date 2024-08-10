@@ -50,7 +50,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 
-def plot_3d(X,distribution=None, title="",lim=None,use_plotly=False, zlim = None, colorbar = False, cmap="plasma"):
+def plot_3d(X,distribution=None, title="",lim=None,use_plotly=False, zlim = None, colorbar = True, cmap="plasma"):
     if distribution is None:
         distribution = np.zeros(len(X))
     if lim is None:

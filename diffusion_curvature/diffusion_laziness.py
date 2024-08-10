@@ -219,6 +219,8 @@ import inspect
 def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", also_plot_against_time = True, **kwargs):
     if also_plot_against_time: fig, axs = plt.subplots(1, 2, figsize=(12, 6))
     else:                      fig, axs = plt.subplots(1, 1, figsize=(6, 6))
+    plotter = axs[1] if also_plot_against_time else axs
+
     for dc in diffusion_curvatures:
         dc_name = None
         for frame_record in inspect.stack():
@@ -234,22 +236,22 @@ def curvature_curves(*diffusion_curvatures, idx=0, title="Curvature Curves", als
         t_values, distances, curvatures = dc.ts, dc.ds[idx], dc.ls[idx]
         # else:
         #     t_values, distances, curvatures = dc.manifold_lazy_est.ts, dc.manifold_lazy_est.ds[idx], dc.manifold_lazy_est.ls[idx]
-        axs[1].plot(distances, curvatures, label=dc_name)
+        plotter.plot(distances, curvatures, label=dc_name)
         if also_plot_against_time: axs[0].plot(t_values, curvatures, label=dc_name)
         
-    axs[1].set_title("Diffusion Energy Vs. Diffusion Trajectory Distance")
-    axs[1].set_xlabel('Distance')
-    axs[1].set_ylabel('Diffusion Energy')
+    plotter.set_title("Diffusion Energy Vs. Diffusion Trajectory Distance")
+    plotter.set_xlabel('Distance')
+    plotter.set_ylabel('Diffusion Energy')
     if also_plot_against_time:
         axs[0].set_title("Diffusion Energy vs. Time")
         axs[0].set_xlabel('Time ($t$)')    
         axs[0].set_ylabel('Diffusion Energy')
         axs[0].legend()
     fig.suptitle(title)
-    axs[1].legend()
+    plotter.legend()
     plt.show()
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 71
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 72
 def compare_curvature_across_datasets(
     *diffusion_lazinesses,
     idxs:List  = None # list of idxs to compare. Can also be a list of lists of idxs, one per DiffusionLaziness
@@ -279,7 +281,7 @@ def compare_curvature_across_datasets(
 
     return bounded_integrals
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 75
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 76
 def compare_curvature_across_datasets_by_maximum_mean_discrepancy(
     target_laziness:DiffusionLaziness, # the DiffusionLaziness operator of the manifold
     comparison_laziness:DiffusionLaziness,
@@ -343,7 +345,7 @@ def compare_curvature_across_datasets_by_maximum_mean_discrepancy(
     
     
 
-# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 76
+# %% ../nbs/0c1a-Diffusion-Laziness.ipynb 77
 import jax
 import jax.numpy as jnp
 from typing import List
@@ -365,6 +367,8 @@ def compare_curvature_across_datasets_by_locality_fraction(
     
     def get_interpolated_laziness(locality_scale, testing=False):
         avg_max_ds = jnp.mean(ds_dl1[:,-1])
+        min_max_comparison = jnp.min(ds_dl2[:,-1])
+        if avg_max_ds > min_max_comparison: avg_max_ds = min_max_comparison
         d = avg_max_ds * locality_scale
         if d > jnp.min(ds_dl2[:,-1]): 
             if testing: return 0, 0
