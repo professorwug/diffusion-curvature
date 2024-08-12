@@ -61,13 +61,13 @@ number-sections: true
 # Introduction
 
 The *Manifold Assumption* is among machine learning’s most prolific muses. Given only the knowledge that the local Euclidean distances between raw datapoints are meaningful, the Assumption grants a fount of theoretical intuition and methodological inspiration. It lies behind low-dimensional embedding and visualization techniques like PHATE, manifold distance estimators like HeatGeo, and the entire field of Topological Data Analysis
-[@moon2019VisualizingStructureTransitions, @huguet2023HeatDiffusionPerspective]. It also invites one to use that theoretical inspiration to design new practical methods. Doing so, however, requires facing a sort of troll: one must bridge the idealized, analytic spaces of theory with the noisy, discrete world of real data. This is easier in some parts of theory than others. In particular, doing so is harder the more *locally* one tries to apply the Assumption. Global topological features are easier; manifold distances, harder; and manifold *curvatures*, perhaps the hardest of all.
+[@moon2019VisualizingStructureTransitions; @huguet2023HeatDiffusionPerspective]. It also invites one to use that theoretical inspiration to design new practical methods. Doing so, however, requires facing a sort of troll: one must bridge the idealized, analytic spaces of theory with the noisy, discrete world of real data. This is easier in some parts of theory than others. In particular, doing so is harder the more *locally* one tries to apply the Assumption. Global topological features are easier; manifold distances, harder; and manifold *curvatures*, perhaps the hardest of all.
 
-But while distances or topological descriptors are widely used and have ready utility, one might be excused for asking “why care about curvatures?” A response, becoming more coherent with a raft of new graph and point-cloud curvature methods, is partially for its utility as a hyper-local descriptor of manifold geometry. 
+But while distances or topological descriptors are widely used and have ready utility, one might be excused for asking “why care about curvatures?” A response, becoming more coherent with a raft of new graph and point-cloud curvature methods, is for its utility as a hyper-local descriptor of manifold geometry. 
 There are many techniques, from Topological Data Analysis, to manifold distances estimators or graph or manifold embedding techniques that give global features.  Curvature answers the opposing question: “*around this point, in this neighborhood, what’s happening to the local geometry*?” Such answers are directly interpretable in domains like single-cell biology, where curvature can indicate the extent of cell differentiation. They have also been shown to exceed and enhance the local discriminative powers of Graph Neural Networks (cite Bastian, COMPASS). 
 (ADD other areas of application; reference Hickok & Sritharan). loss landscapes, eg
 
-But notions of graph and point-cloud curvature are also particularly poignant for their theoretical implications. On one level, they are attempting to square an impossible circle. While global, topological features have a theoretical tolerance for discrete data, Riemannian geometry is built upon measures of *infinitesimal* locality – and curvature is the most local of Riemannian measurements. This is precisely where discrete data is the least reliable. Globally, point clouds can be recognized as manifolds, but zoom in to the locale of individual points, and the inevitable presence of noise and varying densities imbue the discrete manifold with a Heisenberg-like uncertainty: the smaller you go, the less you know of the local structure.
+But notions of graph and point-cloud curvature are also particularly poignant for their theoretical implications. On one level, they are attempting to square an impossible circle. While global, topological features have a theoretical tolerance for discrete data, Riemannian geometry is built upon measures of *infinitesimal* locality – and curvature is the most local of Riemannian measurements. This is precisely where discrete data is the least reliable. Globally, point clouds can be recognized as manifolds, but zoom in to the locale of individual points, and the inevitable presence of noise and varying densities imbues the discrete manifold with a Heisenberg-like uncertainty: the smaller you go, the less you know of the local structure.
 
 Hence the need for that ‘bridge’ – a Rosetta Stone, if you will – between the continuous, analytically-specified spaces of theory and the messy realities of actual data. 
 The several existing discrete curvature methods chiefly use one of two classes of bridge: optimal transport, as in the field’s bulwark, Ollivier-Ricci curvature, and tangent-plane approximation, as used by methods like Sritharan and Adal-PCA (REFINE).
@@ -76,12 +76,12 @@ This choice may seem inconsequential – it’s only curvature, after all – bu
 How effective are these bridges? To explore this, we develop a comprehensive benchmarking suite, and present the first quantitative comparison of discrete curvature methods – probing their tolerance to noise, high dimensions, and parameter perturbations.
 The landscape is, unfortunately, rather dismal. Most existing methods reliably fail to distinguish between negative and positive curvatures in high dimensions, degrade under small quantities of noise, and are highly dependent on the user tuning parameters which the user – not having access to the ground-truth curvatures – has no ability to tune. 
 Graph curvature methods like Ollivier-Ricci and Forman-Ricci are difficult to translate to higher-density point cloud data, and point cloud methods like Sritharan, Hickok, and Adal-PCA depend on higher-order geometric concepts (like volumes and distances) whose estimation depends on curvature.
-This is both discouraging to those practitioners and academics to incorporate curvature estimation in their research, and suggestive of a larger cavity in geometric featurization. None of these existing bridges pass the curvature test.
+This is both discouraging to those practitioners and academics thinking of incorporate curvature estimation in their research, and suggestive of a larger cavity in geometric featurization. None of these existing bridges pass the curvature test.
 
-Perhaps the most well-traveled bridge in other areas of geometric estimation is data diffusion, or as often styled, “Diffusion Geometry”. Beginning in 2006 with Coifman & Lafon’s “Diffusion maps” [@coifman2006DiffusionMaps], this bridge operates through repeated operation of a *diffusion operator* which can be thought of either as simulating heat diffusion, or performing a weighted random walk across data points. 
-When iterated, this diffusion process performs a sort of 'integration' of local structure into a set of semi-local features which enable one to escape the confounding factors noise and sparsity. This idea underlies distance estimators like Diffusion Distances and HeatGeo [@coifman2006DiffusionMaps, @huguet2023HeatDiffusionPerspective], dimensionality-reduction methods like PHATE and GAGA [@moon2019VisualizingStructureTransitions], and even a deep-learning based inference of the local Riemannian metric [@fasina_neural_2023]. More generally, the diffusion-based *graph scattering transform* has inspired new graph neural network architectures with state-of-the-art performance on baselines requiring fine-grained local discrimination. (CHECK. IS THIS TRUE?)
+Perhaps the most well-traveled bridge in other areas of geometric estimation is data diffusion, or as often styled, “Diffusion Geometry”. Beginning in 2006 with Coifman & Lafon’s “Diffusion maps” [@coifman2006DiffusionMaps], this bridge operates through repeated application of a *diffusion operator* which can be thought of either as simulating heat diffusion, or performing a weighted random walk across data points. 
+When iterated, this diffusion process performs a sort of 'integration' of local structure into a set of semi-local features which enable one to escape the confounding factors noise and sparsity. This idea underlies distance estimators like Diffusion Distances and HeatGeo [@coifman2006DiffusionMaps, @huguet2023HeatDiffusionPerspective], dimensionality-reduction methods like PHATE and GAGA [@moon2019VisualizingStructureTransitions], and even a deep-learning based inference of the local Riemannian metric [@fasina2023NeuralFIMLearning]. More generally, the diffusion-based *graph scattering transform* has inspired new graph neural network architectures with state-of-the-art performance on baselines requiring fine-grained local discrimination. (CHECK. IS THIS TRUE?)
 
-Can this bridge of diffusion geometry pass the ‘curvature test’? Moreover, can it produce a curvature method robust enough to noise, dimension, and parameterization to be practically useful on point cloud data? In @bhaskar_diffusion_2022, we gave a preliminary positive answer with *diffusion laziness curvature*, an unsigned curvature derived from the diffusion operator. This strongly suggested that the powered diffusion operator contains curvature information, but was lacking both in theoretical pedigree and experimental validation on anything beyond 2-dimensional manifolds. In *Diffusion Curvature*, we present the maturation of this work.
+Can this bridge of diffusion geometry pass the ‘curvature test’? Moreover, can it produce a curvature method robust enough to noise, dimension, and parameterization to be practically useful on point cloud data? In @bhaskar2022DiffusionCurvatureEstimating, we gave a preliminary positive answer with *diffusion laziness curvature*, an unsigned curvature derived from the diffusion operator. This strongly suggested that the powered diffusion operator contains curvature information, but was lacking both in theoretical pedigree and experimental validation on anything beyond 2-dimensional manifolds. We now present the maturation of this work.
 
 *Diffusion Curvature* is a signed curvature based on diffusion geometry. It is resilient to noise, requires no user-tuned parameters, and robustly distinguishes between signs in high dimensions and under noise. We prove theoretical connections between diffusion curvature and the field’s bulwark, *Ollivier-Ricci Curvature*, which position diffusion curvature as a point-wise adaptation of Ollivier-Ricci - and further connect diffusion geometry to the optimal transport literature.  More broadly, the success of diffusion-based techniques in determining curvature strongly motivates diffusion geometry as the missing Rosetta Stone between geometric theory and data science practice.
 
@@ -254,8 +254,8 @@ This measure of diffusion energy provides a snapshot of curvature at single diff
 
 To remedy this, we perform a change of variable, from the diffusion time $t$ to a *Diffusion Trajectory Distance*. As $t$ ranges from 0 to $\infty$, the diffusions $p_{x}^X(t)$ can be viewed as a trajectory on the $n$-dimensional probability simplex, where $n$ is the number of points in $X$. Given some Riemannian metric ${} g_{p} {}$ on the probability simplex (e.g. the Fisher Information Metric), we define the Diffusion Trajectory Distance of scale $t$ as the arc length of the trajectory to $p_{x}^X(t)$.
 
-::: {def-diffusion-trajctory-distance}
-### Diffusion Trajectory Distance
+::: {#def-diffusion-trajctory-distance}
+#### Diffusion Trajectory Distance
 
 $$
 d_{DTD}(x, t)= \int_{\tau=0}^{t} g_p\left(\frac{d p_x^X(\tau)}{d \tau}, \frac{ d p_x^X(\tau) }{d \tau} \right)
@@ -513,7 +513,7 @@ Hickok & Blumberg primarily tested their method on the 2-dimensional torus and s
 Sritharan et al. performed the most extensive testing we have seen, with studies of correlation against ground truth and robustness to parameters.
 Zhang et al. compared accuracy at a variety of noise scales to Hickok & Blumberg and to our previous unsigned diffusion laziness curvature, but only on 2-dimensional manifolds.
 
-To overcome these shortcomings, we propose a discrete-curvature benchmarking suite we affectionately dub the ‘Curvature Colosseum.’ It permits standardized comparison between methods on four axes:
+To overcome these shortcomings, we propose a discrete-curvature benchmarking suite we affectionately dub the ‘Curvature Colosseum.’ It permits standardized comparison between methods on three axes:
 
 1. *Resilience to Noise.* Pearson correlations with ground truth curvature on 2-Dimensional manifolds across noise scales.
 2. *Accuracy on High Dimensions.* Pearson correlations with ground truth curvature on 3-8 dimensional surfaces.
@@ -527,28 +527,38 @@ The remaining parts of this section detail the results of Diffusion Curvature an
 
 ## Performance in Low Dimensions under Noise
 
- A sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? @fig-2-manifolds shows the diffusion curvature of a Torus, Saddle, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. @fig-2-manifolds-visual-comparison places this in the context of existing methods.
 
 {{< embed ../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds.ipynb#fig-2-manifolds >}}
 
-Though the correlation is strong – passing the 'sniff test' – this low-dimensional validation highlights two subtleties of our method. First, diffusion curvature, being an intrinsic, graph-based measurement, is susceptible to edge effects to a greater degree than extrinsic methods. When diffusion hits the edges of the saddle, it rebounds, creating the false appearance of positive curvature. 
+First, a sanity check. Does diffusion curvature recover the Gaussian curvature of basic 2-manifolds? @fig-2-manifolds shows the diffusion curvature of a Torus, Hyperboloid, and Ellipsoid, along with a scatter plot correlating diffusion curvature and Gaussian curvature. @fig-2-manifolds-visual-comparison places this in the context of existing methods.
 
 {{< embed ../nbs/2-Toy-Manifolds-Benchmark.ipynb#fig-2-manifolds-visual-comparison >}}
 
-The second subtly emerges in the context of related methods. Everything pictured does an excellent job of coloring the toy manifolds. But looking beyond this, *what matters?* Most methods don't care about the precise magnitude – or even exactly matching the correlations, as in the ellipsoid… %% mean vs gaussian curvature, and uniqueness of definitions%%
+All of these methods in @fig-2-manifolds-visual-comparison approximately give the correct relative coloring of these 2-manifolds, except perhaps Forman-Rici. As expected, the graph-based methods, Ollivier-Ricci and Forman-Ricci, perform the worst; they weren't designed to deal with the noise of pointcloud data. Hickok & Blumberg's definition performs the best in terms of correspondence with the ground truth Gaussian curvature, but diffusion curvature follows it closely. Observing the bottom panel of @fig-2-manifolds-visual-comparison, we can see diffusion curvature corresponding closely with the red line of ground truth curvature.
 
-All of these methods in @fig-2-manifolds-visual-comparison perform well on well-sampled noiseless toy manifolds. In Table [@fig-2-manifolds-noise-table], we see the results of adding Gaussian noise to each manifold.
-<!-- 
-{{< embed ../nbs/2-Toy-Manifolds-Benchmark.ipynb#fig-2-manifolds-noise-table >}} -->
+In Table [@fig-2-manifolds-noise-table], we see the results of adding Gaussian noise to each manifold. Here, the noise resilience of diffusion geometry grants diffusion curvature a huge advantage. It has the highest pearson correlation with the ground truth under all but the smallest scales of noise for the torus and ellipsoid. We suspect its correlation with the hyperboloid is lower than Hickok & Blumberg's only because of the "edge" of this negatively-curved manifold, which creates the appearance of positive curvature.
+
+{{< embed ../nbs/2-Toy-Manifolds-Benchmark.ipynb#fig-2-manifolds-noise-table >}}
+
 
 ## Performance in High Dimensions under Noise
 
+TBD!
 
 ## Sign Differentiation
 
-Most existing methods only quantify their performance in high dimensions on one or two test cases.
+To test the ability to differentiate negative from positive curvature in high dimensions, we constructed a dataset containing saddle points, planes, and spheres in dimensions 2-6. For planes, we used uniform samples from the $d$-dimensional unit cube; for spheres, we sampled points from a Gaussian in $\mathbb{R}^d$ and normalized them to have unit length; for saddles, we constructed a quadric surface with the sign of each quadratic alternating between dimensions, and performed rejection sampling on the resulting parameterization. We sampled 2000 points from each surface, and performed this sampling 20 times per surface, creating a dataset of 60 point clouds of negative, zero, and positive curvature.  
+
+To make the comparison as fair as possible, we use our curvature-agnostic kernel to construct the graphs used for Forman-Ricci and Ollivier-Ricci curvature instead of the standard adaptive or k-nearest neighbor kernels generally used (which give worse performance). Hickok & Bloomberg's definition operates directly on pointclouds, so we leave it as is.
+
+As seen in [@fig-sadspheres], only diffusion curvature differentiates the sign across all dimensions. Hickok & Blumberg's curvature initially correctly classifies saddles as negatively curved and spheres as positive in dimension 2, however in dimensions 3-5, it classifies everything as negatively curved, with planes given a higher negative curvature than saddles. By dimension 6, it assigns the most negatively curved surface the least degree of negative curvature. For Ollivier-Ricci, the variance within samplings is extremely high (an artifact of applying a graph-based definition to noisy pointclouds), but it both describes all curvatures as positive and gives the negatively-curved dataset the highest positive curvature. Forman-Ricci does the best among these, comparatively; it at least gives saddles, spheres, and planes the correct ordering of curvature. However the magnitude of its curvatures is entirely negative; there's no sign differentiation.
+
+Diffusion curvature both preserves the correct relative ordering and distinguishses between the signs of saddles and spheres with 95% accuracy.
 
 {{< embed ../nbs/5-sign-prediction-tests.ipynb#fig-sadspheres >}}
+
+
+
 
 ## Resilience to Parameters
 
