@@ -11,7 +11,7 @@
 <meta name="author" content="Yanlei Zhang">
 <meta name="author" content="Ian Adelstein">
 <meta name="author" content="Smita Krishnaswamy">
-<meta name="dcterms.date" content="2024-08-12">
+<meta name="dcterms.date" content="2024-08-13">
 <meta name="keywords" content="Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds, Diffusion Geometry, Topological Data Analysis, Neural Loss Landscapes, Single-Cell Data">
 
 <title>Bridging Diffusion Geometry to Curvature</title>
@@ -65,10 +65,6 @@ div.csl-indent {
     document.body.classList.add('hypothesis-enabled');
   });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -81,10 +77,10 @@ div.csl-indent {
 <meta name="citation_author" content="Yanlei Zhang">
 <meta name="citation_author" content="Ian Adelstein">
 <meta name="citation_author" content="Smita Krishnaswamy">
-<meta name="citation_publication_date" content="2024-08-12">
-<meta name="citation_cover_date" content="2024-08-12">
+<meta name="citation_publication_date" content="2024-08-13">
+<meta name="citation_cover_date" content="2024-08-13">
 <meta name="citation_year" content="2024">
-<meta name="citation_online_date" content="2024-08-12">
+<meta name="citation_online_date" content="2024-08-13">
 <meta name="citation_language" content="en">
 <meta name="citation_firstpage" content="undefined">
 <meta name="citation_journal_title" content="IEEE TPAMI">
@@ -166,8 +162,9 @@ div.csl-indent {
   </ul></li>
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">5</span> Applications</a>
   <ul class="collapse">
-  <li><a href="#loss-landscapes" id="toc-loss-landscapes" class="nav-link" data-scroll-target="#loss-landscapes"><span class="header-section-number">5.1</span> Loss Landscapes</a></li>
-  <li><a href="#curvature-as-a-tda-filtration" id="toc-curvature-as-a-tda-filtration" class="nav-link" data-scroll-target="#curvature-as-a-tda-filtration"><span class="header-section-number">5.2</span> Curvature as a TDA Filtration</a></li>
+  <li><a href="#single-cell-data" id="toc-single-cell-data" class="nav-link" data-scroll-target="#single-cell-data"><span class="header-section-number">5.1</span> Single-Cell Data</a></li>
+  <li><a href="#loss-landscapes" id="toc-loss-landscapes" class="nav-link" data-scroll-target="#loss-landscapes"><span class="header-section-number">5.2</span> Loss Landscapes</a></li>
+  <li><a href="#curvature-as-a-tda-filtration" id="toc-curvature-as-a-tda-filtration" class="nav-link" data-scroll-target="#curvature-as-a-tda-filtration"><span class="header-section-number">5.3</span> Curvature as a TDA Filtration</a></li>
   </ul></li>
   <li><a href="#related-work" id="toc-related-work" class="nav-link" data-scroll-target="#related-work"><span class="header-section-number">6</span> Related Work</a>
   <ul class="collapse">
@@ -178,7 +175,7 @@ div.csl-indent {
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7</span> Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.docx"><i class="bi bi-file-word"></i>MS Word</a></li><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF (ieee)</a></li></ul></div><div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="readme-paper-preview.html"><i class="bi bi-journal-code"></i>Publishing from Zetteldev with Quarto Manuscripts</a></li><li><a href="index-ricci-preview.html"><i class="bi bi-journal-code"></i>A Heat Diffusion-based Ricci Curvature and Applications to GNNs</a></li><li><a href="../nbs/3d-diffusion-trajectory-distance-normalization-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2-Toy-Manifolds-Benchmark-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/5-sign-prediction-tests-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/professorwug/diffusion-curvature/" target="_blank"><i class="bi bi-github"></i>GitHub Repo</a></li></ul></div></nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.docx"><i class="bi bi-file-word"></i>MS Word</a></li><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF (ieee)</a></li></ul></div><div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="readme-paper-preview.html"><i class="bi bi-journal-code"></i>Publishing from Zetteldev with Quarto Manuscripts</a></li><li><a href="index-ricci-preview.html"><i class="bi bi-journal-code"></i>A Heat Diffusion-based Ricci Curvature and Applications to GNNs</a></li><li><a href="../nbs/3d-diffusion-trajectory-distance-normalization-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2a-Diffusion-Curvatures-of-Toy-Manifolds-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/2-Toy-Manifolds-Benchmark-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/5-sign-prediction-tests-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li><li><a href="../nbs/9-single-cell-results-preview.html"><i class="bi bi-journal-code"></i>Standard libraries</a></li></ul></div><div class="quarto-code-links"><h2>Code Links</h2><ul><li><a href="https://github.com/professorwug/diffusion-curvature/" target="_blank"><i class="bi bi-github"></i>GitHub Repo</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -243,7 +240,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 12, 2024</p>
+      <p class="date">August 13, 2024</p>
     </div>
   </div>
   
@@ -495,7 +492,7 @@ H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
 </section>
 <section id="diffusion-trajectory-alignment" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="diffusion-trajectory-alignment"><span class="header-section-number">3.3.2</span> Diffusion Trajectory Alignment</h3>
-<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> We define the Diffusion Trajectory Distance as [[[Invalid date]]</p>
+<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> We define the Diffusion Trajectory Distance as <a href="#def-diffusion-trajctory-distance" class="quarto-xref">Definition&nbsp;4</a>:</p>
 <p><span class="math display">\[
 d_{DTD}(x, t)= \int_{\tau=0}^{t} g_p\left(\frac{d p_x^X(\tau)}{d \tau}, \frac{ d p_x^X(\tau) }{d \tau} \right)
 \]</span></p>
@@ -591,7 +588,7 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y)
 </div>
 <a class="quarto-notebook-link" id="nblink-3" href="../nbs/2-Toy-Manifolds-Benchmark-preview.html#cell-fig-2-manifolds-visual-comparison">Source: Standard libraries</a></div>
 <p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> approximately give the correct relative coloring of these 2-manifolds, except perhaps Forman-Rici. As expected, the graph-based methods, Ollivier-Ricci and Forman-Ricci, perform the worst; they weren’t designed to deal with the noise of pointcloud data. Hickok &amp; Blumberg’s definition performs the best in terms of correspondence with the ground truth Gaussian curvature, but diffusion curvature follows it closely. Observing the bottom panel of <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a>, we can see diffusion curvature corresponding closely with the red line of ground truth curvature.</p>
-<p>In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;4</a>, we see the results of adding Gaussian noise to each manifold. Here, the noise resilience of diffusion geometry grants diffusion curvature a huge advantage. It has the highest pearson correlation with the ground truth under all but the smallest scales of noise.</p>
+<p>In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;4</a>, we see the results of adding Gaussian noise to each manifold. Here, the noise resilience of diffusion geometry grants diffusion curvature a huge advantage. It has the highest pearson correlation with the ground truth under all but the smallest scales of noise for the torus and ellipsoid. We suspect its correlation with the hyperboloid is lower than Hickok &amp; Blumberg’s only because of the “edge” of this negatively-curved manifold, which creates the appearance of positive curvature.</p>
 <div class="quarto-embed-nb-cell">
 <div id="cell-fig-2-manifolds-noise-table" class="cell">
 <div id="fig-2-manifolds-noise-table" class="quarto-figure quarto-figure-center anchored">
@@ -897,11 +894,45 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y)
 </section>
 <section id="applications" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Applications</h1>
-<section id="loss-landscapes" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">5.1</span> Loss Landscapes</h2>
+<section id="single-cell-data" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="single-cell-data"><span class="header-section-number">5.1</span> Single-Cell Data</h2>
+<div id="fig-single-cell" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-embed-nb-cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="cell-fig-single-cell-global" class="cell" data-execution_count="44">
+<div class="cell-output cell-output-display">
+<div id="fig-single-cell-global" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-single-cell-global-output-1.png" class="img-fluid figure-img" alt="..." data-ref-parent="fig-single-cell"></p>
+<figcaption class="figure-caption">(a) with a single estimated global dimension of 11</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-6" href="../nbs/9-single-cell-results-preview.html#cell-fig-single-cell-global">Source: Standard libraries</a></div>
+<div class="quarto-embed-nb-cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="cell-fig-single-cell-local" class="cell" data-execution_count="45">
+<div class="cell-output cell-output-display">
+<div id="fig-single-cell-local" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="index_files/figure-html/fig-single-cell-local-output-1.png" class="img-fluid figure-img" alt="..." data-ref-parent="fig-single-cell"></p>
+<figcaption class="figure-caption">(b) with local dimension estimation performed for each point. Dimensions ranged from 8-20.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<a class="quarto-notebook-link" id="nblink-7" href="../nbs/9-single-cell-results-preview.html#cell-fig-single-cell-local">Source: Standard libraries</a></div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6: Diffusion Curvatures of induced pluripotent stem cells, using either global or local dimension estimation.</figcaption><p></p>
+</figure>
+</div>
 </section>
-<section id="curvature-as-a-tda-filtration" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="curvature-as-a-tda-filtration"><span class="header-section-number">5.2</span> Curvature as a TDA Filtration</h2>
+<section id="loss-landscapes" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">5.2</span> Loss Landscapes</h2>
+</section>
+<section id="curvature-as-a-tda-filtration" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="curvature-as-a-tda-filtration"><span class="header-section-number">5.3</span> Curvature as a TDA Filtration</h2>
 </section>
 </section>
 <section id="related-work" class="level1" data-number="6">
@@ -970,7 +1001,7 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
     and Adelstein, Ian and Krishnaswamy, Smita},
   title = {Bridging {Diffusion} {Geometry} to {Curvature}},
   pages = {undefined},
-  date = {2024-08-12},
+  date = {2024-08-13},
   langid = {en},
   abstract = {Modeling data geometry has proven a rich source of
     interpretable features: quantifying “the shape” of molecules,
@@ -1001,7 +1032,7 @@ Tong, Alexander, Frederick Wenkel, Kincaid Macdonald, Smita Krishnaswamy, and Gu
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-macdonald2024" class="csl-entry quarto-appendix-citeas" role="listitem">
 MacDonald, Kincaid, Dhananjay Bhaskar, Yanlei Zhang, Ian Adelstein, and
 Smita Krishnaswamy. 2024. <span>“Bridging Diffusion Geometry to
-Curvature.”</span> IEEE TPAMI. August 12, 2024.
+Curvature.”</span> IEEE TPAMI. August 13, 2024.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">

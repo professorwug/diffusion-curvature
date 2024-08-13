@@ -10,7 +10,7 @@
     <meta name="author" content="Yanlei Zhang">
     <meta name="author" content="Ian Adelstein">
     <meta name="author" content="Smita Krishnaswamy">
-    <meta name="dcterms.date" content="2024-08-12">
+    <meta name="dcterms.date" content="2024-08-13">
     <meta name="keywords" content="Manifold Learning, Geometric Deep Learning, Graph Curvature, Point Clouds, Diffusion Geometry, Topological Data Analysis, Neural Loss Landscapes, Single-Cell Data">
 
     <title>Bridging Diffusion Geometry to Curvature</title>
@@ -187,10 +187,7 @@
   window.document.addEventListener("DOMContentLoaded", function (_event) {
     document.body.classList.add('hypothesis-enabled');
   });
-</script>  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
-<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script> 
+</script>   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script> 
       <meta name="citation_title" content="Bridging Diffusion Geometry to Curvature">
 <meta name="citation_abstract" content="Modeling data geometry has proven a rich source of interpretable features: quantifying ‘the shape’ of molecules, cellular trajectories, and code enhances downstream classification performance. Yet, creating these features requires a theoretical ‘Rosetta Stone’ to bridge geometric theory into the noisy, discrete world of real data. Various bridging paradigms have been proposed, most prominently *diffusion geometry* – and have given rise to manifold distance estimators, and manifold embedding techniques.However, the estimation of curvature remains relatively unexplored. Curvature, being the most local geometric measure, is among the most challenging concepts to bridge into the discrete realm; for this reason, it is also a sterling test a given paradigm’s ability to translate geometric theory into the sampled data.Here, we introduce *Diffusion Curvature*, a new definition of scalar curvature on point clouds which inherits diffusion geometry’s robustness to noise and sampling. In our benchmarks, diffusion curvature proves itself the *only* method capable of robustly differentiating positive and negative curvature in high dimensions, while its absence of parameters requiring user tuning makes it significantly more user-friendly than other methods.We describe theoretical connections between diffusion curvature and the Ollivier-Ricci curvature, and introduce a general paradigm for comparing diffusions across graphs.We apply diffusion curvature to neural loss landscapes, single-cell RNA data [bit about what we find] motivating the practical utility of our method.">
 <meta name="citation_keywords" content="Manifold Learning,Geometric Deep Learning,Graph Curvature,Point Clouds,Diffusion Geometry,Topological Data Analysis,Neural Loss Landscapes,Single-Cell Data">
@@ -199,10 +196,10 @@
 <meta name="citation_author" content="Yanlei Zhang">
 <meta name="citation_author" content="Ian Adelstein">
 <meta name="citation_author" content="Smita Krishnaswamy">
-<meta name="citation_publication_date" content="2024-08-12">
-<meta name="citation_cover_date" content="2024-08-12">
+<meta name="citation_publication_date" content="2024-08-13">
+<meta name="citation_cover_date" content="2024-08-13">
 <meta name="citation_year" content="2024">
-<meta name="citation_online_date" content="2024-08-12">
+<meta name="citation_online_date" content="2024-08-13">
 <meta name="citation_language" content="en">
 <meta name="citation_firstpage" content="undefined">
 <meta name="citation_journal_title" content="IEEE TPAMI">
@@ -291,8 +288,9 @@
   </ul></li>
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">5</span> Applications</a>
   <ul class="collapse">
-  <li><a href="#loss-landscapes" id="toc-loss-landscapes" class="nav-link" data-scroll-target="#loss-landscapes"><span class="header-section-number">5.1</span> Loss Landscapes</a></li>
-  <li><a href="#curvature-as-a-tda-filtration" id="toc-curvature-as-a-tda-filtration" class="nav-link" data-scroll-target="#curvature-as-a-tda-filtration"><span class="header-section-number">5.2</span> Curvature as a TDA Filtration</a></li>
+  <li><a href="#single-cell-data" id="toc-single-cell-data" class="nav-link" data-scroll-target="#single-cell-data"><span class="header-section-number">5.1</span> Single-Cell Data</a></li>
+  <li><a href="#loss-landscapes" id="toc-loss-landscapes" class="nav-link" data-scroll-target="#loss-landscapes"><span class="header-section-number">5.2</span> Loss Landscapes</a></li>
+  <li><a href="#curvature-as-a-tda-filtration" id="toc-curvature-as-a-tda-filtration" class="nav-link" data-scroll-target="#curvature-as-a-tda-filtration"><span class="header-section-number">5.3</span> Curvature as a TDA Filtration</a></li>
   </ul></li>
   <li><a href="#related-work" id="toc-related-work" class="nav-link" data-scroll-target="#related-work"><span class="header-section-number">6</span> Related Work</a>
   <ul class="collapse">
@@ -368,7 +366,7 @@
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 12, 2024</p>
+      <p class="date">August 13, 2024</p>
     </div>
   </div>
   
@@ -618,7 +616,7 @@ H(m_{x}^t) \simeq \ln(V_{m}(\sqrt{ t })) + \frac{1}{4t}W_{2}(d_{x},m_{x}^t)
 </section>
 <section id="diffusion-trajectory-alignment" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="diffusion-trajectory-alignment"><span class="header-section-number">3.3.2</span> Diffusion Trajectory Alignment</h3>
-<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> We define the Diffusion Trajectory Distance as [[[Invalid date]]</p>
+<p>We consider a new approach to this problem, which replaces the diffusion time <span class="math inline">\(t\)</span> – so heavily dependent on the vagaries of graph construction – with a distance along the <em>diffusion trajectory</em>. To obtain this, we view scales of diffusion as points along a trajectory on the <span class="math inline">\(N\)</span>-dimensional probability simplex, where <span class="math inline">\(N\)</span> is the number of nodes on the graph.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> We define the Diffusion Trajectory Distance as <a href="#def-diffusion-trajctory-distance" class="quarto-xref">Definition&nbsp;4</a>:</p>
 <p><span class="math display">\[
 d_{DTD}(x, t)= \int_{\tau=0}^{t} g_p\left(\frac{d p_x^X(\tau)}{d \tau}, \frac{ d p_x^X(\tau) }{d \tau} \right)
 \]</span></p>
@@ -849,7 +847,7 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y)
 </div></div>
 </div>
 <p>All of these methods in <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a> approximately give the correct relative coloring of these 2-manifolds, except perhaps Forman-Rici. As expected, the graph-based methods, Ollivier-Ricci and Forman-Ricci, perform the worst; they weren’t designed to deal with the noise of pointcloud data. Hickok &amp; Blumberg’s definition performs the best in terms of correspondence with the ground truth Gaussian curvature, but diffusion curvature follows it closely. Observing the bottom panel of <a href="#fig-2-manifolds-visual-comparison" class="quarto-xref">Figure&nbsp;3</a>, we can see diffusion curvature corresponding closely with the red line of ground truth curvature.</p>
-<p>In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;4</a>, we see the results of adding Gaussian noise to each manifold. Here, the noise resilience of diffusion geometry grants diffusion curvature a huge advantage. It has the highest pearson correlation with the ground truth under all but the smallest scales of noise.</p>
+<p>In Table <a href="#fig-2-manifolds-noise-table" class="quarto-xref">Figure&nbsp;4</a>, we see the results of adding Gaussian noise to each manifold. Here, the noise resilience of diffusion geometry grants diffusion curvature a huge advantage. It has the highest pearson correlation with the ground truth under all but the smallest scales of noise for the torus and ellipsoid. We suspect its correlation with the hyperboloid is lower than Hickok &amp; Blumberg’s only because of the “edge” of this negatively-curved manifold, which creates the appearance of positive curvature.</p>
 <div class="quarto-embed-nb-cell" data-notebook="/Users/adjourner/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/2-Toy-Manifolds-Benchmark.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-2-manifolds-noise-table">
 <div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-fig-2-manifolds-noise-table" class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> great_tables <span class="im">import</span> GT, style, loc, exibble</span>
@@ -1205,11 +1203,63 @@ k(x, y) &amp; =\frac{e^{-\frac{d(x, y)^2}{d(x, N_{k}(x))^2\nu^2}}}{d(y, N_{k}(y)
 </section>
 <section id="applications" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Applications</h1>
-<section id="loss-landscapes" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">5.1</span> Loss Landscapes</h2>
+<section id="single-cell-data" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="single-cell-data"><span class="header-section-number">5.1</span> Single-Cell Data</h2>
+<div id="fig-single-cell" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-embed-nb-cell quarto-layout-cell" data-notebook="/Users/adjourner/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/9-single-cell-results.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-single-cell-global" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-container"><div class="cell-decorator"><pre>In [44]:</pre></div><div id="cell-fig-single-cell-global" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> plt.get_cmap(<span class="st">'coolwarm'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>norm <span class="op">=</span> mcolors.TwoSlopeNorm(vmin<span class="op">=-</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ks_gl)), vcenter<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ks_gl)))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.scatter(X_phate[:,<span class="dv">0</span>], X_phate[:,<span class="dv">1</span>],c<span class="op">=</span>ks_gl, cmap<span class="op">=</span>cmap, norm<span class="op">=</span>norm, s <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.colorbar()</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.gca().xaxis.set_ticks([])</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.gca().yaxis.set_ticks([])</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-single-cell-global" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p class=""><img src="index_files/figure-html/fig-single-cell-global-output-1.png" class="img-fluid figure-img" alt="..." data-ref-parent="fig-single-cell"></p>
+<figcaption class="figure-caption">(a) with a single estimated global dimension of 11</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="quarto-embed-nb-cell quarto-layout-cell" data-notebook="/Users/adjourner/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/9-single-cell-results.ipynb" data-notebook-title="Standard libraries" data-notebook-cellid="cell-fig-single-cell-local" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-container"><div class="cell-decorator"><pre>In [45]:</pre></div><div id="cell-fig-single-cell-local" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> plt.get_cmap(<span class="st">'coolwarm'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>norm <span class="op">=</span> mcolors.TwoSlopeNorm(vmin<span class="op">=-</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ks_edc)), vcenter<span class="op">=</span><span class="dv">0</span>, vmax<span class="op">=</span>np.<span class="bu">max</span>(np.<span class="bu">abs</span>(ks_edc)))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(X_phate[:,<span class="dv">0</span>], X_phate[:,<span class="dv">1</span>],c<span class="op">=</span>ks_edc, cmap<span class="op">=</span>cmap, norm<span class="op">=</span>norm, s <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.colorbar()</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.gca().xaxis.set_ticks([])</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.gca().yaxis.set_ticks([])</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-single-cell-local" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p class=""><img src="index_files/figure-html/fig-single-cell-local-output-1.png" class="img-fluid figure-img" alt="..." data-ref-parent="fig-single-cell"></p>
+<figcaption class="figure-caption">(b) with local dimension estimation performed for each point. Dimensions ranged from 8-20.</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6: Diffusion Curvatures of induced pluripotent stem cells, using either global or local dimension estimation.</figcaption><p></p>
+</figure>
+</div>
 </section>
-<section id="curvature-as-a-tda-filtration" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="curvature-as-a-tda-filtration"><span class="header-section-number">5.2</span> Curvature as a TDA Filtration</h2>
+<section id="loss-landscapes" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="loss-landscapes"><span class="header-section-number">5.2</span> Loss Landscapes</h2>
+</section>
+<section id="curvature-as-a-tda-filtration" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="curvature-as-a-tda-filtration"><span class="header-section-number">5.3</span> Curvature as a TDA Filtration</h2>
 </section>
 </section>
 <section id="related-work" class="level1" data-number="6">
