@@ -445,7 +445,7 @@ Other techniques partially address this by considering *multiscale diffusions*. 
 
 ### Diffusion Trajectory Alignment
 
-We consider a new approach to this problem, which replaces the diffusion time $t$ – so heavily dependent on the vagaries of graph construction – with a distance along the *diffusion trajectory*. To obtain this, we view scales of diffusion as points along a trajectory on the $N$-dimensional probability simplex, where $N$ is the number of nodes on the graph.^[This simplex corresponds to the ‘diffusion coordinates’ used by Coifman, as well as the setting of Fasina’s diffusion-based Fisher Information metric (CITE). ] We define the Diffusion Trajectory Distance as [[[Invalid date]]
+We consider a new approach to this problem, which replaces the diffusion time $t$ – so heavily dependent on the vagaries of graph construction – with a distance along the *diffusion trajectory*. To obtain this, we view scales of diffusion as points along a trajectory on the $N$-dimensional probability simplex, where $N$ is the number of nodes on the graph.^[This simplex corresponds to the ‘diffusion coordinates’ used by Coifman, as well as the setting of Fasina’s diffusion-based Fisher Information metric (CITE). ] We define the Diffusion Trajectory Distance as [@def-diffusion-trajctory-distance]:
 
 $$
 d_{DTD}(x, t)= \int_{\tau=0}^{t} g_p\left(\frac{d p_x^X(\tau)}{d \tau}, \frac{ d p_x^X(\tau) }{d \tau} \right)
@@ -536,11 +536,9 @@ First, a sanity check. Does diffusion curvature recover the Gaussian curvature o
 
 All of these methods in @fig-2-manifolds-visual-comparison approximately give the correct relative coloring of these 2-manifolds, except perhaps Forman-Rici. As expected, the graph-based methods, Ollivier-Ricci and Forman-Ricci, perform the worst; they weren't designed to deal with the noise of pointcloud data. Hickok & Blumberg's definition performs the best in terms of correspondence with the ground truth Gaussian curvature, but diffusion curvature follows it closely. Observing the bottom panel of @fig-2-manifolds-visual-comparison, we can see diffusion curvature corresponding closely with the red line of ground truth curvature.
 
-In Table [@fig-2-manifolds-noise-table], we see the results of adding Gaussian noise to each manifold. Here, the noise resilience of diffusion geometry grants diffusion curvature a huge advantage. It has the highest pearson correlation with the ground truth under all but the smallest scales of noise.
+In Table [@fig-2-manifolds-noise-table], we see the results of adding Gaussian noise to each manifold. Here, the noise resilience of diffusion geometry grants diffusion curvature a huge advantage. It has the highest pearson correlation with the ground truth under all but the smallest scales of noise for the torus and ellipsoid. We suspect its correlation with the hyperboloid is lower than Hickok & Blumberg's only because of the "edge" of this negatively-curved manifold, which creates the appearance of positive curvature.
 
 {{< embed ../nbs/2-Toy-Manifolds-Benchmark.ipynb#fig-2-manifolds-noise-table >}}
-
-
 
 
 ## Performance in High Dimensions under Noise
@@ -566,6 +564,16 @@ Diffusion curvature both preserves the correct relative ordering and distinguish
 
 
 # Applications
+
+## Single-Cell Data
+
+::: {#fig-single-cell layout-ncol=2 fig-cap="Diffusion Curvatures of induced pluripotent stem cells, using either global or local dimension estimation."}
+
+{{< embed ../nbs/9-single-cell-results.ipynb#fig-single-cell-global >}}
+
+{{< embed ../nbs/9-single-cell-results.ipynb#fig-single-cell-local >}}
+
+:::
 
 ## Loss Landscapes
 

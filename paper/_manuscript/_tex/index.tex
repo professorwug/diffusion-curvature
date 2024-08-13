@@ -149,13 +149,13 @@
 \theoremstyle{plain}
 \newtheorem{lemma}{Lemma}[section]
 \theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\theoremstyle{definition}
-\newtheorem{example}{Example}[section]
-\theoremstyle{plain}
 \newtheorem{proposition}{Proposition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -189,7 +189,7 @@ Analysis, Neural Loss Landscapes, Single-Cell Data},
 \title{Bridging Diffusion Geometry to Curvature}
 \author{Kincaid MacDonald \and Dhananjay Bhaskar \and Yanlei
 Zhang \and Ian Adelstein \and Smita Krishnaswamy}
-\date{2024-08-12}
+\date{2024-08-13}
 
 \begin{document}
 \maketitle
@@ -1099,7 +1099,8 @@ this, we view scales of diffusion as points along a trajectory on the
 nodes on the graph.\footnote{This simplex corresponds to the `diffusion
   coordinates' used by Coifman, as well as the setting of Fasina's
   diffusion-based Fisher Information metric (CITE).} We define the
-Diffusion Trajectory Distance as {[}{[}{[}Invalid date{]}{]}
+Diffusion Trajectory Distance as
+Definition~\ref{def-diffusion-trajctory-distance}:
 
 \[
 d_{DTD}(x, t)= \int_{\tau=0}^{t} g_p\left(\frac{d p_x^X(\tau)}{d \tau}, \frac{ d p_x^X(\tau) }{d \tau} \right)
@@ -1504,6 +1505,57 @@ libraries}}
 \subsection{Resilience to Parameters}\label{resilience-to-parameters}
 
 \section{Applications}\label{applications}
+
+\subsection{Single-Cell Data}\label{single-cell-data}
+
+\begin{figure}
+
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\begin{figure}[H]
+
+{\centering \includegraphics{index_files/figure-latex/fig-single-cell-global-output-1.png}
+
+}
+
+\caption{with a single estimated global dimension of 11 Source:
+\href{https://professorwug.github.io/diffusion-curvature//Users/adjourner/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/9-single-cell-results.ipynb.html\#cell-fig-single-cell-global}{Standard
+libraries}}
+
+\end{figure}
+
+}
+
+\end{minipage}%
+%
+\begin{minipage}[t]{0.50\linewidth}
+
+{\centering 
+
+\begin{figure}[H]
+
+{\centering \includegraphics{index_files/figure-latex/fig-single-cell-local-output-1.png}
+
+}
+
+\caption{with local dimension estimation performed for each point.
+Dimensions ranged from 8-20. Source:
+\href{https://professorwug.github.io/diffusion-curvature//Users/adjourner/Pumberton/Workshop/21-SUMRY-Curvature/diffusion-curvature/nbs/9-single-cell-results.ipynb.html\#cell-fig-single-cell-local}{Standard
+libraries}}
+
+\end{figure}
+
+}
+
+\end{minipage}%
+
+\caption{\label{fig-single-cell}Diffusion Curvatures of induced
+pluripotent stem cells, using either global or local dimension
+estimation.}
+
+\end{figure}
 
 \subsection{Loss Landscapes}\label{loss-landscapes}
 
