@@ -1,0 +1,15 @@
+---
+title: "Diffusion Ricci curvature"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Diffusion-based Ricci/Ollivier curvature estimation and its relationship to scalar diffusion curvature.
+
+## Figures
+
+_TODO_

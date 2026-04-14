@@ -1,0 +1,22 @@
+onsuccess:
+    shell("uv run python ../../.zetteldev/publish_figure.py --sync 11-successor-curvatures")
+
+rule all:
+    input:
+        "report.pdf"
+
+rule run_main:
+    input:
+        data = "../../data/foo.arrow" # placeholder
+    output:
+        # main.py outputs
+    script:
+        "main.py"
+
+rule render_report:
+    input:
+        "report.qmd"
+    output:
+        "report.pdf"
+    shell:
+        "uv run quarto render report.qmd --to pdf"

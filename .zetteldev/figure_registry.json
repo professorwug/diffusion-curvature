@@ -1,0 +1,2172 @@
+{
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature.pdf": {
+    "commit": "4f58ce2",
+    "hash": "50b0b4eca7514ed1",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature.pdf"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature.svg": {
+    "commit": "4f58ce2",
+    "hash": "d01244b2b5a52d37",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature.svg"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_llama.pdf": {
+    "commit": "4f58ce2",
+    "hash": "dff22e3e0714a8c3",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_llama.pdf"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_llama.svg": {
+    "commit": "4f58ce2",
+    "hash": "8f42639f0bc37721",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_llama.svg"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_llama_by_outcome.pdf": {
+    "commit": "4f58ce2",
+    "hash": "d23de8dbd980bdb3",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_llama_by_outcome.pdf"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_llama_by_outcome.svg": {
+    "commit": "4f58ce2",
+    "hash": "08fe1831f24bdfb2",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_llama_by_outcome.svg"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_llama_first20.pdf": {
+    "commit": "4f58ce2",
+    "hash": "14f50e93d73008f3",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_llama_first20.pdf"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_llama_first20.svg": {
+    "commit": "4f58ce2",
+    "hash": "ced2d38cd0a2e954",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_llama_first20.svg"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_llama_last.pdf": {
+    "commit": "4f58ce2",
+    "hash": "9c622027306fd045",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_llama_last.pdf"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_llama_last.svg": {
+    "commit": "4f58ce2",
+    "hash": "acbd0a67f3c0a916",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_llama_last.svg"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_qwen.pdf": {
+    "commit": "4f58ce2",
+    "hash": "4f9b7863b7af1faa",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_qwen.pdf"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/baseline_vs_rar_curvature_qwen.svg": {
+    "commit": "4f58ce2",
+    "hash": "86bbe3f662bb44d4",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/baseline_vs_rar_curvature_qwen.svg"
+  },
+  "experiments/06-6-more-curvature-rejection-sampling/figures/local_curvature_histogram_knn5_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "15b7510f258760d5",
+    "url": "https://blots.kincaid.ink/reason_reckon/06-6-more-curvature-rejection-sampling/local_curvature_histogram_knn5_t3.svg"
+  },
+  "experiments/07-curvature-sampling-density/figures/convergence_comparison.pdf": {
+    "commit": "4f58ce2",
+    "hash": "1c6990b6f9fddccb",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/convergence_comparison.pdf"
+  },
+  "experiments/07-curvature-sampling-density/figures/convergence_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "87fca27c1b81aeb4",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/convergence_comparison.svg"
+  },
+  "experiments/07-curvature-sampling-density/figures/curvature_convergence_vertical.pdf": {
+    "commit": "4f58ce2",
+    "hash": "f91b3dc5589a8e86",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/curvature_convergence_vertical.pdf"
+  },
+  "experiments/07-curvature-sampling-density/figures/curvature_convergence_vertical.svg": {
+    "commit": "4f58ce2",
+    "hash": "6f20f3a4e85702e0",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/curvature_convergence_vertical.svg"
+  },
+  "experiments/07-curvature-sampling-density/figures/curvature_vs_density.pdf": {
+    "commit": "4f58ce2",
+    "hash": "b19a2b04689f34a9",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/curvature_vs_density.pdf"
+  },
+  "experiments/07-curvature-sampling-density/figures/curvature_vs_density.svg": {
+    "commit": "4f58ce2",
+    "hash": "2d9aa08f5564df8e",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/curvature_vs_density.svg"
+  },
+  "experiments/07-curvature-sampling-density/figures/curvature_vs_density_between_game.pdf": {
+    "commit": "4f58ce2",
+    "hash": "10f50d4bfc17b4af",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/curvature_vs_density_between_game.pdf"
+  },
+  "experiments/07-curvature-sampling-density/figures/curvature_vs_density_between_game.svg": {
+    "commit": "4f58ce2",
+    "hash": "6d9f02db8ebea095",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/curvature_vs_density_between_game.svg"
+  },
+  "experiments/07-curvature-sampling-density/figures/curvature_vs_density_within_game.pdf": {
+    "commit": "4f58ce2",
+    "hash": "c6ca342be7e67ccf",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/curvature_vs_density_within_game.pdf"
+  },
+  "experiments/07-curvature-sampling-density/figures/curvature_vs_density_within_game.svg": {
+    "commit": "4f58ce2",
+    "hash": "29fbfc02a86b2287",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/curvature_vs_density_within_game.svg"
+  },
+  "experiments/07-curvature-sampling-density/figures/laziness_convergence_vertical.pdf": {
+    "commit": "4f58ce2",
+    "hash": "cb8362f1920027e2",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/laziness_convergence_vertical.pdf"
+  },
+  "experiments/07-curvature-sampling-density/figures/laziness_convergence_vertical.svg": {
+    "commit": "4f58ce2",
+    "hash": "0210db6a20680bf4",
+    "url": "https://blots.kincaid.ink/reason_reckon/07-curvature-sampling-density/laziness_convergence_vertical.svg"
+  },
+  "experiments/09-paprika-extra-games/figures/laziness_histogram_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "122c8c06adc97053",
+    "url": "https://blots.kincaid.ink/reason_reckon/09-paprika-extra-games/laziness_histogram_t3.svg"
+  },
+  "experiments/09-paprika-extra-games/figures/ollivier_ricci_k5.svg": {
+    "commit": "4f58ce2",
+    "hash": "474e5d0cc318e78c",
+    "url": "https://blots.kincaid.ink/reason_reckon/09-paprika-extra-games/ollivier_ricci_k5.svg"
+  },
+  "experiments/09-paprika-extra-games/figures/ricci_over_time_k5.svg": {
+    "commit": "4f58ce2",
+    "hash": "ecccbc0e4a125f3a",
+    "url": "https://blots.kincaid.ink/reason_reckon/09-paprika-extra-games/ricci_over_time_k5.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/accuracy_geometry_summary.svg": {
+    "commit": "4f58ce2",
+    "hash": "ab1bd09759b03c71",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/accuracy_geometry_summary.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/accuracy_transitions_geometry.svg": {
+    "commit": "4f58ce2",
+    "hash": "6e8f62afe76916e3",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/accuracy_transitions_geometry.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/accuracy_vs_geometry.svg": {
+    "commit": "4f58ce2",
+    "hash": "b63a0ca46de27b1a",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/accuracy_vs_geometry.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/accuracy_vs_timestep.svg": {
+    "commit": "4f58ce2",
+    "hash": "36a117d1a6a635db",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/accuracy_vs_timestep.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/best_embeddings_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "08f893ebdcac2436",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/best_embeddings_comparison.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/distance_accuracy_correlation.svg": {
+    "commit": "4f58ce2",
+    "hash": "21ba16f08acbeb70",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/distance_accuracy_correlation.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/distance_from_start_vs_accuracy_pointlevel.svg": {
+    "commit": "4f58ce2",
+    "hash": "bea87a5377b9b5bb",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/distance_from_start_vs_accuracy_pointlevel.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/distance_from_start_vs_timestep.svg": {
+    "commit": "4f58ce2",
+    "hash": "312455fa6efa117c",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/distance_from_start_vs_timestep.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/distance_from_timestep1_vs_timestep.svg": {
+    "commit": "4f58ce2",
+    "hash": "93aaafeea9b6dba3",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/distance_from_timestep1_vs_timestep.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/early_learning_vs_accuracy.svg": {
+    "commit": "4f58ce2",
+    "hash": "47978e9fda8a03b2",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/early_learning_vs_accuracy.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/early_learning_vs_accuracy_verified.svg": {
+    "commit": "4f58ce2",
+    "hash": "fbbd7351be2db191",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/early_learning_vs_accuracy_verified.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/embedding_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "6ffda9b69cd44c65",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/embedding_comparison.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/embedding_radar_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "d20cdfae86d76e54",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/embedding_radar_comparison.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/initial_jump_vs_accuracy.svg": {
+    "commit": "4f58ce2",
+    "hash": "b0ef3a4604192889",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/initial_jump_vs_accuracy.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/phate_belief_emds.svg": {
+    "commit": "4f58ce2",
+    "hash": "df71621a83084c3d",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/phate_belief_emds.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/sequential_vs_random_distances.svg": {
+    "commit": "4f58ce2",
+    "hash": "695f11076aa0a7b2",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/sequential_vs_random_distances.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/stepwise_distance_vs_timestep.svg": {
+    "commit": "4f58ce2",
+    "hash": "6f3f9a883d8937ea",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/stepwise_distance_vs_timestep.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/stepwise_distance_vs_timestep_verified.svg": {
+    "commit": "4f58ce2",
+    "hash": "33490cc037388192",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/stepwise_distance_vs_timestep_verified.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/trajectory_level_geometry_accuracy.svg": {
+    "commit": "4f58ce2",
+    "hash": "91acc68fb7f043a9",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/trajectory_level_geometry_accuracy.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/trajectory_level_replication.svg": {
+    "commit": "4f58ce2",
+    "hash": "68ce4a9dda7edf76",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/trajectory_level_replication.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/trajectory_step_distances.svg": {
+    "commit": "4f58ce2",
+    "hash": "a5fcec46a163f666",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/trajectory_step_distances.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/tsne_belief_emds.svg": {
+    "commit": "4f58ce2",
+    "hash": "d8a31710d473b933",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/tsne_belief_emds.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/tsne_detailed_analysis.svg": {
+    "commit": "4f58ce2",
+    "hash": "ea2b410eeda107d7",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/tsne_detailed_analysis.svg"
+  },
+  "experiments/1-belief-embeddings-vllm/figures/umap_belief_emds.svg": {
+    "commit": "4f58ce2",
+    "hash": "882b2970e7cec85e",
+    "url": "https://blots.kincaid.ink/reason_reckon/1-belief-embeddings-vllm/umap_belief_emds.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/advice_quality_by_curvature.svg": {
+    "commit": "4f58ce2",
+    "hash": "3e49ba8f689c4b15",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/advice_quality_by_curvature.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_turns.svg": {
+    "commit": "4f58ce2",
+    "hash": "ecd79880ae11df37",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_turns.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_vs_reflexion_all.pdf": {
+    "commit": "4f58ce2",
+    "hash": "979344052c5b4c69",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_vs_reflexion_all.pdf"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_vs_reflexion_all.svg": {
+    "commit": "4f58ce2",
+    "hash": "e8ee2ec5d9106ab7",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_vs_reflexion_all.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_vs_reflexion_v1.pdf": {
+    "commit": "4f58ce2",
+    "hash": "025a90b3aeb7ab48",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_vs_reflexion_v1.pdf"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_vs_reflexion_v1.svg": {
+    "commit": "4f58ce2",
+    "hash": "f4d0f25c36fa02af",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_vs_reflexion_v1.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_vs_reflexion_v2.pdf": {
+    "commit": "4f58ce2",
+    "hash": "f2e15ef6f31ed1d6",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_vs_reflexion_v2.pdf"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_vs_reflexion_v2.svg": {
+    "commit": "4f58ce2",
+    "hash": "966a119701d743da",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_vs_reflexion_v2.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_vs_reflexion_v4.pdf": {
+    "commit": "4f58ce2",
+    "hash": "1485a93f1b11bc60",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_vs_reflexion_v4.pdf"
+  },
+  "experiments/10-reflexion-rejection/figures/baseline_vs_reflexion_v4.svg": {
+    "commit": "4f58ce2",
+    "hash": "4ebeb5bef24d38e4",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/baseline_vs_reflexion_v4.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/certainty_despair_interaction.svg": {
+    "commit": "4f58ce2",
+    "hash": "42db898ccfe64e1d",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/certainty_despair_interaction.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/combined_graph_all.pdf": {
+    "commit": "4f58ce2",
+    "hash": "d10fcf8a50787cb5",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/combined_graph_all.pdf"
+  },
+  "experiments/10-reflexion-rejection/figures/combined_graph_all.svg": {
+    "commit": "4f58ce2",
+    "hash": "70b401b687a4f3d3",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/combined_graph_all.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/combined_graph_baseline_vs_v4.pdf": {
+    "commit": "4f58ce2",
+    "hash": "9a8411e979fa10cd",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/combined_graph_baseline_vs_v4.pdf"
+  },
+  "experiments/10-reflexion-rejection/figures/combined_graph_baseline_vs_v4.svg": {
+    "commit": "4f58ce2",
+    "hash": "6c120ce2108db87d",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/combined_graph_baseline_vs_v4.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/curvature_by_outcome.svg": {
+    "commit": "4f58ce2",
+    "hash": "76a4e84dae398af3",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/curvature_by_outcome.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/curvature_vs_turn.pdf": {
+    "commit": "4f58ce2",
+    "hash": "e474a4be6445649f",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/curvature_vs_turn.pdf"
+  },
+  "experiments/10-reflexion-rejection/figures/curvature_vs_turn.svg": {
+    "commit": "4f58ce2",
+    "hash": "dada33e9c4aab72f",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/curvature_vs_turn.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/rollout_curvature_dist.svg": {
+    "commit": "4f58ce2",
+    "hash": "59d005524fa40cb0",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/rollout_curvature_dist.svg"
+  },
+  "experiments/10-reflexion-rejection/figures/version_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "64291866050bc7fb",
+    "url": "https://blots.kincaid.ink/reason_reckon/10-reflexion-rejection/version_comparison.svg"
+  },
+  "experiments/11-kernel-bench/figures/curvature_over_time_boed.svg": {
+    "commit": "4f58ce2",
+    "hash": "e4791803d350ed6d",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/curvature_over_time_boed.svg"
+  },
+  "experiments/11-kernel-bench/figures/curvature_over_time_idsoed.svg": {
+    "commit": "4f58ce2",
+    "hash": "495d00729596688e",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/curvature_over_time_idsoed.svg"
+  },
+  "experiments/11-kernel-bench/figures/laziness_histogram_boed_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "4fe3db76f33f4427",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/laziness_histogram_boed_t3.svg"
+  },
+  "experiments/11-kernel-bench/figures/laziness_histogram_boed_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "813dd1022db48b56",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/laziness_histogram_boed_t5.svg"
+  },
+  "experiments/11-kernel-bench/figures/laziness_histogram_boed_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "d90c22c6eaaf7301",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/laziness_histogram_boed_t8.svg"
+  },
+  "experiments/11-kernel-bench/figures/laziness_histogram_idsoed_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "c3c6af4b990cfe07",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/laziness_histogram_idsoed_t3.svg"
+  },
+  "experiments/11-kernel-bench/figures/laziness_histogram_idsoed_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "fd66feb098ee5c09",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/laziness_histogram_idsoed_t5.svg"
+  },
+  "experiments/11-kernel-bench/figures/laziness_histogram_idsoed_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "3bfc5f42dc651afe",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/laziness_histogram_idsoed_t8.svg"
+  },
+  "experiments/11-kernel-bench/figures/laziness_method_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "644c9497353de744",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/laziness_method_comparison.svg"
+  },
+  "experiments/11-kernel-bench/figures/ollivier_ricci_boed_k10.svg": {
+    "commit": "4f58ce2",
+    "hash": "2c89b6170933e6d9",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ollivier_ricci_boed_k10.svg"
+  },
+  "experiments/11-kernel-bench/figures/ollivier_ricci_boed_k5.svg": {
+    "commit": "4f58ce2",
+    "hash": "642bd47372454c34",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ollivier_ricci_boed_k5.svg"
+  },
+  "experiments/11-kernel-bench/figures/ollivier_ricci_idsoed_k10.svg": {
+    "commit": "4f58ce2",
+    "hash": "79a1845309048c4c",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ollivier_ricci_idsoed_k10.svg"
+  },
+  "experiments/11-kernel-bench/figures/ollivier_ricci_idsoed_k5.svg": {
+    "commit": "4f58ce2",
+    "hash": "1d026656fca2ba45",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ollivier_ricci_idsoed_k5.svg"
+  },
+  "experiments/11-kernel-bench/figures/ricci_over_time_boed_k10.svg": {
+    "commit": "4f58ce2",
+    "hash": "5d0f138dabf4aeab",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ricci_over_time_boed_k10.svg"
+  },
+  "experiments/11-kernel-bench/figures/ricci_over_time_boed_k5.svg": {
+    "commit": "4f58ce2",
+    "hash": "0023065ff36f13ac",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ricci_over_time_boed_k5.svg"
+  },
+  "experiments/11-kernel-bench/figures/ricci_over_time_idsoed_k10.svg": {
+    "commit": "4f58ce2",
+    "hash": "2d8179894fdbff7d",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ricci_over_time_idsoed_k10.svg"
+  },
+  "experiments/11-kernel-bench/figures/ricci_over_time_idsoed_k5.svg": {
+    "commit": "4f58ce2",
+    "hash": "000bd6e63cbdc1aa",
+    "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ricci_over_time_idsoed_k5.svg"
+  },
+  "experiments/12-baselines/figures/comparison_table.png": {
+    "commit": "4f58ce2",
+    "hash": "11df1d305a0a90bf",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/comparison_table.png"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_all.pdf": {
+    "commit": "4f58ce2",
+    "hash": "3a9c261c87744751",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_all.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_all.svg": {
+    "commit": "4f58ce2",
+    "hash": "5227af3042d75344",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_all.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_gemini.pdf": {
+    "commit": "4f58ce2",
+    "hash": "bb0a924a70782083",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_gemini.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_gemini.svg": {
+    "commit": "4f58ce2",
+    "hash": "6b4360333b0481b6",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_gemini.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_gpt5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "a993895c61e77291",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_gpt5.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_gpt5.svg": {
+    "commit": "4f58ce2",
+    "hash": "a1da7396d43fd9cb",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_gpt5.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_llama70b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "9ffa42ae6043d86e",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_llama70b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_llama70b.svg": {
+    "commit": "4f58ce2",
+    "hash": "544fe823d3a223c7",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_llama70b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_qwen32b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "c10d912704f1e663",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_qwen32b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_qwen32b.svg": {
+    "commit": "4f58ce2",
+    "hash": "90a3a40317b0f172",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_qwen32b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_qwen80b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "1b80d642e4c33663",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_qwen80b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_20q_qwen80b.svg": {
+    "commit": "4f58ce2",
+    "hash": "b6239c784ef3da7e",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_20q_qwen80b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_customer-service_llama8b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "0169874f40969079",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_customer-service_llama8b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_customer-service_llama8b.svg": {
+    "commit": "4f58ce2",
+    "hash": "d594e07b1fde91bc",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_customer-service_llama8b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_customer-service_qwen32b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "0da9181e9a5991be",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_customer-service_qwen32b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_customer-service_qwen32b.svg": {
+    "commit": "4f58ce2",
+    "hash": "c08d07e8ba96f5a5",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_customer-service_qwen32b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_customer-service_qwen3b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "5f9f390b1d4caeda",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_customer-service_qwen3b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_customer-service_qwen3b.svg": {
+    "commit": "4f58ce2",
+    "hash": "98f3097cffd767a2",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_customer-service_qwen3b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_customer-service_qwen7b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "7f75c4676c78bbf3",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_customer-service_qwen7b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_customer-service_qwen7b.svg": {
+    "commit": "4f58ce2",
+    "hash": "563b5f37cd82bc35",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_customer-service_qwen7b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_murder-mystery_llama8b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "75061a5349f5b9b1",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_murder-mystery_llama8b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_murder-mystery_llama8b.svg": {
+    "commit": "4f58ce2",
+    "hash": "581bfa7077727cab",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_murder-mystery_llama8b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_murder-mystery_qwen3b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "a9b7b5badefdb1e2",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_murder-mystery_qwen3b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_murder-mystery_qwen3b.svg": {
+    "commit": "4f58ce2",
+    "hash": "2f1e78c3cd92eca0",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_murder-mystery_qwen3b.svg"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_murder-mystery_qwen7b.pdf": {
+    "commit": "4f58ce2",
+    "hash": "d060c9c626bedf11",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_murder-mystery_qwen7b.pdf"
+  },
+  "experiments/12-baselines/figures/curvature_trajectory_murder-mystery_qwen7b.svg": {
+    "commit": "4f58ce2",
+    "hash": "f96cb28d0fdd39ab",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/curvature_trajectory_murder-mystery_qwen7b.svg"
+  },
+  "experiments/12-baselines/figures/win_overlap.svg": {
+    "commit": "4f58ce2",
+    "hash": "3476a4581605019e",
+    "url": "https://blots.kincaid.ink/reason_reckon/12-baselines/win_overlap.svg"
+  },
+  "experiments/13-zeppelin-sampling/figures/accuracy_comparison_original_vs_zeppelin.pdf": {
+    "commit": "4f58ce2",
+    "hash": "3a4d4b532f88b908",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/accuracy_comparison_original_vs_zeppelin.pdf"
+  },
+  "experiments/13-zeppelin-sampling/figures/accuracy_comparison_original_vs_zeppelin.svg": {
+    "commit": "4f58ce2",
+    "hash": "3477031ec4ff1450",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/accuracy_comparison_original_vs_zeppelin.svg"
+  },
+  "experiments/13-zeppelin-sampling/figures/baseline_vs_zeppelin_curvature_20q.pdf": {
+    "commit": "4f58ce2",
+    "hash": "3190a7537f2004d0",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/baseline_vs_zeppelin_curvature_20q.pdf"
+  },
+  "experiments/13-zeppelin-sampling/figures/baseline_vs_zeppelin_curvature_20q.svg": {
+    "commit": "4f58ce2",
+    "hash": "42f98989643d5c81",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/baseline_vs_zeppelin_curvature_20q.svg"
+  },
+  "experiments/13-zeppelin-sampling/figures/baseline_vs_zeppelin_curvature_20q_detailed.pdf": {
+    "commit": "4f58ce2",
+    "hash": "55eeb0a6da6c5887",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/baseline_vs_zeppelin_curvature_20q_detailed.pdf"
+  },
+  "experiments/13-zeppelin-sampling/figures/baseline_vs_zeppelin_curvature_20q_detailed.svg": {
+    "commit": "4f58ce2",
+    "hash": "a40594afaafb1e48",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/baseline_vs_zeppelin_curvature_20q_detailed.svg"
+  },
+  "experiments/13-zeppelin-sampling/figures/baseline_vs_zeppelin_curvature_shared_graph.pdf": {
+    "commit": "4f58ce2",
+    "hash": "e01389efdae90ea9",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/baseline_vs_zeppelin_curvature_shared_graph.pdf"
+  },
+  "experiments/13-zeppelin-sampling/figures/baseline_vs_zeppelin_curvature_shared_graph.svg": {
+    "commit": "4f58ce2",
+    "hash": "2b86efc7d488f2b3",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/baseline_vs_zeppelin_curvature_shared_graph.svg"
+  },
+  "experiments/13-zeppelin-sampling/figures/zeppelin_curvature_by_outcome_and_turn.pdf": {
+    "commit": "4f58ce2",
+    "hash": "6a32b0560fff12a2",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/zeppelin_curvature_by_outcome_and_turn.pdf"
+  },
+  "experiments/13-zeppelin-sampling/figures/zeppelin_curvature_by_outcome_and_turn.svg": {
+    "commit": "4f58ce2",
+    "hash": "91390630d2038c38",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/zeppelin_curvature_by_outcome_and_turn.svg"
+  },
+  "experiments/13-zeppelin-sampling/figures/zeppelin_selected_vs_rejected_20q.pdf": {
+    "commit": "4f58ce2",
+    "hash": "ef646b4c0950bd29",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/zeppelin_selected_vs_rejected_20q.pdf"
+  },
+  "experiments/13-zeppelin-sampling/figures/zeppelin_selected_vs_rejected_20q.svg": {
+    "commit": "4f58ce2",
+    "hash": "db52e415db4427f3",
+    "url": "https://blots.kincaid.ink/reason_reckon/13-zeppelin-sampling/zeppelin_selected_vs_rejected_20q.svg"
+  },
+  "experiments/14-figure-fest/figures/big-figure-drawing-gray-bg.png": {
+    "commit": "4f58ce2",
+    "hash": "df39ccfd1cf37c91",
+    "url": "https://blots.kincaid.ink/reason_reckon/14-figure-fest/big-figure-drawing-gray-bg.png"
+  },
+  "experiments/14-figure-fest/figures/big-figure-drawing-white-bg.png": {
+    "commit": "4f58ce2",
+    "hash": "df356a4becb0d657",
+    "url": "https://blots.kincaid.ink/reason_reckon/14-figure-fest/big-figure-drawing-white-bg.png"
+  },
+  "experiments/14-figure-fest/figures/big-figure-drawing.png": {
+    "commit": "4f58ce2",
+    "hash": "b0ab5a7829433ddd",
+    "url": "https://blots.kincaid.ink/reason_reckon/14-figure-fest/big-figure-drawing.png"
+  },
+  "experiments/15-curvature-as-compass/figures/chosen_curvature_violin_win_loss.pdf": {
+    "commit": "4f58ce2",
+    "hash": "969cd048698975d4",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/chosen_curvature_violin_win_loss.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/chosen_curvature_violin_win_loss.svg": {
+    "commit": "4f58ce2",
+    "hash": "0852f17dd288dbe5",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/chosen_curvature_violin_win_loss.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/chosen_curvature_vs_win_probability.pdf": {
+    "commit": "4f58ce2",
+    "hash": "f761a29ad7ac9ffb",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/chosen_curvature_vs_win_probability.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/chosen_curvature_vs_win_probability.svg": {
+    "commit": "4f58ce2",
+    "hash": "886e194f7b1550d7",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/chosen_curvature_vs_win_probability.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/curvature_distribution.pdf": {
+    "commit": "4f58ce2",
+    "hash": "a61d2f46cdafef49",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/curvature_distribution.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/curvature_distribution.svg": {
+    "commit": "4f58ce2",
+    "hash": "89c7c139a1cbef78",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/curvature_distribution.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/curvature_distribution_recomputed.pdf": {
+    "commit": "4f58ce2",
+    "hash": "f18bdf0d89190a5b",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/curvature_distribution_recomputed.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/curvature_distribution_recomputed.svg": {
+    "commit": "4f58ce2",
+    "hash": "2f051bb81382f9b1",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/curvature_distribution_recomputed.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/curvature_vs_win_probability.pdf": {
+    "commit": "4f58ce2",
+    "hash": "0ad27371e0852b8e",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/curvature_vs_win_probability.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/curvature_vs_win_probability.svg": {
+    "commit": "4f58ce2",
+    "hash": "e58bb0ae509d5ce6",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/curvature_vs_win_probability.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_corpus_comparison.pdf": {
+    "commit": "4f58ce2",
+    "hash": "afa524f87f51ddc3",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_corpus_comparison.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_corpus_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "1db59eaec7bdd0d9",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_corpus_comparison.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_curvature_by_outcome.pdf": {
+    "commit": "4f58ce2",
+    "hash": "038905d142c732af",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_curvature_by_outcome.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_curvature_by_outcome.svg": {
+    "commit": "4f58ce2",
+    "hash": "06b786f39107aa37",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_curvature_by_outcome.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_curvature_distribution.pdf": {
+    "commit": "4f58ce2",
+    "hash": "549c5bbaf1d101c2",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_curvature_distribution.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_curvature_distribution.svg": {
+    "commit": "4f58ce2",
+    "hash": "faf2f22ad216a70f",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_curvature_distribution.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_main_results.pdf": {
+    "commit": "4f58ce2",
+    "hash": "4fe41ca6c7f52153",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_main_results.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_main_results.svg": {
+    "commit": "4f58ce2",
+    "hash": "3e5580c764e591df",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_main_results.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/dialog_v15_transcript.pdf": {
+    "commit": "4f58ce2",
+    "hash": "bc215c32523b44bb",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/dialog_v15_transcript.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/intervention_curvature_comparison.pdf": {
+    "commit": "4f58ce2",
+    "hash": "3d3e39652100e9cd",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/intervention_curvature_comparison.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/intervention_curvature_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "5d4b61f7abd113c4",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/intervention_curvature_comparison.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/main_results.pdf": {
+    "commit": "4f58ce2",
+    "hash": "044942227af12eb2",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/main_results.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/main_results.svg": {
+    "commit": "4f58ce2",
+    "hash": "c3dcb036edae1863",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/main_results.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/threshold_comparison.pdf": {
+    "commit": "4f58ce2",
+    "hash": "bfc025d25800f51b",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/threshold_comparison.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/threshold_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "84afcf8d9dcec264",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/threshold_comparison.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/tool_use_ratio_distribution.pdf": {
+    "commit": "4f58ce2",
+    "hash": "a67888c8251a38d1",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/tool_use_ratio_distribution.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/tool_use_ratio_distribution.svg": {
+    "commit": "4f58ce2",
+    "hash": "7111ed4eb57e59eb",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/tool_use_ratio_distribution.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_chosen_curvature_violin.pdf": {
+    "commit": "4f58ce2",
+    "hash": "ff1aa7699bced1e0",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_chosen_curvature_violin.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_chosen_curvature_violin.svg": {
+    "commit": "4f58ce2",
+    "hash": "dc8edc59e0a68dd4",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_chosen_curvature_violin.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_curvature_distributions.pdf": {
+    "commit": "4f58ce2",
+    "hash": "407f1ab2d1aec339",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_curvature_distributions.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_curvature_distributions.svg": {
+    "commit": "4f58ce2",
+    "hash": "443cc6266e6ffe38",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_curvature_distributions.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_curvature_win_probability.pdf": {
+    "commit": "4f58ce2",
+    "hash": "719d31736fa45d51",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_curvature_win_probability.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_curvature_win_probability.svg": {
+    "commit": "4f58ce2",
+    "hash": "46e35ae9b250a348",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_curvature_win_probability.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_win_rates.pdf": {
+    "commit": "4f58ce2",
+    "hash": "c82176222511f7e3",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_win_rates.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_win_rates.svg": {
+    "commit": "4f58ce2",
+    "hash": "2c9ae3873c53a6f0",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_win_rates.svg"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_within_turn_curvature_std.pdf": {
+    "commit": "4f58ce2",
+    "hash": "b7db465c051fe64b",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_within_turn_curvature_std.pdf"
+  },
+  "experiments/15-curvature-as-compass/figures/v15_within_turn_curvature_std.svg": {
+    "commit": "4f58ce2",
+    "hash": "13479bcef31093a2",
+    "url": "https://blots.kincaid.ink/reason_reckon/15-curvature-as-compass/v15_within_turn_curvature_std.svg"
+  },
+  "experiments/16-visualize-belief-manifold/figures/manifold_phate_qwen3-next-80b__g0019_20260202_121212.png": {
+    "commit": "4f58ce2",
+    "hash": "fdc8cd720fb116e3",
+    "url": "https://blots.kincaid.ink/reason_reckon/16-visualize-belief-manifold/manifold_phate_qwen3-next-80b__g0019_20260202_121212.png"
+  },
+  "experiments/16-visualize-belief-manifold/figures/manifold_phate_qwen3-next-80b__g0019_20260202_121236.png": {
+    "commit": "4f58ce2",
+    "hash": "fdc8cd720fb116e3",
+    "url": "https://blots.kincaid.ink/reason_reckon/16-visualize-belief-manifold/manifold_phate_qwen3-next-80b__g0019_20260202_121236.png"
+  },
+  "experiments/16-visualize-belief-manifold/figures/manifold_phate_qwen3-next-80b__g0022_20260202_121712.png": {
+    "commit": "4f58ce2",
+    "hash": "439e4c17f48c0c94",
+    "url": "https://blots.kincaid.ink/reason_reckon/16-visualize-belief-manifold/manifold_phate_qwen3-next-80b__g0022_20260202_121712.png"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/belief_embeddings_grid.pdf": {
+    "commit": "4f58ce2",
+    "hash": "4012a8ce384dbb8d",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/belief_embeddings_grid.pdf"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/belief_embeddings_grid.svg": {
+    "commit": "4f58ce2",
+    "hash": "009ce5ffc681f776",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/belief_embeddings_grid.svg"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/belief_orc_curvature_by_model.pdf": {
+    "commit": "4f58ce2",
+    "hash": "08b0f3d44a92c8ce",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/belief_orc_curvature_by_model.pdf"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/belief_orc_curvature_by_model.svg": {
+    "commit": "4f58ce2",
+    "hash": "0969f4eb8d1ccefa",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/belief_orc_curvature_by_model.svg"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/curvature_ablation.pdf": {
+    "commit": "4f58ce2",
+    "hash": "42f48af92704a65b",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/curvature_ablation.pdf"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/curvature_ablation.svg": {
+    "commit": "4f58ce2",
+    "hash": "ff4983758e190a24",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/curvature_ablation.svg"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/curvature_ntuple.pdf": {
+    "commit": "4f58ce2",
+    "hash": "51521ec90f6e27fa",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/curvature_ntuple.pdf"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/curvature_ntuple.svg": {
+    "commit": "4f58ce2",
+    "hash": "ed158023b5bc14a8",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/curvature_ntuple.svg"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/curvature_ntuple_by_phase.pdf": {
+    "commit": "4f58ce2",
+    "hash": "5da4a6e9de970a4a",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/curvature_ntuple_by_phase.pdf"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/curvature_ntuple_by_phase.svg": {
+    "commit": "4f58ce2",
+    "hash": "1c9c1fe618c98e34",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/curvature_ntuple_by_phase.svg"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/curvature_vs_success.pdf": {
+    "commit": "4f58ce2",
+    "hash": "70535ebd37a2eb0b",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/curvature_vs_success.pdf"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/curvature_vs_success.svg": {
+    "commit": "4f58ce2",
+    "hash": "1fc406c0e8ada065",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/curvature_vs_success.svg"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/edge_homophily.pdf": {
+    "commit": "4f58ce2",
+    "hash": "0dd3b7f6b1831070",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/edge_homophily.pdf"
+  },
+  "experiments/18-psrl-empowerment-sampling/figures/edge_homophily.svg": {
+    "commit": "4f58ce2",
+    "hash": "6e5a1375de0d2311",
+    "url": "https://blots.kincaid.ink/reason_reckon/18-psrl-empowerment-sampling/edge_homophily.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/curvature_ablation.png": {
+    "commit": "4f58ce2",
+    "hash": "4ca6f6a4a258f877",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/curvature_ablation.png"
+  },
+  "experiments/20-curvature-as-prm/figures/curvature_ablation.svg": {
+    "commit": "4f58ce2",
+    "hash": "63de099737e2850a",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/curvature_ablation.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2_compute_vs_accuracy.pdf": {
+    "commit": "4f58ce2",
+    "hash": "53de3071b05d59a4",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2_compute_vs_accuracy.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2_compute_vs_accuracy.png": {
+    "commit": "4f58ce2",
+    "hash": "9582814eb06db455",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2_compute_vs_accuracy.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2_compute_vs_accuracy.svg": {
+    "commit": "4f58ce2",
+    "hash": "f5b60623bb103c26",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2_compute_vs_accuracy.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_full.pdf": {
+    "commit": "4f58ce2",
+    "hash": "46b630110209c420",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_full.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_full.png": {
+    "commit": "4f58ce2",
+    "hash": "1478b0f8eee4b2f2",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_full.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_full.svg": {
+    "commit": "4f58ce2",
+    "hash": "ecf2b74424ab57a8",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_full.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_full_simple.pdf": {
+    "commit": "4f58ce2",
+    "hash": "6729f905349847d6",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_full_simple.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_full_simple.png": {
+    "commit": "4f58ce2",
+    "hash": "bb0f31dc2467ddad",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_full_simple.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_full_simple.svg": {
+    "commit": "4f58ce2",
+    "hash": "1365a5a06d028ab3",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_full_simple.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_pca_delta.pdf": {
+    "commit": "4f58ce2",
+    "hash": "6cb100f23d2b3cd9",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_pca_delta.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_pca_delta.png": {
+    "commit": "4f58ce2",
+    "hash": "93503dea1b42ef70",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_pca_delta.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2a_compute_accuracy_pca_delta.svg": {
+    "commit": "4f58ce2",
+    "hash": "de40efd3054d7d20",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2a_compute_accuracy_pca_delta.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_challenge.pdf": {
+    "commit": "4f58ce2",
+    "hash": "35ad3279f613f2ad",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_challenge.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_challenge.png": {
+    "commit": "4f58ce2",
+    "hash": "ff69be3a803c2559",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_challenge.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_challenge.svg": {
+    "commit": "4f58ce2",
+    "hash": "fd9c666877961b18",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_challenge.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_challenge_simple.pdf": {
+    "commit": "4f58ce2",
+    "hash": "e38b3fa800687fb2",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_challenge_simple.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_challenge_simple.png": {
+    "commit": "4f58ce2",
+    "hash": "f114e2fc427acf51",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_challenge_simple.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_challenge_simple.svg": {
+    "commit": "4f58ce2",
+    "hash": "e6342552b3dea627",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_challenge_simple.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_pca_delta.pdf": {
+    "commit": "4f58ce2",
+    "hash": "751823ace46a4aba",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_pca_delta.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_pca_delta.png": {
+    "commit": "4f58ce2",
+    "hash": "135f24184980c344",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_pca_delta.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig2b_compute_accuracy_pca_delta.svg": {
+    "commit": "4f58ce2",
+    "hash": "17fcce2e4503cce3",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig2b_compute_accuracy_pca_delta.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_corpus_diffcurv_ablation.pdf": {
+    "commit": "4f58ce2",
+    "hash": "32b67df42d1343b6",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_corpus_diffcurv_ablation.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_corpus_diffcurv_ablation.png": {
+    "commit": "4f58ce2",
+    "hash": "26a81c6a2c5be898",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_corpus_diffcurv_ablation.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_corpus_diffcurv_ablation.svg": {
+    "commit": "4f58ce2",
+    "hash": "6b2aa4383c40d9ff",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_corpus_diffcurv_ablation.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_corpus_laziness_ablation.pdf": {
+    "commit": "4f58ce2",
+    "hash": "de65fbabc7cfea3b",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_corpus_laziness_ablation.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_corpus_laziness_ablation.png": {
+    "commit": "4f58ce2",
+    "hash": "8848a8f6a475365b",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_corpus_laziness_ablation.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_corpus_laziness_ablation.svg": {
+    "commit": "4f58ce2",
+    "hash": "7b814d6f34a920f0",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_corpus_laziness_ablation.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_accuracy.pdf": {
+    "commit": "4f58ce2",
+    "hash": "3db92a83aebb13c3",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_accuracy.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_accuracy.png": {
+    "commit": "4f58ce2",
+    "hash": "a9eb7295476a418f",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_accuracy.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_accuracy.svg": {
+    "commit": "4f58ce2",
+    "hash": "d8e5426640e7970b",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_accuracy.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_coefficients.pdf": {
+    "commit": "4f58ce2",
+    "hash": "1a6eecc4e598886c",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_coefficients.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_coefficients.png": {
+    "commit": "4f58ce2",
+    "hash": "f1f621327ca4631b",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_coefficients.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_coefficients.svg": {
+    "commit": "4f58ce2",
+    "hash": "a96c210d554eee40",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_coefficients.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_laziness.pdf": {
+    "commit": "4f58ce2",
+    "hash": "e970143b46fdaba7",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_laziness.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_laziness.png": {
+    "commit": "4f58ce2",
+    "hash": "66a3e31c2f4d3251",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_laziness.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_density_laziness.svg": {
+    "commit": "4f58ce2",
+    "hash": "3803badedf075367",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_density_laziness.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_feature_ablation.pdf": {
+    "commit": "4f58ce2",
+    "hash": "ad0b25e72f5c5391",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_feature_ablation.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_feature_ablation.png": {
+    "commit": "4f58ce2",
+    "hash": "a35cd5017eeade1d",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_feature_ablation.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_feature_ablation.svg": {
+    "commit": "4f58ce2",
+    "hash": "51375f548d813c95",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_feature_ablation.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_combined.pdf": {
+    "commit": "4f58ce2",
+    "hash": "586605840d7d6f8c",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_combined.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_combined.png": {
+    "commit": "4f58ce2",
+    "hash": "c851144c7ca96065",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_combined.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_combined.svg": {
+    "commit": "4f58ce2",
+    "hash": "1942b1e8beef12fd",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_combined.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_customer_service.pdf": {
+    "commit": "4f58ce2",
+    "hash": "98bae71442cd2367",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_customer_service.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_customer_service.png": {
+    "commit": "4f58ce2",
+    "hash": "e631c95c5969d9bd",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_customer_service.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_customer_service.svg": {
+    "commit": "4f58ce2",
+    "hash": "38e780b7ad4ffef1",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_customer_service.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_murder_mystery.pdf": {
+    "commit": "4f58ce2",
+    "hash": "d508b2e474ad9243",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_murder_mystery.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_murder_mystery.png": {
+    "commit": "4f58ce2",
+    "hash": "3f7935847abd221f",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_murder_mystery.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_paprika_murder_mystery.svg": {
+    "commit": "4f58ce2",
+    "hash": "800c1dd6877b1d04",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_paprika_murder_mystery.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_representation_ablation.pdf": {
+    "commit": "4f58ce2",
+    "hash": "20d5b16c02508bed",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_representation_ablation.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_representation_ablation.png": {
+    "commit": "4f58ce2",
+    "hash": "f90404bdbb7b3752",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_representation_ablation.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_representation_ablation.svg": {
+    "commit": "4f58ce2",
+    "hash": "ff06e5a129766b9d",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_representation_ablation.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_simple_baselines.pdf": {
+    "commit": "4f58ce2",
+    "hash": "5763abb867d3c9f8",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_simple_baselines.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_simple_baselines.png": {
+    "commit": "08ff991",
+    "hash": "1d47fc4b8ffdd35f",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_simple_baselines.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_simple_baselines.svg": {
+    "commit": "4f58ce2",
+    "hash": "53f505a1e57ced68",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_simple_baselines.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_simple_baselines_all_turns.pdf": {
+    "commit": "4f58ce2",
+    "hash": "0f0baca47d5c9359",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_simple_baselines_all_turns.pdf"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_simple_baselines_all_turns.png": {
+    "commit": "08ff991",
+    "hash": "aa50bc0f8e33a904",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_simple_baselines_all_turns.png"
+  },
+  "experiments/20-curvature-as-prm/figures/fig_simple_baselines_all_turns.svg": {
+    "commit": "4f58ce2",
+    "hash": "a7bd78e1479db0e8",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/fig_simple_baselines_all_turns.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/trajectory_graphs_llm.png": {
+    "commit": "4f58ce2",
+    "hash": "2e4473630fc93ab2",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/trajectory_graphs_llm.png"
+  },
+  "experiments/20-curvature-as-prm/figures/trajectory_graphs_llm.svg": {
+    "commit": "4f58ce2",
+    "hash": "abdef31c97bfebb9",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/trajectory_graphs_llm.svg"
+  },
+  "experiments/20-curvature-as-prm/figures/trajectory_graphs_pca_delta.png": {
+    "commit": "4f58ce2",
+    "hash": "c734a8bcc59d4772",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/trajectory_graphs_pca_delta.png"
+  },
+  "experiments/20-curvature-as-prm/figures/trajectory_graphs_pca_delta.svg": {
+    "commit": "4f58ce2",
+    "hash": "7b69fdf452b2dfa6",
+    "url": "https://blots.kincaid.ink/reason_reckon/20-curvature-as-prm/trajectory_graphs_pca_delta.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_boed_vs_idsboed.pdf": {
+    "commit": "4f58ce2",
+    "hash": "9947b08e07db0672",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_boed_vs_idsboed.pdf"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_boed_vs_idsboed.png": {
+    "commit": "4f58ce2",
+    "hash": "ea6bcaa7073af91b",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_boed_vs_idsboed.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_boed_vs_idsboed.svg": {
+    "commit": "4f58ce2",
+    "hash": "d085aa707c039f65",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_boed_vs_idsboed.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_classify_laziness_corpus.png": {
+    "commit": "4f58ce2",
+    "hash": "601af344c4a3873e",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_classify_laziness_corpus.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_classify_laziness_corpus.svg": {
+    "commit": "4f58ce2",
+    "hash": "8d275fa228726631",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_classify_laziness_corpus.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_classify_orc_corpus.png": {
+    "commit": "4f58ce2",
+    "hash": "e80a3d67e574d401",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_classify_orc_corpus.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_classify_orc_corpus.svg": {
+    "commit": "4f58ce2",
+    "hash": "695742ff6bba5c03",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_classify_orc_corpus.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_classify_spc_traj_only.png": {
+    "commit": "4f58ce2",
+    "hash": "7d2bdd0c62a60002",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_classify_spc_traj_only.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_classify_spc_traj_only.svg": {
+    "commit": "4f58ce2",
+    "hash": "4cc83325e6ad64fc",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_classify_spc_traj_only.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_curvature_distributions.pdf": {
+    "commit": "4f58ce2",
+    "hash": "b3f2fa17e2793e92",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_curvature_distributions.pdf"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_curvature_distributions.png": {
+    "commit": "4f58ce2",
+    "hash": "5353f4e1bc796a22",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_curvature_distributions.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_curvature_distributions.svg": {
+    "commit": "4f58ce2",
+    "hash": "046e8609385b5455",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_curvature_distributions.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_curvature_filtered_homology.png": {
+    "commit": "ce04e2d",
+    "hash": "abf54488411216ca",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_curvature_filtered_homology.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_graph_homology_ablation.png": {
+    "commit": "ce04e2d",
+    "hash": "00e5d23e08710bf0",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_graph_homology_ablation.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_h1_agent_comparison.png": {
+    "commit": "4f58ce2",
+    "hash": "9b7b40fad3412f98",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_h1_agent_comparison.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_h1_mean_lifetime_table.png": {
+    "commit": "4f58ce2",
+    "hash": "8c27ea309233b9ef",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_h1_mean_lifetime_table.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_persistence_20q.png": {
+    "commit": "ce04e2d",
+    "hash": "653ccc075abbd1cb",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_persistence_20q.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_persistence_best_of_k.png": {
+    "commit": "ce04e2d",
+    "hash": "5df4d88b51d33dc5",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_persistence_best_of_k.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_persistence_classifiers.png": {
+    "commit": "ce04e2d",
+    "hash": "2f841c23269ffa77",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_persistence_classifiers.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_persistence_key_findings.png": {
+    "commit": "4f58ce2",
+    "hash": "476bcf06aee37e18",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_persistence_key_findings.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_persistence_landscapes_by_class.png": {
+    "commit": "4f58ce2",
+    "hash": "580d7280a5a71839",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_persistence_landscapes_by_class.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_persistence_representations.png": {
+    "commit": "ce04e2d",
+    "hash": "89109eb5e8468de2",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_persistence_representations.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_persistence_stats_vs_speedup.png": {
+    "commit": "4f58ce2",
+    "hash": "6e64b591cfb11ff0",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_persistence_stats_vs_speedup.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual.png": {
+    "commit": "4f58ce2",
+    "hash": "f2159b7c2871e596",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual.svg": {
+    "commit": "4f58ce2",
+    "hash": "533b96b18a35fb98",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual_laziness_corpus.png": {
+    "commit": "4f58ce2",
+    "hash": "a072ebc344fe9aa7",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual_laziness_corpus.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual_laziness_corpus.svg": {
+    "commit": "4f58ce2",
+    "hash": "a22d35f7b4a64181",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual_laziness_corpus.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual_orc_corpus.png": {
+    "commit": "4f58ce2",
+    "hash": "84f081eeaca8f354",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual_orc_corpus.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual_orc_corpus.svg": {
+    "commit": "4f58ce2",
+    "hash": "ca71002631e21ba9",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual_orc_corpus.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual_spc_corpus.png": {
+    "commit": "4f58ce2",
+    "hash": "f2159b7c2871e596",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual_spc_corpus.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual_spc_corpus.svg": {
+    "commit": "4f58ce2",
+    "hash": "28fa0866c37d99c2",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual_spc_corpus.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual_spc_traj_only.png": {
+    "commit": "4f58ce2",
+    "hash": "30c007acdcc0e70e",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual_spc_traj_only.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_predicted_vs_actual_spc_traj_only.svg": {
+    "commit": "4f58ce2",
+    "hash": "58c384fcd509539a",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_predicted_vs_actual_spc_traj_only.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_sequential_graph_deep_dive.png": {
+    "commit": "ce04e2d",
+    "hash": "575e0377ae78a7a5",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_sequential_graph_deep_dive.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_truncation_sweep_laziness_corpus.png": {
+    "commit": "4f58ce2",
+    "hash": "6493df87d7cd3f95",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_truncation_sweep_laziness_corpus.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_truncation_sweep_laziness_corpus.svg": {
+    "commit": "4f58ce2",
+    "hash": "691dc83cc34b4134",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_truncation_sweep_laziness_corpus.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_truncation_sweep_orc_corpus.png": {
+    "commit": "4f58ce2",
+    "hash": "a235225024ad05b9",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_truncation_sweep_orc_corpus.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_truncation_sweep_orc_corpus.svg": {
+    "commit": "4f58ce2",
+    "hash": "30ecad285c9411a5",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_truncation_sweep_orc_corpus.svg"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_truncation_sweep_spc_traj_only.png": {
+    "commit": "4f58ce2",
+    "hash": "e3831fa44007d3e2",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_truncation_sweep_spc_traj_only.png"
+  },
+  "experiments/22-kernel-bench-prm-analysis/figures/fig_truncation_sweep_spc_traj_only.svg": {
+    "commit": "4f58ce2",
+    "hash": "0a4b9d891c6c3a1d",
+    "url": "https://blots.kincaid.ink/reason_reckon/22-kernel-bench-prm-analysis/fig_truncation_sweep_spc_traj_only.svg"
+  },
+  "experiments/23-modeling-belief-graphs/figures/builder_heatmap.svg": {
+    "commit": "d4bc649",
+    "hash": "e013fb3f9121828b",
+    "url": "https://blots.kincaid.ink/reason_reckon/23-modeling-belief-graphs/builder_heatmap.svg"
+  },
+  "experiments/23-modeling-belief-graphs/figures/convergence_curves.svg": {
+    "commit": "d4bc649",
+    "hash": "be258d5c8894817b",
+    "url": "https://blots.kincaid.ink/reason_reckon/23-modeling-belief-graphs/convergence_curves.svg"
+  },
+  "experiments/23-modeling-belief-graphs/figures/results_all_features.png": {
+    "commit": "d4bc649",
+    "hash": "c4178aebfea9fa63",
+    "url": "https://blots.kincaid.ink/reason_reckon/23-modeling-belief-graphs/results_all_features.png"
+  },
+  "experiments/23-modeling-belief-graphs/figures/results_all_features_v2.png": {
+    "commit": "d4bc649",
+    "hash": "c4178aebfea9fa63",
+    "url": "https://blots.kincaid.ink/reason_reckon/23-modeling-belief-graphs/results_all_features_v2.png"
+  },
+  "experiments/23-modeling-belief-graphs/figures/results_laziness_only.png": {
+    "commit": "d4bc649",
+    "hash": "a8d0227682f767b0",
+    "url": "https://blots.kincaid.ink/reason_reckon/23-modeling-belief-graphs/results_laziness_only.png"
+  },
+  "experiments/23-modeling-belief-graphs/figures/results_laziness_only_v2.png": {
+    "commit": "d4bc649",
+    "hash": "a8d0227682f767b0",
+    "url": "https://blots.kincaid.ink/reason_reckon/23-modeling-belief-graphs/results_laziness_only_v2.png"
+  },
+  "experiments/23-modeling-belief-graphs/figures/results_table.png": {
+    "commit": "d4bc649",
+    "hash": "98c5e52786845f58",
+    "url": "https://blots.kincaid.ink/reason_reckon/23-modeling-belief-graphs/results_table.png"
+  },
+  "experiments/23-modeling-belief-graphs/figures/torus_curvature_comparison.svg": {
+    "commit": "d4bc649",
+    "hash": "74be140c4ef9b660",
+    "url": "https://blots.kincaid.ink/reason_reckon/23-modeling-belief-graphs/torus_curvature_comparison.svg"
+  },
+  "experiments/24-successor-representations-spectacular/fb-squared/processed_data/best_of_k_squared.png": {
+    "commit": "c102ffd",
+    "hash": "7727ad8d33e5147a",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/best_of_k_squared.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/fb_bspace_affinity.png": {
+    "commit": "a8ca009",
+    "hash": "38159c7cff421f03",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/fb_bspace_affinity.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/fb_bspace_affinity.svg": {
+    "commit": "a8ca009",
+    "hash": "3045e9fc8bf9c1dc",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/fb_bspace_affinity.svg"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/fb_bspace_g0003.png": {
+    "commit": "a8ca009",
+    "hash": "23fa2a6cc10d166c",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/fb_bspace_g0003.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/fb_bspace_g0005.png": {
+    "commit": "a8ca009",
+    "hash": "54023b1e26017a52",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/fb_bspace_g0005.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/fb_bspace_g0014.png": {
+    "commit": "a8ca009",
+    "hash": "8695230af7966490",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/fb_bspace_g0014.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/fb_bspace_summary.png": {
+    "commit": "a8ca009",
+    "hash": "29222c38dc4322d1",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/fb_bspace_summary.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/successor_concentration.png": {
+    "commit": "a8ca009",
+    "hash": "4a8805c82e474b55",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/successor_concentration.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/successor_concentration_tau1.png": {
+    "commit": "a8ca009",
+    "hash": "bdbb0df6e7c8f763",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/successor_concentration_tau1.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/trajectory_edge_schematic.png": {
+    "commit": "a8ca009",
+    "hash": "02c484a82dc60f55",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/trajectory_edge_schematic.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/win_loss_summary_full.png": {
+    "commit": "a8ca009",
+    "hash": "38bfb2c9aac65613",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/win_loss_summary_full.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/figures/win_loss_within_game.png": {
+    "commit": "a8ca009",
+    "hash": "adfa27f27bc73c29",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/win_loss_within_game.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/processed_data/best_of_k_comparison.png": {
+    "commit": "6862d10",
+    "hash": "09f27b791d2162f5",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/best_of_k_comparison.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/processed_data/best_of_k_curve.png": {
+    "commit": "9b498dc",
+    "hash": "1454bd2710a4c8ae",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/best_of_k_curve.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/processed_data/best_of_k_delta.png": {
+    "commit": "b618bac",
+    "hash": "4fa0b6b35129d921",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/best_of_k_delta.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/processed_data/best_of_k_w1.png": {
+    "commit": "f4f6f8c",
+    "hash": "1436f0b2554755dd",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/best_of_k_w1.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/processed_data/best_of_k_w1_variants.png": {
+    "commit": "a8ca009",
+    "hash": "c8309b656b32bdf7",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/best_of_k_w1_variants.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/processed_data/compute_accuracy_full.png": {
+    "commit": "19f1925",
+    "hash": "28d4e5af46c43a06",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/compute_accuracy_full.png"
+  },
+  "experiments/24-successor-representations-spectacular/fb_twenty_questions/processed_data/density_vs_best10.png": {
+    "commit": "50807fb",
+    "hash": "7082a00df3478b13",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/density_vs_best10.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/best_of_k_orc.png": {
+    "commit": "a8ca009",
+    "hash": "8c33c5e746c5c349",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/best_of_k_orc.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/best_of_k_orc_battle.png": {
+    "commit": "a8ca009",
+    "hash": "d350400a00810ce0",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/best_of_k_orc_battle.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/differential_curvature.png": {
+    "commit": "a8ca009",
+    "hash": "1d67ff2d2b5839e1",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/differential_curvature.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/extended_correlations.png": {
+    "commit": "a8ca009",
+    "hash": "c5295f23d29e959f",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/extended_correlations.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/feature_correlations.png": {
+    "commit": "a8ca009",
+    "hash": "62febab56298768b",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/feature_correlations.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/orc_corpus_neighbors.png": {
+    "commit": "a8ca009",
+    "hash": "2434cbeffa5116b1",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/orc_corpus_neighbors.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/orc_fspace_density.png": {
+    "commit": "a8ca009",
+    "hash": "06cfe358c296ab2a",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/orc_fspace_density.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/orc_fspace_density_combined.png": {
+    "commit": "a8ca009",
+    "hash": "84c03a2a9e89a724",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/orc_fspace_density_combined.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/orc_ground_distances.png": {
+    "commit": "a8ca009",
+    "hash": "c40e743c19b0c201",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/orc_ground_distances.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/orc_histogram.png": {
+    "commit": "a8ca009",
+    "hash": "77e86c77a01a59ca",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/orc_histogram.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/orc_softmax_comparison.png": {
+    "commit": "a8ca009",
+    "hash": "1d638fb097278918",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/orc_softmax_comparison.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/orc_subsampled_comparison.png": {
+    "commit": "a8ca009",
+    "hash": "784512d3bbe1a0f4",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/orc_subsampled_comparison.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/orc_vs_turn.png": {
+    "commit": "a8ca009",
+    "hash": "ec2540bee5cff402",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/orc_vs_turn.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/torus_laziness_graph_properties.png": {
+    "commit": "a8ca009",
+    "hash": "2d803b3483b7cba3",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/torus_laziness_graph_properties.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/torus_orc_graph_properties.png": {
+    "commit": "a8ca009",
+    "hash": "e47d27a2e91b6cdd",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/torus_orc_graph_properties.png"
+  },
+  "experiments/24-successor-representations-spectacular/successor-orc/figures/torus_orc_vs_curvature.png": {
+    "commit": "a8ca009",
+    "hash": "5ce99c610d5f99e2",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/torus_orc_vs_curvature.png"
+  },
+  "experiments/24-successor-representations-spectacular/torus-baseline/figures/curvature_correlation.png": {
+    "commit": "c81024d",
+    "hash": "8c9c15ad2112fc43",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/curvature_correlation.png"
+  },
+  "experiments/24-successor-representations-spectacular/torus-baseline/figures/curvature_correlation_corrected.png": {
+    "commit": "1b7ea06",
+    "hash": "16c310637dcfbe19",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/curvature_correlation_corrected.png"
+  },
+  "experiments/24-successor-representations-spectacular/torus-baseline/figures/curvature_correlation_r1.png": {
+    "commit": "d4bc649",
+    "hash": "6c76cce2a2453a2b",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/curvature_correlation_r1.png"
+  },
+  "experiments/24-successor-representations-spectacular/torus-baseline/figures/ground_truth_curvature_signal.png": {
+    "commit": "e755156",
+    "hash": "afa61dbbd9613c3a",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/ground_truth_curvature_signal.png"
+  },
+  "experiments/24-successor-representations-spectacular/torus-baseline/figures/ground_truth_curvature_signal_knn30.png": {
+    "commit": "1b7ea06",
+    "hash": "bd598aaf568ad227",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/ground_truth_curvature_signal_knn30.png"
+  },
+  "experiments/24-successor-representations-spectacular/torus-baseline/figures/kl_vs_n_walks.png": {
+    "commit": "c81024d",
+    "hash": "f51f10f0a6d01142",
+    "url": "https://blots.kincaid.ink/reason_reckon/24-successor-representations-spectacular/kl_vs_n_walks.png"
+  },
+  "experiments/25-rl-with-epistemic-empowerment/figures/v6_eval_curves.png": {
+    "commit": "f5ddfe1",
+    "hash": "4dbe3e07eef7dfdd",
+    "url": "https://blots.kincaid.ink/reason_reckon/25-rl-with-epistemic-empowerment/v6_eval_curves.png"
+  },
+  "experiments/26-epistemic-simulations/figures/mouselights_multistep.pdf": {
+    "commit": "1295ffb",
+    "hash": "6ad43faccca468f0",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/mouselights_multistep.pdf"
+  },
+  "experiments/26-epistemic-simulations/figures/mouselights_multistep.png": {
+    "commit": "1295ffb",
+    "hash": "66b949cf1023510b",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/mouselights_multistep.png"
+  },
+  "experiments/26-epistemic-simulations/figures/mouselights_multistep.svg": {
+    "commit": "1295ffb",
+    "hash": "88d3868a0e540686",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/mouselights_multistep.svg"
+  },
+  "experiments/26-epistemic-simulations/figures/mouselights_one_step.pdf": {
+    "commit": "1295ffb",
+    "hash": "f22f78974a394b08",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/mouselights_one_step.pdf"
+  },
+  "experiments/26-epistemic-simulations/figures/mouselights_one_step.png": {
+    "commit": "1295ffb",
+    "hash": "3b901ee0c974b24c",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/mouselights_one_step.png"
+  },
+  "experiments/26-epistemic-simulations/figures/mouselights_one_step.svg": {
+    "commit": "1295ffb",
+    "hash": "b42e201a47f74199",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/mouselights_one_step.svg"
+  },
+  "experiments/26-epistemic-simulations/figures/policy_grid.pdf": {
+    "commit": "1295ffb",
+    "hash": "f6e3264381daee84",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/policy_grid.pdf"
+  },
+  "experiments/26-epistemic-simulations/figures/policy_grid.png": {
+    "commit": "1295ffb",
+    "hash": "05474f3e2da276cd",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/policy_grid.png"
+  },
+  "experiments/26-epistemic-simulations/figures/policy_grid.svg": {
+    "commit": "1295ffb",
+    "hash": "b3262208608a2371",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/policy_grid.svg"
+  },
+  "experiments/26-epistemic-simulations/figures/total_mi.pdf": {
+    "commit": "1295ffb",
+    "hash": "2e8324de68da92b0",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/total_mi.pdf"
+  },
+  "experiments/26-epistemic-simulations/figures/total_mi.png": {
+    "commit": "1295ffb",
+    "hash": "081b224de67f7d8b",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/total_mi.png"
+  },
+  "experiments/26-epistemic-simulations/figures/total_mi.svg": {
+    "commit": "1295ffb",
+    "hash": "c4c87ff2cbf6ac3a",
+    "url": "https://blots.kincaid.ink/reason_reckon/26-epistemic-simulations/total_mi.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_dc_adaptive_aniso.pdf": {
+    "commit": "4f58ce2",
+    "hash": "92a4536d7a8d4251",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_dc_adaptive_aniso.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_dc_adaptive_aniso.svg": {
+    "commit": "4f58ce2",
+    "hash": "2e622ea30067d958",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_dc_adaptive_aniso.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_dc_adaptive_noaniso.pdf": {
+    "commit": "4f58ce2",
+    "hash": "75826bb7e489be98",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_dc_adaptive_noaniso.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_dc_adaptive_noaniso.svg": {
+    "commit": "4f58ce2",
+    "hash": "f0094c23352511c7",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_dc_adaptive_noaniso.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_dc_fixed_aniso.pdf": {
+    "commit": "4f58ce2",
+    "hash": "ac3fb2348c653695",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_dc_fixed_aniso.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_dc_fixed_aniso.svg": {
+    "commit": "4f58ce2",
+    "hash": "8bd55e15a6ffce8d",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_dc_fixed_aniso.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_dc_fixed_noaniso.pdf": {
+    "commit": "4f58ce2",
+    "hash": "2fa6583d80b2c060",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_dc_fixed_noaniso.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_dc_fixed_noaniso.svg": {
+    "commit": "4f58ce2",
+    "hash": "14c0971b920c951f",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_dc_fixed_noaniso.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_graphtools_knn_aniso.pdf": {
+    "commit": "4f58ce2",
+    "hash": "84c1700ab87b0877",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_graphtools_knn_aniso.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_graphtools_knn_aniso.svg": {
+    "commit": "4f58ce2",
+    "hash": "fdc957d2b75a70ad",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_graphtools_knn_aniso.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_graphtools_knn_noaniso.pdf": {
+    "commit": "4f58ce2",
+    "hash": "e472fe2398898bbe",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_graphtools_knn_noaniso.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/curvature_over_time_graphtools_knn_noaniso.svg": {
+    "commit": "4f58ce2",
+    "hash": "43d81d832546675a",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/curvature_over_time_graphtools_knn_noaniso.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_best.pdf": {
+    "commit": "4f58ce2",
+    "hash": "92555819272377be",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_best.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_best.svg": {
+    "commit": "4f58ce2",
+    "hash": "31a2a929e8ed5fe9",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_best.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_grid.pdf": {
+    "commit": "4f58ce2",
+    "hash": "bf0b2a8e9c17bee8",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_grid.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_grid.svg": {
+    "commit": "4f58ce2",
+    "hash": "70d7c0130d6056ef",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_grid.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_controlled_t3.pdf": {
+    "commit": "4f58ce2",
+    "hash": "115b0d4682ed5973",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_controlled_t3.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_controlled_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "a76bcc01f78504ae",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_controlled_t3.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_controlled_t5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "8232093e349f8cba",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_controlled_t5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_controlled_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "a9dc247b20b159e9",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_controlled_t5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_controlled_t8.pdf": {
+    "commit": "4f58ce2",
+    "hash": "5d3daa8e430aa684",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_controlled_t8.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_controlled_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "43225de85f39f858",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_controlled_t8.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_aniso_t3.pdf": {
+    "commit": "4f58ce2",
+    "hash": "080365d7e995accd",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_aniso_t3.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_aniso_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "481518c416668700",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_aniso_t3.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_aniso_t5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "a1db620ef99cbb2e",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_aniso_t5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_aniso_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "b2977d0d56c2fb39",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_aniso_t5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_aniso_t8.pdf": {
+    "commit": "4f58ce2",
+    "hash": "2bb8e2c6ebdeb8cf",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_aniso_t8.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_aniso_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "784133bfb02c4f40",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_aniso_t8.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_noaniso_t3.pdf": {
+    "commit": "4f58ce2",
+    "hash": "65dcdab0b1e27d1f",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_noaniso_t3.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_noaniso_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "f39d36f380cc3390",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_noaniso_t3.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_noaniso_t5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "d40844024a659b9b",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_noaniso_t5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_noaniso_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "f1d417d8128d99d2",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_noaniso_t5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_noaniso_t8.pdf": {
+    "commit": "4f58ce2",
+    "hash": "94f32cc1a86b7da5",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_noaniso_t8.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_adaptive_noaniso_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "fb4c4ad62b6dcfb3",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_adaptive_noaniso_t8.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_aniso_t3.pdf": {
+    "commit": "4f58ce2",
+    "hash": "3529648e8e1f6d1a",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_aniso_t3.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_aniso_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "a52149435fddace7",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_aniso_t3.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_aniso_t5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "784353d084ac35ce",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_aniso_t5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_aniso_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "7f31d6adadd77513",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_aniso_t5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_aniso_t8.pdf": {
+    "commit": "4f58ce2",
+    "hash": "35f0786895aeed73",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_aniso_t8.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_aniso_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "afd3598484a4dbad",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_aniso_t8.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_noaniso_t3.pdf": {
+    "commit": "4f58ce2",
+    "hash": "25a8ffb1f0c80e2f",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_noaniso_t3.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_noaniso_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "eff36f8c5488bbe0",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_noaniso_t3.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_noaniso_t5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "218944a3715deeba",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_noaniso_t5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_noaniso_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "3e0adb13551fcd28",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_noaniso_t5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_noaniso_t8.pdf": {
+    "commit": "4f58ce2",
+    "hash": "18b102c6c66a2f66",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_noaniso_t8.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_dc_fixed_noaniso_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "f3c6b0fe282ec10a",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_dc_fixed_noaniso_t8.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_aniso_t3.pdf": {
+    "commit": "4f58ce2",
+    "hash": "7f97eb59cbb56c57",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_aniso_t3.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_aniso_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "79eb95ce022718d0",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_aniso_t3.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_aniso_t5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "1e721400aec9f849",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_aniso_t5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_aniso_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "7103061990437d82",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_aniso_t5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_aniso_t8.pdf": {
+    "commit": "4f58ce2",
+    "hash": "9cf019db47a3adda",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_aniso_t8.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_aniso_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "99bdf04a1f7ba892",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_aniso_t8.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_noaniso_t3.pdf": {
+    "commit": "4f58ce2",
+    "hash": "f0e51640783172ef",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_noaniso_t3.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_noaniso_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "7525adaf16a79bd9",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_noaniso_t3.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_noaniso_t5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "3b4e0f28ac51b6e6",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_noaniso_t5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_noaniso_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "f19d10ed756d02fe",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_noaniso_t5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_noaniso_t8.pdf": {
+    "commit": "4f58ce2",
+    "hash": "19025b7d60e4b910",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_noaniso_t8.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_graphtools_knn_noaniso_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "a1cea69ea560e9ea",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_graphtools_knn_noaniso_t8.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t12.pdf": {
+    "commit": "4f58ce2",
+    "hash": "378bc78a2a9477ae",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t12.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t12.svg": {
+    "commit": "4f58ce2",
+    "hash": "6fd6979cb42acef4",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t12.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t3.pdf": {
+    "commit": "4f58ce2",
+    "hash": "0a7ccbd99d1a1321",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t3.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t3.svg": {
+    "commit": "4f58ce2",
+    "hash": "3cee6ff04a274756",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t3.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t4.pdf": {
+    "commit": "4f58ce2",
+    "hash": "57fbda52e5ce28ed",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t4.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t4.svg": {
+    "commit": "4f58ce2",
+    "hash": "d7d10a04f7b86659",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t4.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "d6519a15d71e068c",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t5.svg": {
+    "commit": "4f58ce2",
+    "hash": "d45a3d24daadd105",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t6.pdf": {
+    "commit": "4f58ce2",
+    "hash": "aeacf0d78289d34a",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t6.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t6.svg": {
+    "commit": "4f58ce2",
+    "hash": "86c4b5df59058cd7",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t6.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t8.pdf": {
+    "commit": "4f58ce2",
+    "hash": "aab1d75228c2cb91",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t8.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_histogram_t8.svg": {
+    "commit": "4f58ce2",
+    "hash": "7d3eddb85beb1920",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_histogram_t8.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_kernel_grid.pdf": {
+    "commit": "4f58ce2",
+    "hash": "ff7af7fff6cc7bbf",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_kernel_grid.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/laziness_kernel_grid.svg": {
+    "commit": "4f58ce2",
+    "hash": "f234fd8d3ead4fd3",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/laziness_kernel_grid.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/ollivier_ricci_k10.pdf": {
+    "commit": "4f58ce2",
+    "hash": "3355f5004c3c1bc1",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/ollivier_ricci_k10.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/ollivier_ricci_k10.svg": {
+    "commit": "4f58ce2",
+    "hash": "64774099e3c5ba9f",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/ollivier_ricci_k10.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/ollivier_ricci_k5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "4006b6075b9ba15f",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/ollivier_ricci_k5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/ollivier_ricci_k5.svg": {
+    "commit": "4f58ce2",
+    "hash": "129ccad54c3b8a82",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/ollivier_ricci_k5.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/ricci_over_time_k10.pdf": {
+    "commit": "4f58ce2",
+    "hash": "994b4c1b4b3ffbef",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/ricci_over_time_k10.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/ricci_over_time_k10.svg": {
+    "commit": "4f58ce2",
+    "hash": "e63abba986bca89a",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/ricci_over_time_k10.svg"
+  },
+  "experiments/4-belief-curvature-forays/figures/ricci_over_time_k5.pdf": {
+    "commit": "4f58ce2",
+    "hash": "1bc63984d2ed3a9b",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/ricci_over_time_k5.pdf"
+  },
+  "experiments/4-belief-curvature-forays/figures/ricci_over_time_k5.svg": {
+    "commit": "4f58ce2",
+    "hash": "1a5fe201593cb832",
+    "url": "https://blots.kincaid.ink/reason_reckon/4-belief-curvature-forays/ricci_over_time_k5.svg"
+  },
+  "experiments/5-curvature-rejection-resampling/figures/baseline_comparison.svg": {
+    "commit": "4f58ce2",
+    "hash": "ec6ab1a8da101482",
+    "url": "https://blots.kincaid.ink/reason_reckon/5-curvature-rejection-resampling/baseline_comparison.svg"
+  },
+  "experiments/5-curvature-rejection-resampling/figures/curvature_distribution.svg": {
+    "commit": "4f58ce2",
+    "hash": "c2ff47bf301ac00d",
+    "url": "https://blots.kincaid.ink/reason_reckon/5-curvature-rejection-resampling/curvature_distribution.svg"
+  },
+  "experiments/5-curvature-rejection-resampling/figures/turns_analysis.svg": {
+    "commit": "4f58ce2",
+    "hash": "38430477dd8ee614",
+    "url": "https://blots.kincaid.ink/reason_reckon/5-curvature-rejection-resampling/turns_analysis.svg"
+  }
+}

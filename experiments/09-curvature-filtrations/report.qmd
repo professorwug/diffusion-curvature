@@ -1,0 +1,15 @@
+---
+title: "Curvature filtrations"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Topological filtrations of point clouds ordered by diffusion curvature.
+
+## Figures
+
+_TODO_

@@ -1,0 +1,15 @@
+---
+title: "Curvature-enhanced spectral clustering"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Use pointwise diffusion curvature as a feature to improve spectral clustering.
+
+## Figures
+
+_TODO_

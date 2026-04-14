@@ -1,0 +1,4 @@
+[cluster]
+host = "della"
+remote_path = "/scratch/gpfs/HENDERSON/km5839/reason_reckon"
+sync_dirs = ["processed_data"]

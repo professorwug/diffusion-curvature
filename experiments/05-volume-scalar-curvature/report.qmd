@@ -1,0 +1,15 @@
+---
+title: "Volume-based scalar curvature"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Estimate scalar curvature via volume-comparison using heat diffusion.
+
+## Figures
+
+_TODO_

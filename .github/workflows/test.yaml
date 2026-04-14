@@ -14,7 +14,7 @@ jobs:
           auth-host: prefix.dev
           auth-token: ${{ secrets.PREFIX_DEV_TOKEN }}
       - run: pixi run test_import # test that package can be imported
-      - uses: fastai/workflows/nbdev-ci@master # nbdev tests: notebooks cleaned, tests run.
+      - uses: fastai/workflows/nbdev3-ci@master # nbdev tests: notebooks cleaned, tests run.
         with:
           python-version: 3.11
           pre: false

@@ -1,0 +1,10 @@
+# @package hydra.launcher
+# pli-c partition, 3 GPU(s), 18 CPUs (6 per GPU)
+_target_: hydra_plugins.hydra_submitit_launcher.submitit_launcher.SlurmLauncher
+partition: pli-c
+gpus_per_node: 3
+cpus_per_task: 18
+mem_gb: 192
+timeout_min: 300
+tasks_per_node: 1
+nodes: 1

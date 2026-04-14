@@ -1,0 +1,15 @@
+---
+title: "Flow-matching flattening"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Neural manifold flattening via MIOFlow, diffusion models, Gromov-Wasserstein, continuous normalizing flows, and radial autoencoders; used as a substrate for curvature estimation.
+
+## Figures
+
+_TODO_

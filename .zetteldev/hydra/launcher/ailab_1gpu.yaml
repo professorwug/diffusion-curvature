@@ -1,0 +1,10 @@
+# @package hydra.launcher
+# ailab partition, 1 GPU(s), 6 CPUs (6 per GPU)
+_target_: hydra_plugins.hydra_submitit_launcher.submitit_launcher.SlurmLauncher
+partition: ailab
+gpus_per_node: 1
+cpus_per_task: 6
+mem_gb: 64
+timeout_min: 540
+tasks_per_node: 1
+nodes: 1

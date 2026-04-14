@@ -1,0 +1,15 @@
+---
+title: "Curvature colosseum"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Evaluate curvature estimators against a battery of randomly sampled surfaces with analytically-computed ground-truth scalar curvature.
+
+## Figures
+
+_TODO_

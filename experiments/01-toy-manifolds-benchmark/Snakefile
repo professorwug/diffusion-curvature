@@ -1,0 +1,14 @@
+# 01-toy-manifolds-benchmark
+# Toy manifolds benchmark
+
+rule all:
+    input:
+        "report.qmd",
+
+rule render_report:
+    input:
+        "report.qmd",
+    output:
+        "report.html",
+    shell:
+        "pixi run quarto render {input}"

@@ -1,0 +1,15 @@
+---
+title: "Toy manifolds benchmark"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Benchmark diffusion, Hickock, and Zhang curvature estimators on analytic toy manifolds with known scalar curvature (spheres, tori, saddles, paraboloids).
+
+## Figures
+
+_TODO_

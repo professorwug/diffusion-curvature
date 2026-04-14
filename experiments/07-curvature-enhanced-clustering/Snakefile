@@ -1,0 +1,14 @@
+# 07-curvature-enhanced-clustering
+# Curvature-enhanced spectral clustering
+
+rule all:
+    input:
+        "report.qmd",
+
+rule render_report:
+    input:
+        "report.qmd",
+    output:
+        "report.html",
+    shell:
+        "pixi run quarto render {input}"

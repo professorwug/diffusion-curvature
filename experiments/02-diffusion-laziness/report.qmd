@@ -1,0 +1,15 @@
+---
+title: "Diffusion laziness sensitivity"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Characterize sampling density, kernel choice, graph-construction, and trajectory-distance-normalization effects on the diffusion-laziness curvature estimator.
+
+## Figures
+
+_TODO_

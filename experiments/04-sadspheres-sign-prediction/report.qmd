@@ -1,0 +1,15 @@
+---
+title: "Sadspheres sign prediction"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Evaluate the ability of curvature estimators to distinguish positive vs negative curvature on the saddle+sphere (sadspheres) dataset, including kernel bandwidth ablations.
+
+## Figures
+
+_TODO_

@@ -1,0 +1,15 @@
+---
+title: "Loss-landscape curvature"
+format:
+  html:
+    toc: true
+  pdf: default
+---
+
+## Summary
+
+Characterize the curvature of neural-network loss landscapes via diffusion curvature.
+
+## Figures
+
+_TODO_

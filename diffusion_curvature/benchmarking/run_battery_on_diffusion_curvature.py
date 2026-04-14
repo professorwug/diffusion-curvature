@@ -8,8 +8,8 @@ __all__ = ['battery_file', 'k', 'neighbor_scale', 'alpha', 'ts', 'name_of_run', 
 # parameters for run
 battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_dikey.h5"
 # battery_file = "/home/piriac/data/diffusion_curvature/Curvature_Colosseum_LowD_HighSampled.h5" # for test runs
-k = 80 # for curvature agnostic kernel
-neighbor_scale = 2 # for curvature agnostic kernel
+k = 40 # for curvature agnostic kernel
+neighbor_scale = 1 # for curvature agnostic kernel
 alpha = 0
 ts = list(range(1,80))
 
@@ -21,7 +21,7 @@ from ..core import DiffusionCurvature2
 from ..kernels import get_curvature_agnostic_graph, tune_curvature_agnostic_kernel
 
 def curvature_fn(X, dim, k = k, ts = ts, alpha = alpha, ns = neighbor_scale):
-    graph_former, ns = tune_curvature_agnostic_kernel(X, k, tolerance = 1, max_iterations = 100, alpha = alpha)
+    graph_former, ns = tune_curvature_agnostic_kernel(X, k, tolerance = 3, max_iterations = 100, alpha = alpha)
     # graph_former = partial(get_curvature_agnostic_graph, k = k, neighbor_scale = neighbor_scale, alpha = alpha)
     DC = DiffusionCurvature2(
         diffusion_type = "diffusion matrix",
