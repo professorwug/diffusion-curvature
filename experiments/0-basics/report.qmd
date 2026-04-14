@@ -1,0 +1,8 @@
+---
+title: "0 · Basics (library source)"
+format:
+  html:
+    toc: true
+---
+
+This directory is the canonical source for the `diffusion_curvature` library. It has no experimental results; the notebooks it contains define the library itself. See individual `0*.ipynb` files for the material.

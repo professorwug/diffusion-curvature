@@ -1,0 +1,80 @@
+website:
+  sidebar:
+    contents:
+      - section: "0 · Basics (library source)"
+        contents:
+          - 0-basics/0a-Atoms.ipynb
+          - 0-basics/0a0-Kernels.ipynb
+          - 0-basics/0a1-Graphs.ipynb
+          - 0-basics/0a2-Heat-Diffusion.ipynb
+          - 0-basics/0a3-Diffusion-Spectral-Entropy.ipynb
+          - 0-basics/0a4-Manifold-Distances.ipynb
+          - 0-basics/0b-Baselines.ipynb
+          - 0-basics/0b1-hickock-curvature.ipynb
+          - 0-basics/0b2-zhang-principal-curvature.ipynb
+          - 0-basics/0c-Core.ipynb
+          - 0-basics/0c1a-Diffusion-Laziness.ipynb
+          - 0-basics/0c2-Comparison-Space-Construction.ipynb
+          - 0-basics/0c2a-Mean-Flat-Entropies.ipynb
+          - 0-basics/0d-Data.ipynb
+          - 0-basics/0d1-toy-manifolds.ipynb
+          - 0-basics/0d2-Colosseum-of-Random-Surfaces.ipynb
+          - 0-basics/0d2a-Random-Surfaces.ipynb
+          - 0-basics/0d3-saddle-sphere-ablations.ipynb
+          - 0-basics/0e-Errata.ipynb
+          - 0-basics/0e1-self-evaluating-datasets.ipynb
+          - 0-basics/0g-Guide.ipynb
+      - section: "01 · Toy-manifolds benchmark"
+        contents:
+          - 01-toy-manifolds-benchmark/2-Toy-Manifolds-Benchmark.ipynb
+          - 01-toy-manifolds-benchmark/2a-Diffusion-Curvatures-of-Toy-Manifolds.ipynb
+          - 01-toy-manifolds-benchmark/2b-Hickock-Curvature-of-Toy-manifolds.ipynb
+          - 01-toy-manifolds-benchmark/2c-Zhang-Principal-Curvature-of-Toy-manifolds.ipynb
+      - section: "02 · Diffusion laziness"
+        contents:
+          - 02-diffusion-laziness/3-Sampling-Resilience.ipynb
+          - 02-diffusion-laziness/3a-are-kernels-zeitgeibers.ipynb
+          - 02-diffusion-laziness/3b-Normalizing-by-Graph-Volume.ipynb
+          - 02-diffusion-laziness/3c-effects-of-graph-construction.ipynb
+          - 02-diffusion-laziness/3d-diffusion-trajectory-distance-normalization.ipynb
+          - 02-diffusion-laziness/parameter-sensitivity-tests.ipynb
+      - section: "03 · Curvature colosseum"
+        contents:
+          - 03-curvature-colosseum/4-Curvature-Colosseum.ipynb
+          - 03-curvature-colosseum/4a-curvature-colosseum-with-diffusion-curvature.ipynb
+          - 03-curvature-colosseum/4b-hickock-curvature-of-battery.ipynb
+      - section: "04 · Sadspheres sign prediction"
+        contents:
+          - 04-sadspheres-sign-prediction/5-sign-prediction-tests.ipynb
+          - 04-sadspheres-sign-prediction/5a-kernel-bandwidth-effects-on-negative-curvature-detection.ipynb
+          - 04-sadspheres-sign-prediction/5b-hickok-sign-prediction-tests.ipynb
+      - section: "05 · Volume-based scalar curvature"
+        contents:
+          - 05-volume-scalar-curvature/6-scalar-curvature-by-volume-comparisons.ipynb
+          - 05-volume-scalar-curvature/6a-Volume-Estimation-with-heat-diffusion.ipynb
+      - section: "06 · Ricci curvature"
+        contents:
+          - 06-ricci-curvature/8-Ricci-Curvature.ipynb
+          - 06-ricci-curvature/8a-experiments-with-ricci-curvature.ipynb
+      - section: "07 · Curvature-enhanced clustering"
+        contents:
+          - 07-curvature-enhanced-clustering/1-Curvature-Enhanced-Spectral-Clustering.ipynb
+      - section: "08 · Loss landscapes"
+        contents:
+          - 08-loss-landscapes/7-Loss-Landscapes.ipynb
+      - section: "09 · Curvature filtrations"
+        contents:
+          - 09-curvature-filtrations/curvature-filtrations.ipynb
+      - section: "10 · Flow-matching flattening"
+        contents:
+          - 10-flow-matching-flattening/3c-curvature-from-radial-flattening.ipynb
+          - 10-flow-matching-flattening/3e-curvature-via-neural-flattening.ipynb
+          - 10-flow-matching-flattening/3e1-flattening-with-diffusion-models.ipynb
+          - 10-flow-matching-flattening/3e2-flattening-with-gromov-wasserstein.ipynb
+          - 10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.ipynb
+          - 10-flow-matching-flattening/MIOFlow Standard - Quicktrain.ipynb
+          - 10-flow-matching-flattening/MIOFlow for Neural Flattening.ipynb
+          - 10-flow-matching-flattening/Radial Flattening Autoencoder.ipynb
+      - section: "11 · Successor curvatures"
+        contents:
+          - 11-successor-curvatures/scratchpad_11_successor_curvatures.ipynb

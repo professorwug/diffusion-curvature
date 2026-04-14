@@ -1,0 +1,15 @@
+# 0-basics — canonical library source (nbdev-exported)
+# This "experiment" doesn't produce results; its notebooks define
+# the core library exported to diffusion_curvature/.
+
+rule all:
+    input:
+        "report.qmd",
+
+rule render_report:
+    input:
+        "report.qmd",
+    output:
+        "report.html",
+    shell:
+        "pixi run quarto render {input}"

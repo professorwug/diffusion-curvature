@@ -40,7 +40,7 @@ include = ["diffusion_curvature*"]
 repo = "diffusion_curvature"
 lib_name = "diffusion_curvature"
 lib_path = "diffusion_curvature"
-nbs_path = "nbs"
+nbs_path = "experiments"
 doc_path = "docs"
 doc_host = "https://professorwug.github.io"
 doc_baseurl = "/diffusion_curvature"
@@ -110,6 +110,7 @@ python-dotenv = "*"
 snakemake = "*"
 pytest = "*"
 questionary = "*"
+optuna = "*"
 
 [tool.pixi.pypi-dependencies]
 pykeops = ""

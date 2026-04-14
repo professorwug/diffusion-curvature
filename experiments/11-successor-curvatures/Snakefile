@@ -1,22 +1,78 @@
+"""Snakefile for experiments/11-successor-curvatures.
+
+Run:
+    cd experiments/11-successor-curvatures
+    pixi run snakemake -c1 all                        # production sweep
+    pixi run snakemake -c1 --config test_run=1 all    # tiny sweep
+"""
+
+TEST_RUN = bool(int(config.get("test_run", 0)))
+EXTRA = "--test-run" if TEST_RUN else ""
+
+
 onsuccess:
-    shell("uv run python ../../.zetteldev/publish_figure.py --sync 11-successor-curvatures")
+    shell("pixi run python ../../.zetteldev/publish_figure.py --sync 11-successor-curvatures || true")
+
 
 rule all:
     input:
-        "report.pdf"
+        "figures/tau_colosseum_correlation.png",
+        "figures/tau_sadspheres_auc.png",
 
-rule run_main:
-    input:
-        data = "../../data/foo.arrow" # placeholder
-    output:
-        # main.py outputs
-    script:
-        "main.py"
 
-rule render_report:
-    input:
-        "report.qmd"
+rule sweep:
     output:
-        "report.pdf"
+        "processed_data/metrics.csv",
     shell:
-        "uv run quarto render report.qmd --to pdf"
+        "pixi run python main.py --out {output} " + EXTRA
+
+
+rule plot_colosseum:
+    input:
+        "processed_data/metrics.csv",
+    output:
+        png="figures/tau_colosseum_correlation.png",
+        svg="figures/tau_colosseum_correlation.svg",
+    shell:
+        "pixi run python plot_correlation.py --metrics {input} "
+        "--out figures/tau_colosseum_correlation"
+
+
+rule plot_sadspheres:
+    input:
+        "processed_data/metrics.csv",
+    output:
+        png="figures/tau_sadspheres_auc.png",
+        svg="figures/tau_sadspheres_auc.svg",
+    shell:
+        "pixi run python plot_sign_auc.py --metrics {input} "
+        "--out figures/tau_sadspheres_auc"
+
+
+# ---------------------------------------------------------------------------
+# Optuna tuning (not part of `all` — optional, expensive)
+# ---------------------------------------------------------------------------
+
+N_TRIALS = int(config.get("n_trials", 40))
+
+
+rule tune_sadspheres:
+    output:
+        "processed_data/optuna/fb_sadspheres_best.json",
+    shell:
+        "pixi run python tune_fb_hparams.py --dataset sadspheres "
+        f"--n-trials {N_TRIALS}"
+
+
+rule tune_colosseum:
+    output:
+        "processed_data/optuna/fb_colosseum_best.json",
+    shell:
+        "pixi run python tune_fb_hparams.py --dataset colosseum "
+        f"--n-trials {N_TRIALS}"
+
+
+rule tune_all:
+    input:
+        "processed_data/optuna/fb_sadspheres_best.json",
+        "processed_data/optuna/fb_colosseum_best.json",

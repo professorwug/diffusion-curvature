@@ -5,353 +5,991 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://professorwug.github.io',
                 'git_url': 'https://github.com/professorwug/diffusion_curvature',
                 'lib_path': 'diffusion_curvature'},
-  'syms': { 'diffusion_curvature.benchmarking.hickok': { 'diffusion_curvature.benchmarking.hickok.KDE': ( '0b1-hickock-curvature.html#kde',
+  'syms': { 'diffusion_curvature.benchmarking.curvature_colosseum': { 'diffusion_curvature.benchmarking.curvature_colosseum.compute_correlations': ( '03-curvature-colosseum/4-curvature-colosseum.html#compute_correlations',
+                                                                                                                                                     'diffusion_curvature/benchmarking/curvature_colosseum.py'),
+                                                                      'diffusion_curvature.benchmarking.curvature_colosseum.compute_curvature_on_battery': ( '03-curvature-colosseum/4-curvature-colosseum.html#compute_curvature_on_battery',
+                                                                                                                                                             'diffusion_curvature/benchmarking/curvature_colosseum.py'),
+                                                                      'diffusion_curvature.benchmarking.curvature_colosseum.compute_sign_score': ( '03-curvature-colosseum/4-curvature-colosseum.html#compute_sign_score',
+                                                                                                                                                   'diffusion_curvature/benchmarking/curvature_colosseum.py'),
+                                                                      'diffusion_curvature.benchmarking.curvature_colosseum.result_table': ( '03-curvature-colosseum/4-curvature-colosseum.html#result_table',
+                                                                                                                                             'diffusion_curvature/benchmarking/curvature_colosseum.py')},
+            'diffusion_curvature.benchmarking.hickok': { 'diffusion_curvature.benchmarking.hickok.KDE': ( '0-basics/0b1-hickock-curvature.html#kde',
                                                                                                           'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.KDE.__call__': ( '0b1-hickock-curvature.html#kde.__call__',
+                                                         'diffusion_curvature.benchmarking.hickok.KDE.__call__': ( '0-basics/0b1-hickock-curvature.html#kde.__call__',
                                                                                                                    'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.KDE.__init__': ( '0b1-hickock-curvature.html#kde.__init__',
+                                                         'diffusion_curvature.benchmarking.hickok.KDE.__init__': ( '0-basics/0b1-hickock-curvature.html#kde.__init__',
                                                                                                                    'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.KDE.bandwidth': ( '0b1-hickock-curvature.html#kde.bandwidth',
+                                                         'diffusion_curvature.benchmarking.hickok.KDE.bandwidth': ( '0-basics/0b1-hickock-curvature.html#kde.bandwidth',
                                                                                                                     'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.KDE.biweight': ( '0b1-hickock-curvature.html#kde.biweight',
+                                                         'diffusion_curvature.benchmarking.hickok.KDE.biweight': ( '0-basics/0b1-hickock-curvature.html#kde.biweight',
                                                                                                                    'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.KDE.density': ( '0b1-hickock-curvature.html#kde.density',
+                                                         'diffusion_curvature.benchmarking.hickok.KDE.density': ( '0-basics/0b1-hickock-curvature.html#kde.density',
                                                                                                                   'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.KDE.epanechnikov': ( '0b1-hickock-curvature.html#kde.epanechnikov',
+                                                         'diffusion_curvature.benchmarking.hickok.KDE.epanechnikov': ( '0-basics/0b1-hickock-curvature.html#kde.epanechnikov',
                                                                                                                        'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.KDE.gauss': ( '0b1-hickock-curvature.html#kde.gauss',
+                                                         'diffusion_curvature.benchmarking.hickok.KDE.gauss': ( '0-basics/0b1-hickock-curvature.html#kde.gauss',
                                                                                                                 'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.KDE.triweight': ( '0b1-hickock-curvature.html#kde.triweight',
+                                                         'diffusion_curvature.benchmarking.hickok.KDE.triweight': ( '0-basics/0b1-hickock-curvature.html#kde.triweight',
                                                                                                                     'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est': ( '0b1-hickock-curvature.html#scalar_curvature_est',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est',
                                                                                                                            'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.__init__': ( '0b1-hickock-curvature.html#scalar_curvature_est.__init__',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.__init__': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.__init__',
                                                                                                                                     'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.ball_ratios': ( '0b1-hickock-curvature.html#scalar_curvature_est.ball_ratios',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.ball_ratios': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.ball_ratios',
                                                                                                                                        'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.ball_volumes': ( '0b1-hickock-curvature.html#scalar_curvature_est.ball_volumes',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.ball_volumes': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.ball_volumes',
                                                                                                                                         'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.compute_Rdist': ( '0b1-hickock-curvature.html#scalar_curvature_est.compute_rdist',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.compute_Rdist': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.compute_rdist',
                                                                                                                                          'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.compute_density': ( '0b1-hickock-curvature.html#scalar_curvature_est.compute_density',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.compute_density': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.compute_density',
                                                                                                                                            'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.compute_nbr_matrices': ( '0b1-hickock-curvature.html#scalar_curvature_est.compute_nbr_matrices',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.compute_nbr_matrices': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.compute_nbr_matrices',
                                                                                                                                                 'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.estimate': ( '0b1-hickock-curvature.html#scalar_curvature_est.estimate',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.estimate': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.estimate',
                                                                                                                                     'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.fit_quad_coeff': ( '0b1-hickock-curvature.html#scalar_curvature_est.fit_quad_coeff',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.fit_quad_coeff': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.fit_quad_coeff',
                                                                                                                                           'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.get_Rdist': ( '0b1-hickock-curvature.html#scalar_curvature_est.get_rdist',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.get_Rdist': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.get_rdist',
                                                                                                                                      'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.get_density': ( '0b1-hickock-curvature.html#scalar_curvature_est.get_density',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.get_density': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.get_density',
                                                                                                                                        'diffusion_curvature/benchmarking/hickok.py'),
-                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.nbr_distances': ( '0b1-hickock-curvature.html#scalar_curvature_est.nbr_distances',
+                                                         'diffusion_curvature.benchmarking.hickok.scalar_curvature_est.nbr_distances': ( '0-basics/0b1-hickock-curvature.html#scalar_curvature_est.nbr_distances',
                                                                                                                                          'diffusion_curvature/benchmarking/hickok.py')},
-            'diffusion_curvature.benchmarking.zhang_principal_curvature': { 'diffusion_curvature.benchmarking.zhang_principal_curvature.Gaussian_Curvature_2d': ( '0b2-zhang-principal-curvature.html#gaussian_curvature_2d',
+            'diffusion_curvature.benchmarking.run_battery_on_diffusion_curvature': { 'diffusion_curvature.benchmarking.run_battery_on_diffusion_curvature.compute_correlations': ( '03-curvature-colosseum/4a-curvature-colosseum-with-diffusion-curvature.html#compute_correlations',
+                                                                                                                                                                                   'diffusion_curvature/benchmarking/run_battery_on_diffusion_curvature.py'),
+                                                                                     'diffusion_curvature.benchmarking.run_battery_on_diffusion_curvature.compute_sign_score': ( '03-curvature-colosseum/4a-curvature-colosseum-with-diffusion-curvature.html#compute_sign_score',
+                                                                                                                                                                                 'diffusion_curvature/benchmarking/run_battery_on_diffusion_curvature.py'),
+                                                                                     'diffusion_curvature.benchmarking.run_battery_on_diffusion_curvature.curvature_fn': ( '03-curvature-colosseum/4a-curvature-colosseum-with-diffusion-curvature.html#curvature_fn',
+                                                                                                                                                                           'diffusion_curvature/benchmarking/run_battery_on_diffusion_curvature.py'),
+                                                                                     'diffusion_curvature.benchmarking.run_battery_on_diffusion_curvature.main': ( '03-curvature-colosseum/4a-curvature-colosseum-with-diffusion-curvature.html#main',
+                                                                                                                                                                   'diffusion_curvature/benchmarking/run_battery_on_diffusion_curvature.py'),
+                                                                                     'diffusion_curvature.benchmarking.run_battery_on_diffusion_curvature.result_table': ( '03-curvature-colosseum/4a-curvature-colosseum-with-diffusion-curvature.html#result_table',
+                                                                                                                                                                           'diffusion_curvature/benchmarking/run_battery_on_diffusion_curvature.py')},
+            'diffusion_curvature.benchmarking.run_battery_on_hickok_curvature': { 'diffusion_curvature.benchmarking.run_battery_on_hickok_curvature.curvature_fn': ( '03-curvature-colosseum/4b-hickock-curvature-of-battery.html#curvature_fn',
+                                                                                                                                                                     'diffusion_curvature/benchmarking/run_battery_on_hickok_curvature.py'),
+                                                                                  'diffusion_curvature.benchmarking.run_battery_on_hickok_curvature.main': ( '03-curvature-colosseum/4b-hickock-curvature-of-battery.html#main',
+                                                                                                                                                             'diffusion_curvature/benchmarking/run_battery_on_hickok_curvature.py')},
+            'diffusion_curvature.benchmarking.sign_prediction': { 'diffusion_curvature.benchmarking.sign_prediction.main': ( '04-sadspheres-sign-prediction/5-sign-prediction-tests.html#main',
+                                                                                                                             'diffusion_curvature/benchmarking/sign_prediction.py'),
+                                                                  'diffusion_curvature.benchmarking.sign_prediction.objective': ( '04-sadspheres-sign-prediction/5-sign-prediction-tests.html#objective',
+                                                                                                                                  'diffusion_curvature/benchmarking/sign_prediction.py'),
+                                                                  'diffusion_curvature.benchmarking.sign_prediction.optimize_parameters': ( '04-sadspheres-sign-prediction/5-sign-prediction-tests.html#optimize_parameters',
+                                                                                                                                            'diffusion_curvature/benchmarking/sign_prediction.py'),
+                                                                  'diffusion_curvature.benchmarking.sign_prediction.run_sadspheres': ( '04-sadspheres-sign-prediction/5-sign-prediction-tests.html#run_sadspheres',
+                                                                                                                                       'diffusion_curvature/benchmarking/sign_prediction.py')},
+            'diffusion_curvature.benchmarking.zhang_principal_curvature': { 'diffusion_curvature.benchmarking.zhang_principal_curvature.Gaussian_Curvature_2d': ( '0-basics/0b2-zhang-principal-curvature.html#gaussian_curvature_2d',
                                                                                                                                                                   'diffusion_curvature/benchmarking/zhang_principal_curvature.py'),
-                                                                            'diffusion_curvature.benchmarking.zhang_principal_curvature.adalpca_curvature_of_point_cloud': ( '0b2-zhang-principal-curvature.html#adalpca_curvature_of_point_cloud',
+                                                                            'diffusion_curvature.benchmarking.zhang_principal_curvature.adalpca_curvature_of_point_cloud': ( '0-basics/0b2-zhang-principal-curvature.html#adalpca_curvature_of_point_cloud',
                                                                                                                                                                              'diffusion_curvature/benchmarking/zhang_principal_curvature.py'),
-                                                                            'diffusion_curvature.benchmarking.zhang_principal_curvature.epsilon_and_tau': ( '0b2-zhang-principal-curvature.html#epsilon_and_tau',
+                                                                            'diffusion_curvature.benchmarking.zhang_principal_curvature.epsilon_and_tau': ( '0-basics/0b2-zhang-principal-curvature.html#epsilon_and_tau',
                                                                                                                                                             'diffusion_curvature/benchmarking/zhang_principal_curvature.py')},
-            'diffusion_curvature.comparison_space': { 'diffusion_curvature.comparison_space.EuclideanComparisonSpace': ( '0c2-comparison-space-construction.html#euclideancomparisonspace',
+            'diffusion_curvature.clustering': { 'diffusion_curvature.clustering.enhanced_spectral_clustering': ( '07-curvature-enhanced-clustering/1-curvature-enhanced-spectral-clustering.html#enhanced_spectral_clustering',
+                                                                                                                 'diffusion_curvature/clustering.py')},
+            'diffusion_curvature.comparison_space': { 'diffusion_curvature.comparison_space.EuclideanComparisonSpace': ( '0-basics/0c2-comparison-space-construction.html#euclideancomparisonspace',
                                                                                                                          'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.EuclideanComparisonSpace.__call__': ( '0c2-comparison-space-construction.html#euclideancomparisonspace.__call__',
+                                                      'diffusion_curvature.comparison_space.EuclideanComparisonSpace.__call__': ( '0-basics/0c2-comparison-space-construction.html#euclideancomparisonspace.__call__',
                                                                                                                                   'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.EuclideanComparisonSpace.setup': ( '0c2-comparison-space-construction.html#euclideancomparisonspace.setup',
+                                                      'diffusion_curvature.comparison_space.EuclideanComparisonSpace.setup': ( '0-basics/0c2-comparison-space-construction.html#euclideancomparisonspace.setup',
                                                                                                                                'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.construct_ndgrid': ( '0c2-comparison-space-construction.html#construct_ndgrid',
+                                                      'diffusion_curvature.comparison_space.construct_ndgrid': ( '0-basics/0c2-comparison-space-construction.html#construct_ndgrid',
                                                                                                                  'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.construct_ndgrid_from_shape': ( '0c2-comparison-space-construction.html#construct_ndgrid_from_shape',
+                                                      'diffusion_curvature.comparison_space.construct_ndgrid_from_shape': ( '0-basics/0c2-comparison-space-construction.html#construct_ndgrid_from_shape',
                                                                                                                             'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.diffusion_coordinates': ( '0c2-comparison-space-construction.html#diffusion_coordinates',
+                                                      'diffusion_curvature.comparison_space.diffusion_coordinates': ( '0-basics/0c2-comparison-space-construction.html#diffusion_coordinates',
                                                                                                                       'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.euclidean_comparison_graph': ( '0c2-comparison-space-construction.html#euclidean_comparison_graph',
+                                                      'diffusion_curvature.comparison_space.euclidean_comparison_graph': ( '0-basics/0c2-comparison-space-construction.html#euclidean_comparison_graph',
                                                                                                                            'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.fit_comparison_space_model': ( '0c2-comparison-space-construction.html#fit_comparison_space_model',
+                                                      'diffusion_curvature.comparison_space.fit_comparison_space_model': ( '0-basics/0c2-comparison-space-construction.html#fit_comparison_space_model',
                                                                                                                            'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.get_graph_type': ( '0c2-comparison-space-construction.html#get_graph_type',
+                                                      'diffusion_curvature.comparison_space.get_graph_type': ( '0-basics/0c2-comparison-space-construction.html#get_graph_type',
                                                                                                                'diffusion_curvature/comparison_space.py'),
-                                                      'diffusion_curvature.comparison_space.load_average_entropies': ( '0c2-comparison-space-construction.html#load_average_entropies',
+                                                      'diffusion_curvature.comparison_space.load_average_entropies': ( '0-basics/0c2-comparison-space-construction.html#load_average_entropies',
                                                                                                                        'diffusion_curvature/comparison_space.py')},
-            'diffusion_curvature.compute_mean_flat_entropies': { 'diffusion_curvature.compute_mean_flat_entropies.average_flat_entropies': ( '0c2a-mean-flat-entropies.html#average_flat_entropies',
+            'diffusion_curvature.compute_mean_flat_entropies': { 'diffusion_curvature.compute_mean_flat_entropies.average_flat_entropies': ( '0-basics/0c2a-mean-flat-entropies.html#average_flat_entropies',
                                                                                                                                              'diffusion_curvature/compute_mean_flat_entropies.py'),
-                                                                 'diffusion_curvature.compute_mean_flat_entropies.create_mean_entropy_database': ( '0c2a-mean-flat-entropies.html#create_mean_entropy_database',
+                                                                 'diffusion_curvature.compute_mean_flat_entropies.create_mean_entropy_database': ( '0-basics/0c2a-mean-flat-entropies.html#create_mean_entropy_database',
                                                                                                                                                    'diffusion_curvature/compute_mean_flat_entropies.py'),
-                                                                 'diffusion_curvature.compute_mean_flat_entropies.load_average_entropies': ( '0c2a-mean-flat-entropies.html#load_average_entropies',
+                                                                 'diffusion_curvature.compute_mean_flat_entropies.load_average_entropies': ( '0-basics/0c2a-mean-flat-entropies.html#load_average_entropies',
                                                                                                                                              'diffusion_curvature/compute_mean_flat_entropies.py')},
-            'diffusion_curvature.construct_battery': { 'diffusion_curvature.construct_battery.create_battery': ( '0d2-colosseum-of-random-surfaces.html#create_battery',
+            'diffusion_curvature.construct_battery': { 'diffusion_curvature.construct_battery.create_battery': ( '0-basics/0d2-colosseum-of-random-surfaces.html#create_battery',
                                                                                                                  'diffusion_curvature/construct_battery.py'),
-                                                       'diffusion_curvature.construct_battery.main': ( '0d2-colosseum-of-random-surfaces.html#main',
+                                                       'diffusion_curvature.construct_battery.main': ( '0-basics/0d2-colosseum-of-random-surfaces.html#main',
                                                                                                        'diffusion_curvature/construct_battery.py')},
-            'diffusion_curvature.core': { 'diffusion_curvature.core.DiffusionCurvature': ( '0c-core.html#diffusioncurvature',
+            'diffusion_curvature.core': { 'diffusion_curvature.core.DiffusionCurvature': ( '0-basics/0c-core.html#diffusioncurvature',
                                                                                            'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature.__init__': ( '0c-core.html#diffusioncurvature.__init__',
+                                          'diffusion_curvature.core.DiffusionCurvature.__init__': ( '0-basics/0c-core.html#diffusioncurvature.__init__',
                                                                                                     'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature.curvature': ( '0c-core.html#diffusioncurvature.curvature',
+                                          'diffusion_curvature.core.DiffusionCurvature.curvature': ( '0-basics/0c-core.html#diffusioncurvature.curvature',
                                                                                                      'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature.fit': ( '0c-core.html#diffusioncurvature.fit',
+                                          'diffusion_curvature.core.DiffusionCurvature.fit': ( '0-basics/0c-core.html#diffusioncurvature.fit',
                                                                                                'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature.fit_transform': ( '0c-core.html#diffusioncurvature.fit_transform',
+                                          'diffusion_curvature.core.DiffusionCurvature.fit_transform': ( '0-basics/0c-core.html#diffusioncurvature.fit_transform',
                                                                                                          'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature.spectral_transform': ( '0c-core.html#diffusioncurvature.spectral_transform',
+                                          'diffusion_curvature.core.DiffusionCurvature.spectral_transform': ( '0-basics/0c-core.html#diffusioncurvature.spectral_transform',
                                                                                                               'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature.unsigned_curvature': ( '0c-core.html#diffusioncurvature.unsigned_curvature',
+                                          'diffusion_curvature.core.DiffusionCurvature.unsigned_curvature': ( '0-basics/0c-core.html#diffusioncurvature.unsigned_curvature',
                                                                                                               'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature2': ( '0c-core.html#diffusioncurvature2',
+                                          'diffusion_curvature.core.DiffusionCurvature2': ( '0-basics/0c-core.html#diffusioncurvature2',
                                                                                             'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature2.__init__': ( '0c-core.html#diffusioncurvature2.__init__',
+                                          'diffusion_curvature.core.DiffusionCurvature2.__init__': ( '0-basics/0c-core.html#diffusioncurvature2.__init__',
                                                                                                      'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature2.curvature': ( '0c-core.html#diffusioncurvature2.curvature',
+                                          'diffusion_curvature.core.DiffusionCurvature2.curvature': ( '0-basics/0c-core.html#diffusioncurvature2.curvature',
                                                                                                       'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature2.fit': ( '0c-core.html#diffusioncurvature2.fit',
+                                          'diffusion_curvature.core.DiffusionCurvature2.fit': ( '0-basics/0c-core.html#diffusioncurvature2.fit',
                                                                                                 'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature2.fit_transform': ( '0c-core.html#diffusioncurvature2.fit_transform',
+                                          'diffusion_curvature.core.DiffusionCurvature2.fit_transform': ( '0-basics/0c-core.html#diffusioncurvature2.fit_transform',
                                                                                                           'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.DiffusionCurvature2.unsigned_curvature': ( '0c-core.html#diffusioncurvature2.unsigned_curvature',
+                                          'diffusion_curvature.core.DiffusionCurvature2.unsigned_curvature': ( '0-basics/0c-core.html#diffusioncurvature2.unsigned_curvature',
                                                                                                                'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.SimpleGraph': ( '0c-core.html#simplegraph',
+                                          'diffusion_curvature.core.SimpleGraph': ( '0-basics/0c-core.html#simplegraph',
                                                                                     'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.fill_diagonal': ( '0c-core.html#fill_diagonal',
+                                          'diffusion_curvature.core.fill_diagonal': ( '0-basics/0c-core.html#fill_diagonal',
                                                                                       'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.get_adaptive_graph': ( '0c-core.html#get_adaptive_graph',
+                                          'diffusion_curvature.core.get_adaptive_graph': ( '0-basics/0c-core.html#get_adaptive_graph',
                                                                                            'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.get_fixed_graph': ( '0c-core.html#get_fixed_graph',
+                                          'diffusion_curvature.core.get_fixed_graph': ( '0-basics/0c-core.html#get_fixed_graph',
                                                                                         'diffusion_curvature/core.py'),
-                                          'diffusion_curvature.core.graphtools_graph_from_data': ( '0c-core.html#graphtools_graph_from_data',
+                                          'diffusion_curvature.core.graphtools_graph_from_data': ( '0-basics/0c-core.html#graphtools_graph_from_data',
                                                                                                    'diffusion_curvature/core.py')},
-            'diffusion_curvature.datasets': { 'diffusion_curvature.datasets._ellipsoid_density_defects': ( '0d1-toy-manifolds.html#_ellipsoid_density_defects',
+            'diffusion_curvature.datasets': { 'diffusion_curvature.datasets._ellipsoid_density_defects': ( '0-basics/0d1-toy-manifolds.html#_ellipsoid_density_defects',
                                                                                                            'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.ellipsoid': ( '0d1-toy-manifolds.html#ellipsoid',
+                                              'diffusion_curvature.datasets.ellipsoid': ( '0-basics/0d1-toy-manifolds.html#ellipsoid',
                                                                                           'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.hyperboloid': ( '0d1-toy-manifolds.html#hyperboloid',
+                                              'diffusion_curvature.datasets.hyperboloid': ( '0-basics/0d1-toy-manifolds.html#hyperboloid',
                                                                                             'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.paraboloid': ( '0d1-toy-manifolds.html#paraboloid',
+                                              'diffusion_curvature.datasets.paraboloid': ( '0-basics/0d1-toy-manifolds.html#paraboloid',
                                                                                            'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.plane': ( '0d1-toy-manifolds.html#plane',
+                                              'diffusion_curvature.datasets.plane': ( '0-basics/0d1-toy-manifolds.html#plane',
                                                                                       'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.rejection_sample_for_ellipsoid': ( '0d1-toy-manifolds.html#rejection_sample_for_ellipsoid',
+                                              'diffusion_curvature.datasets.rejection_sample_for_ellipsoid': ( '0-basics/0d1-toy-manifolds.html#rejection_sample_for_ellipsoid',
                                                                                                                'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.rejection_sample_for_hyperboloid': ( '0d1-toy-manifolds.html#rejection_sample_for_hyperboloid',
+                                              'diffusion_curvature.datasets.rejection_sample_for_hyperboloid': ( '0-basics/0d1-toy-manifolds.html#rejection_sample_for_hyperboloid',
                                                                                                                  'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.rejection_sample_for_saddle': ( '0d1-toy-manifolds.html#rejection_sample_for_saddle',
+                                              'diffusion_curvature.datasets.rejection_sample_for_saddle': ( '0-basics/0d1-toy-manifolds.html#rejection_sample_for_saddle',
                                                                                                             'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.rejection_sample_for_torus': ( '0d1-toy-manifolds.html#rejection_sample_for_torus',
+                                              'diffusion_curvature.datasets.rejection_sample_for_torus': ( '0-basics/0d1-toy-manifolds.html#rejection_sample_for_torus',
                                                                                                            'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.rejection_sample_from_saddle': ( '0d1-toy-manifolds.html#rejection_sample_from_saddle',
+                                              'diffusion_curvature.datasets.rejection_sample_from_saddle': ( '0-basics/0d1-toy-manifolds.html#rejection_sample_from_saddle',
                                                                                                              'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.sphere': ( '0d1-toy-manifolds.html#sphere',
+                                              'diffusion_curvature.datasets.sphere': ( '0-basics/0d1-toy-manifolds.html#sphere',
                                                                                        'diffusion_curvature/datasets.py'),
-                                              'diffusion_curvature.datasets.torus': ( '0d1-toy-manifolds.html#torus',
+                                              'diffusion_curvature.datasets.torus': ( '0-basics/0d1-toy-manifolds.html#torus',
                                                                                       'diffusion_curvature/datasets.py')},
-            'diffusion_curvature.diffusion_laziness': { 'diffusion_curvature.diffusion_laziness.DiffusionLaziness': ( '0c1a-diffusion-laziness.html#diffusionlaziness',
+            'diffusion_curvature.diffusion_laziness': { 'diffusion_curvature.diffusion_laziness.DiffusionLaziness': ( '0-basics/0c1a-diffusion-laziness.html#diffusionlaziness',
                                                                                                                       'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.DiffusionLaziness.__init__': ( '0c1a-diffusion-laziness.html#diffusionlaziness.__init__',
+                                                        'diffusion_curvature.diffusion_laziness.DiffusionLaziness.__init__': ( '0-basics/0c1a-diffusion-laziness.html#diffusionlaziness.__init__',
                                                                                                                                'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.DiffusionLaziness.fit_transform': ( '0c1a-diffusion-laziness.html#diffusionlaziness.fit_transform',
+                                                        'diffusion_curvature.diffusion_laziness.DiffusionLaziness.fit_transform': ( '0-basics/0c1a-diffusion-laziness.html#diffusionlaziness.fit_transform',
                                                                                                                                     'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.DiffusionLaziness.integrate_laziness_with_bounds': ( '0c1a-diffusion-laziness.html#diffusionlaziness.integrate_laziness_with_bounds',
+                                                        'diffusion_curvature.diffusion_laziness.DiffusionLaziness.integrate_laziness_with_bounds': ( '0-basics/0c1a-diffusion-laziness.html#diffusionlaziness.integrate_laziness_with_bounds',
                                                                                                                                                      'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.compare_curvature_across_datasets': ( '0c1a-diffusion-laziness.html#compare_curvature_across_datasets',
+                                                        'diffusion_curvature.diffusion_laziness.compare_curvature_across_datasets': ( '0-basics/0c1a-diffusion-laziness.html#compare_curvature_across_datasets',
                                                                                                                                       'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.curvature_curves': ( '0c1a-diffusion-laziness.html#curvature_curves',
+                                                        'diffusion_curvature.diffusion_laziness.curvature_curves': ( '0-basics/0c1a-diffusion-laziness.html#curvature_curves',
                                                                                                                      'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.diffusion_distances_along_trajectory': ( '0c1a-diffusion-laziness.html#diffusion_distances_along_trajectory',
+                                                        'diffusion_curvature.diffusion_laziness.diffusion_distances_along_trajectory': ( '0-basics/0c1a-diffusion-laziness.html#diffusion_distances_along_trajectory',
                                                                                                                                          'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.entropy_of_diffusion': ( '0c1a-diffusion-laziness.html#entropy_of_diffusion',
+                                                        'diffusion_curvature.diffusion_laziness.entropy_of_diffusion': ( '0-basics/0c1a-diffusion-laziness.html#entropy_of_diffusion',
                                                                                                                          'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.js_dist': ( '0c1a-diffusion-laziness.html#js_dist',
+                                                        'diffusion_curvature.diffusion_laziness.js_dist': ( '0-basics/0c1a-diffusion-laziness.html#js_dist',
                                                                                                             'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.kl_div': ( '0c1a-diffusion-laziness.html#kl_div',
+                                                        'diffusion_curvature.diffusion_laziness.kl_div': ( '0-basics/0c1a-diffusion-laziness.html#kl_div',
                                                                                                            'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.trapezoidal_rule': ( '0c1a-diffusion-laziness.html#trapezoidal_rule',
+                                                        'diffusion_curvature.diffusion_laziness.trapezoidal_rule': ( '0-basics/0c1a-diffusion-laziness.html#trapezoidal_rule',
                                                                                                                      'diffusion_curvature/diffusion_laziness.py'),
-                                                        'diffusion_curvature.diffusion_laziness.wasserstein_spread_of_diffusion': ( '0c1a-diffusion-laziness.html#wasserstein_spread_of_diffusion',
+                                                        'diffusion_curvature.diffusion_laziness.wasserstein_spread_of_diffusion': ( '0-basics/0c1a-diffusion-laziness.html#wasserstein_spread_of_diffusion',
                                                                                                                                     'diffusion_curvature/diffusion_laziness.py')},
-            'diffusion_curvature.distances': { 'diffusion_curvature.distances.pairwise_euclidean': ( '0a4-manifold-distances.html#pairwise_euclidean',
+            'diffusion_curvature.diffusion_trajectories': { 'diffusion_curvature.diffusion_trajectories.diffusion_distances_along_trajectory': ( '02-diffusion-laziness/3d-diffusion-trajectory-distance-normalization.html#diffusion_distances_along_trajectory',
+                                                                                                                                                 'diffusion_curvature/diffusion_trajectories.py'),
+                                                            'diffusion_curvature.diffusion_trajectories.show_curvature_curves': ( '02-diffusion-laziness/3d-diffusion-trajectory-distance-normalization.html#show_curvature_curves',
+                                                                                                                                  'diffusion_curvature/diffusion_trajectories.py')},
+            'diffusion_curvature.distances': { 'diffusion_curvature.distances.pairwise_euclidean': ( '0-basics/0a4-manifold-distances.html#pairwise_euclidean',
                                                                                                      'diffusion_curvature/distances.py'),
-                                               'diffusion_curvature.distances.phate_distances': ( '0a4-manifold-distances.html#phate_distances',
+                                               'diffusion_curvature.distances.phate_distances': ( '0-basics/0a4-manifold-distances.html#phate_distances',
                                                                                                   'diffusion_curvature/distances.py'),
-                                               'diffusion_curvature.distances.phate_distances_differentiable': ( '0a4-manifold-distances.html#phate_distances_differentiable',
+                                               'diffusion_curvature.distances.phate_distances_differentiable': ( '0-basics/0a4-manifold-distances.html#phate_distances_differentiable',
                                                                                                                  'diffusion_curvature/distances.py'),
-                                               'diffusion_curvature.distances.phate_distances_from_pointcloud': ( '0a4-manifold-distances.html#phate_distances_from_pointcloud',
+                                               'diffusion_curvature.distances.phate_distances_from_pointcloud': ( '0-basics/0a4-manifold-distances.html#phate_distances_from_pointcloud',
                                                                                                                   'diffusion_curvature/distances.py'),
-                                               'diffusion_curvature.distances.phate_distances_graphtools': ( '0a4-manifold-distances.html#phate_distances_graphtools',
+                                               'diffusion_curvature.distances.phate_distances_graphtools': ( '0-basics/0a4-manifold-distances.html#phate_distances_graphtools',
                                                                                                              'diffusion_curvature/distances.py')},
-            'diffusion_curvature.graphs': { 'diffusion_curvature.graphs.diff_aff': ( '0a1-graphs.html#diff_aff',
+            'diffusion_curvature.experiments.curvature_curves': { 'diffusion_curvature.experiments.curvature_curves.DiffusionCurvature.curvature_curve': ( '02-diffusion-laziness/3a-are-kernels-zeitgeibers.html#diffusioncurvature.curvature_curve',
+                                                                                                                                                           'diffusion_curvature/experiments/curvature_curves.py'),
+                                                                  'diffusion_curvature.experiments.curvature_curves.show_curvature_curves': ( '02-diffusion-laziness/3a-are-kernels-zeitgeibers.html#show_curvature_curves',
+                                                                                                                                              'diffusion_curvature/experiments/curvature_curves.py')},
+            'diffusion_curvature.experiments.graph_volume_normalization': { 'diffusion_curvature.experiments.graph_volume_normalization.DiffusionCurvature.division_normalized_laziness': ( '02-diffusion-laziness/3b-normalizing-by-graph-volume.html#diffusioncurvature.division_normalized_laziness',
+                                                                                                                                                                                            'diffusion_curvature/experiments/graph_volume_normalization.py'),
+                                                                            'diffusion_curvature.experiments.graph_volume_normalization.DiffusionCurvature.graph_volumes': ( '02-diffusion-laziness/3b-normalizing-by-graph-volume.html#diffusioncurvature.graph_volumes',
+                                                                                                                                                                             'diffusion_curvature/experiments/graph_volume_normalization.py')},
+            'diffusion_curvature.flattening.mioflow': { 'diffusion_curvature.flattening.mioflow.Autoencoder': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                'for neural '
+                                                                                                                'flattening.html#autoencoder',
+                                                                                                                'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Autoencoder.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                         'for neural '
+                                                                                                                         'flattening.html#autoencoder.__init__',
+                                                                                                                         'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Autoencoder.decode': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                       'for neural '
+                                                                                                                       'flattening.html#autoencoder.decode',
+                                                                                                                       'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Autoencoder.encode': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                       'for neural '
+                                                                                                                       'flattening.html#autoencoder.encode',
+                                                                                                                       'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Autoencoder.forward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                        'for neural '
+                                                                                                                        'flattening.html#autoencoder.forward',
+                                                                                                                        'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Density_loss': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                 'for neural '
+                                                                                                                 'flattening.html#density_loss',
+                                                                                                                 'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Density_loss.__call__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                          'for neural '
+                                                                                                                          'flattening.html#density_loss.__call__',
+                                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Density_loss.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                          'for neural '
+                                                                                                                          'flattening.html#density_loss.__init__',
+                                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.DiffusionAffinity': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                      'for neural '
+                                                                                                                      'flattening.html#diffusionaffinity',
+                                                                                                                      'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.DiffusionAffinity.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                               'for neural '
+                                                                                                                               'flattening.html#diffusionaffinity.__init__',
+                                                                                                                               'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.DiffusionAffinity.fit': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                          'for neural '
+                                                                                                                          'flattening.html#diffusionaffinity.fit',
+                                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.DiffusionDistance': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                      'for neural '
+                                                                                                                      'flattening.html#diffusiondistance',
+                                                                                                                      'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.DiffusionDistance.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                               'for neural '
+                                                                                                                               'flattening.html#diffusiondistance.__init__',
+                                                                                                                               'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.DiffusionDistance.compute_custom_diffusion_distance': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                        'for '
+                                                                                                                                                        'neural '
+                                                                                                                                                        'flattening.html#diffusiondistance.compute_custom_diffusion_distance',
+                                                                                                                                                        'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.DiffusionDistance.compute_stationnary_distrib': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                  'for '
+                                                                                                                                                  'neural '
+                                                                                                                                                  'flattening.html#diffusiondistance.compute_stationnary_distrib',
+                                                                                                                                                  'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.DiffusionDistance.fit': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                          'for neural '
+                                                                                                                          'flattening.html#diffusiondistance.fit',
+                                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Local_density_loss': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                       'for neural '
+                                                                                                                       'flattening.html#local_density_loss',
+                                                                                                                       'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Local_density_loss.__call__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                'for '
+                                                                                                                                'neural '
+                                                                                                                                'flattening.html#local_density_loss.__call__',
+                                                                                                                                'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.Local_density_loss.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                'for '
+                                                                                                                                'neural '
+                                                                                                                                'flattening.html#local_density_loss.__init__',
+                                                                                                                                'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss': ( '10-flow-matching-flattening/mioflow '
+                                                                                                             'for neural '
+                                                                                                             'flattening.html#mmd_loss',
+                                                                                                             'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                      'for neural '
+                                                                                                                      'flattening.html#mmd_loss.__init__',
+                                                                                                                      'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss.forward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                     'for neural '
+                                                                                                                     'flattening.html#mmd_loss.forward',
+                                                                                                                     'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss.guassian_kernel': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                             'for neural '
+                                                                                                                             'flattening.html#mmd_loss.guassian_kernel',
+                                                                                                                             'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss_to_uniform': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                        'for neural '
+                                                                                                                        'flattening.html#mmd_loss_to_uniform',
+                                                                                                                        'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss_to_uniform.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                 'for '
+                                                                                                                                 'neural '
+                                                                                                                                 'flattening.html#mmd_loss_to_uniform.__init__',
+                                                                                                                                 'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss_to_uniform.forward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                'for '
+                                                                                                                                'neural '
+                                                                                                                                'flattening.html#mmd_loss_to_uniform.forward',
+                                                                                                                                'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss_to_uniform.gaussian_kernel': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                        'for '
+                                                                                                                                        'neural '
+                                                                                                                                        'flattening.html#mmd_loss_to_uniform.gaussian_kernel',
+                                                                                                                                        'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.MMD_loss_to_uniform.uniformly_sampled_circle': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                 'for '
+                                                                                                                                                 'neural '
+                                                                                                                                                 'flattening.html#mmd_loss_to_uniform.uniformly_sampled_circle',
+                                                                                                                                                 'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.NeuralODE': ( '10-flow-matching-flattening/mioflow '
+                                                                                                              'for neural '
+                                                                                                              'flattening.html#neuralode',
+                                                                                                              'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.NeuralODE.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                       'for neural '
+                                                                                                                       'flattening.html#neuralode.__init__',
+                                                                                                                       'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.NeuralODE.forward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                      'for neural '
+                                                                                                                      'flattening.html#neuralode.forward',
+                                                                                                                      'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ODEAdjoint': ( '10-flow-matching-flattening/mioflow '
+                                                                                                               'for neural '
+                                                                                                               'flattening.html#odeadjoint',
+                                                                                                               'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ODEAdjoint.backward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                        'for neural '
+                                                                                                                        'flattening.html#odeadjoint.backward',
+                                                                                                                        'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ODEAdjoint.forward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                       'for neural '
+                                                                                                                       'flattening.html#odeadjoint.forward',
+                                                                                                                       'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ODEF': ( '10-flow-matching-flattening/mioflow '
+                                                                                                         'for neural flattening.html#odef',
+                                                                                                         'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ODEF.flatten_parameters': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                            'for neural '
+                                                                                                                            'flattening.html#odef.flatten_parameters',
+                                                                                                                            'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ODEF.forward_with_grad': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                           'for neural '
+                                                                                                                           'flattening.html#odef.forward_with_grad',
+                                                                                                                           'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.OT_loss': ( '10-flow-matching-flattening/mioflow '
+                                                                                                            'for neural '
+                                                                                                            'flattening.html#ot_loss',
+                                                                                                            'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.OT_loss.__call__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                     'for neural '
+                                                                                                                     'flattening.html#ot_loss.__call__',
+                                                                                                                     'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.OT_loss.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                     'for neural '
+                                                                                                                     'flattening.html#ot_loss.__init__',
+                                                                                                                     'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToyModel': ( '10-flow-matching-flattening/mioflow '
+                                                                                                             'for neural '
+                                                                                                             'flattening.html#toymodel',
+                                                                                                             'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToyModel.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                      'for neural '
+                                                                                                                      'flattening.html#toymodel.__init__',
+                                                                                                                      'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToyModel.forward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                     'for neural '
+                                                                                                                     'flattening.html#toymodel.forward',
+                                                                                                                     'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToyODE': ( '10-flow-matching-flattening/mioflow '
+                                                                                                           'for neural '
+                                                                                                           'flattening.html#toyode',
+                                                                                                           'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToyODE.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                    'for neural '
+                                                                                                                    'flattening.html#toyode.__init__',
+                                                                                                                    'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToyODE.forward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                   'for neural '
+                                                                                                                   'flattening.html#toyode.forward',
+                                                                                                                   'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToySDEModel': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                'for neural '
+                                                                                                                'flattening.html#toysdemodel',
+                                                                                                                'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToySDEModel.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                         'for neural '
+                                                                                                                         'flattening.html#toysdemodel.__init__',
+                                                                                                                         'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToySDEModel.f': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                  'for neural '
+                                                                                                                  'flattening.html#toysdemodel.f',
+                                                                                                                  'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToySDEModel.forward': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                        'for neural '
+                                                                                                                        'flattening.html#toysdemodel.forward',
+                                                                                                                        'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ToySDEModel.g': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                  'for neural '
+                                                                                                                  'flattening.html#toysdemodel.g',
+                                                                                                                  'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.UniformDensityLoss': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                       'for neural '
+                                                                                                                       'flattening.html#uniformdensityloss',
+                                                                                                                       'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.UniformDensityLoss.__call__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                'for '
+                                                                                                                                'neural '
+                                                                                                                                'flattening.html#uniformdensityloss.__call__',
+                                                                                                                                'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.UniformDensityLoss.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                'for '
+                                                                                                                                'neural '
+                                                                                                                                'flattening.html#uniformdensityloss.__init__',
+                                                                                                                                'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.config_criterion': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                     'for neural '
+                                                                                                                     'flattening.html#config_criterion',
+                                                                                                                     'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.config_hold_out': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                    'for neural '
+                                                                                                                    'flattening.html#config_hold_out',
+                                                                                                                    'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.construct_diamond': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                      'for neural '
+                                                                                                                      'flattening.html#construct_diamond',
+                                                                                                                      'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.flatten_with_mioflow': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                         'for neural '
+                                                                                                                         'flattening.html#flatten_with_mioflow',
+                                                                                                                         'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.generate_plot_data': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                       'for neural '
+                                                                                                                       'flattening.html#generate_plot_data',
+                                                                                                                       'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.generate_plot_data_flat': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                            'for neural '
+                                                                                                                            'flattening.html#generate_plot_data_flat',
+                                                                                                                            'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.generate_points': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                    'for neural '
+                                                                                                                    'flattening.html#generate_points',
+                                                                                                                    'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.generate_points_flat': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                         'for neural '
+                                                                                                                         'flattening.html#generate_points_flat',
+                                                                                                                         'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.generate_steps': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                   'for neural '
+                                                                                                                   'flattening.html#generate_steps',
+                                                                                                                   'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.generate_trajectories': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                          'for neural '
+                                                                                                                          'flattening.html#generate_trajectories',
+                                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.generate_trajectories_flat': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                               'for neural '
+                                                                                                                               'flattening.html#generate_trajectories_flat',
+                                                                                                                               'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.get_cell_types_from_df': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                           'for neural '
+                                                                                                                           'flattening.html#get_cell_types_from_df',
+                                                                                                                           'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.get_groups_from_df': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                       'for neural '
+                                                                                                                       'flattening.html#get_groups_from_df',
+                                                                                                                       'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.get_sample_n_from_df': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                         'for neural '
+                                                                                                                         'flattening.html#get_sample_n_from_df',
+                                                                                                                         'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.get_times_from_groups': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                          'for neural '
+                                                                                                                          'flattening.html#get_times_from_groups',
+                                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.group_extract': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                  'for neural '
+                                                                                                                  'flattening.html#group_extract',
+                                                                                                                  'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.make_diamonds': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                  'for neural '
+                                                                                                                  'flattening.html#make_diamonds',
+                                                                                                                  'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.make_model': ( '10-flow-matching-flattening/mioflow '
+                                                                                                               'for neural '
+                                                                                                               'flattening.html#make_model',
+                                                                                                               'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.new_plot_comparisions': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                          'for neural '
+                                                                                                                          'flattening.html#new_plot_comparisions',
+                                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.new_plot_comparisons_flat': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                              'for neural '
+                                                                                                                              'flattening.html#new_plot_comparisons_flat',
+                                                                                                                              'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.ode_solve': ( '10-flow-matching-flattening/mioflow '
+                                                                                                              'for neural '
+                                                                                                              'flattening.html#ode_solve',
+                                                                                                              'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.old_DiffusionDistance': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                          'for neural '
+                                                                                                                          'flattening.html#old_diffusiondistance',
+                                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.old_DiffusionDistance.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                   'for '
+                                                                                                                                   'neural '
+                                                                                                                                   'flattening.html#old_diffusiondistance.__init__',
+                                                                                                                                   'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.old_DiffusionDistance.compute_custom_diffusion_distance': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                            'for '
+                                                                                                                                                            'neural '
+                                                                                                                                                            'flattening.html#old_diffusiondistance.compute_custom_diffusion_distance',
+                                                                                                                                                            'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.old_DiffusionDistance.compute_density_norm_matrix': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                      'for '
+                                                                                                                                                      'neural '
+                                                                                                                                                      'flattening.html#old_diffusiondistance.compute_density_norm_matrix',
+                                                                                                                                                      'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.old_DiffusionDistance.compute_diffusion_Matrix': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                   'for '
+                                                                                                                                                   'neural '
+                                                                                                                                                   'flattening.html#old_diffusiondistance.compute_diffusion_matrix',
+                                                                                                                                                   'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.old_DiffusionDistance.compute_stationnary_distrib': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                      'for '
+                                                                                                                                                      'neural '
+                                                                                                                                                      'flattening.html#old_diffusiondistance.compute_stationnary_distrib',
+                                                                                                                                                      'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.old_DiffusionDistance.distance_matrix_Pt': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                             'for '
+                                                                                                                                             'neural '
+                                                                                                                                             'flattening.html#old_diffusiondistance.distance_matrix_pt',
+                                                                                                                                             'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.old_DiffusionDistance.fit': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                              'for neural '
+                                                                                                                              'flattening.html#old_diffusiondistance.fit',
+                                                                                                                              'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.plot_comparision': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                     'for neural '
+                                                                                                                     'flattening.html#plot_comparision',
+                                                                                                                     'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.plot_comparison_flat': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                         'for neural '
+                                                                                                                         'flattening.html#plot_comparison_flat',
+                                                                                                                         'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.plot_losses': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                'for neural '
+                                                                                                                'flattening.html#plot_losses',
+                                                                                                                'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.sample': ( '10-flow-matching-flattening/mioflow '
+                                                                                                           'for neural '
+                                                                                                           'flattening.html#sample',
+                                                                                                           'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.set_seeds': ( '10-flow-matching-flattening/mioflow '
+                                                                                                              'for neural '
+                                                                                                              'flattening.html#set_seeds',
+                                                                                                              'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.setup_distance': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                   'for neural '
+                                                                                                                   'flattening.html#setup_distance',
+                                                                                                                   'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.to_np': ( '10-flow-matching-flattening/mioflow '
+                                                                                                          'for neural '
+                                                                                                          'flattening.html#to_np',
+                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.train': ( '10-flow-matching-flattening/mioflow '
+                                                                                                          'for neural '
+                                                                                                          'flattening.html#train',
+                                                                                                          'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.train_ae': ( '10-flow-matching-flattening/mioflow '
+                                                                                                             'for neural '
+                                                                                                             'flattening.html#train_ae',
+                                                                                                             'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.train_neural_flattener': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                           'for neural '
+                                                                                                                           'flattening.html#train_neural_flattener',
+                                                                                                                           'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.training_regimen': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                     'for neural '
+                                                                                                                     'flattening.html#training_regimen',
+                                                                                                                     'diffusion_curvature/flattening/mioflow.py'),
+                                                        'diffusion_curvature.flattening.mioflow.training_regimen_neural_flattener': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                      'for '
+                                                                                                                                      'neural '
+                                                                                                                                      'flattening.html#training_regimen_neural_flattener',
+                                                                                                                                      'diffusion_curvature/flattening/mioflow.py')},
+            'diffusion_curvature.flattening.mioflow_quicktrain': { 'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                          'standard '
+                                                                                                                                          '- '
+                                                                                                                                          'quicktrain.html#mioflowstandard',
+                                                                                                                                          'diffusion_curvature/flattening/mioflow_quicktrain.py'),
+                                                                   'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard.__init__': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                   'standard '
+                                                                                                                                                   '- '
+                                                                                                                                                   'quicktrain.html#mioflowstandard.__init__',
+                                                                                                                                                   'diffusion_curvature/flattening/mioflow_quicktrain.py'),
+                                                                   'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard.fit_transform': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                        'standard '
+                                                                                                                                                        '- '
+                                                                                                                                                        'quicktrain.html#mioflowstandard.fit_transform',
+                                                                                                                                                        'diffusion_curvature/flattening/mioflow_quicktrain.py'),
+                                                                   'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard.setup_data': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                     'standard '
+                                                                                                                                                     '- '
+                                                                                                                                                     'quicktrain.html#mioflowstandard.setup_data',
+                                                                                                                                                     'diffusion_curvature/flattening/mioflow_quicktrain.py'),
+                                                                   'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard.train_autoencoder': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                            'standard '
+                                                                                                                                                            '- '
+                                                                                                                                                            'quicktrain.html#mioflowstandard.train_autoencoder',
+                                                                                                                                                            'diffusion_curvature/flattening/mioflow_quicktrain.py'),
+                                                                   'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard.train_ode': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                    'standard '
+                                                                                                                                                    '- '
+                                                                                                                                                    'quicktrain.html#mioflowstandard.train_ode',
+                                                                                                                                                    'diffusion_curvature/flattening/mioflow_quicktrain.py'),
+                                                                   'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard.training_gif': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                       'standard '
+                                                                                                                                                       '- '
+                                                                                                                                                       'quicktrain.html#mioflowstandard.training_gif',
+                                                                                                                                                       'diffusion_curvature/flattening/mioflow_quicktrain.py'),
+                                                                   'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard.transform': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                    'standard '
+                                                                                                                                                    '- '
+                                                                                                                                                    'quicktrain.html#mioflowstandard.transform',
+                                                                                                                                                    'diffusion_curvature/flattening/mioflow_quicktrain.py'),
+                                                                   'diffusion_curvature.flattening.mioflow_quicktrain.MIOFlowStandard.visualize_autoencoder': ( '10-flow-matching-flattening/mioflow '
+                                                                                                                                                                'standard '
+                                                                                                                                                                '- '
+                                                                                                                                                                'quicktrain.html#mioflowstandard.visualize_autoencoder',
+                                                                                                                                                                'diffusion_curvature/flattening/mioflow_quicktrain.py')},
+            'diffusion_curvature.flattening.radial_ae': { 'diffusion_curvature.flattening.radial_ae.RadialDistancesDataset': ( '10-flow-matching-flattening/radial '
+                                                                                                                               'flattening '
+                                                                                                                               'autoencoder.html#radialdistancesdataset',
+                                                                                                                               'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialDistancesDataset.__getitem__': ( '10-flow-matching-flattening/radial '
+                                                                                                                                           'flattening '
+                                                                                                                                           'autoencoder.html#radialdistancesdataset.__getitem__',
+                                                                                                                                           'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialDistancesDataset.__init__': ( '10-flow-matching-flattening/radial '
+                                                                                                                                        'flattening '
+                                                                                                                                        'autoencoder.html#radialdistancesdataset.__init__',
+                                                                                                                                        'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialDistancesDataset.__len__': ( '10-flow-matching-flattening/radial '
+                                                                                                                                       'flattening '
+                                                                                                                                       'autoencoder.html#radialdistancesdataset.__len__',
+                                                                                                                                       'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder': ( '10-flow-matching-flattening/radial '
+                                                                                                                                    'flattening '
+                                                                                                                                    'autoencoder.html#radialflatteningautoencoder',
+                                                                                                                                    'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.__init__': ( '10-flow-matching-flattening/radial '
+                                                                                                                                             'flattening '
+                                                                                                                                             'autoencoder.html#radialflatteningautoencoder.__init__',
+                                                                                                                                             'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.affinity_loss': ( '10-flow-matching-flattening/radial '
+                                                                                                                                                  'flattening '
+                                                                                                                                                  'autoencoder.html#radialflatteningautoencoder.affinity_loss',
+                                                                                                                                                  'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.configure_optimizers': ( '10-flow-matching-flattening/radial '
+                                                                                                                                                         'flattening '
+                                                                                                                                                         'autoencoder.html#radialflatteningautoencoder.configure_optimizers',
+                                                                                                                                                         'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.distance_loss': ( '10-flow-matching-flattening/radial '
+                                                                                                                                                  'flattening '
+                                                                                                                                                  'autoencoder.html#radialflatteningautoencoder.distance_loss',
+                                                                                                                                                  'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.encode': ( '10-flow-matching-flattening/radial '
+                                                                                                                                           'flattening '
+                                                                                                                                           'autoencoder.html#radialflatteningautoencoder.encode',
+                                                                                                                                           'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.forward': ( '10-flow-matching-flattening/radial '
+                                                                                                                                            'flattening '
+                                                                                                                                            'autoencoder.html#radialflatteningautoencoder.forward',
+                                                                                                                                            'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.immersion': ( '10-flow-matching-flattening/radial '
+                                                                                                                                              'flattening '
+                                                                                                                                              'autoencoder.html#radialflatteningautoencoder.immersion',
+                                                                                                                                              'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.step': ( '10-flow-matching-flattening/radial '
+                                                                                                                                         'flattening '
+                                                                                                                                         'autoencoder.html#radialflatteningautoencoder.step',
+                                                                                                                                         'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.test_step': ( '10-flow-matching-flattening/radial '
+                                                                                                                                              'flattening '
+                                                                                                                                              'autoencoder.html#radialflatteningautoencoder.test_step',
+                                                                                                                                              'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.training_step': ( '10-flow-matching-flattening/radial '
+                                                                                                                                                  'flattening '
+                                                                                                                                                  'autoencoder.html#radialflatteningautoencoder.training_step',
+                                                                                                                                                  'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.RadialFlatteningAutoencoder.validation_step': ( '10-flow-matching-flattening/radial '
+                                                                                                                                                    'flattening '
+                                                                                                                                                    'autoencoder.html#radialflatteningautoencoder.validation_step',
+                                                                                                                                                    'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.dataloader_for_local_neighborhood_flattening': ( '10-flow-matching-flattening/radial '
+                                                                                                                                                     'flattening '
+                                                                                                                                                     'autoencoder.html#dataloader_for_local_neighborhood_flattening',
+                                                                                                                                                     'diffusion_curvature/flattening/radial_ae.py'),
+                                                          'diffusion_curvature.flattening.radial_ae.radially_flatten_with_ae': ( '10-flow-matching-flattening/radial '
+                                                                                                                                 'flattening '
+                                                                                                                                 'autoencoder.html#radially_flatten_with_ae',
+                                                                                                                                 'diffusion_curvature/flattening/radial_ae.py')},
+            'diffusion_curvature.graphs': { 'diffusion_curvature.graphs.diff_aff': ( '0-basics/0a1-graphs.html#diff_aff',
                                                                                      'diffusion_curvature/graphs.py'),
-                                            'diffusion_curvature.graphs.diff_op': ( '0a1-graphs.html#diff_op',
+                                            'diffusion_curvature.graphs.diff_op': ( '0-basics/0a1-graphs.html#diff_op',
                                                                                     'diffusion_curvature/graphs.py'),
-                                            'diffusion_curvature.graphs.get_adaptive_graph': ( '0a1-graphs.html#get_adaptive_graph',
+                                            'diffusion_curvature.graphs.get_adaptive_graph': ( '0-basics/0a1-graphs.html#get_adaptive_graph',
                                                                                                'diffusion_curvature/graphs.py'),
-                                            'diffusion_curvature.graphs.get_alpha_decay_graph': ( '0a1-graphs.html#get_alpha_decay_graph',
+                                            'diffusion_curvature.graphs.get_alpha_decay_graph': ( '0-basics/0a1-graphs.html#get_alpha_decay_graph',
                                                                                                   'diffusion_curvature/graphs.py'),
-                                            'diffusion_curvature.graphs.get_knn_graph': ( '0a1-graphs.html#get_knn_graph',
+                                            'diffusion_curvature.graphs.get_knn_graph': ( '0-basics/0a1-graphs.html#get_knn_graph',
                                                                                           'diffusion_curvature/graphs.py'),
-                                            'diffusion_curvature.graphs.get_scanpy_graph': ( '0a1-graphs.html#get_scanpy_graph',
+                                            'diffusion_curvature.graphs.get_scanpy_graph': ( '0-basics/0a1-graphs.html#get_scanpy_graph',
                                                                                              'diffusion_curvature/graphs.py'),
-                                            'diffusion_curvature.graphs.get_umap_graph': ( '0a1-graphs.html#get_umap_graph',
+                                            'diffusion_curvature.graphs.get_umap_graph': ( '0-basics/0a1-graphs.html#get_umap_graph',
                                                                                            'diffusion_curvature/graphs.py'),
-                                            'diffusion_curvature.graphs.kernel_degree': ( '0a1-graphs.html#kernel_degree',
+                                            'diffusion_curvature.graphs.kernel_degree': ( '0-basics/0a1-graphs.html#kernel_degree',
                                                                                           'diffusion_curvature/graphs.py')},
-            'diffusion_curvature.heat_diffusion': { 'diffusion_curvature.heat_diffusion.E': ( '0a2-heat-diffusion.html#e',
+            'diffusion_curvature.heat_diffusion': { 'diffusion_curvature.heat_diffusion.E': ( '0-basics/0a2-heat-diffusion.html#e',
                                                                                               'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.compute_chebychev_coeff_all': ( '0a2-heat-diffusion.html#compute_chebychev_coeff_all',
+                                                    'diffusion_curvature.heat_diffusion.compute_chebychev_coeff_all': ( '0-basics/0a2-heat-diffusion.html#compute_chebychev_coeff_all',
                                                                                                                         'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.expm_multiply': ( '0a2-heat-diffusion.html#expm_multiply',
+                                                    'diffusion_curvature.heat_diffusion.expm_multiply': ( '0-basics/0a2-heat-diffusion.html#expm_multiply',
                                                                                                           'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.g': ( '0a2-heat-diffusion.html#g',
+                                                    'diffusion_curvature.heat_diffusion.g': ( '0-basics/0a2-heat-diffusion.html#g',
                                                                                               'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.get_bound_bergamaschi_generic': ( '0a2-heat-diffusion.html#get_bound_bergamaschi_generic',
+                                                    'diffusion_curvature.heat_diffusion.get_bound_bergamaschi_generic': ( '0-basics/0a2-heat-diffusion.html#get_bound_bergamaschi_generic',
                                                                                                                           'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.get_bound_bergamaschi_specific': ( '0a2-heat-diffusion.html#get_bound_bergamaschi_specific',
+                                                    'diffusion_curvature.heat_diffusion.get_bound_bergamaschi_specific': ( '0-basics/0a2-heat-diffusion.html#get_bound_bergamaschi_specific',
                                                                                                                            'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.get_bound_eps_generic': ( '0a2-heat-diffusion.html#get_bound_eps_generic',
+                                                    'diffusion_curvature.heat_diffusion.get_bound_eps_generic': ( '0-basics/0a2-heat-diffusion.html#get_bound_eps_generic',
                                                                                                                   'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.get_bound_eta_generic': ( '0a2-heat-diffusion.html#get_bound_eta_generic',
+                                                    'diffusion_curvature.heat_diffusion.get_bound_eta_generic': ( '0-basics/0a2-heat-diffusion.html#get_bound_eta_generic',
                                                                                                                   'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.get_bound_eta_specific': ( '0a2-heat-diffusion.html#get_bound_eta_specific',
+                                                    'diffusion_curvature.heat_diffusion.get_bound_eta_specific': ( '0-basics/0a2-heat-diffusion.html#get_bound_eta_specific',
                                                                                                                    'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.get_matrix_power_recursive': ( '0a2-heat-diffusion.html#get_matrix_power_recursive',
+                                                    'diffusion_curvature.heat_diffusion.get_matrix_power_recursive': ( '0-basics/0a2-heat-diffusion.html#get_matrix_power_recursive',
                                                                                                                        'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.heat_diffusion_from_dirac': ( '0a2-heat-diffusion.html#heat_diffusion_from_dirac',
+                                                    'diffusion_curvature.heat_diffusion.heat_diffusion_from_dirac': ( '0-basics/0a2-heat-diffusion.html#heat_diffusion_from_dirac',
                                                                                                                       'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.heat_diffusion_on_signal': ( '0a2-heat-diffusion.html#heat_diffusion_on_signal',
+                                                    'diffusion_curvature.heat_diffusion.heat_diffusion_on_signal': ( '0-basics/0a2-heat-diffusion.html#heat_diffusion_on_signal',
                                                                                                                      'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.jax_power_matrix': ( '0a2-heat-diffusion.html#jax_power_matrix',
+                                                    'diffusion_curvature.heat_diffusion.jax_power_matrix': ( '0-basics/0a2-heat-diffusion.html#jax_power_matrix',
                                                                                                              'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.kronecker_delta': ( '0a2-heat-diffusion.html#kronecker_delta',
+                                                    'diffusion_curvature.heat_diffusion.kronecker_delta': ( '0-basics/0a2-heat-diffusion.html#kronecker_delta',
                                                                                                             'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.powers_of_diffusion': ( '0a2-heat-diffusion.html#powers_of_diffusion',
+                                                    'diffusion_curvature.heat_diffusion.powers_of_diffusion': ( '0-basics/0a2-heat-diffusion.html#powers_of_diffusion',
                                                                                                                 'diffusion_curvature/heat_diffusion.py'),
-                                                    'diffusion_curvature.heat_diffusion.reverse_bound': ( '0a2-heat-diffusion.html#reverse_bound',
+                                                    'diffusion_curvature.heat_diffusion.reverse_bound': ( '0-basics/0a2-heat-diffusion.html#reverse_bound',
                                                                                                           'diffusion_curvature/heat_diffusion.py')},
-            'diffusion_curvature.kernels': { 'diffusion_curvature.kernels.SimpleGraph': ( '0a0-kernels.html#simplegraph',
+            'diffusion_curvature.kernels': { 'diffusion_curvature.kernels.SimpleGraph': ( '0-basics/0a0-kernels.html#simplegraph',
                                                                                           'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.compute_anisotropic_affinities_from_graph': ( '0a0-kernels.html#compute_anisotropic_affinities_from_graph',
+                                             'diffusion_curvature.kernels.compute_anisotropic_affinities_from_graph': ( '0-basics/0a0-kernels.html#compute_anisotropic_affinities_from_graph',
                                                                                                                         'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.compute_anisotropic_diffusion_matrix_from_graph': ( '0a0-kernels.html#compute_anisotropic_diffusion_matrix_from_graph',
+                                             'diffusion_curvature.kernels.compute_anisotropic_diffusion_matrix_from_graph': ( '0-basics/0a0-kernels.html#compute_anisotropic_diffusion_matrix_from_graph',
                                                                                                                               'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.diffusion_matrix': ( '0a0-kernels.html#diffusion_matrix',
+                                             'diffusion_curvature.kernels.diffusion_matrix': ( '0-basics/0a0-kernels.html#diffusion_matrix',
                                                                                                'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.diffusion_matrix_from_affinities': ( '0a0-kernels.html#diffusion_matrix_from_affinities',
+                                             'diffusion_curvature.kernels.diffusion_matrix_from_affinities': ( '0-basics/0a0-kernels.html#diffusion_matrix_from_affinities',
                                                                                                                'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.diffusion_matrix_from_graph': ( '0a0-kernels.html#diffusion_matrix_from_graph',
+                                             'diffusion_curvature.kernels.diffusion_matrix_from_graph': ( '0-basics/0a0-kernels.html#diffusion_matrix_from_graph',
                                                                                                           'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.gaussian_kernel': ( '0a0-kernels.html#gaussian_kernel',
+                                             'diffusion_curvature.kernels.gaussian_kernel': ( '0-basics/0a0-kernels.html#gaussian_kernel',
                                                                                               'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.get_adaptive_graph': ( '0a0-kernels.html#get_adaptive_graph',
+                                             'diffusion_curvature.kernels.get_adaptive_graph': ( '0-basics/0a0-kernels.html#get_adaptive_graph',
                                                                                                  'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.get_curvature_agnostic_graph': ( '0a0-kernels.html#get_curvature_agnostic_graph',
+                                             'diffusion_curvature.kernels.get_curvature_agnostic_graph': ( '0-basics/0a0-kernels.html#get_curvature_agnostic_graph',
                                                                                                            'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.get_fixed_graph': ( '0a0-kernels.html#get_fixed_graph',
+                                             'diffusion_curvature.kernels.get_fixed_graph': ( '0-basics/0a0-kernels.html#get_fixed_graph',
                                                                                               'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.get_knn_graph': ( '0a0-kernels.html#get_knn_graph',
+                                             'diffusion_curvature.kernels.get_knn_graph': ( '0-basics/0a0-kernels.html#get_knn_graph',
                                                                                             'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.median_heuristic': ( '0a0-kernels.html#median_heuristic',
+                                             'diffusion_curvature.kernels.median_heuristic': ( '0-basics/0a0-kernels.html#median_heuristic',
                                                                                                'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.num_in_first_scale_of_diffusion': ( '0a0-kernels.html#num_in_first_scale_of_diffusion',
+                                             'diffusion_curvature.kernels.num_in_first_scale_of_diffusion': ( '0-basics/0a0-kernels.html#num_in_first_scale_of_diffusion',
                                                                                                               'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.pygsp_graph_from_points': ( '0a0-kernels.html#pygsp_graph_from_points',
+                                             'diffusion_curvature.kernels.pygsp_graph_from_points': ( '0-basics/0a0-kernels.html#pygsp_graph_from_points',
                                                                                                       'diffusion_curvature/kernels.py'),
-                                             'diffusion_curvature.kernels.tune_curvature_agnostic_kernel': ( '0a0-kernels.html#tune_curvature_agnostic_kernel',
+                                             'diffusion_curvature.kernels.tune_curvature_agnostic_kernel': ( '0-basics/0a0-kernels.html#tune_curvature_agnostic_kernel',
                                                                                                              'diffusion_curvature/kernels.py')},
-            'diffusion_curvature.random_surfaces': { 'diffusion_curvature.random_surfaces.manifold_density': ( '0d2a-random-surfaces.html#manifold_density',
+            'diffusion_curvature.normalizing_flows': { 'diffusion_curvature.normalizing_flows.FlowNet': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#flownet',
+                                                                                                          'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.FlowNet.__init__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#flownet.__init__',
+                                                                                                                   'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.FlowNet.forward': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#flownet.forward',
+                                                                                                                  'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.GreatFlattener': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#greatflattener',
+                                                                                                                 'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.GreatFlattener.__init__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#greatflattener.__init__',
+                                                                                                                          'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.GreatFlattener.configure_optimizers': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#greatflattener.configure_optimizers',
+                                                                                                                                      'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.GreatFlattener.forward': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#greatflattener.forward',
+                                                                                                                         'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.GreatFlattener.generate_data': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#greatflattener.generate_data',
+                                                                                                                               'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.GreatFlattener.sample': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#greatflattener.sample',
+                                                                                                                        'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.GreatFlattener.training_step': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#greatflattener.training_step',
+                                                                                                                               'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.ManifoldNeighborhoodDataset': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#manifoldneighborhooddataset',
+                                                                                                                              'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.ManifoldNeighborhoodDataset.__getitem__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#manifoldneighborhooddataset.__getitem__',
+                                                                                                                                          'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.ManifoldNeighborhoodDataset.__init__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#manifoldneighborhooddataset.__init__',
+                                                                                                                                       'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.ManifoldNeighborhoodDataset.__len__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#manifoldneighborhooddataset.__len__',
+                                                                                                                                      'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.NegativeLogLikelihood': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#negativeloglikelihood',
+                                                                                                                        'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.NegativeLogLikelihood.__call__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#negativeloglikelihood.__call__',
+                                                                                                                                 'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.NegativeLogLikelihood.__init__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#negativeloglikelihood.__init__',
+                                                                                                                                 'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.NegativeLogLikelihoodQuaUniform': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#negativeloglikelihoodquauniform',
+                                                                                                                                  'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.NegativeLogLikelihoodQuaUniform.__call__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#negativeloglikelihoodquauniform.__call__',
+                                                                                                                                           'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.NegativeLogLikelihoodQuaUniform.__init__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#negativeloglikelihoodquauniform.__init__',
+                                                                                                                                           'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.dataloader_from_manifold_neighborhoods': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#dataloader_from_manifold_neighborhoods',
+                                                                                                                                         'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.neural_flattener': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#neural_flattener',
+                                                                                                                   'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.neural_flattener.__init__': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#neural_flattener.__init__',
+                                                                                                                            'diffusion_curvature/normalizing_flows.py'),
+                                                       'diffusion_curvature.normalizing_flows.neural_flattener.fit_transform': ( '10-flow-matching-flattening/3e3-flattening-with-continuous-normalizing-flows.html#neural_flattener.fit_transform',
+                                                                                                                                 'diffusion_curvature/normalizing_flows.py')},
+            'diffusion_curvature.parameter_sensitivity': { 'diffusion_curvature.parameter_sensitivity.parameter_sensitivity_of_method': ( '02-diffusion-laziness/parameter-sensitivity-tests.html#parameter_sensitivity_of_method',
+                                                                                                                                          'diffusion_curvature/parameter_sensitivity.py')},
+            'diffusion_curvature.random_surfaces': { 'diffusion_curvature.random_surfaces.manifold_density': ( '0-basics/0d2a-random-surfaces.html#manifold_density',
                                                                                                                'diffusion_curvature/random_surfaces.py'),
-                                                     'diffusion_curvature.random_surfaces.max_value': ( '0d2a-random-surfaces.html#max_value',
+                                                     'diffusion_curvature.random_surfaces.max_value': ( '0-basics/0d2a-random-surfaces.html#max_value',
                                                                                                         'diffusion_curvature/random_surfaces.py'),
-                                                     'diffusion_curvature.random_surfaces.random_polynomial': ( '0d2a-random-surfaces.html#random_polynomial',
+                                                     'diffusion_curvature.random_surfaces.random_polynomial': ( '0-basics/0d2a-random-surfaces.html#random_polynomial',
                                                                                                                 'diffusion_curvature/random_surfaces.py'),
-                                                     'diffusion_curvature.random_surfaces.random_surface': ( '0d2a-random-surfaces.html#random_surface',
+                                                     'diffusion_curvature.random_surfaces.random_surface': ( '0-basics/0d2a-random-surfaces.html#random_surface',
                                                                                                              'diffusion_curvature/random_surfaces.py'),
-                                                     'diffusion_curvature.random_surfaces.rejection_sample_from_surface': ( '0d2a-random-surfaces.html#rejection_sample_from_surface',
+                                                     'diffusion_curvature.random_surfaces.rejection_sample_from_surface': ( '0-basics/0d2a-random-surfaces.html#rejection_sample_from_surface',
                                                                                                                             'diffusion_curvature/random_surfaces.py'),
-                                                     'diffusion_curvature.random_surfaces.riemannian_curvature_tensor': ( '0d2a-random-surfaces.html#riemannian_curvature_tensor',
+                                                     'diffusion_curvature.random_surfaces.riemannian_curvature_tensor': ( '0-basics/0d2a-random-surfaces.html#riemannian_curvature_tensor',
                                                                                                                           'diffusion_curvature/random_surfaces.py'),
-                                                     'diffusion_curvature.random_surfaces.samples_from_random_surface': ( '0d2a-random-surfaces.html#samples_from_random_surface',
+                                                     'diffusion_curvature.random_surfaces.samples_from_random_surface': ( '0-basics/0d2a-random-surfaces.html#samples_from_random_surface',
                                                                                                                           'diffusion_curvature/random_surfaces.py'),
-                                                     'diffusion_curvature.random_surfaces.scalar_curvature_at_origin': ( '0d2a-random-surfaces.html#scalar_curvature_at_origin',
+                                                     'diffusion_curvature.random_surfaces.scalar_curvature_at_origin': ( '0-basics/0d2a-random-surfaces.html#scalar_curvature_at_origin',
                                                                                                                          'diffusion_curvature/random_surfaces.py'),
-                                                     'diffusion_curvature.random_surfaces.second_fundamental_form': ( '0d2a-random-surfaces.html#second_fundamental_form',
+                                                     'diffusion_curvature.random_surfaces.second_fundamental_form': ( '0-basics/0d2a-random-surfaces.html#second_fundamental_form',
                                                                                                                       'diffusion_curvature/random_surfaces.py')},
-            'diffusion_curvature.sadspheres': { 'diffusion_curvature.sadspheres.SadSpheres': ( '0d3-saddle-sphere-ablations.html#sadspheres',
+            'diffusion_curvature.ricci': { 'diffusion_curvature.ricci.DiffusionRicciCurvature': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature',
+                                                                                                  'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.__init__': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.__init__',
+                                                                                                           'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.differential_diffusion_curvature_of_edge': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.differential_diffusion_curvature_of_edge',
+                                                                                                                                           'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.diffusion_laziness_of_edge': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.diffusion_laziness_of_edge',
+                                                                                                                             'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.diffusion_laziness_of_edge_with_surgery': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.diffusion_laziness_of_edge_with_surgery',
+                                                                                                                                          'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.diffusion_laziness_of_graph': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.diffusion_laziness_of_graph',
+                                                                                                                              'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.diffusion_laziness_of_idx': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.diffusion_laziness_of_idx',
+                                                                                                                            'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.edge_surgery': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.edge_surgery',
+                                                                                                               'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.fit': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.fit',
+                                                                                                      'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.fit_transform': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.fit_transform',
+                                                                                                                'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.ricci_curvature': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.ricci_curvature',
+                                                                                                                  'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.DiffusionRicciCurvature.scalar_curvature': ( '06-ricci-curvature/8-ricci-curvature.html#diffusionriccicurvature.scalar_curvature',
+                                                                                                                   'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.dirichlet_energy': ( '06-ricci-curvature/8-ricci-curvature.html#dirichlet_energy',
+                                                                                           'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.jax_repeatedly_diffuse_dirac': ( '06-ricci-curvature/8-ricci-curvature.html#jax_repeatedly_diffuse_dirac',
+                                                                                                       'diffusion_curvature/ricci.py'),
+                                           'diffusion_curvature.ricci.stable_entropy_of_diffusion': ( '06-ricci-curvature/8-ricci-curvature.html#stable_entropy_of_diffusion',
+                                                                                                      'diffusion_curvature/ricci.py')},
+            'diffusion_curvature.sadspheres': { 'diffusion_curvature.sadspheres.SadSpheres': ( '0-basics/0d3-saddle-sphere-ablations.html#sadspheres',
                                                                                                'diffusion_curvature/sadspheres.py'),
-                                                'diffusion_curvature.sadspheres.SadSpheres.__init__': ( '0d3-saddle-sphere-ablations.html#sadspheres.__init__',
+                                                'diffusion_curvature.sadspheres.SadSpheres.__init__': ( '0-basics/0d3-saddle-sphere-ablations.html#sadspheres.__init__',
                                                                                                         'diffusion_curvature/sadspheres.py'),
-                                                'diffusion_curvature.sadspheres.SadSpheres.get_item': ( '0d3-saddle-sphere-ablations.html#sadspheres.get_item',
+                                                'diffusion_curvature.sadspheres.SadSpheres.get_item': ( '0-basics/0d3-saddle-sphere-ablations.html#sadspheres.get_item',
                                                                                                         'diffusion_curvature/sadspheres.py'),
-                                                'diffusion_curvature.sadspheres.SadSpheres.get_truth': ( '0d3-saddle-sphere-ablations.html#sadspheres.get_truth',
+                                                'diffusion_curvature.sadspheres.SadSpheres.get_truth': ( '0-basics/0d3-saddle-sphere-ablations.html#sadspheres.get_truth',
                                                                                                          'diffusion_curvature/sadspheres.py'),
-                                                'diffusion_curvature.sadspheres.SadSpheres.pearson_r': ( '0d3-saddle-sphere-ablations.html#sadspheres.pearson_r',
+                                                'diffusion_curvature.sadspheres.SadSpheres.pearson_r': ( '0-basics/0d3-saddle-sphere-ablations.html#sadspheres.pearson_r',
                                                                                                          'diffusion_curvature/sadspheres.py'),
-                                                'diffusion_curvature.sadspheres.SadSpheres.plot_by_dimension': ( '0d3-saddle-sphere-ablations.html#sadspheres.plot_by_dimension',
+                                                'diffusion_curvature.sadspheres.SadSpheres.plot_by_dimension': ( '0-basics/0d3-saddle-sphere-ablations.html#sadspheres.plot_by_dimension',
                                                                                                                  'diffusion_curvature/sadspheres.py'),
-                                                'diffusion_curvature.sadspheres.SadSpheres.sign_score': ( '0d3-saddle-sphere-ablations.html#sadspheres.sign_score',
+                                                'diffusion_curvature.sadspheres.SadSpheres.sign_score': ( '0-basics/0d3-saddle-sphere-ablations.html#sadspheres.sign_score',
                                                                                                           'diffusion_curvature/sadspheres.py')},
             'diffusion_curvature.self_evaluating_dataset': {},
-            'diffusion_curvature.self_evaluating_datasets': { 'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset',
+            'diffusion_curvature.self_evaluating_datasets': { 'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset',
                                                                                                                                       'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.__init__': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.__init__',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.__init__': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.__init__',
                                                                                                                                                'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.__iter__': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.__iter__',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.__iter__': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.__iter__',
                                                                                                                                                'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.__len__': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.__len__',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.__len__': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.__len__',
                                                                                                                                               'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.__next__': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.__next__',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.__next__': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.__next__',
                                                                                                                                                'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset._aggregate_labels': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset._aggregate_labels',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset._aggregate_labels': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset._aggregate_labels',
                                                                                                                                                         'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset._get_metrics': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset._get_metrics',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset._get_metrics': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset._get_metrics',
                                                                                                                                                    'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset._store_truth': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset._store_truth',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset._store_truth': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset._store_truth',
                                                                                                                                                    'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.compute': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.compute',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.compute': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.compute',
                                                                                                                                               'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.compute_metrics': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.compute_metrics',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.compute_metrics': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.compute_metrics',
                                                                                                                                                       'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.delete_saved_method': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.delete_saved_method',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.delete_saved_method': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.delete_saved_method',
                                                                                                                                                           'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.get_item': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.get_item',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.get_item': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.get_item',
                                                                                                                                                'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.get_score': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.get_score',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.get_score': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.get_score',
                                                                                                                                                 'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.get_truth': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.get_truth',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.get_truth': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.get_truth',
                                                                                                                                                 'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.load_from_disk': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.load_from_disk',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.load_from_disk': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.load_from_disk',
                                                                                                                                                      'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.plot': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.plot',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.plot': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.plot',
                                                                                                                                            'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.preprocess': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.preprocess',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.preprocess': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.preprocess',
                                                                                                                                                  'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.save_results': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.save_results',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.save_results': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.save_results',
                                                                                                                                                    'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.table': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.table',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.table': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.table',
                                                                                                                                             'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.update': ( '0e1-self-evaluating-datasets.html#selfevaluatingdataset.update',
+                                                              'diffusion_curvature.self_evaluating_datasets.SelfEvaluatingDataset.update': ( '0-basics/0e1-self-evaluating-datasets.html#selfevaluatingdataset.update',
                                                                                                                                              'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.Wrapper': ( '0e1-self-evaluating-datasets.html#wrapper',
+                                                              'diffusion_curvature.self_evaluating_datasets.Wrapper': ( '0-basics/0e1-self-evaluating-datasets.html#wrapper',
                                                                                                                         'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.Wrapper.__init__': ( '0e1-self-evaluating-datasets.html#wrapper.__init__',
+                                                              'diffusion_curvature.self_evaluating_datasets.Wrapper.__init__': ( '0-basics/0e1-self-evaluating-datasets.html#wrapper.__init__',
                                                                                                                                  'diffusion_curvature/self_evaluating_datasets.py'),
-                                                              'diffusion_curvature.self_evaluating_datasets.metric': ( '0e1-self-evaluating-datasets.html#metric',
+                                                              'diffusion_curvature.self_evaluating_datasets.metric': ( '0-basics/0e1-self-evaluating-datasets.html#metric',
                                                                                                                        'diffusion_curvature/self_evaluating_datasets.py')},
-            'diffusion_curvature.utils': { 'diffusion_curvature.utils.jax_set_best_gpu': ( '0e-errata.html#jax_set_best_gpu',
+            'diffusion_curvature.utils': { 'diffusion_curvature.utils.jax_set_best_gpu': ( '0-basics/0e-errata.html#jax_set_best_gpu',
                                                                                            'diffusion_curvature/utils.py'),
-                                           'diffusion_curvature.utils.kronecker_delta': ( '0e-errata.html#kronecker_delta',
+                                           'diffusion_curvature.utils.kronecker_delta': ( '0-basics/0e-errata.html#kronecker_delta',
                                                                                           'diffusion_curvature/utils.py'),
-                                           'diffusion_curvature.utils.perform_trials': ( '0e-errata.html#perform_trials',
+                                           'diffusion_curvature.utils.perform_trials': ( '0-basics/0e-errata.html#perform_trials',
                                                                                          'diffusion_curvature/utils.py'),
-                                           'diffusion_curvature.utils.plot_3d': ('0e-errata.html#plot_3d', 'diffusion_curvature/utils.py'),
-                                           'diffusion_curvature.utils.plot_array': ( '0e-errata.html#plot_array',
+                                           'diffusion_curvature.utils.plot_3d': ( '0-basics/0e-errata.html#plot_3d',
+                                                                                  'diffusion_curvature/utils.py'),
+                                           'diffusion_curvature.utils.plot_array': ( '0-basics/0e-errata.html#plot_array',
                                                                                      'diffusion_curvature/utils.py'),
-                                           'diffusion_curvature.utils.printnum': ( '0e-errata.html#printnum',
+                                           'diffusion_curvature.utils.printnum': ( '0-basics/0e-errata.html#printnum',
                                                                                    'diffusion_curvature/utils.py'),
-                                           'diffusion_curvature.utils.random_jnparray': ( '0e-errata.html#random_jnparray',
+                                           'diffusion_curvature.utils.random_jnparray': ( '0-basics/0e-errata.html#random_jnparray',
                                                                                           'diffusion_curvature/utils.py'),
-                                           'diffusion_curvature.utils.visualize_embedding': ( '0e-errata.html#visualize_embedding',
+                                           'diffusion_curvature.utils.visualize_embedding': ( '0-basics/0e-errata.html#visualize_embedding',
                                                                                               'diffusion_curvature/utils.py')},
-            'diffusion_curvature.vne': { 'diffusion_curvature.vne.compute_von_neumann_entropy': ( '0a3-diffusion-spectral-entropy.html#compute_von_neumann_entropy',
+            'diffusion_curvature.vne': { 'diffusion_curvature.vne.compute_von_neumann_entropy': ( '0-basics/0a3-diffusion-spectral-entropy.html#compute_von_neumann_entropy',
                                                                                                   'diffusion_curvature/vne.py'),
-                                         'diffusion_curvature.vne.find_knee_point': ( '0a3-diffusion-spectral-entropy.html#find_knee_point',
+                                         'diffusion_curvature.vne.find_knee_point': ( '0-basics/0a3-diffusion-spectral-entropy.html#find_knee_point',
                                                                                       'diffusion_curvature/vne.py'),
-                                         'diffusion_curvature.vne.optimal_t_via_vne': ( '0a3-diffusion-spectral-entropy.html#optimal_t_via_vne',
+                                         'diffusion_curvature.vne.optimal_t_via_vne': ( '0-basics/0a3-diffusion-spectral-entropy.html#optimal_t_via_vne',
                                                                                         'diffusion_curvature/vne.py')}}}
