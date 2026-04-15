@@ -1,0 +1,21 @@
+{
+  "study_name": "fb_sadspheres",
+  "best_value": 0.3333333333333333,
+  "best_params": {
+    "z_dim": 3,
+    "hidden_dim": 512,
+    "gamma": 0.5239587639815868,
+    "lr": 3.8234752246751835e-05,
+    "n_epochs": 200,
+    "ortho_coef": 0.19010245319870356,
+    "tau_polyak": 0.0031357757322577457,
+    "batch_size": 512
+  },
+  "n_trials": 2,
+  "eval_config": {
+    "n_samples": 200,
+    "n_trajectories": 200,
+    "traj_length": 50,
+    "num_instances": 3
+  }
+}

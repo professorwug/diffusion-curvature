@@ -22,10 +22,20 @@ import seaborn as sns
 METHOD_LABEL = {
     "laziness": "Diffusion Laziness",
     "successor_entropy": "Successor Entropy",
+    "successor_orc": "Successor ORC (B)",
+    "laziness_knn_t3": "Laziness (kNN, t=3)",
+    "laziness_knn_t5": "Laziness (kNN, t=5)",
+    "laziness_knn_t10": "Laziness (kNN, t=10)",
+    "laziness_adaptive_t5": "Laziness (adaptive, t=5)",
 }
+# Blues for laziness variants, warm colors for successor.
 METHOD_COLOR = {
-    "laziness": "#1f77b4",
     "successor_entropy": "#d62728",
+    "successor_orc": "#2ca02c",
+    "laziness_knn_t3": "#9ecae1",
+    "laziness_knn_t5": "#4292c6",
+    "laziness_knn_t10": "#08519c",
+    "laziness_adaptive_t5": "#fd8d3c",
 }
 
 

@@ -1,0 +1,13 @@
+dataset,method,auc,sign_acc,n_instances,spearman
+sadspheres,laziness_adaptive_t5,0.0,0.5,20,
+sadspheres,laziness_knn_t10,0.0,0.5,20,
+sadspheres,laziness_knn_t3,0.009999999999999998,0.5,20,
+sadspheres,laziness_knn_t5,0.0,0.5,20,
+sadspheres,successor_entropy,0.11999999999999998,0.5,20,
+sadspheres,successor_orc,0.49000000000000005,0.4946,20,
+colosseum,laziness_adaptive_t5,,,5,0.39999999999999997
+colosseum,laziness_knn_t10,,,5,0.39999999999999997
+colosseum,laziness_knn_t3,,,5,0.3
+colosseum,laziness_knn_t5,,,5,0.39999999999999997
+colosseum,successor_entropy,,,5,-0.9999999999999999
+colosseum,successor_orc,,,5,0.8999999999999998

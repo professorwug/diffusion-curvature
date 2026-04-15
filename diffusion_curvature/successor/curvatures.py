@@ -157,9 +157,11 @@ class _SuccessorCurvatureBase:
 class SuccessorEntropyCurvature(_SuccessorCurvatureBase):
     """Entropy of the softmax(F^T B) successor measure per point.
 
-    Negated so that *concentrated* (low-entropy) measures correspond to
-    positive curvature, and *diffuse* (high-entropy) measures to negative
-    curvature — matching the sign conventions of the other curvature classes.
+    Raw successor entropy ``H`` is a measure of *negative* curvature: random
+    walks diverge more in negatively curved regions, inflating the entropy
+    of their successor distribution. To return values in the standard
+    curvature convention (higher = more positively curved), ``fit_transform``
+    returns ``-H``.
     """
 
     def __init__(self, tau: float = 1.0, **kwargs):
@@ -185,7 +187,7 @@ class SuccessorEntropyCurvature(_SuccessorCurvatureBase):
         P = softmax_measure(M_mat, tau=self.tau)
         P = np.clip(P, 1e-12, 1.0)
         H = -(P * np.log(P)).sum(axis=1)
-        self.curvature_ = -H  # high entropy → negative curvature
+        self.curvature_ = -H
         return self.curvature_
 
 
@@ -249,7 +251,9 @@ class SuccessorORC(_SuccessorCurvatureBase):
         self.B_ = B_emb
 
         coords = F_emb if self.ground == "F" else B_emb
-        measures = softmax_measure(M_mat, tau=self.softmax_tau) if self.use_softmax else M_mat
+        measures = (
+            softmax_measure(M_mat, tau=self.softmax_tau) if self.use_softmax else M_mat
+        )
 
         T = coords.shape[0]
         k = min(self.k_neighbors, T - 1)
@@ -275,8 +279,12 @@ class SuccessorORC(_SuccessorCurvatureBase):
 
         def _one(t: int, tp_: int, d: float) -> tuple[int, float]:
             w = truncated_sliced_w1(
-                measures[t], measures[tp_], coords,
-                top_n=self.top_n, n_projections=self.n_projections, seed=self.seed,
+                measures[t],
+                measures[tp_],
+                coords,
+                top_n=self.top_n,
+                n_projections=self.n_projections,
+                seed=self.seed,
             )
             return t, w / d
 
@@ -342,7 +350,9 @@ class SuccessorW1(_SuccessorCurvatureBase):
         self.B_ = B_emb
 
         coords = F_emb if self.ground == "F" else B_emb
-        measures = softmax_measure(M_mat, tau=self.softmax_tau) if self.use_softmax else M_mat
+        measures = (
+            softmax_measure(M_mat, tau=self.softmax_tau) if self.use_softmax else M_mat
+        )
 
         T = coords.shape[0]
         k = min(self.k_neighbors, T - 1)
@@ -357,8 +367,12 @@ class SuccessorW1(_SuccessorCurvatureBase):
 
         def _one(t: int, tp_: int) -> tuple[int, float]:
             w = truncated_sliced_w1(
-                measures[t], measures[tp_], coords,
-                top_n=self.top_n, n_projections=self.n_projections, seed=self.seed,
+                measures[t],
+                measures[tp_],
+                coords,
+                top_n=self.top_n,
+                n_projections=self.n_projections,
+                seed=self.seed,
             )
             return t, w
 

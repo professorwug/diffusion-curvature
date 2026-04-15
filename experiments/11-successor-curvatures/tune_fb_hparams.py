@@ -24,9 +24,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import warnings
 from pathlib import Path
 from typing import Any
+
+os.environ.setdefault("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
+os.environ.setdefault("XLA_PYTHON_CLIENT_MEM_FRACTION", "0.40")
 
 import numpy as np
 import optuna
@@ -37,14 +41,25 @@ from diffusion_curvature.successor import SuccessorEntropyCurvature
 from diffusion_curvature.tau_datasets import TauColosseum, TauSadSpheres
 
 
+def _pick_torch_device(requested: str) -> str:
+    import torch
+    if requested and requested != "auto":
+        return requested
+    if torch.cuda.is_available():
+        return "cuda:1" if torch.cuda.device_count() >= 2 else "cuda:0"
+    return "cpu"
+
+
 # ---------------------------------------------------------------------------
 # Trial evaluation
 # ---------------------------------------------------------------------------
 
 
-def _score_instance(inst: dict[str, Any], params: dict[str, Any], seed: int) -> float:
+def _score_instance(
+    inst: dict[str, Any], params: dict[str, Any], seed: int, device: str = "cpu",
+) -> float:
     """Train FB on one instance; return per-instance ⟨ks_hat⟩ over visited nodes."""
-    sec = SuccessorEntropyCurvature(**params, seed=seed)
+    sec = SuccessorEntropyCurvature(**params, seed=seed, device=device)
     k_hat = sec.fit_transform(X=inst["X"], trajectories=inst["trajectories"])
     visited = np.unique(np.asarray(inst["trajectories_idx"]).ravel())
     vals = np.asarray(k_hat, dtype=float)[visited]
@@ -65,14 +80,16 @@ def suggest_params(trial: optuna.Trial) -> dict[str, Any]:
     )
 
 
-def objective_sadspheres(trial: optuna.Trial, ds: TauSadSpheres) -> float:
+def objective_sadspheres(
+    trial: optuna.Trial, ds: TauSadSpheres, device: str = "cpu",
+) -> float:
     params = suggest_params(trial)
     scores: list[float] = []
     labels: list[int] = []
     for i in range(len(ds)):
         inst = ds.get_item(i)
         try:
-            s = _score_instance(inst, params, seed=42 + i)
+            s = _score_instance(inst, params, seed=42 + i, device=device)
         except Exception as e:
             trial.set_user_attr("error", f"inst {i}: {e}")
             return 0.5
@@ -86,14 +103,16 @@ def objective_sadspheres(trial: optuna.Trial, ds: TauSadSpheres) -> float:
         return 0.5
 
 
-def objective_colosseum(trial: optuna.Trial, ds: TauColosseum) -> float:
+def objective_colosseum(
+    trial: optuna.Trial, ds: TauColosseum, device: str = "cpu",
+) -> float:
     params = suggest_params(trial)
     scores: list[float] = []
     truths: list[float] = []
     for i in range(len(ds)):
         inst = ds.get_item(i)
         try:
-            s = _score_instance(inst, params, seed=42 + i)
+            s = _score_instance(inst, params, seed=42 + i, device=device)
         except Exception as e:
             trial.set_user_attr("error", f"inst {i}: {e}")
             return 0.0
@@ -167,7 +186,11 @@ def main() -> None:
                    help="SadSpheres num_pointclouds or Colosseum num_manifolds_per_dim")
     p.add_argument("--storage", default="processed_data/optuna/studies.db")
     p.add_argument("--seed", type=int, default=42)
+    p.add_argument("--device", default="auto")
     args = p.parse_args()
+
+    device = _pick_torch_device(args.device)
+    print(f"Torch device: {device}")
 
     Path(args.storage).parent.mkdir(parents=True, exist_ok=True)
     storage_url = f"sqlite:///{args.storage}"
@@ -182,9 +205,9 @@ def main() -> None:
     )
 
     if args.dataset == "sadspheres":
-        objective = lambda t: objective_sadspheres(t, ds)
+        objective = lambda t: objective_sadspheres(t, ds, device=device)
     else:
-        objective = lambda t: objective_colosseum(t, ds)
+        objective = lambda t: objective_colosseum(t, ds, device=device)
 
     study = optuna.create_study(
         direction="maximize",
