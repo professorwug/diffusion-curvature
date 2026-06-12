@@ -89,8 +89,18 @@ class WassersteinSignedCurvature:
 
     Parameters
     ----------
-    t : int
+    t : int | 'auto'
         Diffusion steps for the measure family (ignored when ``M`` is given).
+        With ``'auto'``, t is chosen per evaluation point as the largest t
+        whose diffusion spread stays below ``spread_fraction`` of the median
+        geodesic radius — guarding against mixing (in sparse/high-dim data a
+        fixed t can cover the whole dataset, making all measures identical
+        and biasing the curvature toward +1).
+    spread_fraction : float
+        Target spread as a fraction of the median geodesic distance from the
+        evaluation point (only used with ``t='auto'``).
+    t_max : int
+        Upper bound for auto-selected t.
     knn : int
         Neighbors for both the affinity kernel and the geodesic graph.
     alpha : float
@@ -120,7 +130,9 @@ class WassersteinSignedCurvature:
 
     def __init__(
         self,
-        t: int = 8,
+        t: int | str = 8,
+        spread_fraction: float = 0.3,
+        t_max: int = 64,
         knn: int = 10,
         alpha: float = 1.0,
         n_pairs: int = 8,
@@ -133,6 +145,8 @@ class WassersteinSignedCurvature:
         seed: int = 42,
     ):
         self.t = t
+        self.spread_fraction = spread_fraction
+        self.t_max = t_max
         self.knn = knn
         self.alpha = alpha
         self.n_pairs = n_pairs
@@ -199,13 +213,36 @@ class WassersteinSignedCurvature:
             return self._M[idxs]
         out = np.zeros((len(idxs), self.P.shape[0]))
         out[np.arange(len(idxs)), idxs] = 1.0
-        for _ in range(self.t):
+        t = self._t_eff
+        for _ in range(t):
             out = out @ self.P
         return out
 
     @property
+    def _t_eff(self) -> int:
+        """Concrete diffusion time for the current point (auto-resolved)."""
+        if isinstance(self.t, str):
+            return getattr(self, "_t_auto", 1)
+        return self.t
+
+    def _auto_t_measure(self, i: int, d_i: np.ndarray, finite: np.ndarray):
+        """Step the diffusion from i until spread reaches the target radius."""
+        target = self.spread_fraction * float(np.median(d_i[finite]))
+        mu = np.zeros(self.P.shape[0])
+        mu[i] = 1.0
+        t = 0
+        while t < self.t_max:
+            nxt = mu @ self.P
+            if float((nxt[finite] * d_i[finite]).sum()) > target and t >= 1:
+                break
+            mu = nxt
+            t += 1
+        self._t_auto = max(t, 1)
+        return mu
+
+    @property
     def _smear_steps(self) -> int:
-        return max(1, self.t // 2) if self.smear is None else self.smear
+        return max(1, self._t_eff // 2) if self.smear is None else self.smear
 
     def _smear_rows(self, rows: np.ndarray) -> np.ndarray:
         for _ in range(self._smear_steps):
@@ -227,7 +264,7 @@ class WassersteinSignedCurvature:
         rng = np.random.default_rng(self.seed)
         cache = _DijkstraCache(self.geo)
 
-        if self.compute_midpoint:
+        if self.compute_midpoint and not isinstance(self.t, str):
             self._A = np.linalg.matrix_power(self.P, 2 * self._smear_steps)
         else:
             self._A = None
@@ -253,10 +290,14 @@ class WassersteinSignedCurvature:
 
     def _point_estimate(self, i, cache, rng):
         n = self.P.shape[0]
-        mu_i = self._measure_rows(np.array([i]))[0]
         d_i = cache[i]
-
         finite = np.isfinite(d_i)
+
+        if isinstance(self.t, str) and self._M is None:
+            mu_i = self._auto_t_measure(i, d_i, finite)
+        else:
+            mu_i = self._measure_rows(np.array([i]))[0]
+
         spread = float((mu_i[finite] * d_i[finite]).sum())
         if spread <= 0:
             return np.nan, np.nan, np.nan
@@ -289,10 +330,11 @@ class WassersteinSignedCurvature:
         all_sources = np.unique(np.concatenate([si] + [s for s, _ in supports]))
         cache.fetch(all_sources)
 
-        # Pre-smear endpoint entropies once (shared across pairs).
-        mu_i_s = self._smear_rows(mu_i[None, :])[0]
-        H_i = _entropy(mu_i_s)
-        mu_js_s = self._smear_rows(mu_js)
+        # Pre-smear endpoint entropies once (shared across pairs; midpoint only).
+        if self._A is not None:
+            mu_i_s = self._smear_rows(mu_i[None, :])[0]
+            H_i = _entropy(mu_i_s)
+            mu_js_s = self._smear_rows(mu_js)
 
         orc_vals, mid_vals = [], []
         for k, j in enumerate(pairs):

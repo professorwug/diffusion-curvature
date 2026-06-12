@@ -113,12 +113,13 @@ def _signed_fits(X: np.ndarray, ts=(8, 16)) -> dict[str, float]:
     from diffusion_curvature.wasserstein_signed import WassersteinSignedCurvature
     out = {}
     for t in ts:
+        suffix = "auto" if t == "auto" else f"t{t}"
         est = WassersteinSignedCurvature(
             t=t, knn=10, n_pairs=8, seed=0, compute_midpoint=False,
         )
         est.fit(X=X.astype(np.float64), idx=[0])
-        out[f"signed_orc_t{t}"] = float(est.orc_[0])
-        out[f"signed_orc_phys_t{t}"] = float(est.orc_phys_[0])
+        out[f"signed_orc_{suffix}"] = float(est.orc_[0])
+        out[f"signed_orc_phys_{suffix}"] = float(est.orc_phys_[0])
     return out
 
 
@@ -174,9 +175,10 @@ def run_worker(args) -> None:
         ds = inst["dataset"]
 
         # --- new signed methods (one fit per t, two readouts) ---
+        ts = [t if t == "auto" else int(t) for t in args.ts.split(",")]
+        names = [f"signed_orc_{'auto' if t == 'auto' else f't{t}'}" for t in ts]
         new_needed = [
-            m for m in ("signed_orc_t8", "signed_orc_phys_t8",
-                        "signed_orc_t16", "signed_orc_phys_t16")
+            m for nm in names for m in (nm, nm.replace("orc_", "orc_phys_"))
             if (ds, i, m) not in done
         ]
         if new_needed:
@@ -184,7 +186,7 @@ def run_worker(args) -> None:
             try:
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
-                    vals = _signed_fits(X)
+                    vals = _signed_fits(X, ts=ts)
                 err = ""
             except Exception as e:
                 vals = {m: float("nan") for m in new_needed}
@@ -249,6 +251,8 @@ def main() -> None:
     w.add_argument("--num-workers", type=int, default=8)
     w.add_argument("--out", default=None)
     w.add_argument("--skip-baselines", action="store_true")
+    w.add_argument("--ts", default="8,16",
+                   help="comma list of diffusion times; 'auto' allowed")
     sub.add_parser("merge")
     args = p.parse_args()
 

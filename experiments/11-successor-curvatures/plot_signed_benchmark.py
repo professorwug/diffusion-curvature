@@ -21,6 +21,8 @@ import seaborn as sns
 from sklearn.metrics import roc_auc_score
 
 METHOD_LABEL = {
+    "signed_orc_auto": "Diffusion ORC (auto t)",
+    "signed_orc_phys_auto": "Diffusion ORC phys (auto t)",
     "signed_orc_t8": "Diffusion ORC (t=8)",
     "signed_orc_phys_t8": "Diffusion ORC phys (t=8)",
     "signed_orc_t16": "Diffusion ORC (t=16)",
