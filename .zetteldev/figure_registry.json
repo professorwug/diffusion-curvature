@@ -454,6 +454,26 @@
     "hash": "5c22c892011b38fb",
     "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_surfaces_square.png"
   },
+  "experiments/11-successor-curvatures/figures/signed/signed_colosseum_pearson.png": {
+    "commit": "a759aca",
+    "hash": "c39f41ba7863ab82",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/signed_colosseum_pearson.png"
+  },
+  "experiments/11-successor-curvatures/figures/signed/signed_colosseum_signacc.png": {
+    "commit": "a759aca",
+    "hash": "2d95eb1775347672",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/signed_colosseum_signacc.png"
+  },
+  "experiments/11-successor-curvatures/figures/signed/signed_sadspheres.png": {
+    "commit": "a759aca",
+    "hash": "e770adbcdda82a12",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/signed_sadspheres.png"
+  },
+  "experiments/11-successor-curvatures/figures/signed/signed_scatter.png": {
+    "commit": "a759aca",
+    "hash": "aafe6217bba2c3e2",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/signed_scatter.png"
+  },
   "experiments/11-successor-curvatures/figures/successor_entropy_traj_sweep.png": {
     "commit": "0178559",
     "hash": "1fcff6fb41d2a26c",

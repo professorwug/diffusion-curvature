@@ -48,6 +48,16 @@ def _sign_acc(a, b):
     return float(np.mean(np.sign(a[m]) == np.sign(b[m])))
 
 
+def _balanced_sign_acc(a, b):
+    """Mean of per-class sign accuracies — robust to sign-imbalanced batteries."""
+    m = np.isfinite(a) & np.isfinite(b) & (b != 0)
+    a, b = a[m], b[m]
+    pos, neg = b > 0, b < 0
+    if pos.sum() == 0 or neg.sum() == 0:
+        return float("nan")
+    return float(0.5 * ((a[pos] > 0).mean() + (a[neg] < 0).mean()))
+
+
 def _heat(grid, title, cbar_label, out_stem, vmin=-1, vmax=1, cmap="RdBu_r",
           center=0):
     sns.set_context("talk")
@@ -74,7 +84,8 @@ def colosseum_heatmaps(df: pd.DataFrame, outdir: Path) -> None:
     for (method, d, noise), g in cc.groupby(["method", "dim", "noise"]):
         a, b = g.ks_hat.to_numpy(float), g.ks_true.to_numpy(float)
         rows.append(dict(method=method, dim=int(d), noise=float(noise),
-                         pearson=_pearson(a, b), sign_acc=_sign_acc(a, b)))
+                         pearson=_pearson(a, b),
+                         sign_acc=_balanced_sign_acc(a, b)))
     s = pd.DataFrame(rows)
     s["col"] = [f"d={d}\nε={n:g}" for d, n in zip(s.dim, s.noise)]
     col_order = (s[["col", "dim", "noise"]].drop_duplicates()
@@ -83,8 +94,8 @@ def colosseum_heatmaps(df: pd.DataFrame, outdir: Path) -> None:
     for metric, kw, fname, label in [
         ("pearson", dict(vmin=-1, vmax=1, cmap="RdBu_r", center=0),
          "signed_colosseum_pearson", "Pearson r"),
-        ("sign_acc", dict(vmin=0, vmax=1, cmap="viridis", center=None),
-         "signed_colosseum_signacc", "sign accuracy"),
+        ("sign_acc", dict(vmin=0, vmax=1, cmap="RdBu_r", center=0.5),
+         "signed_colosseum_signacc", "balanced sign accuracy"),
     ]:
         grid = s.pivot(index="method", columns="col", values=metric)[col_order]
         order = grid.mean(axis=1).sort_values(ascending=False).index
