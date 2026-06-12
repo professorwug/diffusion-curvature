@@ -308,3 +308,64 @@ rule iid_plot_compact:
 rule iid_all:
     input:
         "figures/v2/colosseum_pearson_compact_v3.png",
+
+
+# ---------------------------------------------------------------------------
+# Natively signed Wasserstein curvature (Diffusion ORC) benchmark.
+# Battery is generated once with a fixed seed (signed_battery.joblib) so all
+# methods/workers see identical manifolds.
+# ---------------------------------------------------------------------------
+
+SIGNED_WORKERS = int(config.get("signed_workers", 8))
+
+
+rule signed_prototype:
+    output:
+        "processed_data/signed_prototype.csv",
+    shell:
+        "pixi run python signed_prototype.py --out {output} " + EXTRA
+
+
+rule signed_prepare:
+    output:
+        "processed_data/signed_battery.joblib",
+    shell:
+        "pixi run python benchmark_signed_on_iid.py prepare"
+
+
+rule signed_worker:
+    input:
+        "processed_data/signed_battery.joblib",
+    output:
+        "processed_data/signed_metrics_w{wid}.csv",
+    shell:
+        "pixi run python benchmark_signed_on_iid.py run "
+        f"--worker-id {{wildcards.wid}} --num-workers {SIGNED_WORKERS}"
+
+
+rule signed_merge:
+    input:
+        expand("processed_data/signed_metrics_w{wid}.csv",
+               wid=range(SIGNED_WORKERS)),
+    output:
+        "processed_data/signed_metrics.csv",
+    shell:
+        "pixi run python benchmark_signed_on_iid.py merge"
+
+
+rule signed_figures:
+    input:
+        "processed_data/signed_metrics.csv",
+    output:
+        "figures/signed/signed_colosseum_pearson.png",
+        "figures/signed/signed_colosseum_signacc.png",
+        "figures/signed/signed_sadspheres.png",
+        "figures/signed/signed_scatter.png",
+    shell:
+        "pixi run python plot_signed_benchmark.py --metrics {input} "
+        "--outdir figures/signed"
+
+
+rule signed_all:
+    input:
+        "figures/signed/signed_colosseum_pearson.png",
