@@ -1,0 +1,2 @@
+seed,T,N,gamma,mean_kl,pearson_entropy_vs_ks,spearman_entropy_vs_ks,pearson_entropy_hat_vs_real,err
+0,20,10,0.5,6.752019548964811,0.034337396609494746,0.026351750087937522,-0.06639897455042655,

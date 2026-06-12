@@ -1,0 +1,1255 @@
+dataset,instance,method,ks_hat,elapsed_s,fb_elapsed_s,err,name,dim,codim,noise,m,shape,ks_true
+colosseum,91,dc2,-0.5852973461151123,5.82,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,dc_wasserstein_ollivier,0.23962169885635376,6.87,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,dc_entropic_subtraction,-0.014595985412597656,3.77,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,hickock,-0.045564645034613695,31.46,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,orc,0.05396678339220551,4.54,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,spc_hop,6.636109944759687,741.49,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,spc_diffusion_t5,-12.958153757026375,453.07,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,laziness_knn_t5,-4.302542209625244,2.09,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,laziness_adaptive_t5,-4.297707557678223,2.07,,,d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,91,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.05-m41,2,1,0.05,41,,0.5278012204337016
+colosseum,99,dc2,0.008258819580078125,57.08,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,dc_wasserstein_ollivier,0.1173277497291565,43.81,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,dc_entropic_subtraction,-0.053662776947021484,3.85,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,hickock,-0.634830706077165,29.33,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,orc,0.028552275748645918,3.27,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,spc_hop,863.9789039605956,265.79,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,spc_diffusion_t5,-409.04526978044214,918.01,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,laziness_knn_t5,-4.340023994445801,0.16,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,laziness_adaptive_t5,-4.305006980895996,3.23,,,d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,99,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.05-m49,2,1,0.05,49,,-6.409575093981913
+colosseum,107,dc2,-1.1601990461349487,4.73,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,dc_wasserstein_ollivier,0.21737140417099,6.94,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,dc_entropic_subtraction,-0.1147317886352539,3.05,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,hickock,-6.816536479451523,25.88,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,orc,-0.0591529914263604,4.18,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,spc_hop,83.33911572734101,713.17,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,spc_diffusion_t5,261.02858485474786,554.69,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,laziness_knn_t5,-4.570346832275391,0.25,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,laziness_adaptive_t5,-4.491349697113037,0.47,,,d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,107,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m7,2,1,0.1,7,,-3.4056151315376026
+colosseum,115,dc2,-1.0192060470581055,7.35,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,dc_wasserstein_ollivier,0.1805720329284668,9.6,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,dc_entropic_subtraction,0.022342681884765625,3.17,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,hickock,-5.1137498272642015,27.13,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,orc,-0.10445399808698427,3.52,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,spc_hop,-1.1497134146948536,651.4,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,spc_diffusion_t5,383.7134998935509,381.85,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,laziness_knn_t5,-4.352733612060547,0.12,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,laziness_adaptive_t5,-4.339221000671387,0.36,,,d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,115,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m15,2,1,0.1,15,,0.4176228933449855
+colosseum,123,dc2,-1.3440511226654053,4.53,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,dc_wasserstein_ollivier,0.2548106908798218,8.69,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,dc_entropic_subtraction,-0.29662036895751953,3.05,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,hickock,-6.273586879859426,26.19,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,orc,-0.017031951468837077,4.23,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,spc_hop,231.7857732702257,589.54,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,spc_diffusion_t5,127.0446709806685,719.47,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,laziness_knn_t5,-4.574638366699219,0.24,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,laziness_adaptive_t5,-4.518621444702148,0.23,,,d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,123,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m23,2,1,0.1,23,,-1.347434689964345
+colosseum,131,dc2,-1.543273687362671,6.05,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,dc_wasserstein_ollivier,0.16152894496917725,8.48,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,dc_entropic_subtraction,-0.1818523406982422,1.36,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,hickock,-8.758151161709543,25.4,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,orc,-0.040211785815401656,5.06,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,spc_hop,44.01734696533497,605.83,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,spc_diffusion_t5,147.9657074702204,418.17,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,laziness_knn_t5,-4.464776515960693,2.56,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,laziness_adaptive_t5,-4.433926582336426,0.33,,,d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,131,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m31,2,1,0.1,31,,-9.531423472903345
+colosseum,139,dc2,-1.492722749710083,8.16,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,dc_wasserstein_ollivier,0.12483108043670654,7.59,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,dc_entropic_subtraction,-0.11940717697143555,4.97,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,hickock,-6.768711055748332,26.31,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,orc,0.06402528677386998,4.01,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,spc_hop,-103.61659719618228,704.68,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,spc_diffusion_t5,336.6194036889866,787.05,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,laziness_knn_t5,-4.562912940979004,0.13,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,laziness_adaptive_t5,-4.504722595214844,2.43,,,d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,139,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m39,2,1,0.1,39,,-12.071116017346233
+colosseum,147,dc2,-1.1487973928451538,22.25,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,dc_wasserstein_ollivier,0.42821866273880005,9.03,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,dc_entropic_subtraction,-0.07349061965942383,3.39,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,hickock,-5.047124684947864,26.32,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,orc,0.01777995457294281,3.72,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,spc_hop,716.3311004438149,591.62,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,spc_diffusion_t5,69.89893868307757,466.21,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,laziness_knn_t5,-4.275275230407715,0.29,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,laziness_adaptive_t5,-4.198068618774414,0.25,,,d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,147,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m47,2,1,0.1,47,,11.171497030908576
+colosseum,155,dc2,-1.0354493856430054,5.59,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,dc_wasserstein_ollivier,0.26258158683776855,9.08,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,dc_entropic_subtraction,0.04083061218261719,2.33,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,hickock,-22.12884229401465,28.89,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,orc,-0.06886331563032481,5.54,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,spc_hop,-20.23881398836522,620.33,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,spc_diffusion_t5,94.00616277634045,642.76,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,laziness_knn_t5,-4.957619667053223,0.53,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,laziness_adaptive_t5,-4.906914710998535,1.21,,,d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,155,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m5,2,1,0.2,5,,-11.459484068881572
+colosseum,163,dc2,-0.5651545524597168,18.82,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,dc_wasserstein_ollivier,0.2870619297027588,45.0,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,dc_entropic_subtraction,-0.17499923706054688,6.2,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,hickock,-17.82900442471408,24.63,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,orc,0.05405701143264484,3.66,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,spc_hop,19.06142750568635,646.25,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,spc_diffusion_t5,374.439011395667,421.15,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,laziness_knn_t5,-4.621051788330078,0.43,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,laziness_adaptive_t5,-4.623712539672852,1.1,,,d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,163,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m13,2,1,0.2,13,,1.9713238342009687
+colosseum,171,dc2,-1.3085798025131226,8.67,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,dc_wasserstein_ollivier,0.22811436653137207,9.63,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,dc_entropic_subtraction,-0.24105358123779297,2.04,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,hickock,-21.569787752297195,25.65,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,orc,-0.029983390176319014,4.71,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,spc_hop,-85.91972374133995,671.17,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,spc_diffusion_t5,284.31685691686585,786.51,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,laziness_knn_t5,-4.926382064819336,0.53,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,laziness_adaptive_t5,-4.865355014801025,0.4,,,d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,171,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m21,2,1,0.2,21,,-6.522284137266849
+colosseum,179,dc2,-0.8758423328399658,9.62,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,dc_wasserstein_ollivier,0.3878263831138611,10.0,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,dc_entropic_subtraction,-0.13607025146484375,3.56,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,hickock,-17.581252447272846,24.49,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,orc,-0.27099310579669256,3.83,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,spc_hop,-20.113498892182633,724.58,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,spc_diffusion_t5,-632.1687027708759,409.11,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,laziness_knn_t5,-4.9491071701049805,0.24,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,laziness_adaptive_t5,-4.914492607116699,0.78,,,d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,179,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m29,2,1,0.2,29,,-0.8681528917278671
+colosseum,187,dc2,-0.945806622505188,5.18,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,dc_wasserstein_ollivier,0.1505942940711975,9.17,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,dc_entropic_subtraction,0.07167577743530273,3.27,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,hickock,-15.382308493319254,23.73,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,orc,-0.1399675047440948,5.07,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,spc_hop,-19.376551881186458,623.34,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,spc_diffusion_t5,-129.831001408067,436.01,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,laziness_knn_t5,-4.931504249572754,0.13,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,laziness_adaptive_t5,-4.908184051513672,0.66,,,d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,187,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m37,2,1,0.2,37,,-5.120472069525654
+colosseum,195,dc2,-1.0319340229034424,11.97,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,dc_wasserstein_ollivier,0.21544134616851807,8.53,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,dc_entropic_subtraction,-0.1014561653137207,3.19,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,hickock,-18.563262533411226,24.02,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,orc,-0.09111945605471766,4.1,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,spc_hop,79.16527454689916,579.54,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,spc_diffusion_t5,-128.18107577259912,370.74,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,laziness_knn_t5,-4.911518096923828,0.27,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,laziness_adaptive_t5,-4.865669250488281,0.33,,,d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,195,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m45,2,1,0.2,45,,-6.3207157402131156
+colosseum,203,dc2,-0.5986018180847168,17.89,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,dc_wasserstein_ollivier,-0.8407495021820068,5.73,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,dc_entropic_subtraction,0.21833229064941406,3.21,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,hickock,4.357328333070256,27.48,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,orc,-0.1302568959787626,3.75,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,spc_hop,-228.54023414694865,635.56,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,spc_diffusion_t5,134.93424130424978,428.09,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,laziness_knn_t5,-4.855944633483887,0.57,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,laziness_adaptive_t5,-4.763052940368652,0.5,,,d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,203,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m3,3,1,0.01,3,,-17.279350272858508
+colosseum,211,dc2,-0.4498157501220703,12.23,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,dc_wasserstein_ollivier,-0.6893788576126099,7.01,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,dc_entropic_subtraction,0.11477088928222656,5.44,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,hickock,4.303668510531817,28.14,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,orc,-0.044473425234895746,4.77,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,spc_hop,420.799309564058,669.68,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,spc_diffusion_t5,-28.065838561592244,448.94,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,laziness_knn_t5,-4.940780162811279,0.51,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,laziness_adaptive_t5,-4.880091667175293,0.53,,,d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,211,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m11,3,1,0.01,11,,-8.077282352134617
+colosseum,219,dc2,0.15203619003295898,4.05,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,dc_wasserstein_ollivier,-0.783103346824646,7.81,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,dc_entropic_subtraction,0.3361039161682129,3.49,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,hickock,5.896244982688847,26.36,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,orc,0.11357771675200683,4.33,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,spc_hop,653.3885934652102,629.31,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,spc_diffusion_t5,924.5096196728451,440.95,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,laziness_knn_t5,-4.539913654327393,0.59,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,laziness_adaptive_t5,-4.466231346130371,0.51,,,d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,219,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m19,3,1,0.01,19,,3.5892393100582423
+colosseum,227,dc2,0.1751871109008789,6.87,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,dc_wasserstein_ollivier,-0.6506943702697754,7.41,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,dc_entropic_subtraction,0.2172260284423828,1.49,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,hickock,5.14887919759066,24.77,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,orc,-0.10218483756236345,5.24,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,spc_hop,-199.4482178007671,803.06,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,spc_diffusion_t5,-73.73663322760058,392.46,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,laziness_knn_t5,-4.940188884735107,0.38,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,laziness_adaptive_t5,-4.955370903015137,0.3,,,d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,227,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m27,3,1,0.01,27,,-0.5543603774335978
+colosseum,235,dc2,0.20366191864013672,5.57,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,dc_wasserstein_ollivier,-0.36030006408691406,7.8,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,dc_entropic_subtraction,0.42542552947998047,3.04,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,hickock,6.049641761273177,23.81,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,orc,-0.07359566059403376,3.74,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,spc_hop,65.84848385500847,630.92,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,spc_diffusion_t5,-95.38446938685931,456.59,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,laziness_knn_t5,-4.904180526733398,0.12,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,laziness_adaptive_t5,-4.874951362609863,0.29,,,d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,235,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m35,3,1,0.01,35,,11.528085956298673
+colosseum,243,dc2,-0.08061742782592773,6.39,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,dc_wasserstein_ollivier,-0.6521162986755371,9.69,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,dc_entropic_subtraction,0.5301423072814941,1.86,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,hickock,5.899900667968877,26.51,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,orc,0.06584339190068252,5.92,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,spc_hop,-73.06665238714147,913.36,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,spc_diffusion_t5,451.1049525063842,490.12,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,laziness_knn_t5,-4.670204162597656,0.12,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,laziness_adaptive_t5,-4.636356830596924,0.13,,,d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,243,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m43,3,1,0.01,43,,10.82386926828891
+colosseum,251,dc2,-0.4949312210083008,4.25,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,dc_wasserstein_ollivier,-0.7734031677246094,8.5,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,dc_entropic_subtraction,0.5038061141967773,5.07,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,hickock,4.835990258324545,24.54,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,orc,-0.038620029557380205,3.55,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,spc_hop,-26.06669041386786,560.41,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,spc_diffusion_t5,-30.703276214812757,782.59,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,laziness_knn_t5,-5.0209760665893555,0.27,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,laziness_adaptive_t5,-4.987117767333984,0.59,,,d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,251,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m1,3,1,0.05,1,,-9.192148182024921
+colosseum,259,dc2,-0.28927183151245117,4.49,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,dc_wasserstein_ollivier,-0.5307515859603882,9.16,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,dc_entropic_subtraction,0.09420061111450195,3.1,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,hickock,4.081886430814122,23.35,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,orc,-0.2118463378114309,3.77,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,spc_hop,-30.13008814897333,598.38,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,spc_diffusion_t5,-20.743490367191683,416.44,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,laziness_knn_t5,-5.103682518005371,0.24,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,laziness_adaptive_t5,-5.069656848907471,0.24,,,d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,259,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m9,3,1,0.05,9,,-2.4126405968624063
+colosseum,267,dc2,-0.46984100341796875,6.03,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,dc_wasserstein_ollivier,-0.5803565979003906,4.55,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,dc_entropic_subtraction,0.16888904571533203,2.03,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,hickock,4.347454243916335,26.82,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,orc,0.026122110395882255,5.9,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,spc_hop,-147.35013087878906,619.08,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,spc_diffusion_t5,-17.931365163822676,429.09,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,laziness_knn_t5,-4.772148132324219,0.14,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,laziness_adaptive_t5,-4.657541275024414,0.35,,,d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,267,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m17,3,1,0.05,17,,-4.788236654893032
+colosseum,275,dc2,-1.2645111083984375,4.43,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,dc_wasserstein_ollivier,-0.7875748872756958,8.84,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,dc_entropic_subtraction,0.3102602958679199,5.13,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,hickock,4.233637388462923,24.33,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,orc,-0.18554308476768508,4.18,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,spc_hop,181.07139783539216,609.01,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,spc_diffusion_t5,-51.47257350282,393.01,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,laziness_knn_t5,-5.054032325744629,0.23,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,laziness_adaptive_t5,-4.970728397369385,0.33,,,d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,275,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m25,3,1,0.05,25,,-16.325269614337365
+colosseum,283,dc2,-1.191579818725586,4.39,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,dc_wasserstein_ollivier,-0.6204442977905273,5.89,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,dc_entropic_subtraction,0.15246343612670898,3.43,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,hickock,4.0266459999761395,26.66,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,orc,-0.01766603832063525,4.39,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,spc_hop,-33.56131050367811,701.14,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,spc_diffusion_t5,140.1987498024474,506.2,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,laziness_knn_t5,-4.827342987060547,0.12,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,laziness_adaptive_t5,-4.789117813110352,0.56,,,d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,283,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m33,3,1,0.05,33,,-4.720084287511741
+colosseum,291,dc2,-0.669062614440918,9.98,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,dc_wasserstein_ollivier,-0.8427568674087524,14.55,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,dc_entropic_subtraction,0.2110757827758789,3.11,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,hickock,4.149456378879968,23.53,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,orc,0.041091330535938296,3.73,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,spc_hop,59.04736219745382,920.65,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,spc_diffusion_t5,199.6991848691751,376.34,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,laziness_knn_t5,-4.67838191986084,0.22,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,laziness_adaptive_t5,-4.58415412902832,0.34,,,d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,291,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m41,3,1,0.05,41,,-14.048946319134666
+colosseum,299,dc2,-0.11035537719726562,12.39,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,dc_wasserstein_ollivier,-0.8805537223815918,26.36,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,dc_entropic_subtraction,0.22988510131835938,4.51,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,hickock,4.118281505455453,26.55,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,orc,-0.04453099057935037,3.67,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,spc_hop,81.96717820895988,666.75,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,spc_diffusion_t5,-370.9634752435368,448.78,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,laziness_knn_t5,-5.017102241516113,0.21,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,laziness_adaptive_t5,-4.926575660705566,0.46,,,d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,299,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m49,3,1,0.05,49,,-15.572649814171891
+colosseum,307,dc2,-1.035433292388916,5.29,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,dc_wasserstein_ollivier,-0.5566734075546265,8.44,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,dc_entropic_subtraction,0.3621702194213867,3.92,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,hickock,3.677073368241374,26.65,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,orc,-0.0035969739157521792,5.38,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,spc_hop,132.48685019208875,635.47,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,spc_diffusion_t5,-21.068595494728015,417.54,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,laziness_knn_t5,-4.8205366134643555,0.17,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,laziness_adaptive_t5,-4.792303085327148,0.67,,,d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,307,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m7,3,1,0.1,7,,9.335000772754972
+colosseum,315,dc2,-1.2251992225646973,13.87,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,dc_wasserstein_ollivier,-0.7630181312561035,23.66,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,dc_entropic_subtraction,0.3615279197692871,3.83,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,hickock,3.1178798038650104,25.39,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,orc,-0.03712549235271808,3.72,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,spc_hop,41.25518312579258,936.73,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,spc_diffusion_t5,27.300332643549847,404.24,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,laziness_knn_t5,-5.007486343383789,0.34,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,laziness_adaptive_t5,-4.915565013885498,0.32,,,d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,315,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m15,3,1,0.1,15,,-3.9568780344655248
+colosseum,323,dc2,-0.5157737731933594,4.4,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,dc_wasserstein_ollivier,-0.7307825088500977,6.52,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,dc_entropic_subtraction,0.17533254623413086,3.59,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,hickock,2.6040612475158627,26.54,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,orc,-0.2615277762249214,3.79,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,spc_hop,313.4867685343155,703.24,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,spc_diffusion_t5,-132.2275233891248,510.01,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,laziness_knn_t5,-5.227651596069336,0.14,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,laziness_adaptive_t5,-5.171355247497559,0.26,,,d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,323,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m23,3,1,0.1,23,,-5.881332340738363
+colosseum,331,dc2,-1.5261316299438477,4.7,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,dc_wasserstein_ollivier,-0.6959360837936401,7.15,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,dc_entropic_subtraction,0.13834381103515625,2.99,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,hickock,1.5899593805729573,24.88,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,orc,-0.04114818947761515,4.96,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,spc_hop,-5062.49710777688,605.34,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,spc_diffusion_t5,331.44093388040767,450.92,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,laziness_knn_t5,-4.969008445739746,0.16,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,laziness_adaptive_t5,-4.950211524963379,0.24,,,d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,331,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m31,3,1,0.1,31,,-7.3729432246761295
+colosseum,339,dc2,-0.19122576713562012,4.91,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,dc_wasserstein_ollivier,-0.696731686592102,3.18,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,dc_entropic_subtraction,0.2806878089904785,2.04,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,hickock,2.7803370962218525,38.85,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,orc,-0.006811414950398849,7.95,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,spc_hop,13.297484146538713,659.62,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,spc_diffusion_t5,13.01267802845694,457.17,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,laziness_knn_t5,-4.930159568786621,0.36,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,laziness_adaptive_t5,-4.897029399871826,0.67,,,d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,339,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m39,3,1,0.1,39,,-1.5126021159209304
+colosseum,347,dc2,-1.0773849487304688,5.43,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,dc_wasserstein_ollivier,-0.9412420988082886,9.32,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,dc_entropic_subtraction,0.22440004348754883,4.91,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,hickock,1.3011802432345376,26.1,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,orc,-0.13986084578524843,3.94,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,spc_hop,-41.77429164764352,673.48,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,spc_diffusion_t5,41.655223808381955,468.17,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,laziness_knn_t5,-5.329885482788086,0.13,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,laziness_adaptive_t5,-5.277788162231445,0.29,,,d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,347,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m47,3,1,0.1,47,,-22.465241428099063
+colosseum,355,dc2,-1.2390944957733154,4.46,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,dc_wasserstein_ollivier,-0.6141973733901978,11.24,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,dc_entropic_subtraction,0.3656601905822754,2.11,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,hickock,-0.8317637439767327,24.29,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,orc,-0.19348272824497176,5.0,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,spc_hop,116.42327698357474,693.48,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,spc_diffusion_t5,87.03111100394412,579.33,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,laziness_knn_t5,-5.5731000900268555,0.2,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,laziness_adaptive_t5,-5.5516791343688965,0.3,,,d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,355,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m5,3,1,0.2,5,,6.199093760565281
+colosseum,363,dc2,-1.4378862380981445,4.31,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,dc_wasserstein_ollivier,-0.7979236841201782,10.52,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,dc_entropic_subtraction,0.1936359405517578,1.99,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,hickock,-2.9997968221969162,24.42,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,orc,-0.19954744902065125,5.25,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,spc_hop,231.4619081374381,986.57,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,spc_diffusion_t5,-11.134135451957569,480.52,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,laziness_knn_t5,-5.529962062835693,0.16,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,laziness_adaptive_t5,-5.441861629486084,1.76,,,d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,363,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m13,3,1,0.2,13,,-8.998848666150176
+colosseum,371,dc2,-1.527113914489746,6.01,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,dc_wasserstein_ollivier,-0.500697135925293,9.79,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,dc_entropic_subtraction,0.5166325569152832,1.73,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,hickock,-1.1409825548919665,25.6,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,orc,-0.14619968418949325,4.72,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,spc_hop,-70.56388306745744,1054.03,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,spc_diffusion_t5,-135.28475131695038,484.33,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,laziness_knn_t5,-5.233386993408203,0.19,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,laziness_adaptive_t5,-5.205691337585449,0.35,,,d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,371,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m21,3,1,0.2,21,,-1.0153501457130254
+colosseum,379,dc2,-1.136152982711792,5.21,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,dc_wasserstein_ollivier,-0.9157654047012329,10.59,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,dc_entropic_subtraction,0.41611528396606445,2.42,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,hickock,-0.6768405563320605,25.57,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,orc,-0.2917382097591122,5.77,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,spc_hop,-118.86487632499055,678.62,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,spc_diffusion_t5,351.13729747083806,500.75,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,laziness_knn_t5,-5.8143815994262695,0.13,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,laziness_adaptive_t5,-5.800023555755615,0.17,,,d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,379,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m29,3,1,0.2,29,,-14.71056236020721
+colosseum,387,dc2,-1.5842547416687012,7.11,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,dc_wasserstein_ollivier,-0.8288693428039551,5.81,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,dc_entropic_subtraction,0.19951200485229492,1.43,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,hickock,-3.3133953170628407,24.25,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,orc,-0.13596705391589248,4.67,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,spc_hop,-82.33915143557239,1053.8,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,spc_diffusion_t5,52.13283329543763,453.23,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,laziness_knn_t5,-5.4866156578063965,0.27,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,laziness_adaptive_t5,-5.459502696990967,0.82,,,d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,387,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m37,3,1,0.2,37,,-15.812660043089348
+colosseum,395,dc2,-1.2490341663360596,9.04,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,dc_wasserstein_ollivier,-0.8494994640350342,10.5,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,dc_entropic_subtraction,0.14567232131958008,3.54,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,hickock,-2.999983800530753,26.69,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,orc,-0.1490081684569928,5.89,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,spc_hop,-2551.3620042299835,522.32,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,spc_diffusion_t5,-26.136352915513083,150.31,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,laziness_knn_t5,-5.67929220199585,0.13,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,laziness_adaptive_t5,-5.633607864379883,2.45,,,d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,395,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m45,3,1,0.2,45,,-12.275941739911806
+colosseum,403,dc2,-0.6838726997375488,21.43,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,dc_wasserstein_ollivier,-0.8680167198181152,209.43,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,dc_entropic_subtraction,0.6137371063232422,9.91,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,hickock,11.792873464985725,35.26,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,orc,-0.12391931429777074,3.19,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,spc_hop,,0.0,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,laziness_knn_t5,-5.2233195304870605,0.13,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,laziness_adaptive_t5,-5.145898342132568,0.18,,,d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,403,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m3,4,1,0.01,3,,-19.183262069204993
+colosseum,411,dc2,-0.28166675567626953,2.63,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,dc_wasserstein_ollivier,-0.8497514724731445,6.81,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,dc_entropic_subtraction,0.2977943420410156,2.39,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,hickock,10.940316621461706,34.89,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,orc,-0.11095737612381106,3.17,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,spc_hop,,0.0,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,laziness_knn_t5,-5.533672332763672,0.09,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,laziness_adaptive_t5,-5.460986614227295,0.2,,,d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,411,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m11,4,1,0.01,11,,-12.055832539692874
+colosseum,419,dc2,-0.42542505264282227,3.33,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,dc_wasserstein_ollivier,-0.9320691823959351,6.85,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,dc_entropic_subtraction,0.36151981353759766,3.35,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,hickock,10.93714755946314,29.79,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,orc,-0.1437096147596896,4.12,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,spc_hop,,0.0,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,laziness_knn_t5,-5.7644500732421875,0.11,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,laziness_adaptive_t5,-5.742348670959473,0.23,,,d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,419,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m19,4,1,0.01,19,,-23.088254244720858
+colosseum,427,dc2,-0.4791750907897949,4.32,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,dc_wasserstein_ollivier,-0.7758541107177734,6.22,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,dc_entropic_subtraction,0.7750406265258789,3.39,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,hickock,12.188265492520685,29.77,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,orc,-0.13598634815099367,4.06,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,spc_hop,,0.0,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,laziness_knn_t5,-5.6193742752075195,0.3,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,laziness_adaptive_t5,-5.559233665466309,0.3,,,d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,427,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m27,4,1,0.01,27,,-21.61948146468999
+colosseum,435,dc2,-0.2422161102294922,2.69,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,dc_wasserstein_ollivier,-0.8774020671844482,4.34,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,dc_entropic_subtraction,0.5755701065063477,2.51,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,hickock,11.579007165396284,31.36,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,orc,-0.18833281773695398,3.27,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,spc_hop,,0.0,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,laziness_knn_t5,-5.729689598083496,0.1,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,laziness_adaptive_t5,-5.691407680511475,0.15,,,d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,435,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m35,4,1,0.01,35,,-21.955375561404615
+colosseum,443,dc2,-0.32625579833984375,2.74,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,dc_wasserstein_ollivier,-0.9357606172561646,5.83,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,dc_entropic_subtraction,0.25958251953125,3.02,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,hickock,11.09964077665788,33.83,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,orc,-0.0804339938417491,2.84,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,spc_hop,,0.0,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,laziness_knn_t5,-5.5513715744018555,0.11,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,laziness_adaptive_t5,-5.508576393127441,0.16,,,d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,443,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m43,4,1,0.01,43,,-21.56433812641007
+colosseum,451,dc2,-0.4387626647949219,3.58,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,dc_wasserstein_ollivier,-0.9519416093826294,6.84,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,dc_entropic_subtraction,0.5895905494689941,2.73,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,hickock,11.74389008011318,32.38,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,orc,-0.16337207296511133,3.34,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,spc_hop,,0.0,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,laziness_knn_t5,-5.858221054077148,0.12,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,laziness_adaptive_t5,-5.8073649406433105,0.19,,,d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,451,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m1,4,1,0.05,1,,-32.1420223941027
+colosseum,459,dc2,-0.6639466285705566,2.92,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,dc_wasserstein_ollivier,-0.6335394382476807,7.07,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,dc_entropic_subtraction,0.5413656234741211,3.25,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,hickock,11.342606737985314,31.38,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,orc,-0.016602929988136266,2.93,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,spc_hop,,0.0,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,laziness_knn_t5,-5.199286460876465,0.11,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,laziness_adaptive_t5,-5.156141757965088,0.19,,,d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,459,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m9,4,1,0.05,9,,7.97331730782453
+colosseum,467,dc2,-0.2923259735107422,3.15,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,dc_wasserstein_ollivier,-0.9701200723648071,6.02,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,dc_entropic_subtraction,0.4158787727355957,3.88,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,hickock,11.418324235986223,32.13,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,orc,-0.2797487970292786,3.19,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,spc_hop,,0.0,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,laziness_knn_t5,-5.981318950653076,0.11,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,laziness_adaptive_t5,-5.892568588256836,0.17,,,d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,467,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m17,4,1,0.05,17,,-30.722430481860254
+colosseum,475,dc2,0.7170753479003906,4.5,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,dc_wasserstein_ollivier,-0.25124967098236084,9.44,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,dc_entropic_subtraction,1.2480945587158203,3.67,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,hickock,13.36142783520661,28.62,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,orc,-0.05578755411208986,3.75,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,spc_hop,,0.0,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,laziness_knn_t5,-5.2339959144592285,0.12,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,laziness_adaptive_t5,-5.169212818145752,0.34,,,d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,475,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m25,4,1,0.05,25,,79.4642972956821
+colosseum,483,dc2,-0.5471339225769043,3.52,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,dc_wasserstein_ollivier,-0.7684311866760254,5.93,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,dc_entropic_subtraction,0.29354190826416016,2.96,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,hickock,11.050884808737631,32.86,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,orc,-0.07437917196025526,2.97,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,spc_hop,,0.0,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,laziness_knn_t5,-5.34754753112793,0.12,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,laziness_adaptive_t5,-5.329712867736816,0.18,,,d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,483,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m33,4,1,0.05,33,,-7.534435669734771
+colosseum,491,dc2,-0.4071512222290039,4.46,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,dc_wasserstein_ollivier,-0.8953664302825928,5.89,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,dc_entropic_subtraction,0.4206690788269043,2.28,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,hickock,11.190872948466549,28.97,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,orc,-0.1467573195415498,3.9,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,spc_hop,,0.0,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,laziness_knn_t5,-5.831124305725098,0.2,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,laziness_adaptive_t5,-5.800940036773682,0.29,,,d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,491,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m41,4,1,0.05,41,,-26.437617057103765
+colosseum,499,dc2,-0.27209043502807617,4.99,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,dc_wasserstein_ollivier,-0.942511796951294,4.48,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,dc_entropic_subtraction,0.2489471435546875,2.63,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,hickock,10.798656275313256,30.34,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,orc,-0.19425540703867492,3.26,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,spc_hop,,0.0,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,laziness_knn_t5,-5.790039539337158,0.13,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,laziness_adaptive_t5,-5.667769432067871,0.33,,,d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,499,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m49,4,1,0.05,49,,-18.38321674811839
+colosseum,507,dc2,-0.5945515632629395,3.28,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,dc_wasserstein_ollivier,-0.6193594932556152,5.5,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,dc_entropic_subtraction,0.6498117446899414,2.64,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,hickock,12.02425897679827,28.79,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,orc,-0.14427584089123063,3.23,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,spc_hop,,0.0,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,laziness_knn_t5,-5.686497688293457,0.13,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,laziness_adaptive_t5,-5.611337661743164,0.24,,,d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,507,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m7,4,1,0.1,7,,20.514341655969236
+colosseum,515,dc2,-0.6575403213500977,3.73,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,dc_wasserstein_ollivier,-0.9543846845626831,6.9,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,dc_entropic_subtraction,0.46887922286987305,2.53,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,hickock,11.562326257971726,31.87,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,orc,-0.09258932719497356,3.49,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,spc_hop,,0.0,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,laziness_knn_t5,-5.7307257652282715,0.13,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,laziness_adaptive_t5,-5.653106689453125,0.23,,,d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,515,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m15,4,1,0.1,15,,-13.409045006609139
+colosseum,523,dc2,-1.2077713012695312,4.2,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,dc_wasserstein_ollivier,-0.8834230899810791,5.09,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,dc_entropic_subtraction,0.6456332206726074,2.79,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,hickock,11.347804534330828,28.18,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,orc,-0.2546399570231845,3.15,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,spc_hop,,0.0,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,laziness_knn_t5,-5.908275127410889,0.18,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,laziness_adaptive_t5,-5.857295989990234,0.24,,,d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,523,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m23,4,1,0.1,23,,-13.07001244189393
+colosseum,531,dc2,-0.9605007171630859,4.98,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,dc_wasserstein_ollivier,-0.863822340965271,11.14,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,dc_entropic_subtraction,0.5574665069580078,2.62,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,hickock,11.720884704760657,28.93,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,orc,-0.20949528853995913,4.17,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,spc_hop,,0.0,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,laziness_knn_t5,-5.793130874633789,0.28,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,laziness_adaptive_t5,-5.723313331604004,0.28,,,d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,531,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m31,4,1,0.1,31,,10.954616815677618
+colosseum,539,dc2,-0.6039671897888184,2.55,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,dc_wasserstein_ollivier,-0.8060535192489624,5.1,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,dc_entropic_subtraction,0.8737645149230957,2.54,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,hickock,12.406054057079322,26.35,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,orc,-0.020099282369718075,3.4,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,spc_hop,,0.0,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,laziness_knn_t5,-5.499452590942383,0.58,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,laziness_adaptive_t5,-5.431396484375,0.31,,,d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,539,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m39,4,1,0.1,39,,-9.574465611183768
+colosseum,547,dc2,-0.49947547912597656,4.06,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,dc_wasserstein_ollivier,-0.7311609983444214,9.04,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,dc_entropic_subtraction,0.47077512741088867,2.94,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,hickock,11.318927898685196,27.57,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,orc,-0.19898187202901568,3.84,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,spc_hop,,0.0,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,laziness_knn_t5,-5.833138465881348,0.14,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,laziness_adaptive_t5,-5.773390769958496,0.28,,,d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,547,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m47,4,1,0.1,47,,-4.035652127197377
+colosseum,555,dc2,-1.0935781002044678,4.3,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,dc_wasserstein_ollivier,-0.9971351623535156,5.55,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,dc_entropic_subtraction,0.5632987022399902,3.31,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,hickock,11.387679409686704,28.99,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,orc,-0.1901682283477846,3.5,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,spc_hop,,0.0,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,laziness_knn_t5,-5.9363861083984375,0.14,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,laziness_adaptive_t5,-5.853819370269775,0.27,,,d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,555,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m5,4,1,0.2,5,,-23.187554229611386
+colosseum,563,dc2,-1.2136509418487549,3.82,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,dc_wasserstein_ollivier,-0.755791187286377,7.36,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,dc_entropic_subtraction,0.9422907829284668,3.15,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,hickock,12.28698207426967,28.76,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,orc,-0.13474780036045747,2.97,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,spc_hop,,0.0,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,laziness_knn_t5,-5.763511657714844,0.13,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,laziness_adaptive_t5,-5.734027862548828,0.27,,,d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,563,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m13,4,1,0.2,13,,11.94440640306534
+colosseum,571,dc2,-0.7003960609436035,4.45,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,dc_wasserstein_ollivier,-0.751961350440979,7.05,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,dc_entropic_subtraction,0.8733997344970703,2.33,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,hickock,12.372389055152107,28.68,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,orc,-0.19646035599774306,3.74,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,spc_hop,,0.0,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,laziness_knn_t5,-5.691357612609863,0.13,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,laziness_adaptive_t5,-5.674078941345215,0.32,,,d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,571,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m21,4,1,0.2,21,,-7.4802192229001
+colosseum,579,dc2,-0.4328145980834961,3.88,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,dc_wasserstein_ollivier,-0.8054105043411255,8.81,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,dc_entropic_subtraction,0.8449797630310059,3.56,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,hickock,12.860412230762668,28.93,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,orc,0.05776715439320905,3.29,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,spc_hop,,0.0,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,laziness_knn_t5,-5.610047817230225,0.27,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,laziness_adaptive_t5,-5.555335998535156,0.22,,,d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,579,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m29,4,1,0.2,29,,-11.806480535596494
+colosseum,587,dc2,-1.0631380081176758,4.0,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,dc_wasserstein_ollivier,-0.879986047744751,7.16,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,dc_entropic_subtraction,0.8190822601318359,3.98,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,hickock,11.616013781956264,26.76,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,orc,-0.24177938897574133,3.36,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,spc_hop,,0.0,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,laziness_knn_t5,-5.975488662719727,0.13,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,laziness_adaptive_t5,-5.9390716552734375,0.28,,,d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,587,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m37,4,1,0.2,37,,-23.53222022266359
+colosseum,595,dc2,-0.7719709873199463,3.95,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,dc_wasserstein_ollivier,-0.9143286943435669,9.2,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,dc_entropic_subtraction,0.6455340385437012,3.02,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,hickock,12.458847535919539,25.77,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,orc,-0.13381205915817354,4.84,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,spc_hop,,0.0,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,laziness_knn_t5,-5.8751325607299805,0.17,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,laziness_adaptive_t5,-5.848368167877197,0.58,,,d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,595,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m45,4,1,0.2,45,,-16.810988343286787
+colosseum,603,dc2,0.11431407928466797,5.1,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,dc_wasserstein_ollivier,-0.11467611789703369,6.55,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,dc_entropic_subtraction,2.092353343963623,2.47,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,hickock,17.203130062514134,25.91,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,orc,-0.26803303712778337,3.9,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,spc_hop,,0.0,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,laziness_knn_t5,-6.361011505126953,0.13,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,laziness_adaptive_t5,-6.326092720031738,0.19,,,d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,603,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m3,5,1,0.01,3,,-45.87110406417848
+colosseum,611,dc2,-0.01911020278930664,6.16,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,dc_wasserstein_ollivier,-0.44562482833862305,7.85,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,dc_entropic_subtraction,0.7482314109802246,2.16,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,hickock,16.599107883006827,26.32,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,orc,-0.30730000990432077,3.63,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,spc_hop,,0.0,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,laziness_knn_t5,-6.329222679138184,0.13,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,laziness_adaptive_t5,-6.29389762878418,0.29,,,d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,611,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m11,5,1,0.01,11,,-20.56377351165343
+colosseum,619,dc2,-0.12825775146484375,4.94,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,dc_wasserstein_ollivier,-0.4951198101043701,6.81,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,dc_entropic_subtraction,0.825279712677002,2.18,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,hickock,16.28657057800116,26.29,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,orc,-0.15917567781531966,4.89,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,spc_hop,,0.0,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,laziness_knn_t5,-6.050640106201172,0.21,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,laziness_adaptive_t5,-6.0526885986328125,0.22,,,d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,619,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m19,5,1,0.01,19,,-12.14843541939915
+colosseum,627,dc2,-0.23633098602294922,5.56,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,dc_wasserstein_ollivier,-0.43355071544647217,6.64,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,dc_entropic_subtraction,1.0668911933898926,3.27,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,hickock,16.655167888702113,25.83,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,orc,-0.32723547212499254,3.41,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,spc_hop,,0.0,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,laziness_knn_t5,-6.443752765655518,0.22,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,laziness_adaptive_t5,-6.411627769470215,0.25,,,d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,627,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m27,5,1,0.01,27,,-37.90651405841995
+colosseum,635,dc2,-0.07072210311889648,4.33,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,dc_wasserstein_ollivier,-0.3571970462799072,6.58,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,dc_entropic_subtraction,0.8974475860595703,2.5,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,hickock,16.620575041374373,29.03,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,orc,-0.2329131903865087,6.08,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,spc_hop,,0.0,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,laziness_knn_t5,-6.198913097381592,0.13,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,laziness_adaptive_t5,-6.208080291748047,0.57,,,d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,635,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m35,5,1,0.01,35,,-5.6207732106129935
+colosseum,643,dc2,-0.09633731842041016,5.17,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,dc_wasserstein_ollivier,-0.3601951599121094,6.37,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,dc_entropic_subtraction,1.1616873741149902,2.27,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,hickock,16.6333999606673,29.57,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,orc,-0.24082799082448766,3.65,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,spc_hop,,0.0,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,laziness_knn_t5,-6.2743425369262695,0.17,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,laziness_adaptive_t5,-6.246780872344971,0.3,,,d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,643,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m43,5,1,0.01,43,,-28.593771469377838
+colosseum,651,dc2,0.27753686904907227,4.05,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,dc_wasserstein_ollivier,-0.11203432083129883,4.7,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,dc_entropic_subtraction,2.2119956016540527,2.63,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,hickock,17.33659707672664,29.1,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,orc,-0.23155984183984035,3.52,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,spc_hop,,0.0,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,laziness_knn_t5,-6.3164520263671875,0.3,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,laziness_adaptive_t5,-6.2903151512146,0.24,,,d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,651,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m1,5,1,0.05,1,,-41.63939028455811
+colosseum,659,dc2,-0.031348228454589844,4.28,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,dc_wasserstein_ollivier,-0.27151191234588623,5.43,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,dc_entropic_subtraction,1.6552762985229492,2.47,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,hickock,16.961253550327356,30.58,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,orc,-0.20741773598428637,3.13,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,spc_hop,,0.0,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,laziness_knn_t5,-6.236860275268555,0.1,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,laziness_adaptive_t5,-6.1886701583862305,0.67,,,d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,659,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m9,5,1,0.05,9,,-47.15529653703967
+colosseum,667,dc2,-0.08342170715332031,3.03,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,dc_wasserstein_ollivier,-0.26011109352111816,4.25,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,dc_entropic_subtraction,1.5720105171203613,2.22,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,hickock,16.87018798708648,28.6,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,orc,-0.21188178826727488,4.47,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,spc_hop,,0.0,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,laziness_knn_t5,-5.9952521324157715,0.26,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,laziness_adaptive_t5,-5.984825134277344,0.25,,,d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,667,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m17,5,1,0.05,17,,-30.61187402534357
+colosseum,675,dc2,-0.6793613433837891,3.26,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,dc_wasserstein_ollivier,-0.2615237236022949,6.84,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,dc_entropic_subtraction,1.3037409782409668,2.15,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,hickock,16.709596691322407,28.55,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,orc,-0.2611008277662706,3.85,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,spc_hop,,0.0,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,laziness_knn_t5,-6.2076873779296875,0.13,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,laziness_adaptive_t5,-6.118364334106445,0.25,,,d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,675,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m25,5,1,0.05,25,,-15.669983816072584
+colosseum,683,dc2,0.06692218780517578,2.84,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,dc_wasserstein_ollivier,-0.4133368730545044,4.87,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,dc_entropic_subtraction,0.8613743782043457,3.08,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,hickock,16.59822271629921,29.95,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,orc,-0.23781541429693814,6.18,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,spc_hop,,0.0,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,laziness_knn_t5,-6.284850120544434,0.72,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,laziness_adaptive_t5,-6.26396369934082,0.21,,,d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,683,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m33,5,1,0.05,33,,-19.394314584544762
+colosseum,691,dc2,-0.44737958908081055,3.28,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,dc_wasserstein_ollivier,-0.4477360248565674,5.37,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,dc_entropic_subtraction,0.8071637153625488,2.86,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,hickock,16.74403207619549,30.64,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,orc,-0.2936803906337451,4.19,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,spc_hop,,0.0,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,laziness_knn_t5,-6.488273620605469,0.33,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,laziness_adaptive_t5,-6.493374347686768,0.36,,,d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,691,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m41,5,1,0.05,41,,-22.624187512718066
+colosseum,699,dc2,-0.45068359375,2.91,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,dc_wasserstein_ollivier,-0.35169363021850586,4.31,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,dc_entropic_subtraction,1.1393132209777832,1.97,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,hickock,16.46502442422778,28.05,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,orc,-0.15596137635996413,5.1,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,spc_hop,,0.0,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,laziness_knn_t5,-6.135468482971191,0.33,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,laziness_adaptive_t5,-6.118743896484375,0.4,,,d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,699,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m49,5,1,0.05,49,,-19.79656922837067
+colosseum,707,dc2,-0.0836801528930664,4.23,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,dc_wasserstein_ollivier,-0.11223900318145752,3.83,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,dc_entropic_subtraction,2.0769357681274414,1.4,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,hickock,17.48940283819789,28.92,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,orc,-0.17737365379206463,6.87,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,spc_hop,,0.0,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,laziness_knn_t5,-6.143845081329346,1.43,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,laziness_adaptive_t5,-6.093173503875732,0.36,,,d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,707,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m7,5,1,0.1,7,,-5.613758878219
+colosseum,715,dc2,-0.4732508659362793,2.9,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,dc_wasserstein_ollivier,-0.12963294982910156,2.37,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,dc_entropic_subtraction,1.8535776138305664,1.5,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,hickock,17.416799823140487,31.33,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,orc,-0.323186853418055,4.99,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,spc_hop,,0.0,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,laziness_knn_t5,-6.331899166107178,0.14,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,laziness_adaptive_t5,-6.310518264770508,0.32,,,d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,715,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m15,5,1,0.1,15,,23.32498569603592
+colosseum,723,dc2,-0.508204460144043,3.79,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,dc_wasserstein_ollivier,-0.06648004055023193,4.11,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,dc_entropic_subtraction,2.0609493255615234,2.32,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,hickock,17.07173076371017,32.74,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,orc,-0.2640905100289916,4.92,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,spc_hop,,0.0,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,laziness_knn_t5,-6.391426086425781,0.29,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,laziness_adaptive_t5,-6.358329772949219,0.18,,,d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,723,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m23,5,1,0.1,23,,-25.733156958122187
+colosseum,731,dc2,-0.9903688430786133,3.34,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,dc_wasserstein_ollivier,-0.26786160469055176,2.43,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,dc_entropic_subtraction,1.4612312316894531,1.37,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,hickock,16.822505856897923,30.35,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,orc,-0.14277118312390688,4.87,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,spc_hop,,0.0,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,laziness_knn_t5,-6.005972385406494,0.11,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,laziness_adaptive_t5,-5.987966060638428,0.88,,,d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,731,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m31,5,1,0.1,31,,-47.10183112845216
+colosseum,739,dc2,-0.7277960777282715,3.59,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,dc_wasserstein_ollivier,-0.160500168800354,4.65,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,dc_entropic_subtraction,1.738065242767334,1.81,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,hickock,16.960699686744945,32.77,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,orc,-0.2411632995290524,4.21,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,spc_hop,,0.0,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,laziness_knn_t5,-6.235870361328125,0.14,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,laziness_adaptive_t5,-6.206231117248535,0.3,,,d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,739,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m39,5,1,0.1,39,,-16.344278455491455
+colosseum,747,dc2,-0.9208850860595703,3.25,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,dc_wasserstein_ollivier,-0.34253740310668945,3.22,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,dc_entropic_subtraction,1.515505313873291,2.01,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,hickock,16.730513989231138,31.28,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,orc,-0.30819223778536126,4.95,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,spc_hop,,0.0,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,laziness_knn_t5,-6.455472946166992,0.31,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,laziness_adaptive_t5,-6.429409980773926,0.28,,,d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,747,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m47,5,1,0.1,47,,-35.977776687680105
+colosseum,755,dc2,-0.43305110931396484,2.55,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,dc_wasserstein_ollivier,0.2734742760658264,4.61,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,dc_entropic_subtraction,3.4129276275634766,1.94,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,hickock,17.638284794975647,32.13,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,orc,-0.20792801954543033,3.98,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,spc_hop,,0.0,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,laziness_knn_t5,-6.001834869384766,0.63,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,laziness_adaptive_t5,-5.9138875007629395,0.41,,,d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,755,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m5,5,1,0.2,5,,-57.07795254986686
+colosseum,763,dc2,-0.9471836090087891,2.11,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,dc_wasserstein_ollivier,0.21634626388549805,3.85,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,dc_entropic_subtraction,3.0264739990234375,1.33,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,hickock,17.23452356661312,31.72,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,orc,-0.16724522847389822,4.44,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,spc_hop,,0.0,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,laziness_knn_t5,-5.952817916870117,0.3,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,laziness_adaptive_t5,-5.896027088165283,0.32,,,d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,763,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m13,5,1,0.2,13,,36.03617333725322
+colosseum,771,dc2,-1.1970922946929932,1.81,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,dc_wasserstein_ollivier,-0.10921657085418701,3.7,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,dc_entropic_subtraction,2.1662144660949707,2.12,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,hickock,17.07092923317569,35.64,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,orc,-0.26625953537967045,3.19,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,spc_hop,,0.0,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,laziness_knn_t5,-6.235566139221191,0.11,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,laziness_adaptive_t5,-6.250343322753906,0.17,,,d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,771,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m21,5,1,0.2,21,,-37.590222672281435
+colosseum,779,dc2,-1.0888714790344238,1.56,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,dc_wasserstein_ollivier,-0.11742782592773438,3.45,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,dc_entropic_subtraction,2.4628195762634277,1.73,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,hickock,17.466137825766126,35.63,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,orc,-0.1989592947889449,3.16,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,spc_hop,,0.0,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,laziness_knn_t5,-6.3887224197387695,0.62,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,laziness_adaptive_t5,-6.371774196624756,0.2,,,d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,779,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m29,5,1,0.2,29,,-29.849269264389513
+colosseum,787,dc2,-1.553776741027832,2.01,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,dc_wasserstein_ollivier,-0.2647695541381836,4.46,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,dc_entropic_subtraction,1.656883716583252,1.91,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,hickock,16.88357407045012,34.36,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,orc,-0.1704336272514332,2.85,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,spc_hop,,0.0,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,laziness_knn_t5,-6.334148406982422,0.11,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,laziness_adaptive_t5,-6.2905426025390625,0.19,,,d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,787,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m37,5,1,0.2,37,,-18.932710444941357
+colosseum,795,dc2,-0.741457462310791,2.04,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,dc_wasserstein_ollivier,0.17682141065597534,3.44,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,dc_entropic_subtraction,2.878202438354492,1.99,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,hickock,17.29765709400291,34.4,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,orc,-0.2582781918968673,3.65,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,spc_hop,,0.0,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,laziness_knn_t5,-6.045868873596191,0.15,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,laziness_adaptive_t5,-6.022370338439941,0.24,,,d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,795,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m45,5,1,0.2,45,,65.13118505028285
+colosseum,803,dc2,-0.22063875198364258,2.13,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,dc_wasserstein_ollivier,0.6755599975585938,4.71,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,dc_entropic_subtraction,3.9728376865386963,1.67,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,hickock,20.28596391866915,31.94,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,orc,-0.24163901664272397,3.02,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,spc_hop,,0.0,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,laziness_knn_t5,-6.3991618156433105,0.49,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,laziness_adaptive_t5,-6.309536933898926,0.19,,,d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,803,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m3,6,1,0.01,3,,-57.102609129813295
+colosseum,811,dc2,-0.14389657974243164,2.08,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,dc_wasserstein_ollivier,0.6644057035446167,2.83,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,dc_entropic_subtraction,4.3966522216796875,1.83,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,hickock,20.315729373757797,35.47,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,orc,-0.28247218940322,3.48,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,spc_hop,,0.0,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,laziness_knn_t5,-6.445001602172852,0.13,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,laziness_adaptive_t5,-6.408849716186523,0.23,,,d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,811,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m11,6,1,0.01,11,,-43.97746435305777
+colosseum,819,dc2,-0.17536401748657227,2.75,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,dc_wasserstein_ollivier,0.7055224180221558,7.13,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,dc_entropic_subtraction,4.381258487701416,1.84,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,hickock,20.973026143705493,31.18,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,orc,-0.2632907862981281,2.93,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,spc_hop,,0.0,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,laziness_knn_t5,-6.316143989562988,0.11,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,laziness_adaptive_t5,-6.297507286071777,0.26,,,d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,819,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m19,6,1,0.01,19,,71.51040985734635
+colosseum,827,dc2,-0.1983170509338379,3.21,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,dc_wasserstein_ollivier,0.5488282442092896,5.13,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,dc_entropic_subtraction,3.3946757316589355,1.8,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,hickock,20.64461603933264,33.16,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,orc,-0.33590194891107605,4.35,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,spc_hop,,0.0,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,laziness_knn_t5,-6.73063850402832,0.21,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,laziness_adaptive_t5,-6.717361927032471,0.31,,,d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,827,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m27,6,1,0.01,27,,-67.9470783702516
+colosseum,835,dc2,0.11332988739013672,3.15,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,dc_wasserstein_ollivier,0.6527100801467896,4.37,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,dc_entropic_subtraction,4.300683975219727,1.71,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,hickock,21.141565827456887,32.53,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,orc,-0.2994406690441319,3.33,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,spc_hop,,0.0,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,laziness_knn_t5,-6.677947998046875,0.11,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,laziness_adaptive_t5,-6.620821952819824,0.18,,,d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,835,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m35,6,1,0.01,35,,-42.030767440494856
+colosseum,843,dc2,-0.9165830612182617,2.69,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,dc_wasserstein_ollivier,0.5168676376342773,3.84,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,dc_entropic_subtraction,3.0460357666015625,1.74,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,hickock,20.187900247560993,35.14,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,orc,-0.26514382695260486,3.26,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,spc_hop,,0.0,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,laziness_knn_t5,-6.6026201248168945,0.16,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,laziness_adaptive_t5,-6.579644680023193,0.19,,,d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,843,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m43,6,1,0.01,43,,-60.623933615523946
+colosseum,851,dc2,0.15231895446777344,2.04,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,dc_wasserstein_ollivier,0.6705294251441956,4.06,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,dc_entropic_subtraction,3.917365074157715,2.15,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,hickock,20.56964479245941,33.41,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,orc,-0.23904745284061946,3.16,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,spc_hop,,0.0,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,laziness_knn_t5,-6.4130024909973145,0.13,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,laziness_adaptive_t5,-6.395241737365723,0.19,,,d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,851,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m1,6,1,0.05,1,,-45.182743652333166
+colosseum,859,dc2,-0.3514409065246582,1.76,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,dc_wasserstein_ollivier,0.47095006704330444,3.54,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,dc_entropic_subtraction,3.09165096282959,1.55,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,hickock,20.762359063803494,34.68,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,orc,-0.3332108524939007,3.45,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,spc_hop,,0.0,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,laziness_knn_t5,-6.666966438293457,0.13,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,laziness_adaptive_t5,-6.623373031616211,0.81,,,d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,859,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m9,6,1,0.05,9,,-40.67685119016961
+colosseum,867,dc2,-0.37575483322143555,1.99,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,dc_wasserstein_ollivier,0.6411716341972351,3.94,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,dc_entropic_subtraction,3.821608066558838,1.5,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,hickock,20.009258879854208,32.78,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,orc,-0.3031815862058251,3.24,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,spc_hop,,0.0,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,laziness_knn_t5,-6.545620918273926,0.13,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,laziness_adaptive_t5,-6.482733726501465,0.23,,,d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,867,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m17,6,1,0.05,17,,-53.20808494604759
+colosseum,875,dc2,-0.044687747955322266,1.69,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,dc_wasserstein_ollivier,0.6953225135803223,3.94,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,dc_entropic_subtraction,4.59474515914917,1.86,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,hickock,21.150693864744945,34.91,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,orc,-0.30737884707133317,3.49,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,spc_hop,,0.0,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,laziness_knn_t5,-6.573299407958984,0.19,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,laziness_adaptive_t5,-6.553159713745117,0.26,,,d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,875,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m25,6,1,0.05,25,,-34.283992826578164
+colosseum,883,dc2,-0.3384265899658203,2.15,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,dc_wasserstein_ollivier,0.7713495492935181,4.58,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,dc_entropic_subtraction,4.584039688110352,1.7,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,hickock,21.457402788114933,29.93,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,orc,-0.3475364306429983,3.01,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,spc_hop,,0.0,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,laziness_knn_t5,-6.763957500457764,0.49,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,laziness_adaptive_t5,-6.775592803955078,0.19,,,d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,883,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m33,6,1,0.05,33,,-86.90588779799265
+colosseum,891,dc2,-0.2908759117126465,1.58,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,dc_wasserstein_ollivier,0.6078141927719116,2.47,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,dc_entropic_subtraction,3.9769930839538574,1.28,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,hickock,20.69762786449586,30.75,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,orc,-0.32463222035779826,3.06,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,spc_hop,,0.0,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,laziness_knn_t5,-6.825196743011475,0.15,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,laziness_adaptive_t5,-6.7725067138671875,0.22,,,d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,891,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m41,6,1,0.05,41,,-27.88462025003688
+colosseum,899,dc2,0.4351963996887207,1.89,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,dc_wasserstein_ollivier,0.8519409894943237,4.1,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,dc_entropic_subtraction,5.557941436767578,1.39,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,hickock,20.847997970405963,30.33,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,orc,-0.28049275414756747,2.7,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,spc_hop,,0.0,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,laziness_knn_t5,-6.441168785095215,0.11,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,laziness_adaptive_t5,-6.4332098960876465,0.18,,,d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,899,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m49,6,1,0.05,49,,-83.51265264984707
+colosseum,907,dc2,-0.3204984664916992,3.13,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,dc_wasserstein_ollivier,0.6407424807548523,2.83,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,dc_entropic_subtraction,4.125827312469482,1.25,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,hickock,20.734847419830764,30.42,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,orc,-0.22723828222360995,3.78,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,spc_hop,,0.0,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,laziness_knn_t5,-6.629687309265137,0.14,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,laziness_adaptive_t5,-6.715818405151367,0.25,,,d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,907,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m7,6,1,0.1,7,,-36.441023758708226
+colosseum,915,dc2,-0.2602362632751465,3.12,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,dc_wasserstein_ollivier,0.6480845212936401,4.29,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,dc_entropic_subtraction,3.96541166305542,1.73,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,hickock,20.274507376934665,28.75,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,orc,-0.24532510301506,2.7,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,spc_hop,,0.0,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,laziness_knn_t5,-6.446228981018066,0.12,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,laziness_adaptive_t5,-6.453133583068848,0.22,,,d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,915,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m15,6,1,0.1,15,,-27.0821790293064
+colosseum,923,dc2,-0.49555206298828125,3.51,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,dc_wasserstein_ollivier,0.5825467109680176,3.26,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,dc_entropic_subtraction,3.932520627975464,1.33,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,hickock,20.568628544340122,26.49,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,orc,-0.3759540260005318,3.0,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,spc_hop,,0.0,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,laziness_knn_t5,-6.7861504554748535,0.12,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,laziness_adaptive_t5,-6.776070594787598,0.23,,,d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,923,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m23,6,1,0.1,23,,-32.52548513988736
+colosseum,931,dc2,-0.34541749954223633,2.6,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,dc_wasserstein_ollivier,0.5572984218597412,3.17,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,dc_entropic_subtraction,3.2023048400878906,1.73,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,hickock,20.516325776821958,30.55,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,orc,-0.24736359466827462,2.91,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,spc_hop,,0.0,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,laziness_knn_t5,-6.593841552734375,0.12,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,laziness_adaptive_t5,-6.630306243896484,0.21,,,d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,931,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m31,6,1,0.1,31,,-25.02741316371022
+colosseum,939,dc2,-0.5514416694641113,2.78,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,dc_wasserstein_ollivier,0.7695621848106384,2.99,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,dc_entropic_subtraction,5.170171737670898,1.48,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,hickock,21.245550118903786,26.73,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,orc,-0.32402426163794945,2.98,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,spc_hop,,0.0,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,laziness_knn_t5,-6.6018218994140625,0.12,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,laziness_adaptive_t5,-6.6299943923950195,0.29,,,d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,939,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m39,6,1,0.1,39,,-48.07873126586036
+colosseum,947,dc2,-0.8914475440979004,2.36,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,dc_wasserstein_ollivier,0.6057389974594116,2.92,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,dc_entropic_subtraction,3.924877166748047,1.16,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,hickock,20.529583586543453,26.69,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,orc,-0.3410961116388122,2.57,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,spc_hop,,0.0,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,laziness_knn_t5,-6.560537338256836,0.11,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,laziness_adaptive_t5,-6.533598899841309,0.21,,,d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,947,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m47,6,1,0.1,47,,-36.581226109491425
+colosseum,955,dc2,-0.8745079040527344,2.15,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,dc_wasserstein_ollivier,0.7727916240692139,2.39,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,dc_entropic_subtraction,4.8061723709106445,1.1,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,hickock,20.81100007198151,25.18,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,orc,-0.27840151578423095,3.93,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,spc_hop,,0.0,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,laziness_knn_t5,-6.612371444702148,0.73,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,laziness_adaptive_t5,-6.595929145812988,0.16,,,d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,955,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m5,6,1,0.2,5,,-34.16621016453267
+colosseum,963,dc2,-1.0910186767578125,2.52,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,dc_wasserstein_ollivier,0.7484409213066101,2.17,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,dc_entropic_subtraction,4.944404602050781,1.43,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,hickock,21.042344793674893,25.62,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,orc,-0.27508903196201256,3.54,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,spc_hop,,0.0,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,laziness_knn_t5,-6.514586925506592,0.15,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,laziness_adaptive_t5,-6.449014663696289,0.28,,,d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,963,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m13,6,1,0.2,13,,-69.22230825365725
+colosseum,971,dc2,-1.2116069793701172,2.78,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,dc_wasserstein_ollivier,0.7509157061576843,2.56,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,dc_entropic_subtraction,4.746837139129639,1.14,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,hickock,20.676275596645265,25.54,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,orc,-0.2705023979479397,2.88,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,spc_hop,,0.0,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,laziness_knn_t5,-6.6682000160217285,0.18,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,laziness_adaptive_t5,-6.660808086395264,0.35,,,d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,971,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m21,6,1,0.2,21,,-51.0678270298338
+colosseum,979,dc2,-1.013624668121338,3.24,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,dc_wasserstein_ollivier,0.9146223664283752,2.8,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,dc_entropic_subtraction,6.495898246765137,1.38,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,hickock,21.958015787954366,25.43,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,orc,-0.2416301803435506,2.96,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,spc_hop,,0.0,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,laziness_knn_t5,-6.629026412963867,0.11,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,laziness_adaptive_t5,-6.638304710388184,0.17,,,d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,979,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m29,6,1,0.2,29,,-45.446017658024545
+colosseum,987,dc2,-1.0023841857910156,2.23,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,dc_wasserstein_ollivier,0.7383037209510803,2.86,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,dc_entropic_subtraction,4.784235000610352,1.56,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,hickock,21.126635040839506,26.64,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,orc,-0.26132376168926563,2.68,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,spc_hop,,0.0,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,laziness_knn_t5,-6.33882999420166,0.13,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,laziness_adaptive_t5,-6.35025691986084,0.18,,,d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,987,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m37,6,1,0.2,37,,-49.43443232744701
+colosseum,995,dc2,-0.8526339530944824,2.59,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,dc_wasserstein_ollivier,0.8004341125488281,3.12,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,dc_entropic_subtraction,5.242287635803223,1.27,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,hickock,20.883326567949148,26.53,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,orc,-0.22163456237748766,2.65,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,spc_hop,,0.0,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,laziness_knn_t5,-6.544782638549805,0.12,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,laziness_adaptive_t5,-6.5158891677856445,0.19,,,d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796
+colosseum,995,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m45,6,1,0.2,45,,-29.387566285721796

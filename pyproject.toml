@@ -113,6 +113,8 @@ optuna = "*"
 
 [tool.pixi.pypi-dependencies]
 pykeops = ""
+GraphRicciCurvature = ">=0.5"
+snakemake-executor-plugin-slurm = "*"
 # editable install of project itself
 diffusion_curvature = { path = ".", editable = true }
 

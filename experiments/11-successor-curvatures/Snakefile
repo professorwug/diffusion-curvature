@@ -50,6 +50,31 @@ rule plot_sadspheres:
 
 
 # ---------------------------------------------------------------------------
+# Torus FB replication (sanity check — runs independently)
+# ---------------------------------------------------------------------------
+
+
+rule torus_fb_sweep:
+    output:
+        "processed_data/torus_fb_replication.csv",
+    shell:
+        "pixi run python torus_fb_replication.py --out {output}"
+
+
+rule plot_torus_fb:
+    input:
+        "processed_data/torus_fb_replication.csv",
+    output:
+        "figures/torus_fb_kl.png",
+        "figures/torus_fb_pearson_entropy_ks.png",
+        "figures/torus_fb_spearman_entropy_ks.png",
+        "figures/torus_fb_pearson_entropy_hat_vs_real.png",
+    shell:
+        "pixi run python plot_torus_fb_replication.py "
+        "--metrics {input} --out-dir figures"
+
+
+# ---------------------------------------------------------------------------
 # Optuna tuning (not part of `all` — optional, expensive)
 # ---------------------------------------------------------------------------
 
@@ -76,3 +101,210 @@ rule tune_all:
     input:
         "processed_data/optuna/fb_sadspheres_best.json",
         "processed_data/optuna/fb_colosseum_best.json",
+
+
+rule plot_colosseum_surfaces:
+    output:
+        svg="figures/colosseum_surfaces.svg",
+        png="figures/colosseum_surfaces.png",
+    shell:
+        "pixi run python plot_colosseum_surfaces.py "
+        "--out figures/colosseum_surfaces"
+
+
+rule plot_colosseum_surfaces_square:
+    output:
+        svg="figures/colosseum_surfaces_square.svg",
+        png="figures/colosseum_surfaces_square.png",
+    shell:
+        "pixi run python plot_colosseum_surfaces.py "
+        "--layout square --out figures/colosseum_surfaces_square"
+
+
+# ---------------------------------------------------------------------------
+# Trajectory-sampled Colosseum benchmark (CPU-parallel via SLURM executor).
+#
+# The grid is materialized as 5 dims × 4 noise levels = 20 independent cells,
+# each running all methods on 50 manifolds. Cells are independent, so the
+# Snakemake SLURM executor plugin can fan them out concurrently.
+#
+# Build the figure with:
+#   pixi run snakemake -c1 figures/v2/tau_colosseum_pearson_compact.png
+#
+# Submit cells to SLURM (per-cell jobs, default cpus_per_task=8, ~3h each):
+#   pixi run snakemake \
+#       --executor slurm \
+#       -j 20 \
+#       --default-resources slurm_partition=cpu mem_mb=16000 runtime=180 \
+#                           slurm_account=$SLURM_ACCOUNT \
+#       processed_data/tau_metrics.csv
+#
+# Override per cell with --set-resources tau_cell:cpus_per_task=16 etc.
+# ---------------------------------------------------------------------------
+
+
+TAU_DIMS = [2, 3, 4, 5, 6]
+TAU_NOISES = [0.01, 0.05, 0.10, 0.20]
+# IID benchmark uses the same grid; same wildcards keep the rules parallel.
+IID_DIMS = [2, 3, 4, 5, 6]
+IID_NOISES = [0.01, 0.05, 0.10, 0.20]
+
+# Per-cell memory / runtime / cpus (config knobs so we can raise after OOMs).
+CELL_MEM_MB = int(config.get("cell_mem_mb", 48000))
+CELL_RUNTIME = int(config.get("cell_runtime", 240))
+CELL_CPUS = int(config.get("cell_cpus", 8))
+
+
+def _noise_str(noise: float) -> str:
+    # File-system safe noise label, e.g. 0.05 -> "0p05".
+    return f"{noise:.2f}".replace(".", "p")
+
+
+TAU_CELL_CSVS = [
+    f"processed_data/tau_cells/d{d}_n{_noise_str(n)}.csv"
+    for d in TAU_DIMS for n in TAU_NOISES
+]
+IID_CELL_CSVS = [
+    f"processed_data/iid_cells/d{d}_n{_noise_str(n)}.csv"
+    for d in IID_DIMS for n in IID_NOISES
+]
+
+
+rule tau_cell:
+    """Run all curvature methods on one (dim, noise) cell × 50 manifolds.
+
+    The wildcards `d` and `nstr` index the cell. `nstr` uses 'p' as the
+    decimal separator (e.g. '0p05') because Snakemake wildcards struggle
+    with literal periods.
+    """
+    output:
+        "processed_data/tau_cells/d{d}_n{nstr}.csv",
+    threads: CELL_CPUS
+    resources:
+        mem_mb=CELL_MEM_MB,
+        runtime=CELL_RUNTIME,
+    params:
+        extra=EXTRA,
+        noise=lambda wc: float(wc.nstr.replace("p", ".")),
+    shell:
+        "pixi run python benchmark_all_on_tau_colosseum.py "
+        "--cmd run "
+        "--dim {wildcards.d} "
+        "--noise {params.noise} "
+        "--device cpu "
+        "--out {output} "
+        "{params.extra}"
+
+
+rule tau_merge:
+    """Concatenate the per-cell CSVs into a single tau_metrics.csv."""
+    input:
+        TAU_CELL_CSVS,
+    output:
+        "processed_data/tau_metrics.csv",
+    shell:
+        "pixi run python benchmark_all_on_tau_colosseum.py "
+        "--cmd merge "
+        "--merged-out {output} "
+        "--merge-inputs {input}"
+
+
+rule tau_summarize:
+    """Build the per-(method, dim, noise) Pearson summary."""
+    input:
+        "processed_data/tau_metrics.csv",
+    output:
+        "processed_data/v2/tau_colosseum_pearson_summary.csv",
+    shell:
+        "pixi run python summarize_tau_colosseum.py "
+        "--metrics {input} --out {output}"
+
+
+rule tau_plot_compact:
+    """Render the compact Pearson-r heatmap, trajectory-sampled variant."""
+    input:
+        "processed_data/v2/tau_colosseum_pearson_summary.csv",
+    output:
+        png="figures/v2/tau_colosseum_pearson_compact.png",
+        svg="figures/v2/tau_colosseum_pearson_compact.svg",
+        pdf="figures/v2/tau_colosseum_pearson_compact.pdf",
+    shell:
+        "pixi run python plot_colosseum_pearson_compact.py "
+        "--summary {input} "
+        "--out figures/v2/tau_colosseum_pearson_compact"
+
+
+rule tau_all:
+    """Convenience target that pulls the figure all the way through."""
+    input:
+        "figures/v2/tau_colosseum_pearson_compact.png",
+
+
+# ---------------------------------------------------------------------------
+# IID Curvature Colosseum benchmark (per-cell parallelization, codim=1)
+# Mirrors the tau pipeline. One SLURM job per (dim, noise) cell.
+# ---------------------------------------------------------------------------
+
+
+rule iid_cell:
+    """Run all curvature methods on one IID (dim, noise) cell × 50 manifolds (codim=1)."""
+    output:
+        "processed_data/iid_cells/d{d}_n{nstr}.csv",
+    threads: CELL_CPUS
+    resources:
+        mem_mb=CELL_MEM_MB,
+        runtime=CELL_RUNTIME,
+    params:
+        extra=EXTRA,
+        noise=lambda wc: float(wc.nstr.replace("p", ".")),
+    shell:
+        "pixi run python benchmark_all_on_iid.py "
+        "--datasets colosseum "
+        "--dim {wildcards.d} "
+        "--noise {params.noise} "
+        "--codim 1 "
+        "--device cpu "
+        "--out {output} "
+        "{params.extra}"
+
+
+rule iid_merge:
+    """Concatenate per-cell IID CSVs into iid_metrics_v3.csv."""
+    input:
+        IID_CELL_CSVS,
+    output:
+        "processed_data/iid_metrics_v3.csv",
+    shell:
+        "pixi run python merge_iid_cells.py --out {output} {input}"
+
+
+rule iid_summarize:
+    """Build per-(method, dim, noise) Pearson summary from the merged CSV."""
+    input:
+        "processed_data/iid_metrics_v3.csv",
+    output:
+        "processed_data/v2/colosseum_pearson_summary_v3.csv",
+    shell:
+        "pixi run python plot_colosseum_pearson_matrix.py "
+        "--metrics {input} "
+        "--summary-out {output} "
+        "--out figures/v2/colosseum_pearson_matrix_v3"
+
+
+rule iid_plot_compact:
+    """Compact heatmap for the IID benchmark."""
+    input:
+        "processed_data/v2/colosseum_pearson_summary_v3.csv",
+    output:
+        png="figures/v2/colosseum_pearson_compact_v3.png",
+        svg="figures/v2/colosseum_pearson_compact_v3.svg",
+        pdf="figures/v2/colosseum_pearson_compact_v3.pdf",
+    shell:
+        "pixi run python plot_colosseum_pearson_compact.py "
+        "--summary {input} "
+        "--out figures/v2/colosseum_pearson_compact_v3"
+
+
+rule iid_all:
+    input:
+        "figures/v2/colosseum_pearson_compact_v3.png",

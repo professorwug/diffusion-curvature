@@ -1,0 +1,1255 @@
+dataset,instance,method,ks_hat,elapsed_s,fb_elapsed_s,err,name,dim,codim,noise,m,shape,ks_true
+colosseum,95,dc2,,2.73,,INTERNAL: Failed to initialize BLAS support,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,dc_wasserstein_ollivier,,11.2,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 76195072 bytes.,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,dc_entropic_subtraction,,10.91,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 76195072 bytes.,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,hickock,0.39078313753474414,34.07,,,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,orc,0.01881019474684583,3.81,,,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,spc_hop,157.03497353392976,759.67,,,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,spc_diffusion_t5,-390.1978447982599,506.88,,,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,laziness_knn_t5,,10.4,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,laziness_adaptive_t5,,10.57,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,95,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.05-m45,2,1,0.05,45,,9.163805683637682
+colosseum,103,dc2,,10.18,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,dc_wasserstein_ollivier,,10.82,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 76195072 bytes.,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,dc_entropic_subtraction,,11.03,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,hickock,-7.701130552414445,30.56,,,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,orc,0.012875269019330478,6.86,,,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,spc_hop,34.179580334629925,712.38,,,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,spc_diffusion_t5,553.5219980707043,423.39,,,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,laziness_knn_t5,,10.32,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,laziness_adaptive_t5,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,103,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m3,2,1,0.1,3,,-4.991677012840595
+colosseum,111,dc2,,10.18,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,dc_wasserstein_ollivier,,10.88,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,dc_entropic_subtraction,,10.9,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,hickock,-9.896733121663924,28.66,,,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,orc,-0.08943363011307638,4.31,,,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,spc_hop,-55.17523831901359,794.98,,,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,spc_diffusion_t5,-258.8168757997528,435.54,,,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,laziness_knn_t5,,10.38,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,laziness_adaptive_t5,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,111,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m11,2,1,0.1,11,,-30.669667563276434
+colosseum,119,dc2,,10.35,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,dc_wasserstein_ollivier,,11.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,dc_entropic_subtraction,,11.77,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,hickock,-5.633348364484471,31.11,,,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,orc,-0.022295136176378263,4.21,,,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,spc_hop,82.86032330675934,631.88,,,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,spc_diffusion_t5,-1007.902838795349,300.64,,,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,laziness_knn_t5,,10.21,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,laziness_adaptive_t5,,10.48,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,119,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m19,2,1,0.1,19,,1.5721752750818538
+colosseum,127,dc2,,25.08,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,dc_wasserstein_ollivier,,23.39,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,dc_entropic_subtraction,,11.86,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,hickock,-4.7482500649422,23.3,,,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,orc,0.08785401964345879,4.01,,,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,spc_hop,29.9134025738874,577.65,,,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,spc_diffusion_t5,-614.9942011747099,715.81,,,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,laziness_knn_t5,,10.21,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,laziness_adaptive_t5,,11.06,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,127,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m27,2,1,0.1,27,,-2.362584823928727
+colosseum,135,dc2,,11.14,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,dc_wasserstein_ollivier,,10.95,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,dc_entropic_subtraction,,11.01,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,hickock,-5.994442733260392,33.07,,,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,orc,-0.057676135174556366,4.06,,,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,spc_hop,-1073.340761536827,577.53,,,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,spc_diffusion_t5,-328.9283834720097,419.42,,,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,laziness_knn_t5,,10.47,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,laziness_adaptive_t5,,10.41,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,135,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m35,2,1,0.1,35,,-2.361533271727465
+colosseum,143,dc2,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,dc_wasserstein_ollivier,,10.99,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,dc_entropic_subtraction,,11.03,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,hickock,-6.884157484749981,29.89,,,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,orc,-0.01110882735108667,4.22,,,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,spc_hop,195.49631343659007,665.56,,,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,spc_diffusion_t5,48.478272003253025,816.45,,,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,laziness_knn_t5,,10.25,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,laziness_adaptive_t5,,10.29,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,143,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.1-m43,2,1,0.1,43,,-3.6855060268659163
+colosseum,151,dc2,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,dc_wasserstein_ollivier,,10.88,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,dc_entropic_subtraction,,10.95,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,hickock,-16.555132440741207,30.56,,,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,orc,0.0213192979692472,4.91,,,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,spc_hop,799.0945169783046,590.72,,,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,spc_diffusion_t5,-20.98332806327084,220.59,,,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,laziness_knn_t5,,10.2,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,laziness_adaptive_t5,,11.74,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,151,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m1,2,1,0.2,1,,-4.621479709558301
+colosseum,159,dc2,,41.61,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,dc_wasserstein_ollivier,,90.97,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,dc_entropic_subtraction,,42.51,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,hickock,-16.877281566902617,34.12,,,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,orc,-0.10955117028790569,4.66,,,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,spc_hop,107.28750450561643,632.32,,,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,spc_diffusion_t5,-200.58516053072057,661.96,,,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,laziness_knn_t5,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,laziness_adaptive_t5,,11.63,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,159,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m9,2,1,0.2,9,,3.9366333143857974
+colosseum,167,dc2,,10.79,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,dc_wasserstein_ollivier,,17.18,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,dc_entropic_subtraction,,12.84,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,hickock,-17.58524095532649,25.38,,,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,orc,0.0183823816677596,4.7,,,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,spc_hop,-255.13889002063803,645.77,,,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,spc_diffusion_t5,516.7121185603216,410.08,,,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,laziness_knn_t5,,10.39,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,laziness_adaptive_t5,,10.49,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,167,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m17,2,1,0.2,17,,-1.6301173946187584
+colosseum,175,dc2,,10.39,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,dc_wasserstein_ollivier,,11.36,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,dc_entropic_subtraction,,11.66,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,hickock,-16.42805385109788,31.06,,,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,orc,-0.17851189887168795,4.41,,,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,spc_hop,-164.31778646077652,650.96,,,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,spc_diffusion_t5,50.198947348967195,742.8,,,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,laziness_knn_t5,,10.14,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,laziness_adaptive_t5,,10.49,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,175,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m25,2,1,0.2,25,,2.8056911510175597
+colosseum,183,dc2,,10.91,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,dc_wasserstein_ollivier,,12.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,dc_entropic_subtraction,,13.83,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,hickock,-17.83694134280988,23.69,,,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,orc,-0.06216131019512942,4.14,,,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,spc_hop,234.22014747250665,708.69,,,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,spc_diffusion_t5,-118.25509016264313,402.13,,,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,laziness_knn_t5,,10.28,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,laziness_adaptive_t5,,13.06,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,183,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m33,2,1,0.2,33,,-0.7326876792692255
+colosseum,191,dc2,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,dc_wasserstein_ollivier,,12.27,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,dc_entropic_subtraction,,11.07,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,hickock,-16.84135497660204,30.27,,,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,orc,-0.04242668422708384,4.15,,,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,spc_hop,-93.26019286136999,597.04,,,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,spc_diffusion_t5,-195.55233361165645,430.41,,,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,laziness_knn_t5,,10.54,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,laziness_adaptive_t5,,10.99,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,191,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m41,2,1,0.2,41,,-3.318002074494441
+colosseum,199,dc2,,10.77,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,dc_wasserstein_ollivier,,10.72,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,dc_entropic_subtraction,,10.94,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,hickock,-16.1497931559191,31.88,,,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,orc,-0.024836166975265344,5.52,,,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,spc_hop,519.8690678327933,568.18,,,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,spc_diffusion_t5,-41.662674379839366,358.07,,,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,laziness_knn_t5,,10.65,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,laziness_adaptive_t5,,10.87,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,199,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d2-c1-n0.2-m49,2,1,0.2,49,,-1.5860222639151589
+colosseum,207,dc2,,10.42,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,dc_wasserstein_ollivier,,11.01,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,dc_entropic_subtraction,,11.05,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,hickock,5.366995414294895,33.12,,,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,orc,-0.14959405522134975,4.48,,,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,spc_hop,316.8867339638342,614.05,,,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,spc_diffusion_t5,123.82422740205259,330.69,,,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,laziness_knn_t5,,10.18,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,laziness_adaptive_t5,,11.49,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,207,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m7,3,1,0.01,7,,5.032540091296853
+colosseum,215,dc2,,20.53,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,dc_wasserstein_ollivier,,40.6,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,dc_entropic_subtraction,,12.6,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,hickock,4.756399506175313,25.5,,,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,orc,0.02415572892797543,2.68,,,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,spc_hop,-1713.5121808588628,649.15,,,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,spc_diffusion_t5,79.96814561249754,476.6,,,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,laziness_knn_t5,,10.25,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,laziness_adaptive_t5,,10.6,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,215,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m15,3,1,0.01,15,,-2.9394794280406265
+colosseum,223,dc2,,10.18,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,dc_wasserstein_ollivier,,10.9,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,dc_entropic_subtraction,,10.9,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,hickock,5.3834330602520915,30.2,,,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,orc,-0.11839359474972583,3.86,,,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,spc_hop,46.48642535462442,616.84,,,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,spc_diffusion_t5,-227.6879586097428,412.24,,,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,laziness_knn_t5,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,laziness_adaptive_t5,,10.9,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,223,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m23,3,1,0.01,23,,-3.6146092553836686
+colosseum,231,dc2,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,dc_wasserstein_ollivier,,11.23,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,dc_entropic_subtraction,,11.29,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,hickock,6.235148383771813,28.91,,,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,orc,-0.026061204963244138,3.92,,,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,spc_hop,369.7563393030975,751.87,,,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,spc_diffusion_t5,45.76049496968276,407.54,,,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,laziness_knn_t5,,10.41,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,laziness_adaptive_t5,,10.64,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,231,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m31,3,1,0.01,31,,13.522091746243676
+colosseum,239,dc2,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,dc_wasserstein_ollivier,,10.86,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,dc_entropic_subtraction,,11.29,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,hickock,4.459030912516855,29.82,,,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,orc,0.004001735435298426,5.29,,,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,spc_hop,187.72865665734025,593.94,,,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,spc_diffusion_t5,557.5212414732835,401.7,,,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,laziness_knn_t5,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,laziness_adaptive_t5,,12.33,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,239,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m39,3,1,0.01,39,,-6.628371134678934
+colosseum,247,dc2,,23.96,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,dc_wasserstein_ollivier,,11.77,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,dc_entropic_subtraction,,12.64,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,hickock,5.313622101955822,24.29,,,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,orc,-0.08176700997321582,4.67,,,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,spc_hop,-881.0401501173499,912.63,,,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,spc_diffusion_t5,-112.79147220444595,481.77,,,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,laziness_knn_t5,,10.21,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,laziness_adaptive_t5,,10.43,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,247,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.01-m47,3,1,0.01,47,,-14.435383890821294
+colosseum,255,dc2,,10.47,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,dc_wasserstein_ollivier,,11.13,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,dc_entropic_subtraction,,10.97,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,hickock,3.1631300072760924,31.28,,,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,orc,-0.00844035107914437,4.2,,,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,spc_hop,-155.7873030611058,567.6,,,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,spc_diffusion_t5,-25.057736407151328,738.15,,,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,laziness_knn_t5,,10.53,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,laziness_adaptive_t5,,10.5,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,255,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m5,3,1,0.05,5,,-18.34901977522456
+colosseum,263,dc2,,10.2,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,dc_wasserstein_ollivier,,10.9,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,dc_entropic_subtraction,,10.98,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,hickock,3.320351353080984,32.49,,,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,orc,-0.026020494276817702,4.21,,,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,spc_hop,77.49933296661632,577.79,,,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,spc_diffusion_t5,-226.93976191814198,394.21,,,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,laziness_knn_t5,,10.4,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,laziness_adaptive_t5,,10.29,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,263,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m13,3,1,0.05,13,,-20.670960880314407
+colosseum,271,dc2,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,dc_wasserstein_ollivier,,10.86,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,dc_entropic_subtraction,,11.13,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,hickock,4.275344335151793,29.7,,,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,orc,-0.10705712277664044,4.43,,,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,spc_hop,-1.5278770694903756,604.49,,,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,spc_diffusion_t5,-80.67322696051906,407.31,,,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,laziness_knn_t5,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,laziness_adaptive_t5,,10.5,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,271,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m21,3,1,0.05,21,,-13.738730439775905
+colosseum,279,dc2,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,dc_wasserstein_ollivier,,10.78,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,dc_entropic_subtraction,,10.89,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,hickock,5.308146700077426,30.31,,,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,orc,0.02517852311083961,5.47,,,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,spc_hop,-138.65023355537744,585.02,,,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,spc_diffusion_t5,-51.375757949843354,295.37,,,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,laziness_knn_t5,,11.34,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,laziness_adaptive_t5,,11.28,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,279,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m29,3,1,0.05,29,,5.150921455462298
+colosseum,287,dc2,,21.97,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,dc_wasserstein_ollivier,,26.53,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,dc_entropic_subtraction,,16.47,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,hickock,4.381058679242988,26.3,,,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,orc,-0.08423866829946804,2.72,,,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,spc_hop,-99.51504246468332,699.83,,,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,spc_diffusion_t5,-572.2330589202961,495.3,,,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,laziness_knn_t5,,10.77,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,laziness_adaptive_t5,,12.09,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,287,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m37,3,1,0.05,37,,-3.8173920501874843
+colosseum,295,dc2,,11.99,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,dc_wasserstein_ollivier,,13.26,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,dc_entropic_subtraction,,10.77,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,hickock,3.824107545548904,28.45,,,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,orc,-0.1494516089700868,4.49,,,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,spc_hop,108.72691810201479,913.79,,,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,spc_diffusion_t5,-66.88854741204644,380.98,,,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,laziness_knn_t5,,10.85,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,laziness_adaptive_t5,,10.92,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,295,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.05-m45,3,1,0.05,45,,-8.036174758064881
+colosseum,303,dc2,,10.57,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,dc_wasserstein_ollivier,,10.59,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,dc_entropic_subtraction,,10.76,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,hickock,5.320578940388463,31.69,,,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,orc,0.07637382903589682,4.34,,,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,spc_hop,1439.2559027845273,635.01,,,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,spc_diffusion_t5,490.42304521994953,445.16,,,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,laziness_knn_t5,,11.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,laziness_adaptive_t5,,10.78,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,303,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m3,3,1,0.1,3,,-8.654189876978071
+colosseum,311,dc2,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,dc_wasserstein_ollivier,,10.92,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,dc_entropic_subtraction,,11.06,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,hickock,2.68132900418475,30.29,,,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,orc,-0.13397548383761437,3.82,,,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,spc_hop,-123.4250535301971,624.43,,,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,spc_diffusion_t5,1.5727321535852292,401.18,,,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,laziness_knn_t5,,10.53,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,laziness_adaptive_t5,,11.98,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,311,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m11,3,1,0.1,11,,4.194711440287204
+colosseum,319,dc2,,11.82,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,dc_wasserstein_ollivier,,10.97,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,dc_entropic_subtraction,,10.83,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,hickock,3.0021732452320373,31.13,,,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,orc,-0.0392015702957244,4.48,,,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,spc_hop,-88.58729219813954,907.82,,,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,spc_diffusion_t5,-224.44742075240225,358.22,,,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,laziness_knn_t5,,11.53,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,laziness_adaptive_t5,,11.2,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,319,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m19,3,1,0.1,19,,-5.497914191107561
+colosseum,327,dc2,,13.06,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,dc_wasserstein_ollivier,,14.97,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,dc_entropic_subtraction,,11.64,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,hickock,3.600209583773865,23.95,,,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,orc,-0.09687587489209927,3.9,,,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,spc_hop,-276.75869311789046,725.37,,,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,spc_diffusion_t5,-224.7600147991301,459.98,,,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,laziness_knn_t5,,10.26,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,laziness_adaptive_t5,,10.53,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,327,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m27,3,1,0.1,27,,-20.78804940206205
+colosseum,335,dc2,,10.54,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,dc_wasserstein_ollivier,,13.13,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,dc_entropic_subtraction,,10.67,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,hickock,2.344387675028123,28.6,,,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,orc,-0.01838856612034672,4.63,,,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,spc_hop,11315.441037181732,618.83,,,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,spc_diffusion_t5,58.704757814891465,482.5,,,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,laziness_knn_t5,,10.23,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,laziness_adaptive_t5,,10.27,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,335,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m35,3,1,0.1,35,,-4.01002032708342
+colosseum,343,dc2,,10.25,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,dc_wasserstein_ollivier,,11.59,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,dc_entropic_subtraction,,11.74,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,hickock,2.2904005188336414,27.54,,,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,orc,-0.00883693461879743,5.36,,,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,spc_hop,-17.271630454782503,574.68,,,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,spc_diffusion_t5,122.64068879698317,447.92,,,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,laziness_knn_t5,,10.48,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,laziness_adaptive_t5,,10.39,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,343,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.1-m43,3,1,0.1,43,,1.6632145723134517
+colosseum,351,dc2,,10.64,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,dc_wasserstein_ollivier,,10.85,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,dc_entropic_subtraction,,11.02,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,hickock,-2.1184082490158445,29.46,,,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,orc,-0.10870190177075609,3.97,,,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,spc_hop,43.26682610243478,638.25,,,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,spc_diffusion_t5,-32.17859692221729,467.6,,,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,laziness_knn_t5,,10.51,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,laziness_adaptive_t5,,10.73,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,351,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m1,3,1,0.2,1,,-6.507631396464972
+colosseum,359,dc2,,10.16,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,dc_wasserstein_ollivier,,11.05,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,dc_entropic_subtraction,,11.59,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,hickock,0.9837217999426461,29.79,,,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,orc,-0.20346956500678542,4.25,,,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,spc_hop,-103.56127424390873,654.17,,,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,spc_diffusion_t5,-38.122781794270466,573.54,,,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,laziness_knn_t5,,10.26,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,laziness_adaptive_t5,,10.38,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,359,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m9,3,1,0.2,9,,-26.033971682982767
+colosseum,367,dc2,,10.64,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,dc_wasserstein_ollivier,,10.84,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,dc_entropic_subtraction,,10.85,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,hickock,0.056658746672507185,29.48,,,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,orc,-0.1712176538352296,4.35,,,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,spc_hop,102.10749280531363,979.57,,,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,spc_diffusion_t5,39.52252962492532,458.0,,,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,laziness_knn_t5,,10.15,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,laziness_adaptive_t5,,11.77,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,367,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m17,3,1,0.2,17,,23.551377761615875
+colosseum,375,dc2,,10.22,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,dc_wasserstein_ollivier,,10.9,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,dc_entropic_subtraction,,11.06,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,hickock,1.2738778636343415,30.19,,,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,orc,-0.1144565856749026,4.23,,,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,spc_hop,-159.39089418548417,1016.17,,,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,spc_diffusion_t5,23.858812669750883,478.87,,,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,laziness_knn_t5,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,laziness_adaptive_t5,,10.67,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,375,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m25,3,1,0.2,25,,-1.6902786067148925
+colosseum,383,dc2,,10.29,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,dc_wasserstein_ollivier,,10.86,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,dc_entropic_subtraction,,10.95,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,hickock,-1.65227499365193,29.83,,,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,orc,-0.1491863797020094,5.59,,,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,spc_hop,68.7222422308458,649.52,,,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,spc_diffusion_t5,-63.774922591302065,462.22,,,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,laziness_knn_t5,,10.87,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,laziness_adaptive_t5,,12.6,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,383,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m33,3,1,0.2,33,,-6.338115622808241
+colosseum,391,dc2,,10.89,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,dc_wasserstein_ollivier,,11.29,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,dc_entropic_subtraction,,10.56,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,hickock,-0.9269256318791569,26.61,,,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,orc,-0.11767397051091961,4.32,,,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,spc_hop,-24.835460378780127,1053.32,,,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,spc_diffusion_t5,88.05743501540776,435.76,,,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,laziness_knn_t5,,10.27,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,laziness_adaptive_t5,,10.28,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,391,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m41,3,1,0.2,41,,-12.60302730815501
+colosseum,399,dc2,,10.58,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,dc_wasserstein_ollivier,,11.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,dc_entropic_subtraction,,10.9,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,hickock,-1.993371305248931,36.55,,,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,orc,-0.11497076459314821,4.06,,,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,spc_hop,-339.9241030393273,524.76,,,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,spc_diffusion_t5,-112.35212985821661,351.27,,,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,laziness_knn_t5,,10.22,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,laziness_adaptive_t5,,10.68,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,399,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d3-c1-n0.2-m49,3,1,0.2,49,,-2.6661385438428287
+colosseum,407,dc2,,10.64,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,dc_wasserstein_ollivier,,11.37,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,dc_entropic_subtraction,,10.74,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,hickock,11.170137084795124,36.81,,,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,orc,-0.26135656196076545,3.02,,,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,spc_hop,,0.0,,,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,laziness_knn_t5,,10.16,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,laziness_adaptive_t5,,10.39,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,407,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m7,4,1,0.01,7,,-15.544130357584686
+colosseum,415,dc2,,10.64,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,dc_wasserstein_ollivier,,11.68,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,dc_entropic_subtraction,,10.72,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,hickock,11.62966122326854,34.68,,,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,orc,-0.26471251242031296,3.57,,,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,spc_hop,,0.0,,,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,laziness_knn_t5,,10.14,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,laziness_adaptive_t5,,10.39,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,415,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m15,4,1,0.01,15,,-44.72176709287545
+colosseum,423,dc2,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,dc_wasserstein_ollivier,,10.91,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,dc_entropic_subtraction,,11.2,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,hickock,11.232885511149695,33.07,,,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,orc,-0.21932310938309837,3.94,,,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,spc_hop,,0.0,,,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,laziness_knn_t5,,10.23,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,laziness_adaptive_t5,,10.21,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,423,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m23,4,1,0.01,23,,-19.03863256879623
+colosseum,431,dc2,,10.34,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,dc_wasserstein_ollivier,,11.63,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,dc_entropic_subtraction,,10.97,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,hickock,11.353030465258207,32.6,,,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,orc,-0.017801538243277792,4.09,,,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,spc_hop,,0.0,,,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,laziness_knn_t5,,10.27,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,laziness_adaptive_t5,,10.25,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,431,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m31,4,1,0.01,31,,-11.728335602959897
+colosseum,439,dc2,,10.21,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,dc_wasserstein_ollivier,,11.28,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,dc_entropic_subtraction,,11.53,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,hickock,11.290492940006743,32.05,,,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,orc,-0.09959398218280846,5.18,,,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,spc_hop,,0.0,,,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,laziness_knn_t5,,10.25,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,laziness_adaptive_t5,,10.25,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,439,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m39,4,1,0.01,39,,-27.91112645209391
+colosseum,447,dc2,,10.34,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,dc_wasserstein_ollivier,,11.71,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,dc_entropic_subtraction,,11.09,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,hickock,11.72208099664855,28.75,,,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,orc,-0.11061208849813471,4.08,,,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,spc_hop,,0.0,,,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,spc_diffusion_t5,,0.0,,,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,laziness_knn_t5,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,laziness_adaptive_t5,,10.33,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,447,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.01-m47,4,1,0.01,47,,-40.440636102834375
+colosseum,455,dc2,,10.16,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,dc_wasserstein_ollivier,,10.8,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,dc_entropic_subtraction,,10.74,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,hickock,11.932204876185157,30.79,,,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,orc,-0.14747212259840312,2.65,,,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,spc_hop,,0.0,,,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,laziness_knn_t5,,10.13,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,laziness_adaptive_t5,,10.5,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,455,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m5,4,1,0.05,5,,-67.2218656296363
+colosseum,463,dc2,,10.43,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,dc_wasserstein_ollivier,,11.24,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,dc_entropic_subtraction,,10.72,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,hickock,11.457165075327948,35.19,,,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,orc,-0.26791686384337726,3.11,,,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,spc_hop,,0.0,,,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,laziness_knn_t5,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,laziness_adaptive_t5,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,463,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m13,4,1,0.05,13,,-0.5648079248090547
+colosseum,471,dc2,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,dc_wasserstein_ollivier,,10.69,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,dc_entropic_subtraction,,10.74,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,hickock,11.470604743872887,34.57,,,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,orc,-0.21235548828918288,3.81,,,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,spc_hop,,0.0,,,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,laziness_knn_t5,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,laziness_adaptive_t5,,10.53,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,471,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m21,4,1,0.05,21,,-53.233054501536124
+colosseum,479,dc2,,10.3,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,dc_wasserstein_ollivier,,10.64,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,dc_entropic_subtraction,,11.05,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,hickock,11.107212063154087,32.5,,,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,orc,-0.16538870765346791,3.38,,,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,spc_hop,,0.0,,,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,laziness_knn_t5,,10.21,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,laziness_adaptive_t5,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,479,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m29,4,1,0.05,29,,-18.213645373468317
+colosseum,487,dc2,,10.4,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,dc_wasserstein_ollivier,,10.78,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,dc_entropic_subtraction,,11.24,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,hickock,11.93911438979059,31.46,,,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,orc,-0.1748054180029349,2.8,,,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,spc_hop,,0.0,,,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,laziness_knn_t5,,10.15,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,laziness_adaptive_t5,,10.21,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,487,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m37,4,1,0.05,37,,8.65493710374083
+colosseum,495,dc2,,10.69,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,dc_wasserstein_ollivier,,10.88,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,dc_entropic_subtraction,,11.13,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,hickock,11.13629246421991,37.16,,,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,orc,-0.24828675412299975,3.45,,,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,spc_hop,,0.0,,,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,spc_diffusion_t5,,0.0,,,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,laziness_knn_t5,,10.13,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,laziness_adaptive_t5,,10.3,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,495,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.05-m45,4,1,0.05,45,,-10.504195486111167
+colosseum,503,dc2,,10.77,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,dc_wasserstein_ollivier,,11.36,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,dc_entropic_subtraction,,11.04,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,hickock,11.3223345873753,37.62,,,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,orc,-0.07472817019653086,2.78,,,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,spc_hop,,0.0,,,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,laziness_knn_t5,,10.16,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,laziness_adaptive_t5,,10.95,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,503,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m3,4,1,0.1,3,,-18.002834620106313
+colosseum,511,dc2,,10.48,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,dc_wasserstein_ollivier,,11.91,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,dc_entropic_subtraction,,10.69,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,hickock,11.619043777641426,37.86,,,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,orc,-0.19572182163997182,2.64,,,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,spc_hop,,0.0,,,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,laziness_knn_t5,,10.13,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,laziness_adaptive_t5,,10.34,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,511,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m11,4,1,0.1,11,,-4.261876171200981
+colosseum,519,dc2,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,dc_wasserstein_ollivier,,11.32,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,dc_entropic_subtraction,,10.68,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,hickock,11.556409629289183,37.75,,,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,orc,-0.12300907637780983,2.71,,,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,spc_hop,,0.0,,,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,laziness_knn_t5,,10.51,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,laziness_adaptive_t5,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,519,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m19,4,1,0.1,19,,5.115413580992472
+colosseum,527,dc2,,10.34,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,dc_wasserstein_ollivier,,11.27,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,dc_entropic_subtraction,,10.7,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,hickock,12.619637391161088,38.17,,,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,orc,-0.08629524742654769,2.67,,,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,spc_hop,,0.0,,,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,laziness_knn_t5,,10.14,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,laziness_adaptive_t5,,10.34,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,527,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m27,4,1,0.1,27,,-29.448950067862338
+colosseum,535,dc2,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,dc_wasserstein_ollivier,,10.87,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,dc_entropic_subtraction,,10.6,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,hickock,11.556522693372624,39.46,,,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,orc,-0.021959056652902452,2.64,,,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,spc_hop,,0.0,,,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,laziness_knn_t5,,10.41,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,laziness_adaptive_t5,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,535,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m35,4,1,0.1,35,,-29.350185579006162
+colosseum,543,dc2,,10.18,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,dc_wasserstein_ollivier,,11.23,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,dc_entropic_subtraction,,10.58,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,hickock,11.887385281915478,36.0,,,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,orc,-0.26521008509365257,4.61,,,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,spc_hop,,0.0,,,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,spc_diffusion_t5,,0.0,,,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,laziness_knn_t5,,10.11,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,laziness_adaptive_t5,,10.18,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,543,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.1-m43,4,1,0.1,43,,-21.24343095902297
+colosseum,551,dc2,,10.22,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,dc_wasserstein_ollivier,,11.5,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,dc_entropic_subtraction,,12.15,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,hickock,11.556362533844966,35.07,,,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,orc,-0.04777236499880154,4.89,,,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,spc_hop,,0.0,,,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,laziness_knn_t5,,10.71,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,laziness_adaptive_t5,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,551,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m1,4,1,0.2,1,,-46.70947464096946
+colosseum,559,dc2,,10.26,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,dc_wasserstein_ollivier,,11.2,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,dc_entropic_subtraction,,11.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,hickock,12.400715575997694,39.12,,,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,orc,-0.1831342238336917,2.97,,,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,spc_hop,,0.0,,,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,laziness_knn_t5,,10.12,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,laziness_adaptive_t5,,10.22,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,559,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m9,4,1,0.2,9,,10.012372993089487
+colosseum,567,dc2,,10.43,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,dc_wasserstein_ollivier,,10.92,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,dc_entropic_subtraction,,11.55,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,hickock,12.297244382300978,37.7,,,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,orc,-0.17261333234715082,5.42,,,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,spc_hop,,0.0,,,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,laziness_knn_t5,,10.58,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,laziness_adaptive_t5,,10.32,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,567,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m17,4,1,0.2,17,,64.65102639513
+colosseum,575,dc2,,10.3,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,dc_wasserstein_ollivier,,10.71,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,dc_entropic_subtraction,,11.65,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,hickock,11.185613451457684,32.57,,,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,orc,-0.20216231084228445,5.38,,,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,spc_hop,,0.0,,,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,laziness_knn_t5,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,laziness_adaptive_t5,,10.28,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,575,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m25,4,1,0.2,25,,-19.01414523256043
+colosseum,583,dc2,,10.26,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,dc_wasserstein_ollivier,,10.98,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,dc_entropic_subtraction,,11.27,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,hickock,11.682846858297674,31.99,,,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,orc,-0.2661941372628215,4.74,,,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,spc_hop,,0.0,,,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,laziness_knn_t5,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,laziness_adaptive_t5,,10.2,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,583,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m33,4,1,0.2,33,,-15.709510140658978
+colosseum,591,dc2,,10.28,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,dc_wasserstein_ollivier,,10.67,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,dc_entropic_subtraction,,11.01,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,hickock,12.216818077774974,31.23,,,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,orc,-0.2402508858239349,3.2,,,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,spc_hop,,0.0,,,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,laziness_knn_t5,,10.14,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,laziness_adaptive_t5,,10.36,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,591,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m41,4,1,0.2,41,,1.898721003704723
+colosseum,599,dc2,,10.44,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,dc_wasserstein_ollivier,,10.83,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,dc_entropic_subtraction,,11.67,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,hickock,11.486401038518759,32.75,,,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,orc,-0.17444393604315045,3.17,,,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,spc_hop,,0.0,,,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,spc_diffusion_t5,,0.0,,,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,laziness_knn_t5,,10.12,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,laziness_adaptive_t5,,10.45,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,599,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d4-c1-n0.2-m49,4,1,0.2,49,,-5.987918663947381
+colosseum,607,dc2,,10.26,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,dc_wasserstein_ollivier,,10.68,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,dc_entropic_subtraction,,10.57,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,hickock,16.636535031057868,30.57,,,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,orc,-0.17738664745419921,3.93,,,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,spc_hop,,0.0,,,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,laziness_knn_t5,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,laziness_adaptive_t5,,10.38,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,607,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m7,5,1,0.01,7,,4.116877491868241
+colosseum,615,dc2,,10.17,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,dc_wasserstein_ollivier,,10.5,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,dc_entropic_subtraction,,11.3,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,hickock,16.952118907683705,31.51,,,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,orc,-0.31942567075446393,6.82,,,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,spc_hop,,0.0,,,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,laziness_knn_t5,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,laziness_adaptive_t5,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,615,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m15,5,1,0.01,15,,-15.61221309703686
+colosseum,623,dc2,,10.48,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,dc_wasserstein_ollivier,,10.52,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,dc_entropic_subtraction,,11.14,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,hickock,17.592887260406773,34.83,,,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,orc,-0.323581352801658,3.84,,,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,spc_hop,,0.0,,,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,laziness_knn_t5,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,laziness_adaptive_t5,,10.35,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,623,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m23,5,1,0.01,23,,50.75077523514257
+colosseum,631,dc2,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,dc_wasserstein_ollivier,,10.92,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,dc_entropic_subtraction,,11.22,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,hickock,17.377124355668546,33.12,,,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,orc,-0.1633702020950449,3.89,,,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,spc_hop,,0.0,,,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,laziness_knn_t5,,10.23,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,laziness_adaptive_t5,,10.41,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,631,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m31,5,1,0.01,31,,37.233457074718324
+colosseum,639,dc2,,10.32,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,dc_wasserstein_ollivier,,10.66,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,dc_entropic_subtraction,,10.88,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,hickock,17.235433629152638,32.13,,,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,orc,-0.2173992548742741,3.74,,,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,spc_hop,,0.0,,,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,laziness_knn_t5,,10.22,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,laziness_adaptive_t5,,10.31,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,639,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m39,5,1,0.01,39,,-30.511093854060025
+colosseum,647,dc2,,10.52,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,dc_wasserstein_ollivier,,10.61,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,dc_entropic_subtraction,,11.33,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,hickock,16.849953657999432,35.61,,,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,orc,-0.2307586705443616,3.94,,,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,spc_hop,,0.0,,,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,spc_diffusion_t5,,0.0,,,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,laziness_knn_t5,,10.19,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,laziness_adaptive_t5,,10.29,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,647,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.01-m47,5,1,0.01,47,,-33.98899423029998
+colosseum,655,dc2,,10.14,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,dc_wasserstein_ollivier,,10.73,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,dc_entropic_subtraction,,10.57,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,hickock,16.860361385416187,29.79,,,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,orc,-0.2734420246821824,2.66,,,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,spc_hop,,0.0,,,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,laziness_knn_t5,,10.15,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,laziness_adaptive_t5,,10.45,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,655,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m5,5,1,0.05,5,,17.407816219194437
+colosseum,663,dc2,,10.21,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,dc_wasserstein_ollivier,,10.78,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,dc_entropic_subtraction,,11.22,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,hickock,17.339286247127678,27.65,,,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,orc,-0.2831420117221159,3.18,,,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,spc_hop,,0.0,,,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,laziness_knn_t5,,10.13,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,laziness_adaptive_t5,,10.37,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,663,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m13,5,1,0.05,13,,-30.96952628838691
+colosseum,671,dc2,,10.18,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,dc_wasserstein_ollivier,,11.27,,RESOURCE_EXHAUSTED: Out of memory while trying to allocate 36000000 bytes.,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,dc_entropic_subtraction,,11.12,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,hickock,16.923649076006864,24.37,,,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,orc,-0.19108470883932108,2.95,,,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,spc_hop,,0.0,,,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,laziness_knn_t5,,0.27,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,laziness_adaptive_t5,,0.24,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,671,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m21,5,1,0.05,21,,-27.78712674558398
+colosseum,679,dc2,,0.31,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,dc_wasserstein_ollivier,,1.26,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,dc_entropic_subtraction,,1.11,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,hickock,17.033872669010968,25.52,,,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,orc,-0.2848743598714909,3.11,,,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,spc_hop,,0.0,,,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,laziness_adaptive_t5,,0.32,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,679,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m29,5,1,0.05,29,,-22.653150413978544
+colosseum,687,dc2,,0.21,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,dc_wasserstein_ollivier,,0.74,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,dc_entropic_subtraction,,0.77,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,hickock,16.739818309448395,25.61,,,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,orc,-0.2381341699110772,2.54,,,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,spc_hop,,0.0,,,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,laziness_knn_t5,,0.12,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,687,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m37,5,1,0.05,37,,-25.134977052088516
+colosseum,695,dc2,,0.19,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,dc_wasserstein_ollivier,,0.94,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,dc_entropic_subtraction,,0.54,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,hickock,16.614850956994776,22.77,,,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,orc,-0.18548265262680363,3.57,,,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,spc_hop,,0.0,,,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,spc_diffusion_t5,,0.0,,,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,laziness_knn_t5,,0.2,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,laziness_adaptive_t5,,0.24,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,695,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.05-m45,5,1,0.05,45,,-21.04222788649439
+colosseum,703,dc2,,0.27,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,dc_wasserstein_ollivier,,0.57,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,dc_entropic_subtraction,,0.66,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,hickock,17.221995918511738,23.74,,,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,orc,-0.2405615070913516,2.51,,,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,spc_hop,,0.0,,,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,laziness_knn_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,laziness_adaptive_t5,,0.2,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,703,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m3,5,1,0.1,3,,-39.228941369789354
+colosseum,711,dc2,,0.23,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,dc_wasserstein_ollivier,,0.77,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,dc_entropic_subtraction,,0.66,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,hickock,17.356201429085136,24.65,,,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,orc,-0.2327661543350934,3.02,,,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,spc_hop,,0.0,,,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,laziness_knn_t5,,0.27,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,laziness_adaptive_t5,,0.38,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,711,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m11,5,1,0.1,11,,0.04905587408525136
+colosseum,719,dc2,,0.34,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,dc_wasserstein_ollivier,,0.8,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,dc_entropic_subtraction,,0.84,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,hickock,17.418907939922036,24.96,,,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,orc,-0.23052398380868402,2.87,,,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,spc_hop,,0.0,,,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,laziness_knn_t5,,0.15,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,laziness_adaptive_t5,,0.21,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,719,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m19,5,1,0.1,19,,-26.733702836921275
+colosseum,727,dc2,,0.17,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,dc_wasserstein_ollivier,,0.48,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,dc_entropic_subtraction,,0.8,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,hickock,17.058068993179162,22.53,,,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,orc,-0.089559501000266,2.96,,,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,spc_hop,,0.0,,,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,laziness_knn_t5,,0.16,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,laziness_adaptive_t5,,0.2,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,727,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m27,5,1,0.1,27,,15.224368958350802
+colosseum,735,dc2,,0.19,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,dc_wasserstein_ollivier,,0.96,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,dc_entropic_subtraction,,0.83,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,hickock,16.94784866337238,23.39,,,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,orc,-0.27181951007155725,3.09,,,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,spc_hop,,0.0,,,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,laziness_knn_t5,,0.16,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,laziness_adaptive_t5,,0.67,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,735,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m35,5,1,0.1,35,,-25.575328885612553
+colosseum,743,dc2,,0.2,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,dc_wasserstein_ollivier,,0.5,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,dc_entropic_subtraction,,0.51,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,hickock,16.89692548643246,25.93,,,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,orc,-0.26905177272442327,2.52,,,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,spc_hop,,0.0,,,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,spc_diffusion_t5,,0.0,,,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,743,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.1-m43,5,1,0.1,43,,-0.03430496175333397
+colosseum,751,dc2,,0.2,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,dc_wasserstein_ollivier,,0.57,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,dc_entropic_subtraction,,0.71,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,hickock,17.265411038091724,24.86,,,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,orc,-0.24802038054160036,3.82,,,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,spc_hop,,0.0,,,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,laziness_knn_t5,,0.4,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,laziness_adaptive_t5,,0.35,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,751,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m1,5,1,0.2,1,,-17.43950563448628
+colosseum,759,dc2,,0.22,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,dc_wasserstein_ollivier,,0.43,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,dc_entropic_subtraction,,0.43,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,hickock,17.687948077193244,20.89,,,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,orc,-0.36209756235613655,2.8,,,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,spc_hop,,0.0,,,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,laziness_knn_t5,,0.19,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,laziness_adaptive_t5,,0.31,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,759,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m9,5,1,0.2,9,,-11.123796937135136
+colosseum,767,dc2,,0.21,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,dc_wasserstein_ollivier,,0.74,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,dc_entropic_subtraction,,0.74,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,hickock,16.90925454565501,18.31,,,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,orc,-0.3664114297743494,2.67,,,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,spc_hop,,0.0,,,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,laziness_knn_t5,,0.12,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,767,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m17,5,1,0.2,17,,-24.455085864679344
+colosseum,775,dc2,,0.15,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,dc_wasserstein_ollivier,,0.44,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,dc_entropic_subtraction,,0.43,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,hickock,17.09328231791622,19.04,,,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,orc,-0.15993655313576188,2.26,,,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,spc_hop,,0.0,,,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,laziness_adaptive_t5,,0.16,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,775,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m25,5,1,0.2,25,,-20.59913203329686
+colosseum,783,dc2,,0.14,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,dc_wasserstein_ollivier,,0.41,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,dc_entropic_subtraction,,0.83,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,hickock,17.35056612563907,19.24,,,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,orc,-0.2816395020893554,2.2,,,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,spc_hop,,0.0,,,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,laziness_knn_t5,,0.1,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,783,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m33,5,1,0.2,33,,-14.266163257245838
+colosseum,791,dc2,,0.18,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,dc_wasserstein_ollivier,,0.44,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,dc_entropic_subtraction,,0.4,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,hickock,17.0768060615345,17.34,,,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,orc,-0.24917949970647363,2.44,,,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,spc_hop,,0.0,,,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,laziness_adaptive_t5,,0.19,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,791,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m41,5,1,0.2,41,,-77.8307359827705
+colosseum,799,dc2,,0.16,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,dc_wasserstein_ollivier,,0.65,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,dc_entropic_subtraction,,0.97,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,hickock,17.483789583034262,17.33,,,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,orc,-0.2845296678443223,2.3,,,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,spc_hop,,0.0,,,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,spc_diffusion_t5,,0.0,,,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,799,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d5-c1-n0.2-m49,5,1,0.2,49,,-17.91789051467135
+colosseum,807,dc2,,0.16,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,dc_wasserstein_ollivier,,0.4,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,dc_entropic_subtraction,,0.44,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,hickock,20.384261156043923,18.8,,,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,orc,-0.3034666948206142,2.27,,,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,spc_hop,,0.0,,,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,807,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m7,6,1,0.01,7,,2.5765930531607424
+colosseum,815,dc2,,0.2,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,dc_wasserstein_ollivier,,0.38,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,dc_entropic_subtraction,,0.66,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,hickock,20.53727776090582,19.54,,,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,orc,-0.35680004881547944,2.25,,,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,spc_hop,,0.0,,,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,laziness_knn_t5,,0.12,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,815,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m15,6,1,0.01,15,,-57.81290458698522
+colosseum,823,dc2,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,dc_wasserstein_ollivier,,0.38,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,dc_entropic_subtraction,,0.4,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,hickock,21.12487902547693,17.46,,,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,orc,-0.3805766788642851,3.06,,,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,spc_hop,,0.0,,,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,laziness_knn_t5,,0.19,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,laziness_adaptive_t5,,0.28,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,823,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m23,6,1,0.01,23,,-6.261659890593533
+colosseum,831,dc2,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,dc_wasserstein_ollivier,,0.65,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,dc_entropic_subtraction,,0.38,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,hickock,20.870764333881528,17.15,,,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,orc,-0.28420361107184466,2.53,,,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,spc_hop,,0.0,,,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,laziness_adaptive_t5,,0.21,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,831,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m31,6,1,0.01,31,,105.37292499568531
+colosseum,839,dc2,,0.13,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,dc_wasserstein_ollivier,,0.36,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,dc_entropic_subtraction,,0.47,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,hickock,20.702248010072573,18.35,,,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,orc,-0.4048030027592368,2.25,,,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,spc_hop,,0.0,,,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,839,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m39,6,1,0.01,39,,-40.837550108738775
+colosseum,847,dc2,,0.14,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,dc_wasserstein_ollivier,,0.4,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,dc_entropic_subtraction,,0.68,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,hickock,20.53732272481769,18.96,,,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,orc,-0.3897236420830378,2.21,,,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,spc_hop,,0.0,,,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,spc_diffusion_t5,,0.0,,,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,laziness_adaptive_t5,,0.2,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,847,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.01-m47,6,1,0.01,47,,-19.36971144954046
+colosseum,855,dc2,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,dc_wasserstein_ollivier,,0.35,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,dc_entropic_subtraction,,0.37,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,hickock,21.19257219070391,17.45,,,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,orc,-0.372203172969409,3.23,,,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,spc_hop,,0.0,,,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,laziness_knn_t5,,0.31,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,laziness_adaptive_t5,,0.19,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,855,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m5,6,1,0.05,5,,3.3570577315770898
+colosseum,863,dc2,,0.16,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,dc_wasserstein_ollivier,,0.64,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,dc_entropic_subtraction,,0.4,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,hickock,21.129331438271564,17.24,,,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,orc,-0.3233171164522594,2.47,,,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,spc_hop,,0.0,,,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,laziness_knn_t5,,0.12,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,laziness_adaptive_t5,,0.16,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,863,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m13,6,1,0.05,13,,-46.39829026176057
+colosseum,871,dc2,,0.16,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,dc_wasserstein_ollivier,,0.57,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,dc_entropic_subtraction,,0.4,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,hickock,20.82209025603517,18.4,,,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,orc,-0.27947366273652097,2.38,,,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,spc_hop,,0.0,,,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,laziness_knn_t5,,0.13,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,laziness_adaptive_t5,,0.23,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,871,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m21,6,1,0.05,21,,-34.676217538115395
+colosseum,879,dc2,,0.15,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,dc_wasserstein_ollivier,,0.36,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,dc_entropic_subtraction,,0.37,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,hickock,20.714373884303146,19.11,,,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,orc,-0.29558094678975066,2.4,,,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,spc_hop,,0.0,,,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,879,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m29,6,1,0.05,29,,-24.70853436922091
+colosseum,887,dc2,,0.19,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,dc_wasserstein_ollivier,,0.35,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,dc_entropic_subtraction,,0.39,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,hickock,20.492771755339888,18.35,,,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,orc,-0.3768434139211048,3.15,,,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,spc_hop,,0.0,,,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,laziness_adaptive_t5,,0.44,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,887,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m37,6,1,0.05,37,,-41.51749495253932
+colosseum,895,dc2,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,dc_wasserstein_ollivier,,0.36,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,dc_entropic_subtraction,,0.36,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,hickock,20.943904080738744,17.26,,,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,orc,-0.3518498637673633,2.37,,,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,spc_hop,,0.0,,,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,spc_diffusion_t5,,0.0,,,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,895,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.05-m45,6,1,0.05,45,,-22.850611815524847
+colosseum,903,dc2,,0.15,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,dc_wasserstein_ollivier,,0.39,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,dc_entropic_subtraction,,0.38,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,hickock,20.199895054570646,18.09,,,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,orc,-0.3352159762217925,2.78,,,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,spc_hop,,0.0,,,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,903,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m3,6,1,0.1,3,,-22.6059241036591
+colosseum,911,dc2,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,dc_wasserstein_ollivier,,0.36,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,dc_entropic_subtraction,,0.37,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,hickock,20.820452591648284,19.0,,,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,orc,-0.3144737658846594,2.4,,,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,spc_hop,,0.0,,,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,911,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m11,6,1,0.1,11,,-38.95047259595537
+colosseum,919,dc2,,0.15,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,dc_wasserstein_ollivier,,0.38,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,dc_entropic_subtraction,,0.39,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,hickock,21.108530137648522,19.05,,,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,orc,-0.28800726350464667,2.71,,,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,spc_hop,,0.0,,,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,919,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m19,6,1,0.1,19,,-27.146688257118498
+colosseum,927,dc2,,0.21,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,dc_wasserstein_ollivier,,0.38,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,dc_entropic_subtraction,,0.38,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,hickock,20.541296185384095,17.32,,,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,orc,-0.27376669188848907,2.66,,,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,spc_hop,,0.0,,,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,laziness_knn_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,laziness_adaptive_t5,,0.24,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,927,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m27,6,1,0.1,27,,-7.751886079138053
+colosseum,935,dc2,,0.19,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,dc_wasserstein_ollivier,,0.59,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,dc_entropic_subtraction,,0.76,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,hickock,20.074026610761667,17.29,,,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,orc,-0.3074427470322295,2.44,,,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,spc_hop,,0.0,,,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,laziness_knn_t5,,0.12,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,935,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m35,6,1,0.1,35,,-53.58058746263921
+colosseum,943,dc2,,0.2,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,dc_wasserstein_ollivier,,0.35,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,dc_entropic_subtraction,,0.37,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,hickock,21.452732329903107,18.56,,,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,orc,-0.429000429635896,2.35,,,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,spc_hop,,0.0,,,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,spc_diffusion_t5,,0.0,,,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,943,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.1-m43,6,1,0.1,43,,29.51157181891833
+colosseum,951,dc2,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,dc_wasserstein_ollivier,,0.34,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,dc_entropic_subtraction,,0.68,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,hickock,20.78842037808281,18.68,,,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,orc,-0.23769052077497937,2.45,,,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,spc_hop,,0.0,,,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,laziness_adaptive_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,951,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m1,6,1,0.2,1,,-29.547116333832303
+colosseum,959,dc2,,0.16,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,dc_wasserstein_ollivier,,0.37,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,dc_entropic_subtraction,,0.4,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,hickock,21.231545945368808,17.19,,,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,orc,-0.38319253298763556,3.1,,,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,spc_hop,,0.0,,,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,laziness_knn_t5,,0.17,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,laziness_adaptive_t5,,0.32,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,959,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m9,6,1,0.2,9,,-36.17556863830477
+colosseum,967,dc2,,0.15,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,dc_wasserstein_ollivier,,0.62,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,dc_entropic_subtraction,,0.34,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,hickock,21.561554266134777,16.98,,,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,orc,-0.22768011191276433,2.4,,,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,spc_hop,,0.0,,,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,laziness_knn_t5,,0.12,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,laziness_adaptive_t5,,0.24,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,967,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m17,6,1,0.2,17,,-28.821535967835615
+colosseum,975,dc2,,0.23,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,dc_wasserstein_ollivier,,0.36,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,dc_entropic_subtraction,,0.36,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,hickock,21.838225106331596,18.45,,,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,orc,-0.22914880133878898,2.39,,,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,spc_hop,,0.0,,,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,laziness_knn_t5,,0.12,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,975,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m25,6,1,0.2,25,,-8.291606480088308
+colosseum,983,dc2,,0.15,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,dc_wasserstein_ollivier,,0.37,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,dc_entropic_subtraction,,0.38,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,hickock,20.99452194291886,18.85,,,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,orc,-0.35105718198846864,2.37,,,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,spc_hop,,0.0,,,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,laziness_adaptive_t5,,0.23,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,983,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m33,6,1,0.2,33,,-17.346833479111247
+colosseum,991,dc2,,0.15,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,dc_wasserstein_ollivier,,0.4,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,dc_entropic_subtraction,,0.37,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,hickock,20.797480250619035,17.53,,,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,orc,-0.38884961349062164,3.42,,,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,spc_hop,,0.0,,,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,laziness_knn_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,laziness_adaptive_t5,,0.18,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,991,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m41,6,1,0.2,41,,-47.32565565249221
+colosseum,999,dc2,,0.15,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,dc_wasserstein_ollivier,,0.39,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,dc_entropic_subtraction,,0.35,,INTERNAL: Failed to initialize BLAS support for GemmCmd,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,hickock,20.87979953098625,17.06,,,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,orc,-0.21475316477079365,2.38,,,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,spc_hop,,0.0,,,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,spc_diffusion_t5,,0.0,,,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,laziness_knn_t5,,0.11,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,laziness_adaptive_t5,,0.2,,INTERNAL: Failed to initialize BLAS support,d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,successor_entropy,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167
+colosseum,999,successor_orc,,0.0,0.0,diffusion_curvature.successor.train.FBTrainer() got multiple values for keyword argument 'batch_size',d6-c1-n0.2-m49,6,1,0.2,49,,-29.723677943801167

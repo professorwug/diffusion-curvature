@@ -444,6 +444,146 @@
     "hash": "000bd6e63cbdc1aa",
     "url": "https://blots.kincaid.ink/reason_reckon/11-kernel-bench/ricci_over_time_idsoed_k5.svg"
   },
+  "experiments/11-successor-curvatures/figures/colosseum_surfaces.png": {
+    "commit": "0178559",
+    "hash": "2a3901a93703ca7b",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_surfaces.png"
+  },
+  "experiments/11-successor-curvatures/figures/colosseum_surfaces_square.png": {
+    "commit": "0178559",
+    "hash": "5c22c892011b38fb",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_surfaces_square.png"
+  },
+  "experiments/11-successor-curvatures/figures/successor_entropy_traj_sweep.png": {
+    "commit": "0178559",
+    "hash": "1fcff6fb41d2a26c",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/successor_entropy_traj_sweep.png"
+  },
+  "experiments/11-successor-curvatures/figures/successor_entropy_traj_sweep_gamma09_spearman.png": {
+    "commit": "0178559",
+    "hash": "21b560933c2e009d",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/successor_entropy_traj_sweep_gamma09_spearman.png"
+  },
+  "experiments/11-successor-curvatures/figures/successor_entropy_traj_sweep_gamma09_tau03_spearman.png": {
+    "commit": "0178559",
+    "hash": "1eab6013982fb068",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/successor_entropy_traj_sweep_gamma09_tau03_spearman.png"
+  },
+  "experiments/11-successor-curvatures/figures/successor_entropy_traj_sweep_spearman.png": {
+    "commit": "0178559",
+    "hash": "3dab2527f46a0dbb",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/successor_entropy_traj_sweep_spearman.png"
+  },
+  "experiments/11-successor-curvatures/figures/successor_entropy_traj_sweep_v2_pearson_best.png": {
+    "commit": "0178559",
+    "hash": "fba53f1902d5e7ea",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/successor_entropy_traj_sweep_v2_pearson_best.png"
+  },
+  "experiments/11-successor-curvatures/figures/successor_entropy_traj_sweep_v2_spearman_best.png": {
+    "commit": "0178559",
+    "hash": "917e2f69608d167e",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/successor_entropy_traj_sweep_v2_spearman_best.png"
+  },
+  "experiments/11-successor-curvatures/figures/successor_entropy_traj_sweep_v2_spearman_heatmap.png": {
+    "commit": "0178559",
+    "hash": "03c3ec94165a9864",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/successor_entropy_traj_sweep_v2_spearman_heatmap.png"
+  },
+  "experiments/11-successor-curvatures/figures/tau_colosseum_correlation.png": {
+    "commit": "0178559",
+    "hash": "9c7fe63c0d4f0ad4",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/tau_colosseum_correlation.png"
+  },
+  "experiments/11-successor-curvatures/figures/tau_sadspheres_auc.png": {
+    "commit": "0178559",
+    "hash": "c61eb0dea8f6c3b3",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/tau_sadspheres_auc.png"
+  },
+  "experiments/11-successor-curvatures/figures/torus_fb_kl.png": {
+    "commit": "0178559",
+    "hash": "627c90d180da214f",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/torus_fb_kl.png"
+  },
+  "experiments/11-successor-curvatures/figures/torus_fb_pearson_entropy_hat_vs_real.png": {
+    "commit": "0178559",
+    "hash": "656e00e8635eaeb1",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/torus_fb_pearson_entropy_hat_vs_real.png"
+  },
+  "experiments/11-successor-curvatures/figures/torus_fb_pearson_entropy_ks.png": {
+    "commit": "0178559",
+    "hash": "a194f49757709ac0",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/torus_fb_pearson_entropy_ks.png"
+  },
+  "experiments/11-successor-curvatures/figures/torus_fb_spearman_entropy_ks.png": {
+    "commit": "0178559",
+    "hash": "75c9c3b76d6a9415",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/torus_fb_spearman_entropy_ks.png"
+  },
+  "experiments/11-successor-curvatures/figures/torus_fb_v2_best_temp_heatmap.png": {
+    "commit": "0178559",
+    "hash": "4b798876f9043ced",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/torus_fb_v2_best_temp_heatmap.png"
+  },
+  "experiments/11-successor-curvatures/figures/torus_fb_v2_kl_best.png": {
+    "commit": "0178559",
+    "hash": "12e3633e3ce8b005",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/torus_fb_v2_kl_best.png"
+  },
+  "experiments/11-successor-curvatures/figures/torus_fb_v2_pearson_best.png": {
+    "commit": "0178559",
+    "hash": "6056a8f9c0d78e92",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/torus_fb_v2_pearson_best.png"
+  },
+  "experiments/11-successor-curvatures/figures/torus_fb_v2_spearman_best.png": {
+    "commit": "0178559",
+    "hash": "6ed6e36259f1a59c",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/torus_fb_v2_spearman_best.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/colosseum_pearson_compact.png": {
+    "commit": "0178559",
+    "hash": "0cfaa7fe09092d03",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_pearson_compact.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/colosseum_pearson_compact_v3.png": {
+    "commit": "0178559",
+    "hash": "1e62eaeabffe3b60",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_pearson_compact_v3.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/colosseum_pearson_matrix.png": {
+    "commit": "0178559",
+    "hash": "8cb0c581ce6062c2",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_pearson_matrix.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/colosseum_pearson_merged.png": {
+    "commit": "0178559",
+    "hash": "fcf862f7879bab3e",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_pearson_merged.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/colosseum_pearson_table.png": {
+    "commit": "0178559",
+    "hash": "a5cda242a147fd76",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_pearson_table.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/colosseum_sign_acc_heatmap.png": {
+    "commit": "0178559",
+    "hash": "0924d71e845103b5",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_sign_acc_heatmap.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/colosseum_spearman_heatmap.png": {
+    "commit": "0178559",
+    "hash": "a55d844235ffc84d",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_spearman_heatmap.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/sadspheres_methods.png": {
+    "commit": "0178559",
+    "hash": "e4202291f32dc3b1",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/sadspheres_methods.png"
+  },
+  "experiments/11-successor-curvatures/figures/v2/tau_colosseum_pearson_compact.png": {
+    "commit": "0178559",
+    "hash": "0d73407e438ade82",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/tau_colosseum_pearson_compact.png"
+  },
   "experiments/12-baselines/figures/comparison_table.png": {
     "commit": "4f58ce2",
     "hash": "11df1d305a0a90bf",

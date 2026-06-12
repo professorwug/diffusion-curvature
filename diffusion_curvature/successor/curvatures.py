@@ -144,7 +144,11 @@ class _SuccessorCurvatureBase:
         self.trainer_ = trainer
 
         M_mat, F_emb, B_emb = compute_successor_measures(
-            trainer.F_net, trainer.B_net, corpus, corpus, device=self.device
+            trainer.F_net,
+            trainer.B_net,
+            corpus,
+            corpus,
+            device=self.device,
         )
         return M_mat, F_emb, B_emb
 
@@ -207,7 +211,7 @@ class SuccessorORC(_SuccessorCurvatureBase):
     top_n : int
         Top-n support truncation for sliced-W1 computation.
     use_softmax : bool
-        If True, softmax-normalize M before computing W1 (per the linked zettel).
+        If True, softmax-normalize M before computing W1
     softmax_tau : float
     n_projections : int
         Sliced-W1 projection count.
@@ -302,90 +306,91 @@ class SuccessorORC(_SuccessorCurvatureBase):
         return orc
 
 
-class SuccessorW1(_SuccessorCurvatureBase):
-    """Raw mean W1 distance between a point's successor measure and its neighbors'.
+# This doesn't make any sense
+# class SuccessorW1(_SuccessorCurvatureBase):
+#     """Raw mean W1 distance between a point's successor measure and its neighbors'.
 
-    Negated so that points whose successor measure *changes a lot* across the
-    neighborhood (≈ unstable region) read as negative curvature.
+#     Negated so that points whose successor measure *changes a lot* across the
+#     neighborhood (≈ unstable region) read as negative curvature.
 
-    Parameters mirror SuccessorORC but the final statistic is
-        W1(i) = mean_{j ∈ kNN(i)} W1(M(i), M(j))
-    (no division by ground distance).
-    """
+#     Parameters mirror SuccessorORC but the final statistic is
+#         W1(i) = mean_{j ∈ kNN(i)} W1(M(i), M(j))
+#     (no division by ground distance).
+#     """
 
-    def __init__(
-        self,
-        ground: GroundMetric = "B",
-        k_neighbors: int = 1,
-        top_n: int = 200,
-        use_softmax: bool = False,
-        softmax_tau: float = 1.0,
-        n_projections: int = 50,
-        n_jobs: int = -1,
-        **kwargs,
-    ):
-        super().__init__(**kwargs)
-        self.ground = ground
-        self.k_neighbors = k_neighbors
-        self.top_n = top_n
-        self.use_softmax = use_softmax
-        self.softmax_tau = softmax_tau
-        self.n_projections = n_projections
-        self.n_jobs = n_jobs
+#     def __init__(
+#         self,
+#         ground: GroundMetric = "B",
+#         k_neighbors: int = 1,
+#         top_n: int = 200,
+#         use_softmax: bool = False,
+#         softmax_tau: float = 1.0,
+#         n_projections: int = 50,
+#         n_jobs: int = -1,
+#         **kwargs,
+#     ):
+#         super().__init__(**kwargs)
+#         self.ground = ground
+#         self.k_neighbors = k_neighbors
+#         self.top_n = top_n
+#         self.use_softmax = use_softmax
+#         self.softmax_tau = softmax_tau
+#         self.n_projections = n_projections
+#         self.n_jobs = n_jobs
 
-    def fit_transform(
-        self,
-        G: pygsp.graphs.Graph | None = None,
-        X: np.ndarray | None = None,
-        trajectories: np.ndarray | list[np.ndarray] | None = None,
-        F_embeddings: np.ndarray | None = None,
-        B_embeddings: np.ndarray | None = None,
-        M: np.ndarray | None = None,
-    ) -> np.ndarray:
-        M_mat, F_emb, B_emb = self._resolve_inputs(
-            G, X, trajectories, F_embeddings, B_embeddings, M
-        )
-        self.M_ = M_mat
-        self.F_ = F_emb
-        self.B_ = B_emb
+#     def fit_transform(
+#         self,
+#         G: pygsp.graphs.Graph | None = None,
+#         X: np.ndarray | None = None,
+#         trajectories: np.ndarray | list[np.ndarray] | None = None,
+#         F_embeddings: np.ndarray | None = None,
+#         B_embeddings: np.ndarray | None = None,
+#         M: np.ndarray | None = None,
+#     ) -> np.ndarray:
+#         M_mat, F_emb, B_emb = self._resolve_inputs(
+#             G, X, trajectories, F_embeddings, B_embeddings, M
+#         )
+#         self.M_ = M_mat
+#         self.F_ = F_emb
+#         self.B_ = B_emb
 
-        coords = F_emb if self.ground == "F" else B_emb
-        measures = (
-            softmax_measure(M_mat, tau=self.softmax_tau) if self.use_softmax else M_mat
-        )
+#         coords = F_emb if self.ground == "F" else B_emb
+#         measures = (
+#             softmax_measure(M_mat, tau=self.softmax_tau) if self.use_softmax else M_mat
+#         )
 
-        T = coords.shape[0]
-        k = min(self.k_neighbors, T - 1)
-        if k < 1:
-            self.curvature_ = np.zeros(T)
-            return self.curvature_
+#         T = coords.shape[0]
+#         k = min(self.k_neighbors, T - 1)
+#         if k < 1:
+#             self.curvature_ = np.zeros(T)
+#             return self.curvature_
 
-        nn = NearestNeighbors(n_neighbors=k + 1, metric="euclidean")
-        nn.fit(coords)
-        _, idx = nn.kneighbors(coords)
-        neigh_i = idx[:, 1:]
+#         nn = NearestNeighbors(n_neighbors=k + 1, metric="euclidean")
+#         nn.fit(coords)
+#         _, idx = nn.kneighbors(coords)
+#         neigh_i = idx[:, 1:]
 
-        def _one(t: int, tp_: int) -> tuple[int, float]:
-            w = truncated_sliced_w1(
-                measures[t],
-                measures[tp_],
-                coords,
-                top_n=self.top_n,
-                n_projections=self.n_projections,
-                seed=self.seed,
-            )
-            return t, w
+#         def _one(t: int, tp_: int) -> tuple[int, float]:
+#             w = truncated_sliced_w1(
+#                 measures[t],
+#                 measures[tp_],
+#                 coords,
+#                 top_n=self.top_n,
+#                 n_projections=self.n_projections,
+#                 seed=self.seed,
+#             )
+#             return t, w
 
-        pairs = [(t, int(neigh_i[t, j])) for t in range(T) for j in range(k)]
-        results = Parallel(n_jobs=self.n_jobs, prefer="threads")(
-            delayed(_one)(t, tp_) for t, tp_ in pairs
-        )
-        per_t: dict[int, list[float]] = defaultdict(list)
-        for t, w in results:
-            per_t[t].append(w)
-        w1 = np.zeros(T)
-        for t in range(T):
-            if per_t[t]:
-                w1[t] = float(np.mean(per_t[t]))
-        self.curvature_ = -w1
-        return self.curvature_
+#         pairs = [(t, int(neigh_i[t, j])) for t in range(T) for j in range(k)]
+#         results = Parallel(n_jobs=self.n_jobs, prefer="threads")(
+#             delayed(_one)(t, tp_) for t, tp_ in pairs
+#         )
+#         per_t: dict[int, list[float]] = defaultdict(list)
+#         for t, w in results:
+#             per_t[t].append(w)
+#         w1 = np.zeros(T)
+#         for t in range(T):
+#             if per_t[t]:
+#                 w1[t] = float(np.mean(per_t[t]))
+#         self.curvature_ = -w1
+#         return self.curvature_
