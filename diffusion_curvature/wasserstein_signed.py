@@ -75,6 +75,19 @@ class _DijkstraCache:
         return self.rows[s]
 
 
+class _MatrixCache:
+    """Cache-compatible view over a precomputed dense distance matrix."""
+
+    def __init__(self, D: np.ndarray):
+        self.D = D
+
+    def fetch(self, sources: np.ndarray) -> None:
+        pass
+
+    def __getitem__(self, s: int) -> np.ndarray:
+        return self.D[s]
+
+
 # ---------------------------------------------------------------------------
 # Core estimator
 # ---------------------------------------------------------------------------
@@ -165,11 +178,23 @@ class WassersteinSignedCurvature:
 
     # -- inputs --------------------------------------------------------------
 
-    def _build_operators(self, G, X, M):
+    def _build_operators(self, G, X, M, D=None):
         """Set self.P (dense diffusion matrix), self.measures (callable row->mu),
         and self.geo (sparse distance graph for geodesics)."""
         if X is None and G is None:
-            raise ValueError("Supply X (pointcloud) and/or G (pygsp graph).")
+            if M is None or D is None:
+                raise ValueError(
+                    "Supply X (pointcloud) and/or G (pygsp graph), or both "
+                    "M (measures) and D (ground distances)."
+                )
+            # Fully kernel-driven mode: measures and metric are precomputed.
+            self.P = None
+            self.geo = None
+            Mm = np.asarray(M, dtype=np.float64)
+            rsm = Mm.sum(axis=1, keepdims=True)
+            rsm[rsm <= 0] = 1.0
+            self._M = Mm / rsm
+            return
 
         if G is not None:
             W = G.W
@@ -256,15 +281,20 @@ class WassersteinSignedCurvature:
         G=None,
         X: np.ndarray | None = None,
         M: np.ndarray | None = None,
+        D: np.ndarray | None = None,
         idx=None,
     ) -> "WassersteinSignedCurvature":
-        self._build_operators(G, X, M)
-        n = self.P.shape[0]
+        self._build_operators(G, X, M, D)
+        n = self._M.shape[0] if self.P is None else self.P.shape[0]
         idxs = np.arange(n) if idx is None else np.atleast_1d(np.asarray(idx, dtype=int))
         rng = np.random.default_rng(self.seed)
-        cache = _DijkstraCache(self.geo)
+        if D is not None:
+            cache = _MatrixCache(np.asarray(D, dtype=np.float64))
+        else:
+            cache = _DijkstraCache(self.geo)
 
-        if self.compute_midpoint and not isinstance(self.t, str):
+        if self.compute_midpoint and self.P is not None \
+                and not isinstance(self.t, str):
             self._A = np.linalg.matrix_power(self.P, 2 * self._smear_steps)
         else:
             self._A = None
@@ -289,7 +319,7 @@ class WassersteinSignedCurvature:
         return self
 
     def _point_estimate(self, i, cache, rng):
-        n = self.P.shape[0]
+        n = self._M.shape[0] if self.P is None else self.P.shape[0]
         d_i = cache[i]
         finite = np.isfinite(d_i)
 
