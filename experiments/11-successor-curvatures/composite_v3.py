@@ -1,4 +1,4 @@
-"""Composite v3: ruler-channel study — {entropy, Wasserstein spread} x t grid.
+"""Composite v5 (evolved in place): ruler-channel study — {entropy, Wasserstein spread} x t grid.
 
 Hypothesis (user): the low-dim inversion of the entropy ruler is a boundary
 effect — auto-t overspreads into the boundary at d=2-3 where sampling is
@@ -50,9 +50,9 @@ TS_RULER = (2, 4, 8, 16, 32, 64, 128)
 FLAT_DIMS = (2, 3, 4, 5, 6)
 FLAT_NS = (2000, 3000)
 
-OUT_RUN_TPL = "processed_data/composite4_run_w{wid}.csv"
-OUT_FLAT_TPL = "processed_data/composite4_flat_w{wid}.csv"
-OUT_MERGED = Path("processed_data/composite_signed_v4.csv")
+OUT_RUN_TPL = "processed_data/composite5_run_w{wid}.csv"
+OUT_FLAT_TPL = "processed_data/composite5_flat_w{wid}.csv"
+OUT_MERGED = Path("processed_data/composite_signed_v5.csv")
 
 
 def channels(X: np.ndarray, device: str) -> dict[str, float]:
@@ -77,8 +77,24 @@ def channels(X: np.ndarray, device: str) -> dict[str, float]:
 
     t_auto = _auto_t_dense(W, D, anchors)
     out["t_auto"] = t_auto
+
+    def _knee_t(frac=0.55, t_max=192):
+        Pn = W / np.maximum(W.sum(axis=1, keepdims=True), 1e-30)
+        target = frac * float(np.median(D[anchors]))
+        mu = np.zeros((len(anchors), W.shape[0]))
+        mu[np.arange(len(anchors)), anchors] = 1.0
+        t = 0
+        while t < t_max:
+            nxt = mu @ Pn
+            if float(np.median((nxt * D[anchors]).sum(axis=1))) > target and t >= 1:
+                break
+            mu = nxt
+            t += 1
+        return max(t, 1)
+    t_knee = _knee_t()
+    out["t_knee"] = t_knee
     D_anch = torch.as_tensor(D[anchors], dtype=torch.float32, device=device)
-    checkpoints = sorted(set(TS_RULER) | {t_auto})
+    checkpoints = sorted(set(TS_RULER) | {t_auto, t_knee})
     with torch.no_grad():
         rows = torch.zeros((len(anchors), X.shape[0]), device=device)
         for q, a in enumerate(anchors):
@@ -95,11 +111,15 @@ def channels(X: np.ndarray, device: str) -> dict[str, float]:
                 if step == t_auto:
                     out["ent_auto"] = H
                     out["wspread_auto"] = Wsp
+                if step == t_knee:
+                    out["ent_knee"] = H
+                    out["wspread_knee"] = Wsp
     return out
 
 
-RULERS = ([f"ent_t{t}" for t in TS_RULER] + ["ent_auto"]
-          + [f"wspread_t{t}" for t in TS_RULER] + ["wspread_auto"])
+RULERS = ([f"ent_t{t}" for t in TS_RULER] + ["ent_auto", "ent_knee"]
+          + [f"wspread_t{t}" for t in TS_RULER] + ["wspread_auto",
+                                                   "wspread_knee"])
 NAN_CH = {**{k: np.nan for k in
              ("kappa_plus", "frac", *RULERS)}, "t_auto": -1}
 
@@ -164,11 +184,11 @@ def run_battery(args) -> None:
 def run_summarize() -> None:
     from scipy.stats import pearsonr
     flat = pd.concat([pd.read_csv(p) for p in
-                      sorted(Path("processed_data").glob("composite4_flat_w*.csv"))],
+                      sorted(Path("processed_data").glob("composite5_flat_w*.csv"))],
                      ignore_index=True).drop_duplicates(
         ["n_points", "dim", "rep"], keep="last")
     df = pd.concat([pd.read_csv(p) for p in
-                    sorted(Path("processed_data").glob("composite4_run_w*.csv"))],
+                    sorted(Path("processed_data").glob("composite5_run_w*.csv"))],
                    ignore_index=True).drop_duplicates(
         ["instance"], keep="last").reset_index(drop=True)
 
@@ -183,7 +203,9 @@ def run_summarize() -> None:
     df.to_csv(OUT_MERGED, index=False)
     print(f"wrote {OUT_MERGED} ({len(df)} rows)")
     print(f"t_auto by dim (colosseum): "
-          f"{df[df.dataset=='colosseum'].groupby('dim').t_auto.median().to_dict()}\n")
+          f"{df[df.dataset=='colosseum'].groupby('dim').t_auto.median().to_dict()}")
+    print(f"t_knee by dim (colosseum): "
+          f"{df[df.dataset=='colosseum'].groupby('dim').t_knee.median().to_dict()}\n")
 
     cc = df[df.dataset == "colosseum"]
     print("=== RULER ORDERING: Pearson(z_ruler, ks_true) per dim (colosseum) ===")
