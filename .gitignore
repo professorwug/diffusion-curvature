@@ -174,3 +174,4 @@ token
 # Quarto
 **/.quarto/
 .aider*
+experiments/*/processed_data/*_w[0-9]*.csv
