@@ -155,8 +155,17 @@ class WassersteinSignedCurvature:
         max_support: int = 384,
         smear: int | None = None,
         compute_midpoint: bool = True,
+        transport: str = "w1",
+        far_quantiles: tuple[float, float] | None = None,
         seed: int = 42,
     ):
+        self.transport = transport
+        # Far-pair self-calibration: additionally estimate kappa on pairs at
+        # this quantile band of the geodesic distances from i. For clean
+        # measures far kappa ~ 0, so a nonzero far kappa measures the
+        # shared-mass (stationary-contamination) fraction rho; correct with
+        # kappa* = 1 - (1 - kappa_near) / (1 - kappa_far).
+        self.far_quantiles = far_quantiles
         self.t = t
         self.spread_fraction = spread_fraction
         self.t_max = t_max
@@ -284,12 +293,22 @@ class WassersteinSignedCurvature:
         M: np.ndarray | None = None,
         D: np.ndarray | None = None,
         D_graph=None,
+        M2: tuple[np.ndarray, np.ndarray] | None = None,
         idx=None,
     ) -> "WassersteinSignedCurvature":
         """``D_graph``: sparse graph of trusted local distances; geodesics are
         computed lazily over it (path-metric re-metrization without the full
-        n x n Dijkstra)."""
+        n x n Dijkstra). ``M2``: a pair of independent (e.g. split-sample)
+        estimates of the same measures; enables the per-point noise floor
+        ``floor_`` (transport cost between the two estimates)."""
         self._build_operators(G, X, M, D, D_graph)
+        self._M2 = M2
+        if M2 is not None:
+            MA, MB = M2
+            MA = np.asarray(MA, dtype=np.float64)
+            MB = np.asarray(MB, dtype=np.float64)
+            self._M2 = (MA / MA.sum(axis=1, keepdims=True),
+                        MB / MB.sum(axis=1, keepdims=True))
         n = self._M.shape[0] if self.P is None else self.P.shape[0]
         idxs = np.arange(n) if idx is None else np.atleast_1d(np.asarray(idx, dtype=int))
         rng = np.random.default_rng(self.seed)
@@ -309,14 +328,32 @@ class WassersteinSignedCurvature:
         orc = np.full(len(idxs), np.nan)
         mid = np.full(len(idxs), np.nan)
         spread = np.full(len(idxs), np.nan)
+        floor = np.full(len(idxs), np.nan)
+        self.pair_w1_: list[np.ndarray] = []
+        self.pair_d_: list[np.ndarray] = []
 
+        far = np.full(len(idxs), np.nan)
         for out_i, i in enumerate(idxs):
             try:
                 o, m, s = self._point_estimate(int(i), cache, rng)
+                self.pair_w1_.append(self._last_pairs[0])
+                self.pair_d_.append(self._last_pairs[1])
+                far[out_i] = self._last_far
             except Exception as e:  # pragma: no cover - per-point robustness
                 warnings.warn(f"signed curvature failed at node {i}: {e}")
                 o, m, s = np.nan, np.nan, np.nan
+                self.pair_w1_.append(np.array([]))
+                self.pair_d_.append(np.array([]))
             orc[out_i], mid[out_i], spread[out_i] = o, m, s
+            if self._M2 is not None:
+                try:
+                    floor[out_i] = self._floor_estimate(int(i), cache)
+                except Exception:
+                    pass
+        self.floor_ = floor
+        self.far_ = far
+        with np.errstate(divide="ignore", invalid="ignore"):
+            self.orc_calibrated_ = 1.0 - (1.0 - orc) / (1.0 - far)
 
         self.orc_ = orc
         self.midpoint_ = mid
@@ -374,6 +411,7 @@ class WassersteinSignedCurvature:
             mu_js_s = self._smear_rows(mu_js)
 
         orc_vals, mid_vals = [], []
+        pair_w1, pair_d = [], []
         for k, j in enumerate(pairs):
             sj, wj = supports[k]
             S = np.unique(np.concatenate([si, sj]))
@@ -394,8 +432,13 @@ class WassersteinSignedCurvature:
             if not np.isfinite(d_ij) or d_ij <= 0:
                 continue
 
-            w1 = float(ot.emd2(a_full, b_full, DS))
+            if self.transport == "w2":
+                w1 = float(np.sqrt(ot.emd2(a_full, b_full, DS**2)))
+            else:
+                w1 = float(ot.emd2(a_full, b_full, DS))
             orc_vals.append(1.0 - w1 / d_ij)
+            pair_w1.append(w1)
+            pair_d.append(d_ij)
 
             # --- bridge-midpoint entropy (W2 plan) ---
             if self._A is None:
@@ -422,7 +465,70 @@ class WassersteinSignedCurvature:
 
         o = float(np.mean(orc_vals)) if orc_vals else np.nan
         m = float(np.mean(mid_vals)) if mid_vals else np.nan
+        self._last_pairs = (np.asarray(pair_w1), np.asarray(pair_d))
+
+        self._last_far = np.nan
+        if self.far_quantiles is not None:
+            lo_q, hi_q = self.far_quantiles
+            dfin = d_i[finite & (d_i > 0)]
+            f_lo, f_hi = np.quantile(dfin, lo_q), np.quantile(dfin, hi_q)
+            far_cand = np.where(finite & (d_i >= f_lo) & (d_i <= f_hi))[0]
+            far_cand = far_cand[far_cand != i]
+            if far_cand.size:
+                far_pairs = rng.choice(
+                    far_cand, size=min(self.n_pairs, far_cand.size),
+                    replace=False)
+                mu_far = self._measure_rows(far_pairs)
+                far_vals = []
+                for k, j in enumerate(far_pairs):
+                    sj, wj = _truncate_measure(
+                        mu_far[k], self.support_mass, self.max_support)
+                    S = np.unique(np.concatenate([si, sj]))
+                    cache.fetch(S)
+                    pos = {a: q for q, a in enumerate(S)}
+                    DS = np.stack([cache[int(a)][S] for a in S])
+                    DS = 0.5 * (DS + DS.T)
+                    bad = ~np.isfinite(DS)
+                    if bad.any():
+                        DS[bad] = DS[np.isfinite(DS)].max() * 2.0
+                    a_full = np.zeros(len(S))
+                    a_full[[pos[a] for a in si]] = wi
+                    b_full = np.zeros(len(S))
+                    b_full[[pos[a] for a in sj]] = wj
+                    d_ij = float(d_i[j])
+                    if not np.isfinite(d_ij) or d_ij <= 0:
+                        continue
+                    if self.transport == "w2":
+                        w = float(np.sqrt(ot.emd2(a_full, b_full, DS**2)))
+                    else:
+                        w = float(ot.emd2(a_full, b_full, DS))
+                    far_vals.append(1.0 - w / d_ij)
+                if far_vals:
+                    self._last_far = float(np.mean(far_vals))
         return o, m, spread
+
+    def _floor_estimate(self, i: int, cache) -> float:
+        """Noise-floor: transport cost between two independent estimates of the
+        SAME measure (from self._M2 = (M_A, M_B)) — zero for a perfect
+        estimator, and exactly the shared-mass bias scale otherwise."""
+        MA, MB = self._M2
+        sa, wa = _truncate_measure(MA[i], self.support_mass, self.max_support)
+        sb, wb = _truncate_measure(MB[i], self.support_mass, self.max_support)
+        S = np.unique(np.concatenate([sa, sb]))
+        cache.fetch(S)
+        pos = {a: q for q, a in enumerate(S)}
+        DS = np.stack([cache[int(a)][S] for a in S])
+        DS = 0.5 * (DS + DS.T)
+        bad = ~np.isfinite(DS)
+        if bad.any():
+            DS[bad] = DS[np.isfinite(DS)].max() * 2.0
+        a_full = np.zeros(len(S))
+        a_full[[pos[a] for a in sa]] = wa
+        b_full = np.zeros(len(S))
+        b_full[[pos[a] for a in sb]] = wb
+        if self.transport == "w2":
+            return float(np.sqrt(ot.emd2(a_full, b_full, DS**2)))
+        return float(ot.emd2(a_full, b_full, DS))
 
     def fit_transform(self, G=None, X=None, M=None, idx=None) -> np.ndarray:
         """Returns the Diffusion-ORC estimate (use MidpointEntropyCurvature for
