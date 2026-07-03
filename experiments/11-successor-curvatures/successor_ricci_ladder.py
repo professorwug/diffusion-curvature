@@ -288,18 +288,28 @@ def main() -> None:
     v2.add_argument("--worker-id", type=int, default=0)
     v2.add_argument("--num-workers", type=int, default=2)
     v2.add_argument("--device", default="cuda:0")
+    v3 = sub.add_parser("run-v3")
+    v3.add_argument("--worker-id", type=int, default=0)
+    v3.add_argument("--num-workers", type=int, default=2)
+    v3.add_argument("--device", default="cuda:0")
+    v4 = sub.add_parser("run-v4")
+    v4.add_argument("--worker-id", type=int, default=0)
+    v4.add_argument("--num-workers", type=int, default=2)
+    v4.add_argument("--device", default="cuda:0")
     sub.add_parser("summarize")
     args = ap.parse_args()
     if args.cmd == "run":
         run_worker(args)
     elif args.cmd == "run-v2":
         run_v2(args)
+    elif args.cmd == "run-v3":
+        run_v3(args)
+    elif args.cmd == "run-v4":
+        run_v4(args)
     else:
         run_summarize()
 
 
-if __name__ == "__main__":
-    main()
 
 
 # ---------------------------------------------------------------------------
@@ -409,3 +419,176 @@ def run_v2(args) -> None:
               + " ".join(f"{r['variant']}={r['score']:+.3g}" for r in rows)
               + f" eta={(len(mine)-prog)/max(rate,1e-9):.0f}min", flush=True)
     print(f"[w{args.worker_id}] v2 done in {(time.time()-t0)/60:.1f} min", flush=True)
+
+
+# ---------------------------------------------------------------------------
+# v3: shortcut-value Ricci. Perturb LONG-RANGE virtual edges (partner at
+# band_mult x spread) instead of nearest-neighbor edges. A shortcut across
+# diverging geodesics (negative K) is valuable (big entropy response); across
+# converging ones (positive K) it is redundant (small response) — a natively
+# signed mechanism that does not dilute with volume.
+# ---------------------------------------------------------------------------
+
+
+def band_edges(D: np.ndarray, anchors, spread: float, band_mult: float,
+               k_edge: int, rng) -> list[tuple[int, int]]:
+    lo, hi = 0.8 * band_mult * spread, 1.2 * band_mult * spread
+    edges = []
+    for a in anchors:
+        cand = np.where((D[a] >= lo) & (D[a] <= hi))[0]
+        cand = cand[cand != a]
+        if not cand.size:
+            continue
+        for j in rng.choice(cand, size=min(k_edge, cand.size), replace=False):
+            edges.append((a, int(j)))
+    return edges
+
+
+def _median_spread(W: np.ndarray, D: np.ndarray, probes, t: int) -> float:
+    P = W / np.maximum(W.sum(axis=1, keepdims=True), 1e-30)
+    mu = np.zeros((len(probes), W.shape[0]))
+    mu[np.arange(len(probes)), probes] = 1.0
+    for _ in range(t):
+        mu = mu @ P
+    return float(np.median((mu * D[probes]).sum(axis=1)))
+
+
+def run_v3(args) -> None:
+    units = list(itertools.product(DIMS, DATASETS, NTS))
+    mine = [u for i, u in enumerate(units) if i % args.num_workers == args.worker_id]
+    out = Path(f"processed_data/successor_ricci_v3_w{args.worker_id}.csv")
+    done = set()
+    if out.exists() and out.stat().st_size > 0:
+        prev = pd.read_csv(out, usecols=["dim", "dataset", "n_traj"])
+        done = set(map(tuple, prev.values))
+    header = out.exists() and out.stat().st_size > 0
+    print(f"[w{args.worker_id}] v3: {len(mine)} units on {args.device}", flush=True)
+
+    t0 = time.time()
+    for prog, (d, ds_name, nt) in enumerate(mine, 1):
+        if (d, ds_name, nt) in done:
+            continue
+        t1 = time.time()
+        X, ks_true = build_Xd(ds_name, d, seed=7)
+        rng = np.random.default_rng(7)
+        G = pygsp.graphs.NNGraph(np.asarray(X, dtype=np.float64), k=KNN)
+        traj_idx = subsample_trajectories(G, n_trajectories=nt,
+                                          length=TRAJ_LEN, rng=7)
+        V = np.unique(traj_idx)
+        X_V = np.asarray(X[V], dtype=np.float64)
+        anchors = rng.choice(len(V), min(N_ANCHORS, len(V)),
+                             replace=False).tolist()
+
+        from sklearn.metrics import pairwise_distances
+        D_euc = pairwise_distances(X_V)
+        W_euc = affinity_from_D(D_euc, k=KNN)
+        t_euc = _auto_t_dense(W_euc, D_euc, anchors)
+        spread = _median_spread(W_euc, D_euc, anchors, t_euc)
+
+        variants: dict[str, float] = {}
+        for bm in (1.5, 2.5):
+            edges = band_edges(D_euc, anchors, spread, bm, K_EDGE, rng)
+            if not edges:
+                variants[f"shortcut_odd_b{bm:g}"] = np.nan
+                variants[f"shortcut_even_b{bm:g}"] = np.nan
+                continue
+            odd, even = fd_edge_response(W_euc, t_euc, edges, args.device)
+            variants[f"shortcut_odd_b{bm:g}"] = float(np.mean(odd))
+            variants[f"shortcut_even_b{bm:g}"] = float(np.mean(even))
+
+        rows = [dict(dim=d, dataset=ds_name, n_traj=nt, ks_true=ks_true,
+                     variant=k, score=v) for k, v in variants.items()]
+        pd.DataFrame(rows).to_csv(out, mode="a", index=False, header=not header)
+        header = True
+        rate = prog / max((time.time() - t0) / 60, 1e-9)
+        print(f"  [w{args.worker_id}] {prog}/{len(mine)} d={d} {ds_name} nt={nt} "
+              f"({time.time()-t1:.0f}s): "
+              + " ".join(f"{k}={v:+.3g}" for k, v in variants.items())
+              + f" eta={(len(mine)-prog)/max(rate,1e-9):.0f}min", flush=True)
+    print(f"[w{args.worker_id}] v3 done in {(time.time()-t0)/60:.1f} min", flush=True)
+
+
+# ---------------------------------------------------------------------------
+# v4: quantile shortcut bands (manifold-adaptive, no NaN on compact spaces) +
+# per-anchor "shortcut premium" = odd(shortcut) / odd(near edge), which
+# cancels global response scale.
+# ---------------------------------------------------------------------------
+
+
+def quantile_band_edges(D: np.ndarray, anchors, q_lo: float, q_hi: float,
+                        k_edge: int, rng) -> list[tuple[int, int]]:
+    edges = []
+    for a in anchors:
+        row = D[a]
+        fin = np.isfinite(row) & (row > 0)
+        lo, hi = np.quantile(row[fin], [q_lo, q_hi])
+        cand = np.where(fin & (row >= lo) & (row <= hi))[0]
+        cand = cand[cand != a]
+        if cand.size:
+            for j in rng.choice(cand, size=min(k_edge, cand.size),
+                                replace=False):
+                edges.append((a, int(j)))
+    return edges
+
+
+def run_v4(args) -> None:
+    units = list(itertools.product(DIMS, DATASETS, NTS))
+    mine = [u for i, u in enumerate(units) if i % args.num_workers == args.worker_id]
+    out = Path(f"processed_data/successor_ricci_v4_w{args.worker_id}.csv")
+    done = set()
+    if out.exists() and out.stat().st_size > 0:
+        prev = pd.read_csv(out, usecols=["dim", "dataset", "n_traj"])
+        done = set(map(tuple, prev.values))
+    header = out.exists() and out.stat().st_size > 0
+    print(f"[w{args.worker_id}] v4: {len(mine)} units on {args.device}", flush=True)
+
+    t0 = time.time()
+    for prog, (d, ds_name, nt) in enumerate(mine, 1):
+        if (d, ds_name, nt) in done:
+            continue
+        t1 = time.time()
+        X, ks_true = build_Xd(ds_name, d, seed=7)
+        rng = np.random.default_rng(7)
+        G = pygsp.graphs.NNGraph(np.asarray(X, dtype=np.float64), k=KNN)
+        traj_idx = subsample_trajectories(G, n_trajectories=nt,
+                                          length=TRAJ_LEN, rng=7)
+        V = np.unique(traj_idx)
+        X_V = np.asarray(X[V], dtype=np.float64)
+        anchors = rng.choice(len(V), min(N_ANCHORS, len(V)),
+                             replace=False).tolist()
+
+        from sklearn.metrics import pairwise_distances
+        D_euc = pairwise_distances(X_V)
+        W_euc = affinity_from_D(D_euc, k=KNN)
+        t_euc = _auto_t_dense(W_euc, D_euc, anchors)
+
+        variants: dict[str, float] = {}
+        # near-edge odd response per anchor (normalizer)
+        near_edges = [(a, j) for a, js in
+                      anchor_edges(D_euc, anchors, K_EDGE).items() for j in js]
+        near_odd, _ = fd_edge_response(W_euc, t_euc, near_edges, args.device)
+        near_by_anchor = near_odd.reshape(len(anchors), K_EDGE).mean(axis=1)
+
+        for q_lo, q_hi, tag in ((0.35, 0.45, "q40"), (0.55, 0.65, "q60")):
+            edges = quantile_band_edges(D_euc, anchors, q_lo, q_hi,
+                                        K_EDGE, rng)
+            odd, _ = fd_edge_response(W_euc, t_euc, edges, args.device)
+            variants[f"shortcut_odd_{tag}"] = float(np.mean(odd))
+            # premium: per-anchor ratio (assumes k_edge per anchor, ordered)
+            n_a = len(odd) // K_EDGE
+            band_by_anchor = odd[:n_a * K_EDGE].reshape(n_a, K_EDGE).mean(axis=1)
+            prem = band_by_anchor / np.maximum(np.abs(near_by_anchor[:n_a]), 1e-12)
+            variants[f"premium_{tag}"] = float(np.mean(prem))
+
+        rows = [dict(dim=d, dataset=ds_name, n_traj=nt, ks_true=ks_true,
+                     variant=k, score=v) for k, v in variants.items()]
+        pd.DataFrame(rows).to_csv(out, mode="a", index=False, header=not header)
+        header = True
+        rate = prog / max((time.time() - t0) / 60, 1e-9)
+        print(f"  [w{args.worker_id}] {prog}/{len(mine)} d={d} {ds_name} nt={nt} "
+              f"({time.time()-t1:.0f}s): "
+              + " ".join(f"{k}={v:+.3g}" for k, v in variants.items())
+              + f" eta={(len(mine)-prog)/max(rate,1e-9):.0f}min", flush=True)
+    print(f"[w{args.worker_id}] v4 done in {(time.time()-t0)/60:.1f} min", flush=True)
+if __name__ == "__main__":
+    main()
