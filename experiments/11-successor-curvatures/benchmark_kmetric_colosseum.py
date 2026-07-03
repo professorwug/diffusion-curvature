@@ -205,6 +205,17 @@ def evaluate_unit(inst: dict, n_traj: int, device: str) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 
+def _done_all_shards() -> set:
+    done = set()
+    for p in Path("processed_data").glob("kmetric_colosseum_*.csv"):
+        try:
+            prev = pd.read_csv(p, usecols=["instance", "n_traj", "method"])
+            done |= set(zip(prev.instance, prev.n_traj, prev.method))
+        except Exception:
+            pass
+    return done
+
+
 def run_worker(args) -> None:
     instances = joblib.load(BATTERY_PATH)
     cc = [(i, inst) for i, inst in enumerate(instances)
@@ -212,17 +223,19 @@ def run_worker(args) -> None:
     units = [(i, inst, nt) for (i, inst), nt in
              itertools.product(cc, N_TRAJS)]
     mine = [u for k, u in enumerate(units) if k % args.num_workers == args.worker_id]
+    if args.reverse:
+        mine = mine[::-1]
 
-    out = Path(OUT_TPL.format(wid=args.worker_id))
-    done = set()
-    if out.exists() and out.stat().st_size > 0:
-        prev = pd.read_csv(out, usecols=["instance", "n_traj", "method"])
-        done = set(zip(prev.instance, prev.n_traj, prev.method))
+    out = Path(args.out) if args.out else Path(OUT_TPL.format(wid=args.worker_id))
+    done = _done_all_shards()
     header = out.exists() and out.stat().st_size > 0
-    print(f"[w{args.worker_id}] {len(mine)} units on {args.device}", flush=True)
+    print(f"[w{args.worker_id}{'R' if args.reverse else ''}] {len(mine)} units "
+          f"on {args.device} ({len(done)} rows done)", flush=True)
 
     t0 = time.time()
     for prog, (i, inst, nt) in enumerate(mine, 1):
+        if args.reverse:  # helpers race the forward workers: refresh view
+            done = _done_all_shards()
         if all((i, nt, m) in done
                for m in ("traj_dorc", "kmetric_dorc", "fbkernel_orc")):
             continue
@@ -245,7 +258,7 @@ def run_worker(args) -> None:
 def run_summarize(args) -> None:
     from scipy.stats import pearsonr
     frames = [pd.read_csv(p) for p in
-              sorted(Path("processed_data").glob("kmetric_colosseum_w*.csv"))]
+              sorted(Path("processed_data").glob("kmetric_colosseum_[wh]*.csv"))]
     df = pd.concat(frames, ignore_index=True).drop_duplicates(
         ["instance", "n_traj", "method"], keep="last")
     df.to_csv(OUT_MERGED, index=False)
@@ -281,6 +294,10 @@ def main() -> None:
     w.add_argument("--worker-id", type=int, required=True)
     w.add_argument("--num-workers", type=int, default=6)
     w.add_argument("--device", default="cuda:0")
+    w.add_argument("--reverse", action="store_true",
+                   help="process this worker's units back-to-front (helper "
+                        "mode; refreshes the done-set from all shards)")
+    w.add_argument("--out", default=None)
     sub.add_parser("summarize")
     args = p.parse_args()
     if args.cmd == "run":
