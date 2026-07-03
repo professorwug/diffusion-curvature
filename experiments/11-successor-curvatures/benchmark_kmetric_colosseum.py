@@ -75,6 +75,13 @@ def potential_distances(K: np.ndarray) -> np.ndarray:
     rs = K.sum(axis=1, keepdims=True)
     rs[rs <= 0] = 1.0
     U = -np.log((K / rs).astype(np.float32) + 1e-6)
+    try:  # GPU cdist is ~50x faster on n=3000 corpora
+        import torch
+        if torch.cuda.is_available():
+            t = torch.as_tensor(U, device="cuda")
+            return torch.cdist(t, t).cpu().numpy().astype(np.float64)
+    except Exception:
+        pass
     return pairwise_distances(U)
 
 
