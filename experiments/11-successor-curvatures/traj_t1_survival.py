@@ -199,17 +199,130 @@ def run_summarize() -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
-    w = sub.add_parser("run")
-    w.add_argument("--worker-id", type=int, default=0)
-    w.add_argument("--num-workers", type=int, default=2)
-    w.add_argument("--device", default="cuda:0")
+    for name in ("run", "flatpack"):
+        w = sub.add_parser(name)
+        w.add_argument("--worker-id", type=int, default=0)
+        w.add_argument("--num-workers", type=int, default=2)
+        w.add_argument("--device", default="cuda:0")
     sub.add_parser("summarize")
+    sub.add_parser("summarize-t2")
     args = ap.parse_args()
     if args.cmd == "run":
         run_worker(args)
+    elif args.cmd == "flatpack":
+        run_flatpack(args)
+    elif args.cmd == "summarize-t2":
+        run_summarize_t2()
     else:
         run_summarize()
 
 
+
+
+# ---------------------------------------------------------------------------
+# T2: coverage-matched flat packs (planes -> walks -> visited channels) and
+# the trajectory-regime composite fusion over the T1 battery channels.
+# ---------------------------------------------------------------------------
+
+N_REP_PACK = 15
+PACK_TPL = "processed_data/traj_t2_flat_w{wid}.csv"
+
+
+def run_flatpack(args) -> None:
+    from diffusion_curvature.datasets import plane
+    units = list(itertools.product((3000,), (2, 3, 4, 5, 6), NTS,
+                                   range(N_REP_PACK)))
+    mine = [u for i, u in enumerate(units) if i % args.num_workers == args.worker_id]
+    out = Path(PACK_TPL.format(wid=args.worker_id))
+    done = set()
+    if out.exists() and out.stat().st_size > 0:
+        prev = pd.read_csv(out, usecols=["n_points", "dim", "n_traj", "rep"])
+        done = set(map(tuple, prev.values))
+    header = out.exists() and out.stat().st_size > 0
+    print(f"[w{args.worker_id}] T2 flatpack: {len(mine)} units", flush=True)
+    for (n, d, nt, rep) in mine:
+        if (n, d, nt, rep) in done:
+            continue
+        np.random.seed(20_000 + 1000 * d + 10 * nt + rep)
+        X = np.hstack([plane(n, dim=d), np.zeros((n, 1))])
+        err = ""
+        ch: dict[str, float] = {k: np.nan for k in CH_KEYS}
+        coverage = np.nan
+        try:
+            G = pygsp.graphs.NNGraph(np.asarray(X, dtype=np.float64), k=KNN)
+            traj_idx = subsample_trajectories(
+                G, n_trajectories=nt, length=TRAJ_LEN, rng=1000 + nt + rep)
+            V = np.unique(traj_idx)
+            coverage = len(V) / n
+            X_V = np.asarray(X, dtype=np.float64)[V]
+            i0 = int(np.argmin(np.linalg.norm(X_V - X[0], axis=1)))
+            if len(V) >= MIN_V:
+                ch = traj_channels(X_V, i0, args.device)
+        except Exception as e:
+            err = str(e)[:200]
+        pd.DataFrame([dict(n_points=n, dim=d, n_traj=nt, rep=rep, err=err,
+                           coverage=coverage, **ch)]).to_csv(
+            out, mode="a", index=False, header=not header)
+        header = True
+    print(f"[w{args.worker_id}] flatpack done", flush=True)
+
+
+def run_summarize_t2() -> None:
+    from scipy.stats import pearsonr, spearmanr
+    flat = pd.concat([pd.read_csv(p) for p in
+                      sorted(Path("processed_data").glob("traj_t2_flat_w*.csv"))],
+                     ignore_index=True).drop_duplicates(
+        ["n_points", "dim", "n_traj", "rep"], keep="last")
+    df = pd.read_csv(OUT_MERGED).reset_index(drop=True)
+
+    agg = {f"mu_{c}": (c, "mean") for c in CH_KEYS}
+    agg.update({f"sd_{c}": (c, "std") for c in CH_KEYS})
+    ref = flat.groupby(["dim", "n_traj"]).agg(**agg).reset_index()
+    df = df.merge(ref, on=["dim", "n_traj"], how="left")
+    df["z_plus"] = (df.kappa_plus - df.mu_kappa_plus) / df.sd_kappa_plus.clip(lower=1e-4)
+    df["z_frac"] = (df.frac - df.mu_frac) / df.sd_frac.clip(lower=1e-3)
+    df["S_diff"] = df.z_plus - df.z_frac
+    for r in [f"ent_cak_t{t}" for t in TS_CAK]:
+        df[f"z_{r}"] = (df[f"mu_{r}"] - df[r]) / df[f"sd_{r}"].clip(lower=1e-6)
+
+    def gated(r):
+        def _offset(g):
+            z, s_ = g[f"z_{r}"].to_numpy(), g.S_diff.to_numpy()
+            m = np.isfinite(z) & np.isfinite(s_)
+            z, s_ = z[m], s_[m]
+            if not len(z):
+                return 0.0
+            w = np.abs(s_)
+            cands = np.unique(z)
+            cands = (cands[:-1] + cands[1:]) / 2 if len(cands) > 1 else cands
+            return max(((float((w * (np.sign(z - c) == np.sign(s_))).sum()),
+                         float(c)) for c in cands), default=(0, 0.0))[1]
+        offs = {k: _offset(g) for k, g in df.groupby(["dim", "n_traj"])}
+        c_off = np.array([offs[(d, nt)] for d, nt in zip(df.dim, df.n_traj)])
+        K = df[f"z_{r}"].to_numpy() - c_off
+        dis = (np.sign(K) != np.sign(df.S_diff)) & (df.S_diff.abs() > 1)
+        return np.where(dis, np.abs(K) * np.sign(df.S_diff), K)
+
+    ests = {"S_diff": df.S_diff.to_numpy(),
+            "K_gated[cak_t4]": gated("ent_cak_t4"),
+            "K_gated[cak_t8]": gated("ent_cak_t8")}
+    for name, K in ests.items():
+        print(f"\n=== T2 {name}: pearson | balanced sign AT ZERO per (n_traj, dim) ===")
+        rows = []
+        for nt in NTS:
+            row = {"n_traj": nt}
+            for d in (2, 3, 4, 5, 6):
+                m = ((df.n_traj == nt) & (df.dim == d)).to_numpy() & np.isfinite(K)
+                kt = df.ks_true.to_numpy()
+                if m.sum() > 5 and np.std(K[m]) > 0:
+                    r_p = pearsonr(K[m], kt[m])[0]
+                    pos, neg = m & (kt > 0), m & (kt < 0)
+                    bal = (0.5 * ((K[pos] > 0).mean() + (K[neg] < 0).mean())
+                           if pos.any() and neg.any() else np.nan)
+                    row[f"d{d}"] = f"{r_p:+.2f}|{bal:.2f}"
+                else:
+                    row[f"d{d}"] = "  -  "
+            rows.append(row)
+        print(pd.DataFrame(rows).set_index("n_traj").to_string())
 if __name__ == "__main__":
     main()
