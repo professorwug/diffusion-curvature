@@ -454,6 +454,11 @@
     "hash": "5c22c892011b38fb",
     "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/colosseum_surfaces_square.png"
   },
+  "experiments/11-successor-curvatures/figures/signed/kmetric_colosseum.png": {
+    "commit": "764c20f",
+    "hash": "31c38c54eeff6f91",
+    "url": "https://blots.kincaid.ink/diffusion_curvature/11-successor-curvatures/kmetric_colosseum.png"
+  },
   "experiments/11-successor-curvatures/figures/signed/signed_colosseum_pearson.png": {
     "commit": "a759aca",
     "hash": "c39f41ba7863ab82",
