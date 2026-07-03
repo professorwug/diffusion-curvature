@@ -46,13 +46,13 @@ T_FRAC = 16
 K_EDGE = 16
 N_LOCAL = 5
 N_REP = 30
-TS_RULER = (2, 4, 8, 16, 32)
+TS_RULER = (2, 4, 8, 16, 32, 64, 128)
 FLAT_DIMS = (2, 3, 4, 5, 6)
 FLAT_NS = (2000, 3000)
 
-OUT_RUN_TPL = "processed_data/composite3_run_w{wid}.csv"
-OUT_FLAT_TPL = "processed_data/composite3_flat_w{wid}.csv"
-OUT_MERGED = Path("processed_data/composite_signed_v3.csv")
+OUT_RUN_TPL = "processed_data/composite4_run_w{wid}.csv"
+OUT_FLAT_TPL = "processed_data/composite4_flat_w{wid}.csv"
+OUT_MERGED = Path("processed_data/composite_signed_v4.csv")
 
 
 def channels(X: np.ndarray, device: str) -> dict[str, float]:
@@ -164,11 +164,11 @@ def run_battery(args) -> None:
 def run_summarize() -> None:
     from scipy.stats import pearsonr
     flat = pd.concat([pd.read_csv(p) for p in
-                      sorted(Path("processed_data").glob("composite3_flat_w*.csv"))],
+                      sorted(Path("processed_data").glob("composite4_flat_w*.csv"))],
                      ignore_index=True).drop_duplicates(
         ["n_points", "dim", "rep"], keep="last")
     df = pd.concat([pd.read_csv(p) for p in
-                    sorted(Path("processed_data").glob("composite3_run_w*.csv"))],
+                    sorted(Path("processed_data").glob("composite4_run_w*.csv"))],
                    ignore_index=True).drop_duplicates(
         ["instance"], keep="last").reset_index(drop=True)
 
