@@ -178,14 +178,15 @@ class WassersteinSignedCurvature:
 
     # -- inputs --------------------------------------------------------------
 
-    def _build_operators(self, G, X, M, D=None):
+    def _build_operators(self, G, X, M, D=None, D_graph=None):
         """Set self.P (dense diffusion matrix), self.measures (callable row->mu),
         and self.geo (sparse distance graph for geodesics)."""
         if X is None and G is None:
-            if M is None or D is None:
+            if M is None or (D is None and D_graph is None):
                 raise ValueError(
-                    "Supply X (pointcloud) and/or G (pygsp graph), or both "
-                    "M (measures) and D (ground distances)."
+                    "Supply X (pointcloud) and/or G (pygsp graph), or M "
+                    "(measures) plus D (ground distances) or D_graph (sparse "
+                    "distance graph)."
                 )
             # Fully kernel-driven mode: measures and metric are precomputed.
             self.P = None
@@ -282,14 +283,20 @@ class WassersteinSignedCurvature:
         X: np.ndarray | None = None,
         M: np.ndarray | None = None,
         D: np.ndarray | None = None,
+        D_graph=None,
         idx=None,
     ) -> "WassersteinSignedCurvature":
-        self._build_operators(G, X, M, D)
+        """``D_graph``: sparse graph of trusted local distances; geodesics are
+        computed lazily over it (path-metric re-metrization without the full
+        n x n Dijkstra)."""
+        self._build_operators(G, X, M, D, D_graph)
         n = self._M.shape[0] if self.P is None else self.P.shape[0]
         idxs = np.arange(n) if idx is None else np.atleast_1d(np.asarray(idx, dtype=int))
         rng = np.random.default_rng(self.seed)
         if D is not None:
             cache = _MatrixCache(np.asarray(D, dtype=np.float64))
+        elif D_graph is not None:
+            cache = _DijkstraCache(sp.csr_matrix(D_graph))
         else:
             cache = _DijkstraCache(self.geo)
 
