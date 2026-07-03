@@ -296,6 +296,10 @@ def main() -> None:
     v4.add_argument("--worker-id", type=int, default=0)
     v4.add_argument("--num-workers", type=int, default=2)
     v4.add_argument("--device", default="cuda:0")
+    v5 = sub.add_parser("run-v5")
+    v5.add_argument("--worker-id", type=int, default=0)
+    v5.add_argument("--num-workers", type=int, default=2)
+    v5.add_argument("--device", default="cuda:0")
     sub.add_parser("summarize")
     args = ap.parse_args()
     if args.cmd == "run":
@@ -306,6 +310,8 @@ def main() -> None:
         run_v3(args)
     elif args.cmd == "run-v4":
         run_v4(args)
+    elif args.cmd == "run-v5":
+        run_v5(args)
     else:
         run_summarize()
 
@@ -590,5 +596,79 @@ def run_v4(args) -> None:
               + " ".join(f"{k}={v:+.3g}" for k, v in variants.items())
               + f" eta={(len(mine)-prog)/max(rate,1e-9):.0f}min", flush=True)
     print(f"[w{args.worker_id}] v4 done in {(time.time()-t0)/60:.1f} min", flush=True)
+
+
+# ---------------------------------------------------------------------------
+# v5: probability-space shortcut perturbation on the FULL pointcloud.
+# P[a,:] <- (1-eps) P[a,:] + eps delta_j (and symmetrically at j): eps is a
+# fixed amount of redirected transition probability — dimensionless,
+# density-free (kills the -x log x / row-mass artifact), identical in meaning
+# at every anchor and manifold. No trajectories anywhere.
+# ---------------------------------------------------------------------------
+
+
+def prob_edge_response(W: np.ndarray, t: int, edges, device: str,
+                       eps: float = 0.05) -> np.ndarray:
+    """[H_a + H_j](eps) - [H_a + H_j](0) over eps, with probability-mixture
+    shortcut injection at (a, j)."""
+    import torch as th
+    with th.no_grad():
+        Wt = th.as_tensor(W, dtype=th.float32, device=device)
+        P = Wt / Wt.sum(dim=1, keepdim=True).clamp_min(1e-30)
+        n = W.shape[0]
+        out = []
+        for a, j in edges:
+            hs = {}
+            for e in (0.0, eps):
+                P_e = P.clone()
+                if e > 0:
+                    P_e[a] = (1 - e) * P[a]
+                    P_e[a, j] += e
+                    P_e[j] = (1 - e) * P[j]
+                    P_e[j, a] += e
+                rows = th.zeros((2, n), dtype=th.float32, device=device)
+                rows[0, a] = 1.0
+                rows[1, j] = 1.0
+                for _ in range(t):
+                    rows = rows @ P_e
+                p = rows.clamp_min(1e-12)
+                hs[e] = float(-(p * p.log()).sum())
+            out.append((hs[eps] - hs[0.0]) / eps)
+    return np.asarray(out)
+
+
+def run_v5(args) -> None:
+    """Full-pointcloud triads, probability-space shortcut response."""
+    units = list(itertools.product(DIMS, DATASETS))
+    mine = [u for i, u in enumerate(units) if i % args.num_workers == args.worker_id]
+    out = Path(f"processed_data/successor_ricci_v5_w{args.worker_id}.csv")
+    header = out.exists() and out.stat().st_size > 0
+    print(f"[w{args.worker_id}] v5: {len(mine)} units on {args.device}", flush=True)
+
+    from sklearn.metrics import pairwise_distances
+    t0 = time.time()
+    for prog, (d, ds_name) in enumerate(mine, 1):
+        t1 = time.time()
+        X, ks_true = build_Xd(ds_name, d, seed=7)
+        rng = np.random.default_rng(7)
+        anchors = rng.choice(X.shape[0], N_ANCHORS, replace=False).tolist()
+        D = pairwise_distances(np.asarray(X, dtype=np.float64))
+        W = affinity_from_D(D, k=KNN)
+        t_diff = _auto_t_dense(W, D, anchors)
+
+        variants = {}
+        for q_lo, q_hi, tag in ((0.35, 0.45, "q40"), (0.55, 0.65, "q60")):
+            edges = quantile_band_edges(D, anchors, q_lo, q_hi, K_EDGE, rng)
+            resp = prob_edge_response(W, t_diff, edges, args.device)
+            variants[f"prob_shortcut_{tag}"] = float(np.mean(resp))
+        rows = [dict(dim=d, dataset=ds_name, ks_true=ks_true, t=t_diff,
+                     variant=k, score=v) for k, v in variants.items()]
+        pd.DataFrame(rows).to_csv(out, mode="a", index=False, header=not header)
+        header = True
+        print(f"  [w{args.worker_id}] {prog}/{len(mine)} d={d} {ds_name} "
+              f"t={t_diff} ({time.time()-t1:.0f}s): "
+              + " ".join(f"{k}={v:+.4f}" for k, v in variants.items()),
+              flush=True)
+    print(f"[w{args.worker_id}] v5 done in {(time.time()-t0)/60:.1f} min", flush=True)
 if __name__ == "__main__":
     main()
