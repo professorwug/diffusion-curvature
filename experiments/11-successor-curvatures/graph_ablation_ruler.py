@@ -36,12 +36,12 @@ warnings.filterwarnings("ignore")
 BATTERY_PATH = Path("processed_data/signed_battery.joblib")
 M_MAX = 15
 N_LOCAL = 5
-TS = (1, 2, 4, 8, 16, 32)
-KNNS = (10, 25, 50)
-CAK_TARGETS = (40, 80, 160)
+TS = (1, 2, 4, 8, 16, 32, 64, 128)
+KNNS = (50, 100)
+CAK_TARGETS = (160, 320, 640)
 
-OUT_TPL = "processed_data/graph_ablation_w{wid}.csv"
-OUT_MERGED = Path("processed_data/graph_ablation.csv")
+OUT_TPL = "processed_data/graph_ablation2_w{wid}.csv"
+OUT_MERGED = Path("processed_data/graph_ablation2.csv")
 
 
 def adaptive_W(D: np.ndarray, k: int, alpha: float = 1.0) -> np.ndarray:
@@ -153,7 +153,7 @@ def run_worker(args) -> None:
 def run_summarize() -> None:
     from scipy.stats import pearsonr
     df = pd.concat([pd.read_csv(p) for p in
-                    sorted(Path("processed_data").glob("graph_ablation_w*.csv"))],
+                    sorted(Path("processed_data").glob("graph_ablation2_w*.csv"))],
                    ignore_index=True).drop_duplicates(
         ["instance", "graph"], keep="last")
     df.to_csv(OUT_MERGED, index=False)
