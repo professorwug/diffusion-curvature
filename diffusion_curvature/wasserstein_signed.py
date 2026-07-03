@@ -157,6 +157,7 @@ class WassersteinSignedCurvature:
         compute_midpoint: bool = True,
         transport: str = "w1",
         far_quantiles: tuple[float, float] | None = None,
+        profile_bands: list[tuple[float, float]] | None = None,
         seed: int = 42,
     ):
         self.transport = transport
@@ -166,6 +167,12 @@ class WassersteinSignedCurvature:
         # shared-mass (stationary-contamination) fraction rho; correct with
         # kappa* = 1 - (1 - kappa_near) / (1 - kappa_far).
         self.far_quantiles = far_quantiles
+        # kappa(d) profile mode: sample pairs in several distance bands
+        # (multiples of the measure spread) and fit
+        #     kappa(d) = c0 + c1/d + c2 d^2
+        # c2 isolates curvature (contamination rho is d-flat, independent
+        # noise decays as 1/d); c0 ~ rho + spread term; -c1 ~ noise floor.
+        self.profile_bands = profile_bands
         self.t = t
         self.spread_fraction = spread_fraction
         self.t_max = t_max
@@ -333,7 +340,26 @@ class WassersteinSignedCurvature:
         self.pair_d_: list[np.ndarray] = []
 
         far = np.full(len(idxs), np.nan)
+        prof_slope = np.full(len(idxs), np.nan)
+        prof_rho = np.full(len(idxs), np.nan)
+        prof_delta = np.full(len(idxs), np.nan)
+        self.profile_pairs_: list[tuple[np.ndarray, np.ndarray]] = []
+
         for out_i, i in enumerate(idxs):
+            if self.profile_bands is not None:
+                try:
+                    o, sl, rho, delta, s, pairs_dk = self._profile_estimate(
+                        int(i), cache, rng)
+                except Exception as e:  # pragma: no cover
+                    warnings.warn(f"profile failed at node {i}: {e}")
+                    o = sl = rho = delta = s = np.nan
+                    pairs_dk = (np.array([]), np.array([]))
+                orc[out_i], spread[out_i] = o, s
+                prof_slope[out_i], prof_rho[out_i], prof_delta[out_i] = sl, rho, delta
+                self.profile_pairs_.append(pairs_dk)
+                self.pair_w1_.append(np.array([]))
+                self.pair_d_.append(np.array([]))
+                continue
             try:
                 o, m, s = self._point_estimate(int(i), cache, rng)
                 self.pair_w1_.append(self._last_pairs[0])
@@ -352,6 +378,9 @@ class WassersteinSignedCurvature:
                     pass
         self.floor_ = floor
         self.far_ = far
+        self.profile_slope_ = prof_slope
+        self.profile_rho_ = prof_rho
+        self.profile_delta_ = prof_delta
         with np.errstate(divide="ignore", invalid="ignore"):
             self.orc_calibrated_ = 1.0 - (1.0 - orc) / (1.0 - far)
 
@@ -506,6 +535,84 @@ class WassersteinSignedCurvature:
                 if far_vals:
                     self._last_far = float(np.mean(far_vals))
         return o, m, spread
+
+    def _pair_transport(self, si, wi, j, mu_j, cache, d_ij) -> float | None:
+        """Exact transport cost between measure i (si, wi) and mu_j."""
+        sj, wj = _truncate_measure(mu_j, self.support_mass, self.max_support)
+        S = np.unique(np.concatenate([si, sj]))
+        cache.fetch(S)
+        pos = {a: q for q, a in enumerate(S)}
+        DS = np.stack([cache[int(a)][S] for a in S])
+        DS = 0.5 * (DS + DS.T)
+        bad = ~np.isfinite(DS)
+        if bad.any():
+            DS[bad] = DS[np.isfinite(DS)].max() * 2.0
+        a_full = np.zeros(len(S))
+        a_full[[pos[a] for a in si]] = wi
+        b_full = np.zeros(len(S))
+        b_full[[pos[a] for a in sj]] = wj
+        if not np.isfinite(d_ij) or d_ij <= 0:
+            return None
+        if self.transport == "w2":
+            return float(np.sqrt(ot.emd2(a_full, b_full, DS**2)))
+        return float(ot.emd2(a_full, b_full, DS))
+
+    DEFAULT_BANDS = [(0.75, 1.25), (1.5, 2.0), (2.25, 2.75),
+                     (3.0, 3.5), (3.75, 4.5)]
+
+    def _profile_estimate(self, i: int, cache, rng):
+        """kappa(d) over distance bands (multiples of spread) + 3-term fit.
+
+        Returns (orc_near, slope, rho, delta, spread, (ds, kappas)).
+        Bands are capped at the 60th percentile of geodesic distances from i
+        to avoid boundary / antipodal saturation.
+        """
+        d_i = cache[i]
+        finite = np.isfinite(d_i)
+        if isinstance(self.t, str) and self._M is None:
+            mu_i = self._auto_t_measure(i, d_i, finite)
+        else:
+            mu_i = self._measure_rows(np.array([i]))[0]
+        spread = float((mu_i[finite] * d_i[finite]).sum())
+        if spread <= 0:
+            return (np.nan,) * 5 + ((np.array([]), np.array([])),)
+        si, wi = _truncate_measure(mu_i, self.support_mass, self.max_support)
+        cache.fetch(si)
+
+        cap = float(np.quantile(d_i[finite & (d_i > 0)], 0.6))
+        bands = self.profile_bands or self.DEFAULT_BANDS
+        ds_all, ks_all = [], []
+        for lo_m, hi_m in bands:
+            lo, hi = lo_m * spread, hi_m * spread
+            if lo >= cap:
+                continue
+            hi = min(hi, cap)
+            cand = np.where(finite & (d_i >= lo) & (d_i <= hi))[0]
+            cand = cand[cand != i]
+            if not cand.size:
+                continue
+            pairs = rng.choice(cand, size=min(self.n_pairs, cand.size),
+                               replace=False)
+            mu_js = self._measure_rows(pairs)
+            for k, j in enumerate(pairs):
+                w = self._pair_transport(si, wi, int(j), mu_js[k], cache,
+                                         float(d_i[j]))
+                if w is None:
+                    continue
+                ds_all.append(float(d_i[j]))
+                ks_all.append(1.0 - w / float(d_i[j]))
+        ds_all = np.asarray(ds_all)
+        ks_all = np.asarray(ks_all)
+        # near-band raw kappa for continuity with the plain estimator
+        near_mask = ds_all <= 1.25 * spread
+        orc_near = float(ks_all[near_mask].mean()) if near_mask.any() else np.nan
+
+        if len(ds_all) < 6 or np.ptp(ds_all) < 1e-9:
+            return orc_near, np.nan, np.nan, np.nan, spread, (ds_all, ks_all)
+        A = np.stack([np.ones_like(ds_all), 1.0 / ds_all, ds_all**2], axis=1)
+        coef, *_ = np.linalg.lstsq(A, ks_all, rcond=None)
+        rho, neg_delta, slope = float(coef[0]), float(coef[1]), float(coef[2])
+        return orc_near, slope, rho, -neg_delta, spread, (ds_all, ks_all)
 
     def _floor_estimate(self, i: int, cache) -> float:
         """Noise-floor: transport cost between two independent estimates of the
