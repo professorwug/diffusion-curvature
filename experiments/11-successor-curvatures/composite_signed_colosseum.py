@@ -53,9 +53,9 @@ FLAT_DIMS = (2, 3, 4, 5, 6)
 FLAT_NS = (2000, 3000)   # sadspheres / colosseum sizes
 TAU_SEL = 1.0
 
-OUT_RUN_TPL = "processed_data/composite_run_w{wid}.csv"
-OUT_FLAT_TPL = "processed_data/composite_flat_w{wid}.csv"
-OUT_MERGED = Path("processed_data/composite_signed.csv")
+OUT_RUN_TPL = "processed_data/composite2_run_w{wid}.csv"
+OUT_FLAT_TPL = "processed_data/composite2_flat_w{wid}.csv"
+OUT_MERGED = Path("processed_data/composite_signed_v2.csv")
 
 
 # ---------------------------------------------------------------------------
@@ -81,7 +81,21 @@ def channels(X: np.ndarray, device: str) -> dict[str, float]:
     edges = [(a, int(j)) for q, a in enumerate(anchors)
              for j in order[q, 1:K_EDGE + 1]]
     fr = edge_fractions(P, edges, (T_FRAC,))
-    return dict(kappa_plus=kappa_plus, frac=float(fr[T_FRAC].mean()))
+
+    # diffusion-entropy channel: H of P^t rows at the origin-local pool,
+    # spread-targeted t (the magnitude ruler; ordering-strong, zero-weak)
+    from successor_ricci_ladder import _auto_t_dense
+    t_ent = _auto_t_dense(W, D, anchors)
+    with torch.no_grad():
+        rows = torch.zeros((len(anchors), X.shape[0]), device=device)
+        for q, a in enumerate(anchors):
+            rows[q, a] = 1.0
+        for _ in range(t_ent):
+            rows = rows @ P
+        pr = rows.clamp_min(1e-12)
+        ent = float((-(pr * pr.log()).sum(dim=1)).mean())
+    return dict(kappa_plus=kappa_plus, frac=float(fr[T_FRAC].mean()),
+                ent=ent, t_ent=t_ent)
 
 
 # ---------------------------------------------------------------------------
@@ -109,7 +123,7 @@ def run_flatpack(args) -> None:
             ch = channels(X, args.device)
             err = ""
         except Exception as e:
-            ch, err = dict(kappa_plus=np.nan, frac=np.nan), str(e)[:200]
+            ch, err = dict(kappa_plus=np.nan, frac=np.nan, ent=np.nan, t_ent=-1), str(e)[:200]
         pd.DataFrame([dict(n_points=n, dim=d, rep=rep, err=err, **ch)]).to_csv(
             out, mode="a", index=False, header=not header)
         header = True
@@ -140,7 +154,7 @@ def run_battery(args) -> None:
             ch = channels(np.asarray(inst["X"], dtype=np.float64), args.device)
             err = ""
         except Exception as e:
-            ch, err = dict(kappa_plus=np.nan, frac=np.nan), str(e)[:200]
+            ch, err = dict(kappa_plus=np.nan, frac=np.nan, ent=np.nan, t_ent=-1), str(e)[:200]
         pd.DataFrame([dict(
             instance=i, dataset=inst["dataset"], err=err, name=inst["name"],
             dim=inst["dim"], noise=inst["noise"], m=inst["m"],
@@ -159,31 +173,56 @@ def run_summarize() -> None:
     from scipy.stats import pearsonr, spearmanr
     from sklearn.metrics import roc_auc_score
     flat = pd.concat([pd.read_csv(p) for p in
-                      sorted(Path("processed_data").glob("composite_flat_w*.csv"))],
+                      sorted(Path("processed_data").glob("composite2_flat_w*.csv"))],
                      ignore_index=True).drop_duplicates(
         ["n_points", "dim", "rep"], keep="last")
     df = pd.concat([pd.read_csv(p) for p in
-                    sorted(Path("processed_data").glob("composite_run_w*.csv"))],
+                    sorted(Path("processed_data").glob("composite2_run_w*.csv"))],
                    ignore_index=True).drop_duplicates(["instance"], keep="last")
 
     ref = flat.groupby(["n_points", "dim"]).agg(
         mu_k=("kappa_plus", "mean"), sd_k=("kappa_plus", "std"),
-        mu_f=("frac", "mean"), sd_f=("frac", "std")).reset_index()
+        mu_f=("frac", "mean"), sd_f=("frac", "std"),
+        mu_e=("ent", "mean"), sd_e=("ent", "std")).reset_index()
     ref["sd_k"] = ref.sd_k.clip(lower=1e-4)
     ref["sd_f"] = ref.sd_f.clip(lower=1e-3)
+    ref["sd_e"] = ref.sd_e.clip(lower=1e-4)
     df = df.merge(ref, on=["n_points", "dim"], how="left")
     df["z_plus"] = (df.kappa_plus - df.mu_k) / df.sd_k
     df["z_frac"] = (df.frac - df.mu_f) / df.sd_f
+    df["z_ent"] = (df.mu_e - df.ent) / df.sd_e   # lower H = more positive K
     df["S_diff"] = df.z_plus - df.z_frac
+
+    # ordering/zero factorization: K_cal = z_ent - c, c per (n,d) aligning
+    # the zero-crossing with S_diff (|S_diff|-weighted sign agreement).
+    def _offset(g):
+        z, s_ = g.z_ent.to_numpy(), g.S_diff.to_numpy()
+        w = np.abs(s_)
+        cands = np.unique(z)
+        cands = (cands[:-1] + cands[1:]) / 2 if len(cands) > 1 else cands
+        best_c, best_a = 0.0, -np.inf
+        for c in cands:
+            a = float((w * (np.sign(z - c) == np.sign(s_))).sum())
+            if a > best_a:
+                best_a, best_c = a, float(c)
+        return best_c
+    offs = {k: _offset(g) for k, g in df.groupby(["n_points", "dim"])}
+    df["c_off"] = [offs[(n, d)] for n, d in zip(df.n_points, df.dim)]
+    df["K_cal"] = df.z_ent - df.c_off
+    df["S3"] = df.z_ent + df.z_plus - df.z_frac
+    disagree = (np.sign(df.K_cal) != np.sign(df.S_diff)) & (df.S_diff.abs() > 1)
+    df["K_gated"] = np.where(disagree, np.abs(df.K_cal) * np.sign(df.S_diff),
+                             df.K_cal)
     sel_pos = (df.z_plus > df.z_frac) & (df.z_plus > TAU_SEL)
     sel_neg = (df.z_frac >= df.z_plus) & (df.z_frac > TAU_SEL)
     df["S_sel"] = np.where(sel_pos, df.z_plus, np.where(sel_neg, -df.z_frac, 0.0))
     df["kappa_only"] = df.z_plus
     df["frac_only"] = -df.z_frac
+    df["ent_only"] = df.z_ent
     df.to_csv(OUT_MERGED, index=False)
     print(f"wrote {OUT_MERGED} ({len(df)} rows)\n")
 
-    scores = ["kappa_only", "frac_only", "S_diff", "S_sel"]
+    scores = ["kappa_only", "frac_only", "ent_only", "S_diff", "K_cal", "S3", "K_gated"]
     cc = df[(df.dataset == "colosseum") & np.isfinite(df.S_diff)]
     print("=== COLOSSEUM per dim: pearson | spearman | balanced sign AT ZERO ===")
     for sc in scores:
