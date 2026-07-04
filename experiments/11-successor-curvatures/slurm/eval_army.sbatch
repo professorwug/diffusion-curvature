@@ -18,7 +18,7 @@
 #   WORKERS_PER_GPU (default 8) | SCRIPT_ARGS (extra args)
 
 set -euo pipefail
-cd ~/src/diffusion-curvature/experiments/11-successor-curvatures
+cd "${WORKDIR:-$HOME/src/diffusion-curvature/experiments/11-successor-curvatures}"
 PY=../../.pixi/envs/default/bin/python
 export JAX_PLATFORMS=cpu MPLBACKEND=Agg OMP_NUM_THREADS=2 \
        XLA_PYTHON_CLIENT_PREALLOCATE=false
