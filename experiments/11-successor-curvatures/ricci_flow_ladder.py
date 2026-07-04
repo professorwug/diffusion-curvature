@@ -203,9 +203,123 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--device", default="cuda:0")
     ap.add_argument("--out", default="processed_data/ricci_flow_ladder.csv")
+    ap.add_argument("--driver", default="entropy", choices=["entropy", "orc"])
     args = ap.parse_args()
-    run_ladder(args.device, args.out)
+    if args.driver == "orc":
+        run_ladder_orc(args.device, args.out)
+    else:
+        run_ladder(args.device, args.out)
 
 
+
+
+# ---------------------------------------------------------------------------
+# Exact-OT signed driver: per-edge ORC kappa = 1 - W1(mu_a, mu_b)/d_geo(a,b),
+# mu = P^4 rows truncated to top-64 atoms, ground metric = all-pairs
+# geodesics on the CURRENT flowed skeleton. Flow: d <- d(1 - eta*clip(kappa)).
+# Prediction (falsifiable): signed driver ==> len/ent drift separates signs.
+# ---------------------------------------------------------------------------
+
+TOP_SUPP = 64
+T_MEAS = 4
+ETA_ORC = 0.5
+KAPPA_CLIP = 0.3
+
+
+def orc_edge_kappas(P: torch.Tensor, edges, lengths, sigma, n, n_jobs=16):
+    import ot
+    import scipy.sparse as sp
+    from scipy.sparse.csgraph import dijkstra
+    from joblib import Parallel, delayed
+
+    with torch.no_grad():
+        M = torch.matrix_power(P, T_MEAS).cpu().numpy().astype(np.float64)
+    G = sp.csr_matrix((lengths, (edges[:, 0], edges[:, 1])), shape=(n, n))
+    D_geo = dijkstra(G, directed=False)
+
+    tops = np.argsort(M, axis=1)[:, -TOP_SUPP:]
+
+    def _one(e):
+        a, b = int(edges[e, 0]), int(edges[e, 1])
+        S = np.union1d(tops[a], tops[b])
+        wa = M[a, S]; wb = M[b, S]
+        sa, sb = wa.sum(), wb.sum()
+        if sa <= 0 or sb <= 0 or not np.isfinite(D_geo[a, b]) or D_geo[a, b] <= 0:
+            return 0.0
+        DS = D_geo[np.ix_(S, S)]
+        bad = ~np.isfinite(DS)
+        if bad.any():
+            DS = DS.copy()
+            DS[bad] = np.nanmax(DS[~bad]) * 2 if (~bad).any() else 1.0
+        w1 = ot.emd2(wa / sa, wb / sb, DS)
+        return float(1.0 - w1 / D_geo[a, b])
+
+    ks = Parallel(n_jobs=n_jobs, prefer="threads")(
+        delayed(_one)(e) for e in range(len(edges)))
+    return np.asarray(ks)
+
+
+def run_ladder_orc(device: str, out_csv: str) -> None:
+    dims = (2, 4, 6)
+    seeds = (1, 2)
+    n_pts = 1000
+    k_steps = 6
+    rows = []
+    for d in dims:
+        for ds in DATASETS:
+            for seed in seeds:
+                np.random.seed(seed)
+                X, ks = build_Xd(ds, d, seed=seed)
+                X = np.asarray(X[:n_pts], dtype=np.float64)
+                rng = np.random.default_rng(seed)
+                anchors = rng.choice(len(X), N_ANCHORS, replace=False)
+                t0 = time.time()
+                edges, lengths, sigma = build_skeleton(X)
+                len0 = lengths.copy()
+                total0 = lengths.sum()
+                inc = {a: np.where((edges[:, 0] == a)
+                                   | (edges[:, 1] == a))[0] for a in anchors}
+                traj_len, traj_ent = [], []
+                for k in range(k_steps + 1):
+                    P = operator_from(edges, lengths, sigma, len(X), device)
+                    with torch.no_grad():
+                        rr = torch.zeros((len(anchors), len(X)), device=device)
+                        for q, a in enumerate(anchors):
+                            rr[q, a] = 1.0
+                        for _ in range(T_ENT):
+                            rr = rr @ P
+                        pr = rr.clamp_min(1e-12)
+                        H = (-(pr * pr.log()).sum(dim=1)).cpu().numpy()
+                    traj_ent.append(H)
+                    traj_len.append(np.array(
+                        [np.log(lengths[inc[a]] / len0[inc[a]]).mean()
+                         for a in anchors]))
+                    if k == k_steps:
+                        break
+                    kap = orc_edge_kappas(P, edges, lengths, sigma, len(X))
+                    kap = np.clip(kap, -KAPPA_CLIP, KAPPA_CLIP)
+                    lengths = lengths * (1.0 - ETA_ORC * kap)
+                    lengths *= total0 / lengths.sum()
+                ent_slope = np.polyfit(np.arange(k_steps + 1),
+                                       np.stack(traj_ent), 1)[0]
+                len_slope = np.polyfit(np.arange(k_steps + 1),
+                                       np.stack(traj_len), 1)[0]
+                rows.append(dict(dim=d, dataset=ds, seed=seed, ks_true=ks,
+                                 ent_slope=float(np.mean(ent_slope)),
+                                 len_slope=float(np.mean(len_slope)),
+                                 secs=round(time.time() - t0, 1)))
+                print(f"d={d} {ds:<7} s={seed}: "
+                      f"len_slope={rows[-1]['len_slope']:+.5f} "
+                      f"ent_slope={rows[-1]['ent_slope']:+.4f} "
+                      f"({rows[-1]['secs']}s)", flush=True)
+    df = pd.DataFrame(rows)
+    df.to_csv(out_csv, index=False)
+    print(f"\nwrote {out_csv}")
+    for metric in ("len_slope", "ent_slope"):
+        piv = df.pivot_table(index="dim", columns="dataset", values=metric)
+        piv["sph-pl"] = piv.sphere - piv.plane
+        piv["pl-sad"] = piv.plane - piv.saddle
+        print(f"\n=== {metric} (mean over seeds) ===")
+        print(piv.round(5).to_string())
 if __name__ == "__main__":
     main()
