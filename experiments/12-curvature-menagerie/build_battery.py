@@ -21,8 +21,8 @@ import joblib
 import numpy as np
 
 from diffusion_curvature.menagerie import (WarpedProduct, dumbbell_profile,
-                                           hyperbolic, product, sphere_sf,
-                                           torus_flat)
+                                           hyperbolic, necklace_profile,
+                                           product, sphere_sf, torus_flat)
 
 N = 1500
 SEEDS = (0, 1, 2)
@@ -47,14 +47,23 @@ def tier1_recipes():
 
 
 def tier2_recipes():
-    return [dict(kind="dumbbell", dim=d, beta=beta)
-            for d, beta in itertools.product((3, 4, 5, 6), (0.5, 0.8))]
+    rec = [dict(kind="dumbbell", dim=d, beta=beta)
+           for d, beta in itertools.product((3, 4, 5, 6), (0.5, 0.8))]
+    rec += [dict(kind="necklace", dim=d, b=b)
+            for d, b in itertools.product((3, 4, 5, 6), (0.55, 0.7))]
+    return rec
 
 
 @lru_cache(maxsize=8)
 def _wp(beta: float, d: int) -> WarpedProduct:
     f, L = dumbbell_profile(beta=beta)
     return WarpedProduct(f, L, d=d)
+
+
+@lru_cache(maxsize=8)
+def _wp_neck(b: float, d: int) -> WarpedProduct:
+    f, L = necklace_profile(b=b)
+    return WarpedProduct(f, L, d=d, periodic=True)
 
 
 def materialize(recipe: dict) -> dict:
@@ -73,6 +82,8 @@ def materialize(recipe: dict) -> dict:
                                rng=rng))
     elif k == "dumbbell":
         m = _wp(recipe["beta"], recipe["dim"]).sample(N, rng=rng)
+    elif k == "necklace":
+        m = _wp_neck(recipe["b"], recipe["dim"]).sample(N, rng=rng)
     else:
         raise ValueError(k)
     D = m["D"]
@@ -87,8 +98,8 @@ def materialize(recipe: dict) -> dict:
         eps = 0.5 * (eps + eps.T)
         D = np.maximum(D * (1 + eps), 0)
         np.fill_diagonal(D, 0)
-    n_eval = 24 if k == "dumbbell" else 8
-    if k == "dumbbell":  # stratify eval points by ks quantile
+    n_eval = 24 if k in ("dumbbell", "necklace") else 8
+    if k in ("dumbbell", "necklace"):  # stratify eval points by ks quantile
         qs = np.linspace(0.02, 0.98, n_eval)
         order = np.argsort(ks_field)
         eval_idx = order[(qs * (len(order) - 1)).astype(int)]
@@ -105,13 +116,13 @@ def main() -> None:
     for base in tier1_recipes() + tier2_recipes():
         for seed, noise in itertools.product(SEEDS, NOISES):
             recipes.append(dict(**base, seed=seed, noise=noise,
-                                dataset="tier1" if base["kind"] != "dumbbell"
-                                else "dumbbell"))
+                                dataset=("tier2" if base["kind"] in ("dumbbell", "necklace")
+                                         else "tier1")))
     OUT.parent.mkdir(exist_ok=True)
     joblib.dump(recipes, OUT)
     print(f"wrote {OUT}: {len(recipes)} instances "
           f"({sum(r['dataset']=='tier1' for r in recipes)} tier1, "
-          f"{sum(r['dataset']=='dumbbell' for r in recipes)} dumbbell)")
+          f"{sum(r['dataset']=='tier2' for r in recipes)} tier2)")
 
 
 if __name__ == "__main__":

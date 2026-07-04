@@ -113,6 +113,21 @@ def sphere_profile(L: float = np.pi):
     return lambda r: np.sin(np.clip(r, 0, L)), L
 
 
+def necklace_profile(L: float = 2 * np.pi, a: float = 1.0, b: float = 0.55,
+                     k: int = 2):
+    """Periodic profile: k pearls (bulges) and k necks; boundary-free
+    negative reference when necks are deep enough (tune b/a per d)."""
+    def f(r):
+        return a + b * np.cos(2 * np.pi * k * np.asarray(r) / L)
+    return f, L
+
+
+def cylinder_profile(L: float = 2 * np.pi, f0: float = 0.6):
+    """Constant profile: flat product S^1_L x S^{d-1}(f0) — periodic-mode
+    validation (exact distances: min-image in r, f0*ang in the sphere)."""
+    return (lambda r: np.full_like(np.asarray(r, dtype=float), f0)), L
+
+
 def dumbbell_profile(L: float = np.pi, beta: float = 0.65,
                      w: float | None = None):
     """Two bulbs joined by a neck at r = L/2. f'(0) = 1 - O(e^-12) so the
@@ -139,12 +154,21 @@ class WarpedProduct:
     """
 
     def __init__(self, profile_fn, L: float, d: int, n_grid_r: int = 500,
-                 n_grid_phi: int = 300, n_knn_grid: int = 8):
+                 n_grid_phi: int = 300, n_knn_grid: int = 8,
+                 periodic: bool = False):
         self.f, self.L, self.d = profile_fn, L, d
+        self.periodic = periodic
         rg = np.linspace(0, L, 20001)
         fg = self.f(rg)
-        fp = np.gradient(fg, rg)
-        fpp = np.gradient(fp, rg)
+        if periodic:
+            pad = 50
+            fg_p = np.concatenate([fg[-pad-1:-1], fg, fg[1:pad+1]])
+            rg_p = np.concatenate([rg[-pad-1:-1] - L, rg, rg[1:pad+1] + L])
+            fp = np.gradient(fg_p, rg_p)[pad:-pad]
+            fpp = np.gradient(np.gradient(fg_p, rg_p), rg_p)[pad:-pad]
+        else:
+            fp = np.gradient(fg, rg)
+            fpp = np.gradient(fp, rg)
         eps = 1e-6 * fg.max()
         self.rg, self.fg = rg, fg
         with np.errstate(divide="ignore", invalid="ignore"):
@@ -160,8 +184,11 @@ class WarpedProduct:
     def _build_2d_solver(self, nr: int, nphi: int) -> None:
         """Grid graph on the 2D surface of revolution: ds^2 = dr^2 + f^2 dphi^2.
         Margins avoid the coordinate degeneracy at the caps."""
-        r0 = self.L * 2e-3
-        self.grid_r = np.linspace(r0, self.L - r0, nr)
+        if self.periodic:
+            self.grid_r = np.linspace(0, self.L, nr, endpoint=False)
+        else:
+            r0 = self.L * 2e-3
+            self.grid_r = np.linspace(r0, self.L - r0, nr)
         self.grid_phi = np.linspace(0, np.pi, nphi)
         fr = np.maximum(self.f(self.grid_r), 1e-9)
         nodes = nr * nphi
@@ -179,7 +206,11 @@ class WarpedProduct:
             j = np.arange(nphi)
             ii, jj = np.meshgrid(i, j, indexing="ij")
             i2, j2 = ii + di, jj + dj
-            ok = (i2 >= 0) & (i2 < nr) & (j2 >= 0) & (j2 < nphi)
+            if self.periodic:
+                i2 = i2 % nr
+                ok = (j2 >= 0) & (j2 < nphi)
+            else:
+                ok = (i2 >= 0) & (i2 < nr) & (j2 >= 0) & (j2 < nphi)
             a = nid(ii[ok], jj[ok])
             b = nid(i2[ok], j2[ok])
             fmid = 0.5 * (fr[ii[ok]] + fr[i2[ok]])
@@ -217,10 +248,15 @@ class WarpedProduct:
         # tight for short near-geodesic segments, handles f-variation)
         Q = 9
         ts = np.linspace(0, 1, Q)[None, :]
-        rpath = r1[:, None] * (1 - ts) + r2[:, None] * ts
+        dr12 = r2 - r1
+        if self.periodic:
+            dr12 = (dr12 + self.L / 2) % self.L - self.L / 2
+        rpath = (r1[:, None] + dr12[:, None] * ts) % (self.L
+                                                      if self.periodic
+                                                      else np.inf)
         fpath = np.interp(rpath.ravel(), self.rg, self.fg).reshape(rpath.shape)
         fmid = 0.5 * (fpath[:, 1:] + fpath[:, :-1])
-        seg = np.sqrt(((r2 - r1)[:, None] / (Q - 1)) ** 2
+        seg = np.sqrt((dr12[:, None] / (Q - 1)) ** 2
                       + (fmid * (ang[:, None] / (Q - 1))) ** 2)
         d_loc = seg.sum(axis=1)
         cell = 15.0 * max(self.grid_r[1] - self.grid_r[0],
