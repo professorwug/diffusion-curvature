@@ -180,6 +180,38 @@ def run_summarize() -> None:
         print(f"nz={nz}: " + "   ".join(row))
     print("(channel order: kappa | frac | ent2 | ent4)")
 
+    v2 = df[df.dataset == "tier1v2"]
+    if len(v2):
+        print("\n=== TIER 1 v2 (EQUAL DENSITY) cross-manifold: Pearson | torus-zero balanced sign ===")
+        iv2 = v2.groupby("instance").agg(
+            dim=("dim", "first"), noise=("noise", "first"),
+            kind=("kind", "first"), ks=("ks_true", "mean"),
+            **{c: (c, "mean") for c, _ in chans}).reset_index()
+        for nz, g in iv2.groupby("noise"):
+            row = []
+            for d in (2, 3, 4, 5, 6):
+                gd = g[g.dim == d]
+                tor = gd[gd.kind == "torus"]
+                parts = []
+                for ch, orient in chans:
+                    v = orient * pd.to_numeric(gd[ch], errors="coerce")
+                    m = np.isfinite(v)
+                    r = (pearsonr(v[m], gd.ks[m])[0]
+                         if m.sum() > 4 and v[m].std() > 0 else np.nan)
+                    zero = orient * tor[ch].mean() if len(tor) else np.nan
+                    pos = m & (gd.ks > 1e-9)
+                    neg = m & (gd.ks < -1e-9)
+                    bal = (0.5 * ((v[pos] > zero).mean()
+                                  + (v[neg] < zero).mean())
+                           if pos.any() and neg.any() and np.isfinite(zero)
+                           else np.nan)
+                    parts.append(f"{r:+.2f}|{bal:.2f}")
+                row.append(f"d{d}: " + " ".join(parts))
+            print(f"nz={nz}: " + "   ".join(row))
+        print("\n  v2 per-kind means (nz=0):")
+        print(iv2[iv2.noise == 0].groupby(["kind", "dim"])
+              [["ks", "kappa", "frac", "ent4"]].mean().round(2).to_string())
+
     print("\n=== TIER 1 per-kind channel means (nz=0, diagnosing the inversion) ===")
     g0 = inst[inst.noise == 0.0]
     print(g0.groupby(["kind", "dim"])[["ks", "kappa", "frac", "ent4"]]
