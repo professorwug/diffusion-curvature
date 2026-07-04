@@ -157,8 +157,8 @@ def materialize(recipe: dict) -> dict:
         order = np.argsort(ks_field)
         eval_idx = order[(qs * (len(order) - 1)).astype(int)]
     else:
-        eval_idx = np.random.default_rng(seed).choice(N, n_eval,
-                                                      replace=False)
+        eval_idx = np.random.default_rng(seed).choice(
+            len(ks_field), n_eval, replace=False)
     return dict(D=D, X=None, ks_field=ks_field, scale=scale,
                 eval_idx=np.asarray(eval_idx), name=m["meta"]["name"],
                 **recipe)
