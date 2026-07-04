@@ -132,7 +132,7 @@ def run_summarize() -> None:
     chans = [("kappa", +1), ("frac", -1), ("ent2", -1), ("ent4", -1)]
 
     print("\n=== TIER 2 within-manifold field Pearson (mean over instances) ===")
-    t2 = df[df.dataset == "tier2"]
+    t2 = df[df.kind.isin(["dumbbell", "necklace"])]
     for kind in ("dumbbell", "necklace"):
         g0 = t2[t2.kind == kind]
         for nz, gn in g0.groupby("noise"):
@@ -153,7 +153,7 @@ def run_summarize() -> None:
             print(f"{kind:<9} nz={nz:<5} " + "  ".join(row))
 
     print("\n=== TIER 1 cross-manifold (per-instance means; torus-zero balanced sign) ===")
-    t1 = df[df.dataset == "tier1"]
+    t1 = df[~df.kind.isin(["dumbbell", "necklace"])]
     inst = t1.groupby("instance").agg(
         dim=("dim", "first"), noise=("noise", "first"),
         kind=("kind", "first"), ks=("ks_true", "mean"),
@@ -179,6 +179,11 @@ def run_summarize() -> None:
             row.append(f"d{d}: " + " ".join(parts))
         print(f"nz={nz}: " + "   ".join(row))
     print("(channel order: kappa | frac | ent2 | ent4)")
+
+    print("\n=== TIER 1 per-kind channel means (nz=0, diagnosing the inversion) ===")
+    g0 = inst[inst.noise == 0.0]
+    print(g0.groupby(["kind", "dim"])[["ks", "kappa", "frac", "ent4"]]
+          .mean().round(2).to_string())
 
 
 def main() -> None:
