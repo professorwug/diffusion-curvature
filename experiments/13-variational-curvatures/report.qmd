@@ -1,0 +1,24 @@
+---
+title: "13-variational-curvatures"
+format:
+  pdf:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    colorlinks: true
+execute:
+  echo: false
+  warning: false
+---
+
+# 13-variational-curvatures
+
+> *Dataset*: Describe what data you used and how?
+> *Metrics*: Which metrics did you use and how?
+> *Hypothesis*: ...
+
+## Setup
+
+```{python}
+print("Hello from 13-variational-curvatures")
+```
