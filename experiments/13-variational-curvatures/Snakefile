@@ -3,15 +3,47 @@ onsuccess:
 
 rule all:
     input:
-        "report.pdf"
+        "processed_data/vmi_gate_v2.csv",
+        "processed_data/vmi_tps_ladder.csv",
+        "processed_data/v5_gate.csv",
+        "processed_data/vmi_noise.csv",
 
-rule run_main:
-    input:
-        data = "../../data/foo.arrow" # placeholder
+# Stage-0 exact-target probes (no training; print-only)
+rule stage0_probes:
     output:
-        # main.py outputs
-    script:
-        "main.py"
+        touch("processed_data/.stage0_done")
+    shell:
+        "pixi run python exact_mi_probe.py && "
+        "pixi run python exact_mi_density_probe.py && "
+        "pixi run python exact_renyi_probe.py && "
+        "pixi run python gap_probe.py"
+
+# S1 — fidelity gates for V1 (InfoNCE/DV) and V5 (Mohamed/BA decoder)
+rule vmi_gate:
+    output:
+        "processed_data/vmi_gate_v2.csv"
+    shell:
+        "pixi run python vmi_gate_v2.py"
+
+rule v5_gate:
+    output:
+        "processed_data/v5_gate.csv"
+    shell:
+        "pixi run python v5_gate.py"
+
+# S2 — tps frontier: VMI (pairs) vs trace-H0 (counts) on paired walks
+rule tps_ladder:
+    output:
+        "processed_data/vmi_tps_ladder.csv"
+    shell:
+        "pixi run python vmi_tps_ladder.py"
+
+# S3 — heteroskedastic slip noise: entropy vs action-conditioned channels
+rule noise:
+    output:
+        "processed_data/vmi_noise.csv"
+    shell:
+        "pixi run python vmi_noise.py"
 
 rule render_report:
     input:
