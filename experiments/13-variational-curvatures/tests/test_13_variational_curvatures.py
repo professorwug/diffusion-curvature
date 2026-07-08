@@ -84,3 +84,46 @@ def test_ba_decoder_recovers_exact_field():
     assert r > 0.8, f"BA field corr {r:.2f} vs exact H"
     # BA lower-bounds the pooled I(A;S+|s) = H(S+|s)
     assert np.nanmean(out.ba) <= H_exact.mean() + 0.1
+
+
+def test_brownian_walks_stationarity_and_msd():
+    """BM on the necklace: stationary r-histogram matches the volume
+    element f^{d-1}; short-time mean squared geodesic displacement ~ d*t."""
+    from diffusion_curvature.continuous_walks import brownian_walks
+    from diffusion_curvature.menagerie import WarpedProduct, necklace_profile
+    f, L = necklace_profile(b=0.7)
+    wp = WarpedProduct(f, L, d=3, periodic=True)
+    dt = 0.004
+    out = brownian_walks(wp, nt=20, T=1500, rng=0, dt=dt)
+    r = out["r"][:, 300:].ravel()  # discard burn-in
+    hist, edges = np.histogram(r, bins=40, range=(0, wp.L), density=True)
+    mid = 0.5 * (edges[:-1] + edges[1:])
+    pdf = np.interp(mid, wp.rg, np.maximum(wp.fg, 0) ** (wp.d - 1))
+    pdf = pdf / np.trapz(pdf, mid)
+    assert np.corrcoef(hist, pdf)[0, 1] > 0.9, "stationary r-density wrong"
+    # MSD over k steps: E[d_geo^2] ~ d * (k dt) for small times
+    rng = np.random.default_rng(1)
+    for k in (5, 20):
+        idx = rng.integers(0, 20, 200), rng.integers(300, 1400, 200)
+        r1, u1 = out["r"][idx], out["u"][idx]
+        r2 = out["r"][idx[0], idx[1] + k]
+        u2 = out["u"][idx[0], idx[1] + k]
+        ang = np.arccos(np.clip((u1 * u2).sum(1), -1, 1))
+        dg = wp.pair_distance(r1, r2, ang)
+        ratio = (dg**2).mean() / (wp.d * k * dt)
+        assert 0.6 < ratio < 1.5, f"MSD ratio {ratio:.2f} at k={k}"
+
+
+def test_td_infonce_recovers_exact_field():
+    from diffusion_curvature.variational import TDInfoNCE
+    gamma = 0.9
+    P, rng = _two_scale_chain()
+    traj = _walks(P, nt=20, T=800, rng=rng)
+    mi_exact = _exact_mi(P, gamma)
+    est = TDInfoNCE(gamma=gamma, z_dim=16, features="tabular", n_epochs=60,
+                    batch_size=2048, n_candidates=79, lr=1e-2,
+                    device="cpu", seed=0).fit(traj, P.shape[0])
+    out = est.mi_field(np.arange(P.shape[0]))
+    m = np.isfinite(out.mi_bound)
+    r = np.corrcoef(out.mi_bound[m], mi_exact[m])[0, 1]
+    assert r > 0.8, f"TD-InfoNCE DV field corr {r:.2f} vs exact"

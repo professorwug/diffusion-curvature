@@ -535,3 +535,101 @@ def fami_ensemble(traj, intended, n_states, anchors,
         anchors=np.asarray(anchors),
         fami=np.nanmean([o.fami for o in outs], axis=0),
         n_pos=outs[0].n_pos)
+
+
+# ---------------------------------------------------------------------------
+# TD-InfoNCE — bootstrapped contrastive successor critic (continuous-ready)
+# ---------------------------------------------------------------------------
+
+class TDInfoNCE:
+    """Temporal-difference InfoNCE (Zheng & Eysenbach style): the critic
+    f(s, s') is trained toward the discounted occupancy density ratio
+    log[M_gamma(s,·)/rho(·)] using ONE-STEP pairs only — the gamma-horizon is
+    built by bootstrapping:
+      L = (1-gamma) * CE(logits(s, [s'; cands]), 0)
+        + gamma     * CE(logits(s, cands), softmax(f_tgt(s', cands)))
+    with a Polyak-averaged target critic. This re-imports the Markov
+    structure that flat lag-pair InfoNCE forfeits."""
+
+    def __init__(self, gamma: float = 0.95, z_dim: int = 64,
+                 features: str = "coords", hidden: int = 256,
+                 n_epochs: int = 150, batch_size: int = 4096,
+                 n_candidates: int = 511, lr: float = 1e-3,
+                 tau_polyak: float = 0.01, holdout_frac: float = 0.5,
+                 lags_per_step: int = 8,
+                 device: str = "cuda:0", seed: int = 0):
+        self.gamma = gamma
+        self.z_dim = z_dim
+        self.features = features
+        self.hidden = hidden
+        self.n_epochs = n_epochs
+        self.batch_size = batch_size
+        self.n_candidates = n_candidates
+        self.lr = lr
+        self.tau_polyak = tau_polyak
+        self.holdout_frac = holdout_frac
+        self.lags_per_step = lags_per_step
+        self.device = device
+        self.seed = seed
+
+    def fit(self, traj: np.ndarray, n_states: int,
+            X: np.ndarray | None = None) -> "TDInfoNCE":
+        import copy
+        rng = np.random.default_rng(self.seed)
+        torch.manual_seed(self.seed)
+        dev = self.device
+        self.n_states = n_states
+        # held-out geometric-lag pairs for the DV readout only
+        a, p = harvest_pairs(traj, self.gamma, self.lags_per_step, rng)
+        keep = rng.random(len(a)) < self.holdout_frac
+        self._held_pairs = (a[keep], p[keep])
+        # training data: consecutive pairs
+        s = traj[:, :-1].ravel()
+        sp = traj[:, 1:].ravel()
+        St = torch.as_tensor(s, dtype=torch.long, device=dev)
+        Spt = torch.as_tensor(sp, dtype=torch.long, device=dev)
+        if self.features == "tabular":
+            self.net = _TabularCritic(n_states, self.z_dim).to(dev)
+        else:
+            Xt = torch.as_tensor(np.asarray(X), dtype=torch.float32,
+                                 device=dev)
+            self.net = _CoordCritic(Xt, self.z_dim, self.hidden).to(dev)
+        tgt = copy.deepcopy(self.net)
+        for prm in tgt.parameters():
+            prm.requires_grad_(False)
+        opt = torch.optim.Adam(self.net.parameters(), lr=self.lr)
+        sched = torch.optim.lr_scheduler.CosineAnnealingLR(
+            opt, T_max=self.n_epochs, eta_min=self.lr * 1e-2)
+        n_tr = len(St)
+        g = torch.Generator(device="cpu").manual_seed(self.seed + 1)
+        for _ in range(self.n_epochs):
+            perm = torch.randperm(n_tr, generator=g).to(dev)
+            for lo in range(0, n_tr, self.batch_size):
+                idx = perm[lo:lo + self.batch_size]
+                si, spi = St[idx], Spt[idx]
+                cand = torch.randint(0, n_states, (self.n_candidates,),
+                                     device=dev)
+                f_next = self.net.score_pairs(si, spi)        # (B,)
+                f_cand = self.net.score(si, cand)             # (B, K)
+                logits1 = torch.cat([f_next[:, None], f_cand], dim=1)
+                loss1 = nn.functional.cross_entropy(
+                    logits1, torch.zeros(len(si), dtype=torch.long,
+                                         device=dev))
+                with torch.no_grad():
+                    p_tgt = torch.softmax(tgt.score(spi, cand), dim=1)
+                loss2 = -(p_tgt
+                          * torch.log_softmax(f_cand, dim=1)).sum(1).mean()
+                loss = (1 - self.gamma) * loss1 + self.gamma * loss2
+                opt.zero_grad()
+                loss.backward()
+                opt.step()
+                with torch.no_grad():
+                    for pn, pt in zip(self.net.parameters(),
+                                      tgt.parameters()):
+                        pt.mul_(1 - self.tau_polyak).add_(
+                            pn, alpha=self.tau_polyak)
+            sched.step()
+        return self
+
+    # readout shares VMI's semantics; reuse its implementation
+    mi_field = VMI.mi_field
