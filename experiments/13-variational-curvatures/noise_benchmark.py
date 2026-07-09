@@ -160,7 +160,9 @@ def apply_noise(unit, X_true, Xt_true, u1, rng):
     raise ValueError(noise)
 
 
-def run_unit(unit, caches, device):
+def prepare_unit(unit, caches):
+    """Deterministic data prep shared by all channel scripts: same walks,
+    same noise draw, same eval targets and pooled groups per unit."""
     key = (unit["profile"], unit["d"])
     if key not in caches:
         p = PROFILES[unit["profile"]]
@@ -189,7 +191,16 @@ def run_unit(unit, caches, device):
     kt_w = tks[targets]
     tree = cKDTree(X)
     _, grp = tree.query(Xt_ev, k=POOL_STATES)
-    groups = list(grp)
+    return dict(X=X, Xt_ev=Xt_ev, kt_w=kt_w, groups=list(grp),
+                traj_idx=traj_idx, n_pts=n_pts, gamma_c=gamma_c)
+
+
+def run_unit(unit, caches, device):
+    prep = prepare_unit(unit, caches)
+    X, Xt_ev, kt_w = prep["X"], prep["Xt_ev"], prep["kt_w"]
+    groups, traj_idx = prep["groups"], prep["traj_idx"]
+    n_pts, gamma_c = prep["n_pts"], prep["gamma_c"]
+    wseed = unit["wseed"]
 
     def rw(v):
         mm = np.isfinite(v) & np.isfinite(kt_w)
