@@ -649,7 +649,14 @@ class TDInfoNCE:
                 d2 = ((Xa[traj[w, t + 2]] - Xa[traj[w, t]])**2).sum(1)
                 sig2 = max(0.0, float(np.mean(d1) - (np.mean(d2)
                                                      - np.mean(d1)))) / 2
-                lag2 = max(lag2 - 2 * sig2, 0.01 * lag2)
+                if self.aug_nugget == "soft":
+                    # scale the subtraction by the noise-dominance ratio
+                    # rho = 2sig^2/lag^2: full nugget when noise dominates
+                    # (hd64), ~base jitter when geometry dominates (hetero)
+                    rho = min(1.0, 2 * sig2 / max(lag2, 1e-12))
+                    lag2 = max(lag2 - 2 * sig2 * rho, 0.01 * lag2)
+                else:
+                    lag2 = max(lag2 - 2 * sig2, 0.01 * lag2)
             jit = float(self.aug_scale * np.sqrt(lag2))
         self.jitter_ = jit
         opt = torch.optim.Adam(self.net.parameters(), lr=self.lr)

@@ -160,9 +160,11 @@ def apply_noise(unit, X_true, Xt_true, u1, rng):
     raise ValueError(noise)
 
 
-def prepare_unit(unit, caches):
+def prepare_unit(unit, caches, nt=None):
     """Deterministic data prep shared by all channel scripts: same walks,
-    same noise draw, same eval targets and pooled groups per unit."""
+    same noise draw, same eval targets and pooled groups per unit.
+    `nt` overrides the number of walks (budget axis); default NT."""
+    nt = nt or NT
     key = (unit["profile"], unit["d"])
     if key not in caches:
         p = PROFILES[unit["profile"]]
@@ -174,10 +176,10 @@ def prepare_unit(unit, caches):
     wp, s = caches[key]
     d, wseed = unit["d"], unit["wseed"]
     gamma_c = 1 - d * DT_NORM / SPREAD_T
-    walks = brownian_walks(wp, NT, T, dt=DT_NORM * s**2, rng=wseed)
+    walks = brownian_walks(wp, nt, T, dt=DT_NORM * s**2, rng=wseed)
     X_true = chi_embed(wp, walks["r"], walks["u"]) / s
-    n_pts = NT * (T + 1)
-    traj_idx = np.arange(n_pts).reshape(NT, T + 1)
+    n_pts = nt * (T + 1)
+    traj_idx = np.arange(n_pts).reshape(nt, T + 1)
     tw = brownian_walks(wp, 8, 1200, dt=DT_NORM * s**2, rng=1000 + wseed)
     tchi = (chi_embed(wp, tw["r"], tw["u"]) / s).reshape(-1,
                                                          X_true.shape[-1])
