@@ -55,11 +55,14 @@ class _TabularCritic(nn.Module):
         nn.init.normal_(self.B.weight, std=0.1)
         nn.init.zeros_(self.bias.weight)
 
-    def score(self, s: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
-        """f(s_i, t_j) for all i x j. s: (B,), targets: (K,) -> (B, K)."""
+    def score(self, s: torch.Tensor, targets: torch.Tensor,
+              jitter: float = 0.0) -> torch.Tensor:
+        """f(s_i, t_j) for all i x j. s: (B,), targets: (K,) -> (B, K).
+        `jitter` ignored (no coordinate space to perturb)."""
         return (self.F(s) @ self.B(targets).T) + self.bias(targets)[:, 0][None, :]
 
-    def score_pairs(self, s: torch.Tensor, t: torch.Tensor) -> torch.Tensor:
+    def score_pairs(self, s: torch.Tensor, t: torch.Tensor,
+                    jitter: float = 0.0) -> torch.Tensor:
         """f(s_i, t_i) elementwise. -> (B,)"""
         return (self.F(s) * self.B(t)).sum(-1) + self.bias(t)[:, 0]
 
@@ -77,7 +80,10 @@ class _MLP(nn.Module):
 
 
 class _CoordCritic(nn.Module):
-    """MLP twin encoders on coordinates; last B output is the target bias."""
+    """MLP twin encoders on coordinates; last B output is the target bias.
+
+    `jitter` adds fresh Gaussian input noise per call (train-time
+    augmentation: a smoothness prior at the chosen scale; 0 at readout)."""
 
     def __init__(self, X: torch.Tensor, z_dim: int, hidden: int):
         super().__init__()
@@ -85,14 +91,20 @@ class _CoordCritic(nn.Module):
         self.Fnet = _MLP(X.shape[1], z_dim, hidden)
         self.Bnet = _MLP(X.shape[1], z_dim + 1, hidden)
 
-    def score(self, s, targets):
-        Fz = self.Fnet(self.X[s])
-        Bz = self.Bnet(self.X[targets])
+    def _emb(self, idx, jitter: float = 0.0):
+        x = self.X[idx]
+        if jitter > 0:
+            x = x + jitter * torch.randn_like(x)
+        return x
+
+    def score(self, s, targets, jitter: float = 0.0):
+        Fz = self.Fnet(self._emb(s, jitter))
+        Bz = self.Bnet(self._emb(targets, jitter))
         return Fz @ Bz[:, :-1].T + Bz[:, -1][None, :]
 
-    def score_pairs(self, s, t):
-        Fz = self.Fnet(self.X[s])
-        Bz = self.Bnet(self.X[t])
+    def score_pairs(self, s, t, jitter: float = 0.0):
+        Fz = self.Fnet(self._emb(s, jitter))
+        Bz = self.Bnet(self._emb(t, jitter))
         return (Fz * Bz[:, :-1]).sum(-1) + Bz[:, -1]
 
 
@@ -556,7 +568,7 @@ class TDInfoNCE:
                  n_epochs: int = 150, batch_size: int = 4096,
                  n_candidates: int = 511, lr: float = 1e-3,
                  tau_polyak: float = 0.01, holdout_frac: float = 0.5,
-                 lags_per_step: int = 8,
+                 lags_per_step: int = 8, aug_scale: float = 0.0,
                  device: str = "cuda:0", seed: int = 0):
         self.gamma = gamma
         self.z_dim = z_dim
@@ -569,6 +581,7 @@ class TDInfoNCE:
         self.tau_polyak = tau_polyak
         self.holdout_frac = holdout_frac
         self.lags_per_step = lags_per_step
+        self.aug_scale = aug_scale   # x median step length -> input jitter
         self.device = device
         self.seed = seed
 
@@ -597,6 +610,17 @@ class TDInfoNCE:
         tgt = copy.deepcopy(self.net)
         for prm in tgt.parameters():
             prm.requires_grad_(False)
+        # augmentation scale: aug_scale x median gamma-lag displacement —
+        # smooth away structure below the horizon scale (the readout pools
+        # there anyway); robust across noise levels because the lag
+        # displacement includes whatever observation noise is present.
+        jit = 0.0
+        if self.aug_scale > 0 and self.features == "coords":
+            Xa = np.asarray(X)
+            sub = np.arange(0, len(a), max(1, len(a) // 4096))
+            lag_disp = np.linalg.norm(Xa[p[sub]] - Xa[a[sub]], axis=1)
+            jit = float(self.aug_scale * np.median(lag_disp))
+        self.jitter_ = jit
         opt = torch.optim.Adam(self.net.parameters(), lr=self.lr)
         sched = torch.optim.lr_scheduler.CosineAnnealingLR(
             opt, T_max=self.n_epochs, eta_min=self.lr * 1e-2)
@@ -609,14 +633,15 @@ class TDInfoNCE:
                 si, spi = St[idx], Spt[idx]
                 cand = torch.randint(0, n_states, (self.n_candidates,),
                                      device=dev)
-                f_next = self.net.score_pairs(si, spi)        # (B,)
-                f_cand = self.net.score(si, cand)             # (B, K)
+                f_next = self.net.score_pairs(si, spi, jitter=jit)  # (B,)
+                f_cand = self.net.score(si, cand, jitter=jit)       # (B, K)
                 logits1 = torch.cat([f_next[:, None], f_cand], dim=1)
                 loss1 = nn.functional.cross_entropy(
                     logits1, torch.zeros(len(si), dtype=torch.long,
                                          device=dev))
                 with torch.no_grad():
-                    p_tgt = torch.softmax(tgt.score(spi, cand), dim=1)
+                    p_tgt = torch.softmax(tgt.score(spi, cand, jitter=jit),
+                                          dim=1)
                 loss2 = -(p_tgt
                           * torch.log_softmax(f_cand, dim=1)).sum(1).mean()
                 loss = (1 - self.gamma) * loss1 + self.gamma * loss2
