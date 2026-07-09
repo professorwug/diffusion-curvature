@@ -192,7 +192,9 @@ def prepare_unit(unit, caches):
     tree = cKDTree(X)
     _, grp = tree.query(Xt_ev, k=POOL_STATES)
     return dict(X=X, Xt_ev=Xt_ev, kt_w=kt_w, groups=list(grp),
-                traj_idx=traj_idx, n_pts=n_pts, gamma_c=gamma_c)
+                traj_idx=traj_idx, n_pts=n_pts, gamma_c=gamma_c,
+                X_true=X_true.reshape(n_pts, -1),
+                Xt_true=tchi[targets])
 
 
 def run_unit(unit, caches, device):
