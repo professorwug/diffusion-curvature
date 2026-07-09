@@ -52,3 +52,10 @@ rule render_report:
         "report.pdf"
     shell:
         "uv run quarto render report.qmd --to pdf"
+
+# C-series — continuous-trajectory race
+rule c_series:
+    output:
+        "processed_data/c_series.csv"
+    shell:
+        "pixi run python c_series.py"
