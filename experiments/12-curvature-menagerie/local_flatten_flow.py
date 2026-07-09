@@ -453,10 +453,48 @@ def run_full(device: str) -> None:
         print(summ.sort_values(["config", "kind", "dim"]).to_string(index=False))
 
 
+def run_patchsize(device: str) -> None:
+    """Disentangle patch point-count (m) from physical radius. At full n=1200,
+    sweep radius quantile so m ranges ~40-160, on the headline cells; compare
+    the m~60 point to the n=600 winner (rq0.10 also gave m~60)."""
+    n_eval = 40
+    seeds = [0, 1]
+    cells = [("necklace", 3), ("necklace", 5), ("dumbbell", 3),
+             ("dumbbell", 4), ("torus", 3)]
+    rqs = [0.033, 0.05, 0.075, 0.10]     # at n=1200 -> m ~ 40,60,90,120
+    base = dict(kernel="cak", t=2, band=2.0, n_pairs=16, k=8,
+                boundary="free", objective="allpairs", recompute_mu=False,
+                n_steps=3, target_rel=0.02)
+    t0 = time.time()
+    rows = []
+    for kind, d in cells:
+        for seed in seeds:
+            man = build_manifold(kind, d, 1200, seed)
+            D, ks = man["D"], man["ks"]
+            rng = np.random.default_rng(7000 + seed)
+            eval_idx = pick_eval_points(ks, n_eval, rng)
+            for rq in rqs:
+                cfg = dict(base, radius_q=rq)
+                for i in eval_idx:
+                    out = flow_point(D, int(i), float(ks[i]), cfg, device)
+                    if out is None:
+                        continue
+                    out.update(kind=kind, dim=d, seed=seed, rq=rq, point=int(i))
+                    rows.append(out)
+            print(f"[patchsize] {kind}{d} seed{seed} ({time.time()-t0:.0f}s)",
+                  flush=True)
+    df = pd.DataFrame(rows)
+    df.to_csv(PROC / "local_flatten_patchsize_points.csv", index=False)
+    summ = _summ(df, ["rq"])
+    summ.to_csv(PROC / "local_flatten_patchsize_summary.csv", index=False)
+    with pd.option_context("display.width", 260, "display.max_columns", None):
+        print(summ.sort_values(["kind", "dim", "rq"]).to_string(index=False))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
-    for name in ("small", "rederivation", "full"):
+    for name in ("small", "rederivation", "full", "patchsize"):
         s = sub.add_parser(name)
         s.add_argument("--device", default="cpu")
     args = ap.parse_args()
@@ -466,6 +504,8 @@ def main() -> None:
         run_rederivation(args.device)
     elif args.cmd == "full":
         run_full(args.device)
+    elif args.cmd == "patchsize":
+        run_patchsize(args.device)
 
 
 if __name__ == "__main__":
