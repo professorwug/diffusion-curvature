@@ -12,7 +12,7 @@ Usage:
 
 Reads [tool.zetteldev] base_url from pyproject.toml.
 """
-import json, secrets, string, sys
+import json, os, secrets, string, sys
 import re
 from pathlib import Path
 
@@ -282,6 +282,13 @@ def scaffold_experiment(exp: str, hydra: bool = False) -> None:
 
     # scratchpad notebook with experiment name in filename
     create_scratchpad(exp, exp_underscore, folder / f"scratchpad_{exp_underscore}.ipynb")
+
+    # default Snakemake workflow profile (auto-discovered as profiles/default/);
+    # symlinks to the one canonical profile under .zetteldev/snakemake/default
+    canon = Path(".zetteldev/snakemake/default").resolve()
+    link = folder / "profiles" / "default"
+    link.parent.mkdir(parents=True, exist_ok=True)
+    link.symlink_to(os.path.relpath(canon, link.parent))
 
     # Hydra + submitit scaffold for cluster experiments
     if hydra:

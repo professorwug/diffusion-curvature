@@ -1,0 +1,31 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Della Snakemake profile — submits each GPU rule as its own SLURM job via the
+# snakemake-executor-plugin-slurm. Activate on the della login node (inside tmux):
+#
+#     export SNAKEMAKE_PROFILE=$REPO/.zetteldev/snakemake/della
+#
+# This LAYERS ON the auto-discovered profiles/default (mtime-prudence: keep-
+# incomplete, mtime-only rerun triggers); the two merge on disjoint keys.
+#
+# GPU rules set their own footprint via `resources: **gpu("target")`
+# (zetteldev.della.gpu). Pure-CPU steps inherit the cheap default-resources
+# below, or are marked `localrule` to run on the login node.
+# ─────────────────────────────────────────────────────────────────────────────
+
+executor: slurm
+jobs: 8                       # max concurrent SLURM jobs the controller holds
+latency-wait: 60             # NFS settle time after a job writes its output
+restart-times: 1             # auto-resubmit a transiently-failed job once
+
+# Belt-and-suspenders: keep a failed/timed-out job's partial output instead of deleting it. This IS set in
+# the layered profiles/default, but a Qwen-teacher gen timeout (2026-06-16) still lost its 175/500-row
+# partial on Della — so set it EXPLICITLY here, not reliant on workflow-profile merging. Crucial for the
+# RESUMABLE jobs (gen_sft_transcripts, run_brainwash_agentic) whose partial output IS their resume state.
+keep-incomplete: true
+
+# Defaults for un-annotated (CPU) rules: small and cheap.
+default-resources:
+  slurm_partition: cpu
+  runtime: 30
+  mem_mb: 8000
+  cpus_per_task: 2

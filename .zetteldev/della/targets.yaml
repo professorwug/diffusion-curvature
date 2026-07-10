@@ -1,0 +1,252 @@
+# vLLM target registry — the single source of truth for a model on Della.
+#
+# Two consumers read this file (see zetteldev.della and bin/della-vllm-run):
+#   1. `gpu("name")` in a Snakemake rule's `resources:` -> the SLURM request
+#      (partition, gpus, cpus, mem, runtime, --gres) for the executor-slurm plugin.
+#   2. `della-vllm-run --target name` -> the della-lib server launch
+#      (model path, tensor-parallel size, tool parser, context length).
+# Add a model = add one block here; both the allocation and the server follow.
+#
+# Required per target: partition, model_path, tensor_parallel, tool_parser,
+#   max_model_len, runtime (minutes).
+# NOTE: in a flow mapping ({ ... }) a ${cache} value must be QUOTED, else YAML
+#   reads the braces as a nested mapping, e.g.
+#       embed: { model_path: "${cache}/Llama-3.1-8B-Instruct" }
+#
+# Optional: embed {model_path}  -> colocated embedding sidecar (adds 1 GPU);
+#   mem_mb / cpus_per_task / gpus -> override the derived SLURM shape;
+#   vllm_extra: [..]            -> raw flags appended to the vLLM launch.
+
+# della-wide constants; per-target blocks inherit via the <<: *defaults merge.
+_defaults: &defaults
+  account: henderson
+  cache: /scratch/gpfs/HENDERSON/transformer_cache
+
+# Belief-extraction model for experiment 33 (section 3). No embed sidecar: belief
+# extraction emits *text* beliefs; embedding is a decoupled downstream step
+# (smallscale_analysis.py), so the extraction job needs only the chat server.
+gpt-oss-120b:
+  <<: *defaults
+  partition: pli-c            # 2x H100 is enough; pli-c has shorter queues
+  model_path: ${cache}/gpt-oss-120b
+  tensor_parallel: 2
+  tool_parser: openai         # gpt-oss requires the openai parser (not hermes)
+  max_model_len: 32768
+  runtime: 180
+
+# Exp-34 Stage-2→3 SFT teacher/student: gpt-oss-20b on a single GPU. Same MXFP4
+# weights as local Ollama, but vLLM with the openai tool-parser gives reliable
+# Harmony->tool_call parsing for the agentic transcript generation.
+gpt-oss-20b:
+  <<: *defaults
+  partition: pli-c
+  model_path: ${cache}/gpt-oss-20b
+  tensor_parallel: 1
+  tool_parser: openai         # gpt-oss requires the openai parser (not hermes)
+  max_model_len: 32768
+  runtime: 180
+
+# Exp-34 hybrid-eval comparison: Qwen3-8B (the hybrid think/no-think model) as a tool-calling chat
+# server, to see how it forecasts on the 120-question hybrid-evidence battery vs gpt-oss. hermes tool
+# parser + deepseek_r1 reasoning parser (Qwen3's <think> channel); thinking ON to match the gpt-oss run.
+qwen3-8b:
+  <<: *defaults
+  partition: pli-c
+  model_path: ${cache}/Qwen3-8B
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# Exp-34 belief-collapse SFT (idea #3, tiny-slice): serve the LoRA-merged Qwen3-8B. Absolute model_path to
+# the merged dir on scratch; same serving shape as qwen3-8b. Eval rules borrow gpu("qwen3-8b") for resources.
+qwen3-8b-sft-slice:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_slice_lr1e5_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# Full-data belief-collapse SFT model (426 samples). Served for the base-vs-SFT dissociation eval.
+qwen3-8b-sft:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_lr1e5_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# v3 belief-collapse SFT — DIVERSE hybrid-corpus teacher (temp 0.7, gold-discounting transcripts) +
+# {% generation %} TRL mask. Tests whether less-repetitive teacher data resolves the vLLM fragility.
+qwen3-8b-sft-hybrid:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_gen_hybrid_lr1e5_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# v4 belief-collapse SFT — TURN-BY-TURN, THINKING-DISABLED on the diverse hybrid corpus. The decisive
+# vLLM-fragility test: per-turn {prompt, completion} examples (rejected actions dropped), TRL prompt-masked.
+# If THIS serves clean tool calls under vLLM where every whole-trajectory SFT degenerated, the format —
+# not the disposition — was the fragility culprit. Same hermes + deepseek_r1 serving stack as base.
+qwen3-8b-sft-hybrid-turns:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_hybrid_turns_lr1e5_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# v2b belief-collapse SFT — TRL assistant_only_loss=True via a {% generation %}-patched Qwen3 template
+# (train_sft_gen.py). Tests whether the hand-rolled delimiter mask was the vLLM-fragility culprit.
+qwen3-8b-sft-gen:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_gen_lr1e5_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# fp32 serve of the SFT model — to test whether the vLLM degradation is a bf16 numerics knife-edge
+# (if fp32 emits clean tool calls where bf16 runs away, precision is the lever). max_model_len trimmed:
+# fp32 KV-cache is 2x bf16, and the probe only needs ~4k tokens.
+qwen3-8b-sft-fp32:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_lr1e5_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 8192
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1", "--dtype", "float32"]
+
+# v2 belief-collapse SFT — ASSISTANT-ONLY LOSS (train_sft_masked.py). Fixes the v1 full-seq-loss void
+# (over-generation/repetition under vLLM). Same data+rendering, loss masked to assistant tool-call spans.
+qwen3-8b-sft-masked:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_lr1e5_masked_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# v3 belief-collapse SFT — GENTLER (LR 5e-6, 1 epoch, assistant-only loss). v1/v2 (LR 1e-5, 2ep) drove the model
+# into a degeneration basin (over-generation, no tool-call envelope). Less intensity to absorb disposition w/o collapse.
+qwen3-8b-sft-masked-gentle:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_lr5e6ep1_masked_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# Option-A serving test: same gentle model, but vLLM prefix-caching + chunked-prefill DISABLED, to test whether
+# those (which split the prefill / reuse KV and can perturb a fragile model's numerics) are what tip it into the
+# HF-vs-vLLM divergence (HF emits clean <tool_call>, vLLM doesn't on the byte-identical prompt).
+qwen3-8b-sft-masked-gentle-noprefix:
+  <<: *defaults
+  partition: pli-c
+  model_path: /scratch/gpfs/HENDERSON/km5839/reason_reckon/experiments/34-forecasting-with-belief-fixation/processed_data/sft_qwen_lr5e6ep1_masked_merged
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1", "--no-enable-prefix-caching", "--no-enable-chunked-prefill"]
+
+# Exp-34 within-family scaling point: Qwen3-32B on 2x H100 (TP=2; 64 heads / 8 KV heads / vocab
+# 151936 all divide 2). Same hermes + deepseek_r1 setup as qwen3-8b, thinking ON. ~64 GB bf16 weights
+# + KV cache for 8 concurrent workers fits comfortably in 160 GB.
+qwen3-32b:
+  <<: *defaults
+  partition: pli-c
+  model_path: ${cache}/Qwen3-32B
+  tensor_parallel: 2
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+# Exp-34 pilot: the fine-tuned (LoRA-merged) models, served for the post-training agentic eval.
+# merge_lora.py writes the merged bf16 weights into ${cache}/exp34_*; these targets serve them with
+# the same parsers as their base, so run_brainwash_agentic drives them through the hybrid battery.
+qwen3-8b-sft-register:        # Exp-1 'Forbidden Register' SFT student (Qwen3-8B base)
+  <<: *defaults
+  partition: pli-c
+  model_path: ${cache}/exp34_sft_register_qwen3_8b
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--reasoning-parser", "deepseek_r1"]
+
+gpt-oss-20b-bf16:             # Exp-2 matched BASE: gpt-oss-20b dequantized to bf16 (so base & DPO share
+  <<: *defaults                # the serving stack — MXFP4 MoE generation is broken on this vLLM build)
+  partition: pli-c
+  model_path: ${cache}/exp34_gptoss_bf16_base
+  tensor_parallel: 1
+  tool_parser: openai
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--trust-remote-code"]
+
+gpt-oss-20b-dpo-startcorrect:  # Exp-2 'Start-correct' DPO student (gpt-oss-20b base, dequantized bf16)
+  <<: *defaults
+  partition: pli-c
+  model_path: ${cache}/exp34_dpo_startcorrect_gptoss
+  tensor_parallel: 1
+  tool_parser: openai
+  max_model_len: 32768
+  runtime: 300
+  vllm_extra: ["--trust-remote-code"]   # the LoRA-merged save needs it to load the tokenizer
+
+# Larger instruct model (H200s). Kept here as a registry example / future use.
+qwen3-80b:
+  <<: *defaults
+  partition: ailab            # Qwen3-80B needs 141GB H200s
+  model_path: ${cache}/Qwen3-Next-80B-A3B-Instruct
+  tensor_parallel: 2
+  tool_parser: hermes
+  max_model_len: 16384
+  runtime: 180
+
+# Small model, single GPU, no embed sidecar.
+llama-8b:
+  <<: *defaults
+  partition: pli-c
+  model_path: ${cache}/Llama-3.1-8B-Instruct
+  tensor_parallel: 1
+  tool_parser: llama3_json
+  max_model_len: 16384
+  runtime: 60
+
+# Exp-34 news-RAG (notebook 07): embed the forecast-news corpus into 512-tok/stride-64 passages with
+# Qwen3-Embedding-8B (faithful to OpenForesight's embedding_retrieval; no summarise/rerank). NOT a
+# della-vllm-run server — the news_embed rule loads the model in-process via vLLM; gpu() only reads the
+# SLURM shape here (1 GPU/shard, ~120 month shards on pli-c). tool_parser is unused for an embed job.
+news-embed:
+  <<: *defaults
+  partition: pli-c
+  model_path: ${cache}/Qwen3-Embedding-8B
+  tensor_parallel: 1
+  tool_parser: hermes
+  max_model_len: 8192
+  runtime: 360          # 6h/shard: a 2018 month ~2h, but recent high-volume months run longer
+  mem_mb: 128000
+  cpus_per_task: 16

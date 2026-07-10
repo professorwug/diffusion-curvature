@@ -6,13 +6,18 @@ This is a 'Zetteldev' repo for conducting academic research through literate pro
 
 - **`rar`** (Reread and Run): Re-read the last active zettel (daily note or experiment zettel), find any new placeholder figures/tables/requests, create scripts to produce them (saved to well-organized python files in appropriate subdirectories), and run them. Always save code to files — never run long computations inline. When a computation is expected to take a while, save useful intermediate results (dataframes, arrays, model outputs) to `processed_data/` so they can be reused by downstream figure scripts without recomputation.
 
+## House Style: Headings and Reports
+
+- **MINI HEADERS**: in long responses and documents, use informal capitalized headings as super-punctuators — each marks the end of one unit of thought, as the comma ends a clause and the period a sentence. Aim for witty headings that reveal the subject of what follows while hinting at the mystery.
+- **PREVIOUSLY ON 'INVENTIVE NAME'**: begin each report that follows a long work bout with a recap section titled `PREVIOUSLY ON '<inventive name for the effort>'` — a brief review of the project, the recent work, the current status, and the key definitions/terms in play, so the reader (the author returning after hours away) can re-enter cold.
+
 # Procedure: Phases of an Experiment
 
 **The markdown files which guide and document each experiment are found within the user's Obsidian vault, in ~/Pumberton.** These are standard Obsidian markdown: they contain [[wikilinks]] and YAML frontmatter.
 
 **Most work happens within `experiments/` subfolders.** You will either be asked to work within an existing experiment or create a new one.
    - If in an existing experiment, familiarize yourself with the existing code. Crucially, also ensure you have located and read the 'zettel' in Obsidian. If the user doesn't provide it, consult `design.md` for the path. If the user provides a filename, look in `~/Pumberton/Stream` - this is the default location. 
-   - If creating an experiment, run `just create-experiment experiment-name`. This will scaffold a main.py, a report.qmd, and a Snakefile. For experiments that need cluster training with hyperparameter sweeps, use `just create-experiment experiment-name --hydra` to also scaffold a Hydra config directory and train.py entry point.
+   - If creating an experiment, run `just create-experiment experiment-name`. This will scaffold numbered marimo notebooks, a main.py, and a Snakefile. For experiments that need cluster training with hyperparameter sweeps, use `just create-experiment experiment-name --hydra` to also scaffold a Hydra config directory and train.py entry point.
 
 The user should tell you which phase you are operating within; if not it should be inferred from the context. If given a PDF, you are in Phase 1. If asked to modify some aspect of an existing experiment or to launch evaluation jobs, you are in Phase 3.
 
@@ -76,9 +81,13 @@ The repo is structured like this:
 .
 ├── experiments
 │   ├── 1-example-experiment
-│   │   ├── report.qmd
+│   │   ├── design.md (stub pointer to the zettel)
+│   │   ├── 01-foundational-marimo-notebook.py (e.g. sets up data)
+│   │   ├── 02-method-development.py (e.g. derives the machinery)
+│   │   ├── 03-analysis.py (e.g. interactive plots galore)
 │   │   ├── main.py
 │   │   ├── Snakefile
+│   │   ├── scripts/ (python files orchestrated by Snakemake)
 │   │   ├── processed_data/
 │   │   ├── figures/
 │   │   └── tests/
@@ -96,9 +105,9 @@ The repo is structured like this:
 ```
 
 You'll notice that each experiment folder is prepopulated with this template:
-- `Snakefile`: Defines at least two rules—(1) run main.py, (2) render report.qmd. These will be explained below!
-- `main.py`: Main Python script controlling the experiment's logic.
-- `report.qmd`: Quarto file for generating the final PDF and rendering figures. This is only to be edited by the user.
+- `Snakefile`: Defines the experiment's computation DAG (explained below).
+- `01-…py`, `02-…py`, `03-…py`: numbered **marimo notebooks** — the computational essays where datasets, methods, and analyses are developed (see "Programs as Essays" below). These replace the old `report.qmd` Quarto flow.
+- `main.py`: Main Python script controlling the experiment's large-scale logic.
 - `processed_data/`: Holds data outputs. Synced via Git LFS.
 - `figures/`: Store images, plots, or other visuals for your report
 - `tests/`: Contains experiment-specific Pytest files for unit or integration testing
@@ -111,6 +120,33 @@ With `--hydra`, these are also created:
 - `train.py`: `@hydra.main` entry point for training.
 
 Here's how each of these works.
+
+## Programs as Essays: Marimo Notebooks
+
+Each experiment is a conversation between three literate mediums: the *zettel* (design, then results), the *marimo notebooks* (which develop and illustrate the core algorithms, datasets, and machinery), and the *Snakemake scripts* (which perform the experiment at scale). The notebooks are computational essays in Knuth's sense — compiled by the machine, addressed to a human.
+
+Working practices:
+- To write in Marimo, refer to your `marimo-pair` skill for the latest API details; in brief, you can connect directly to the kernel of a notebook the author has created, run existing cells, execute 'anonymous' scratchpad code to prototype, and author cells to build the essay. **Always use marimo's "code mode" to edit and create cells; never edit the raw `.py` file** — it is frequently overwritten by the active kernel.
+- Marimo demands a functional style: define as objects the primitives considered in the essay, and evolve them through stacks of short, interpretable functions. Heavy computations (trainings, embeddings, analyses up to ~30 min) may occur in the notebook using local resources (beefy CPU, 2× 4090s), but use marimo's cache helpers to prevent needless recomputation.
+- Tell, and show: populate the essay with visualizations, mermaid diagrams, math, and raw dataframe views. Unlike the zettel (the author's territory), a beautiful, thoroughly-correct computational essay is *your* responsibility — double-check and red-team it.
+- The core pieces of each essay should be importable downstream. A function or class defined in a marimo notebook can be imported by scripts if (1) it is defined in its own cell, with nothing else, and (2) that cell refers only to symbols defined at the *top* of the DAG (e.g. the setup cell). Then:
+
+```python
+from zetteldev import notebook_module
+
+bex = notebook_module("02-method-development.py")  # loads a numbered notebook by path
+result = bex.core_function(...)                    # an @app.function cell, callable downstream
+```
+
+- Publishing figures from within a notebook, without leaving the kernel:
+
+```python
+from zetteldev import figpub
+figpub.publish(fig, "difficulty_spectrum.png")  # uploads to R2, dedupes, returns the URL
+```
+
+  It accepts a matplotlib `Figure`/`Axes`, a `PIL.Image`, a path, or raw bytes; infers the experiment and `figures/` directory from the working directory; and returns an object rendering the figure inline beside its stable URL and a copy-paste `![…](url)` line. Identical bytes are never re-uploaded.
+- Marimo quirk: the notebook's kernel changes ID whenever the webpage is refreshed (author views from a new device, connection drop). If the kernel suddenly seems unresponsive, rediscover its new ID.
 
 ## Snakemake & Snakefiles
 The snakefile specifies a DAG of computations associated to each experiment.
@@ -129,7 +165,9 @@ rule run_main:
         "main.py"
 ```
 - Update Snakefile when adding/modifying experiment scripts.
-- Always define an `all` rule so the entire experiment can be run with `uv run snakemake`.
+- Always define an `all` rule so the entire experiment can be run with `pixi run snakemake`.
+- Pure-CPU prep steps should be marked `localrule: True` so they run on the login node / local machine without a SLURM allocation.
+- For cluster pipelines, a Snakemake SLURM *profile* lives at `.zetteldev/snakemake/della/config.yaml` (`executor: slurm`): each GPU rule becomes its own SLURM job while `localrule` steps run on the login node. On della: `export SNAKEMAKE_PROFILE=$REPO/.zetteldev/snakemake/della` then `pixi run snakemake -j8 <target>` from a tmux window. The profile sets the concurrency cap, an NFS `latency-wait`, one auto-resubmit on transient failure, and cheap default resources for un-annotated CPU rules.
 - The exception: long-running compute jobs like vLLM inference or RL training. For these, use Hydra+submitit (see below) or sbatch scripts. Add snakemake rules as detached nodes in the DAG for bookkeeping.
 
 ## Hydra + submitit (cluster training experiments)
@@ -219,6 +257,7 @@ The primary medium for communicating results is the figure. The zettel should sp
 Figures are hosted on Cloudflare R2 for stable, cross-device access in Obsidian notes. The public URL pattern is `https://blots.kincaid.ink/reason_reckon/{experiment}/{filename}`.
 
 **Commands:**
+- `zetteldev.figpub.publish(fig, "name.png")` — from inside a marimo notebook (preferred; see "Programs as Essays")
 - `just publish-figure <path>` — upload a single figure
 - `just publish-figure <path> --obsidian` — upload and print Obsidian-ready markdown
 - `just publish-figures` — sync all changed figures across all experiments
@@ -234,34 +273,42 @@ Figures are hosted on Cloudflare R2 for stable, cross-device access in Obsidian 
 ## Testing
 Always write and perform two types of tests.
 
-1. *Is it doing what the user's design spec wants?* While writing scripts, write corresponding tests in the `./tests` folder, using Pytest. Execute these with `just test` (runs all tests in the project) or `uv run pytest path/to/test_file.py` for a specific file. Because there are multiple experiment directories, include the current experiment name in any tests you write to prevent collisions.
+1. *Is it doing what the user's design spec wants?* While writing scripts, write corresponding tests in the `./tests` folder, using Pytest. Execute these with `just test` (runs all tests in the project) or `pixi run pytest path/to/test_file.py` for a specific file. Because there are multiple experiment directories, include the current experiment name in any tests you write to prevent collisions.
 2. *Does it run without errors?* In all scripts, respect a `test_run` parameter (set globally in the Snakefile) which performs only the bare minimum computation to use all bits of the code. For example, process a tiny subset of the input data; do only 2 epochs of training; use only 2 rounds of monte-carlo sampling. After implementing an experiment, set the `test_run` to true and run snakemake. Ensure the full pipeline works.
 
 ---
 
+# The Driver: Long Marches
+
+When an experiment reaches the "Marches" — code written, awaiting results from jobs — the author will ask you to employ a *driver*: a `/loop` cron job that wakes you every third hour to keep things progressing. Anchor each driver in the experiment's zettel; the author adds a task list at the bottom of the zettel (experiments to run, results to gather).
+
+On each driver wake:
+1. Re-read the entire zettel — context and tasks may have changed since the last check-in.
+2. Identify the unblocked tasks.
+3. Complete as many as you can. Keep *one thing* in focus at a time; when it blocks (waiting on a run, or on user input), move to the next. Tasks are ordered roughly by priority; adjust from your knowledge of the details.
+4. Report progress tersely (counts and a rate estimate); if jobs left the queue, read their logs for the cause; if they completed, clear stale `.inprogress` locks and resubmit the remainder.
+
+Create monitoring loops yourself whenever the need arises — immediately after submitting jobs, and again after any mop-up resubmission. Favour many short jobs over one long one (conservative 3–6h limits earn queue priority), and design sweeps to **resume** so a timeout costs nothing.
+
 # Conventions
 
 ## Environment & Package Management
-This project uses **uv** for Python package management and **just** as a task runner.
+This project uses **pixi** for Python package management (config in `pyproject.toml` under `[tool.pixi.*]`) and **just** as a task runner.
 
-### uv basics
-- `uv sync` - Install all dependencies from pyproject.toml
-- `uv sync --group dev` - Also install dev dependencies
-- `uv run python script.py` - Run a script in the virtual environment
-- `uv add package` - Add a new dependency
-- `uv add --dev package` - Add a dev dependency
-- `uv pip install package` - pip-compatible interface for one-off installs
-- `uv pip compile` / `uv pip sync` - pip-tools compatible workflow
+### pixi basics
+- `pixi install` - Install the environment from pyproject.toml + pixi.lock
+- `pixi run python script.py` - Run a script in the environment (or call `.pixi/envs/default/bin/python` directly — more reliable for detached/background processes, where `pixi run` can hang)
+- `pixi add package` - Add a conda dependency; `pixi add --pypi package` for PyPI
+- **Gotcha**: after editing dependencies in `pyproject.toml` by hand, run `pixi lock` explicitly — `pixi install` alone may silently skip re-solving.
+- The `zetteldev` package (`.zetteldev/`, editable install) provides `figpub`, `notebook_module`, and cluster helpers.
 
-Dependencies are defined in `pyproject.toml`. If you need a package not listed, please ask.
+Dependencies are defined in `pyproject.toml`. If you need a package not listed, please ask. (A `uv.lock` also exists for pip-compatible tooling, but pixi is the source of truth.)
 
 ### just task runner
 Common tasks are defined in `justfile`. Run `just` to see all available commands:
 - `just test` - Run pytest
-- `just notebooks` - Launch Jupyter Lab
-- `just nbsync` - Export notebooks to Python modules
-- `just create-experiment` - Create a new experiment
-- `just render-notebook input.ipynb output.pdf` - Render notebook to PDF (strips NBDev directives)
+- `just create-experiment` - Create a new experiment (scaffolds marimo notebooks)
+- `pixi run marimo edit <notebook.py>` - Open/serve a marimo notebook (the author usually runs the kernel; connect via the `marimo-pair` skill)
 
 See the full list with `just --list`.
 
@@ -275,6 +322,17 @@ See the full list with `just --list`.
   - Don't allow things to silently fail. If something critical to the experiment (i.e. a specified model, a necessary API key) is missing, the researcher needs to be informed immediately.
 
 # Tips 
+
+## Della Eval Army (primary cluster pattern for this repo)
+
+Benchmark evaluations parallelize via the *eval army*: generic worker-packed SLURM jobs over shard-resume scripts. All benchmark scripts share the `(--worker-id, --num-workers, --device)` + per-worker CSV shard pattern, so one sbatch serves them all.
+
+- `experiments/11-successor-curvatures/slurm/eval_army.sbatch` — packs `WORKERS_PER_GPU` (default 8) workers per GPU (our nets/OT problems are small; a lone worker wastes ~90% of an H100). Parameterized by env: `SCRIPT`, `SUBCMD`, `JOB_INDEX`, `NUM_JOBS`, `WORKDIR` (run scripts from any experiment dir), `SCRIPT_ARGS`.
+- `submit_army.sh <script> <subcmd> <jobs> <gpus> <partition> [extra args]` — tiles the worker range across jobs; `pull_shards.sh "<glob>"` — rsync shards back for local merge.
+- Typical scale: 4 jobs × 4 H100 × 8 workers = 128 slots; a full-battery FB-heavy run lands in 15–20 min (vs ~3 h local). Della↔local replication verified exact (corr ≥ 0.9998 on identical instances).
+- **Shard-resume discipline**: workers skip instances already present in their own shard, so stragglers/mop-ups are cheap: `scancel` the job, resubmit its `JOB_INDEX` (optionally `--exclude=<node>`); only missing instances recompute. Never commit per-worker shards to git (cross-machine collisions) — merged CSVs only; `experiments/*/processed_data/*_w[0-9]*.csv` is gitignored.
+- **Sync discipline**: code moves by git (`git push` locally; on della `git stash -q` FIRST, then `git pull`, then **verify HEAD** — pulls fail silently on unstaged changes); data moves by rsync (`processed_data` is not tracked). The fixed-seed battery joblib must be rsynced, not regenerated.
+- Watch for wall-limit races: if a worker's remaining instances can't finish inside the job's time limit, cancel and mop up with finer sharding rather than waiting for the clock.
 
 ## Della Cluster
 
@@ -723,7 +781,7 @@ tail -f /tmp/vllm-gpt-oss.log
 ## JAX/Diffusion Curvature
 - Diffusion curvature requires `jax[cuda12]` for GPU acceleration
 - Without it, JAX falls back to CPU with warning: "CUDA-enabled jaxlib is not installed"
-- Install with: `uv add "jax[cuda12]"`
+- Install with: `pixi add --pypi "jax[cuda12]"`
 - Set JAX environment in sbatch scripts:
   ```bash
   JAX_ENV=(CUDA_VISIBLE_DEVICES=1 XLA_PYTHON_CLIENT_PREALLOCATE=false XLA_PYTHON_CLIENT_MEM_FRACTION=0.75)

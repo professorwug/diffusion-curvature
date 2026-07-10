@@ -117,6 +117,8 @@ GraphRicciCurvature = ">=0.5"
 snakemake-executor-plugin-slurm = "*"
 # editable install of project itself
 diffusion_curvature = { path = ".", editable = true }
+zetteldev = { path = ".zetteldev", editable = true }
+marimo = ">=0.10"
 
 [tool.pixi.tasks]
 # install the library in editable mode

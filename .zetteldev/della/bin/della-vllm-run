@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+# della-vllm-run — launch a vLLM server from the target registry, run a command
+# against it, tear everything down, and exit with the command's status.
+#
+# It is experiment_template.sbatch collapsed to one parameterized line: it reads
+# the same .zetteldev/della/targets.yaml that zetteldev.della.gpu() reads, so
+# the SLURM allocation and the server launch can never desync.
+#
+# Usage:
+#   della-vllm-run --target NAME [--workers N] [--embed auto|none] [--dry-run] -- CMD...
+#
+# Server endpoints reach CMD via env (OPENAI_API_BASE / EMBEDDING_API_BASE);
+# data paths reach it via argv (Snakemake {input}/{output}). With --workers N>1,
+# N copies of CMD run concurrently, each with WORKER_RANK / WORKER_WORLD set so a
+# worker can self-shard via zetteldev.della.worker_shard().
+#
+# Modes (auto-detected):
+#   $SLURM_JOB_ID set  -> della allocation (GPUs preset by SLURM as 0..n-1)
+#   otherwise          -> local (picks freest GPUs; workstation ports)
+set -euo pipefail
+
+TARGET="" ; WORKERS=1 ; EMBED="auto" ; DRYRUN=false ; CMD=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --target)  TARGET="$2"; shift 2 ;;
+    --workers) WORKERS="$2"; shift 2 ;;
+    --embed)   EMBED="$2"; shift 2 ;;
+    --dry-run) DRYRUN=true; shift ;;
+    --)        shift; CMD=("$@"); break ;;
+    *) echo "della-vllm-run: unknown option $1" >&2; exit 2 ;;
+  esac
+done
+[[ -z "$TARGET" ]] && { echo "della-vllm-run: --target is required" >&2; exit 2; }
+[[ ${#CMD[@]} -eq 0 && "$DRYRUN" == false ]] && { echo "della-vllm-run: no CMD after --" >&2; exit 2; }
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+# Prefer the repo venv python (has PyYAML); fall back to whatever python3 is active.
+PYBIN="$REPO_ROOT/.venv/bin/python"; [[ -x "$PYBIN" ]] || PYBIN="python3"
+
+# --- resolve target fields from the registry (single source of truth: della.py) ---
+read_field() {
+  PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}" "$PYBIN" -c "
+import sys
+from zetteldev.della import load_targets, n_gpus
+targets = load_targets()
+if '$TARGET' not in targets:
+    sys.exit(\"della-vllm-run: unknown target '$TARGET'; known: \" + ', '.join(sorted(targets)))
+t = targets['$TARGET']
+field = '$1'
+if field == 'n_gpus':
+    print(n_gpus('$TARGET'))
+elif field == 'embed_model':
+    print((t.get('embed') or {}).get('model_path', ''))
+elif field == 'vllm_extra':
+    print(' '.join(t.get('vllm_extra', [])))
+else:
+    print(t.get(field, ''))
+"
+}
+
+MODEL_PATH="$(read_field model_path)"
+TP="$(read_field tensor_parallel)"
+PARSER="$(read_field tool_parser)"
+MAXLEN="$(read_field max_model_len)"
+NGPUS="$(read_field n_gpus)"
+VLLM_EXTRA="$(read_field vllm_extra)"
+EMBED_MODEL="$(read_field embed_model)"
+[[ "$EMBED" == "none" ]] && EMBED_MODEL=""
+
+if [[ "$DRYRUN" == true ]]; then
+  echo "── della-vllm-run --dry-run (target=$TARGET) ──"
+  echo "model_path     : $MODEL_PATH"
+  echo "tensor_parallel: $TP    (gpus requested: $NGPUS)"
+  echo "tool_parser    : $PARSER"
+  echo "max_model_len  : $MAXLEN"
+  echo "embed_model    : ${EMBED_MODEL:-<none>}"
+  echo "vllm_extra     : ${VLLM_EXTRA:-<none>}"
+  echo "workers        : $WORKERS"
+  echo "resolved vLLM  : launch_vllm_server $MODEL_PATH 0..$((TP-1)) $TP \$VLLM_PORT model \\"
+  echo "                   --max-model-len $MAXLEN --tool-call-parser $PARSER $VLLM_EXTRA"
+  echo "cmd            : ${CMD[*]:-<none>}"
+  echo "resources (gpu): $(PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}" "$PYBIN" -c "from zetteldev.della import gpu; print(gpu('$TARGET'))")"
+  exit 0
+fi
+
+# --- launch servers via the della library ---
+source "$REPO_ROOT/.zetteldev/della/lib/della.sh"
+della_vllm_setup                          # cleanup trap (EXIT INT TERM) + port assignment
+
+# gpt-oss / Harmony: vLLM downloads the tiktoken vocab at server init via openai_harmony, which fails on
+# airgapped compute nodes (HarmonyError: error downloading or loading vocab file). Point tiktoken-rs at the
+# pre-warmed shared cache if it exists — a no-op for every other model. Pre-warm once on the login node:
+#   TIKTOKEN_RS_CACHE_DIR=$DIR python -c "from openai_harmony import load_harmony_encoding, HarmonyEncodingName; \
+#     load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)"
+HARMONY_CACHE="/scratch/gpfs/HENDERSON/$USER/harmony_cache"
+[[ -d "$HARMONY_CACHE" ]] && export TIKTOKEN_RS_CACHE_DIR="$HARMONY_CACHE"
+
+launch_vllm_server "$MODEL_PATH" "$(seq -s, 0 $((TP-1)))" "$TP" "$VLLM_PORT" "model" \
+  --max-model-len "$MAXLEN" --tool-call-parser "$PARSER" $VLLM_EXTRA
+
+WAIT_ARGS=("http://localhost:$VLLM_PORT|chat")
+if [[ -n "$EMBED_MODEL" ]]; then
+  launch_embedding_server "$EMBED_MODEL" "$TP" "$EMBED_PORT" "embedding"
+  WAIT_ARGS+=("http://localhost:$EMBED_PORT|embed")
+fi
+wait_for_servers "${WAIT_ARGS[@]}" || exit 1   # FAIL FAST: unhealthy server -> non-zero rule
+
+export OPENAI_API_BASE="http://localhost:$VLLM_PORT/v1" OPENAI_API_KEY=dummy
+[[ -n "$EMBED_MODEL" ]] && export EMBEDDING_API_BASE="http://localhost:$EMBED_PORT/v1"
+
+# --- run CMD: N copies, each self-sharding via WORKER_RANK / WORKER_WORLD ---
+pids=()
+for ((r=0; r<WORKERS; r++)); do
+  WORKER_RANK="$r" WORKER_WORLD="$WORKERS" "${CMD[@]}" &
+  pids+=($!)
+done
+rc=0
+for pid in "${pids[@]}"; do
+  wait "$pid" || rc=$?            # capture first non-zero; report failure up to SLURM
+done
+exit $rc                          # FAITHFUL EXIT: rule success == worker success

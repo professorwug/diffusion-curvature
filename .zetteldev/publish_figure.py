@@ -34,7 +34,6 @@ from dotenv import load_dotenv
 
 BUCKET_NAME = "zetteldev-figures"
 PUBLIC_BASE = "https://blots.kincaid.ink"
-REPO_NAME_OVERRIDE = "diffusion_curvature"
 IMAGE_EXTENSIONS = {".png", ".svg", ".pdf", ".jpg", ".jpeg", ".webp"}
 
 
@@ -59,8 +58,6 @@ def get_git_commit() -> str:
 
 
 def get_repo_name() -> str:
-    if REPO_NAME_OVERRIDE:
-        return REPO_NAME_OVERRIDE
     return get_git_root().name
 
 

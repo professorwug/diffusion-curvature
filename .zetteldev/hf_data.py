@@ -69,12 +69,31 @@ def get_experiments() -> list[str]:
     return experiments
 
 
+def _is_excluded(file_path: Path, directory: Path) -> bool:
+    """Whether `file_path` should be skipped during hash/size/upload.
+
+    Skips dotfiles and anything under a `checkpoint-*` subdirectory. Model
+    training writes multi-GB DeepSpeed checkpoint dirs into processed_data
+    that are unsuitable for HF sync — they live on scratch separately.
+    """
+    if file_path.name.startswith("."):
+        return True
+    try:
+        rel = file_path.relative_to(directory)
+    except ValueError:
+        return False
+    for part in rel.parts:
+        if part.startswith("checkpoint-"):
+            return True
+    return False
+
+
 def compute_dir_hash(directory: Path) -> str:
     """Compute a hash of directory contents for change detection."""
     hasher = hashlib.sha256()
 
     for file_path in sorted(directory.rglob("*")):
-        if file_path.is_file() and not file_path.name.startswith("."):
+        if file_path.is_file() and not _is_excluded(file_path, directory):
             hasher.update(str(file_path.relative_to(directory)).encode())
             hasher.update(str(file_path.stat().st_size).encode())
             hasher.update(str(int(file_path.stat().st_mtime)).encode())
@@ -99,10 +118,10 @@ def save_local_manifest(experiment: str, manifest: dict) -> None:
 
 
 def get_dir_size(directory: Path) -> int:
-    """Get total size of directory in bytes (excludes dotfiles for consistency with hash)."""
+    """Get total size of directory in bytes (excludes dotfiles + checkpoints for consistency with hash)."""
     total = 0
     for file_path in directory.rglob("*"):
-        if file_path.is_file() and not file_path.name.startswith("."):
+        if file_path.is_file() and not _is_excluded(file_path, directory):
             total += file_path.stat().st_size
     return total
 
@@ -347,10 +366,10 @@ def upload_with_retry(
 
     folder = Path(folder_path)
 
-    # Collect all files with sizes
+    # Collect all files with sizes (skip dotfiles + checkpoint-*/ subdirs)
     files = []
     for fp in sorted(folder.rglob("*")):
-        if fp.is_file() and not fp.name.startswith("."):
+        if fp.is_file() and not _is_excluded(fp, folder):
             files.append((fp, fp.stat().st_size))
 
     if not files:
@@ -443,7 +462,7 @@ def cmd_push(args: argparse.Namespace) -> None:
 
     # List files for manifest
     for file_path in sorted(local_path.rglob("*")):
-        if file_path.is_file() and not file_path.name.startswith("."):
+        if file_path.is_file() and not _is_excluded(file_path, local_path):
             rel_path = file_path.relative_to(local_path)
             manifest["files"].append({
                 "path": str(rel_path),
@@ -672,7 +691,7 @@ def cmd_pushall(args: argparse.Namespace) -> None:
         }
 
         for file_path in sorted(local_path.rglob("*")):
-            if file_path.is_file() and not file_path.name.startswith("."):
+            if file_path.is_file() and not _is_excluded(file_path, local_path):
                 rel_path = file_path.relative_to(local_path)
                 manifest["files"].append({
                     "path": str(rel_path),

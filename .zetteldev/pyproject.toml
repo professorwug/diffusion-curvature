@@ -1,0 +1,33 @@
+[project]
+name = "zetteldev"
+version = "0.1.0"
+description = "Shared infrastructure for Zetteldev literate-programming research repos: figure publishing, cluster/SLURM helpers, experiment scaffolding."
+requires-python = ">=3.11"
+# Only the deps needed by the *importable* Python surface (currently the figure-
+# publishing path). Other scripts here run via `uv run`/`just` in the host repo's
+# env; add their deps as more modules are migrated into the importable namespace.
+dependencies = [
+    "boto3",
+    "python-dotenv",
+    # zetteldev.dask — lazily imported (import zetteldev stays light), but the
+    # local-cluster module needs the scheduler/worker/Client surface at runtime,
+    # and connect() needs paramiko for the in-process SSH tunnel to a remote one.
+    "dask[distributed]",
+    "paramiko",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+# Zero-move layout: the import package `zetteldev` is rooted at this directory
+# (`.zetteldev/`) itself, so top-level modules import as `zetteldev.<module>`
+# (e.g. `zetteldev.publish_figure`, `zetteldev.figpub`). The leading-dot directory
+# name is decoupled from the legal import name. Non-Python subdirs (della/, hydra/,
+# snakemake/, paper/) have no __init__.py and stay as plain assets.
+[tool.setuptools]
+packages = ["zetteldev", "zetteldev.della"]
+include-package-data = false
+
+[tool.setuptools.package-dir]
+zetteldev = "."

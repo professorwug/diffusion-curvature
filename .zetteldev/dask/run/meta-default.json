@@ -1,0 +1,1 @@
+{"gpus": "all", "slots": 1, "gpu_ids": [0, 1], "host": "127.0.0.1"}

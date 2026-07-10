@@ -1,0 +1,62 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Default Snakemake workflow profile for reason_reckon.
+#
+# Canonical home for the project's standing Snakemake preferences. Each
+# experiment dir carries a `profiles/default` symlink pointing here, so the
+# settings are auto-discovered with zero flags whenever you run `snakemake`
+# from inside an experiment (sync with `just sync-smk-profile`; new
+# experiments get the symlink from `just create-experiment`).
+#
+# Every key below maps to the long-form CLI flag of the same name
+# (`rerun-triggers:` → `--rerun-triggers`, etc.). CLI args you pass explicitly
+# override the matching key here on a per-key basis.
+#
+# ── WHY THESE EXIST ──────────────────────────────────────────────────────────
+# The dread this profile answers: returning to find a finished result swept
+# into the fire because Snakemake judged it "stale" and rebuilt it. Since 7.8,
+# the default rerun triggers are {code, input, mtime, params, software-env} —
+# so merely reformatting a script, bumping a dependency, or shuffling the
+# environment condemns existing outputs to deletion-and-rebuild. There is NO
+# "ask me first" flag in Snakemake; the lever is the staleness *judgment*, not
+# the deletion. So we narrow the grounds of suspicion and preserve wreckage.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Decide staleness by modification time ALONE. A reformatted script, a changed
+# param, or a reshuffled software stack will no longer condemn outputs — only a
+# genuinely newer *input file* triggers a rerun.
+rerun-triggers:
+  - mtime
+
+# Do not remove the output of a job that FAILS mid-stride. Preserves the
+# half-woven cloth for inspection instead of clearing it before the retry.
+keep-incomplete: true
+
+# Stay the hand that clears files marked temp(). The project declares no
+# temp() outputs today, so this is currently a no-op safety net; if temp() is
+# ever introduced and you genuinely want the cleanup, override per-run with
+# `--all-temp` off / drop this, or pass nothing (CLI wins per-key).
+notemp: true
+
+# ── THE FLIP SIDE — READ THIS ────────────────────────────────────────────────
+# With mtime-only triggers, a genuine *logic* change to a script will NOT
+# trigger a rerun, and `snakemake -n` will NOT flag it (code is no longer a
+# trigger). You can therefore silently run stale code. This is the intended
+# trade. After a real logic edit, force the rebuild explicitly:
+#
+#     snakemake --forcerun <rule>            # rebuild that rule's chain
+#     snakemake --rerun-triggers code,mtime  # restore code-awareness for a run
+#
+# ── STANDING DISCIPLINE ──────────────────────────────────────────────────────
+# There is no confirmation prompt, but there is a rehearsal. Before anything
+# destructive, look then leap:
+#
+#     snakemake -n                # dry run: names every job + its reason
+#     snakemake --summary         # ledger of what is current vs doomed
+#
+# Note: `-n` / `--summary` are per-run disciplines, deliberately NOT encoded as
+# profile keys (a `dry-run: true` here would break every invocation).
+#
+# NOT included, on purpose: --max-checksum-file-size=0. Leaving the default
+# (1 MB) means small input files are compared by content checksum, which makes
+# Snakemake MORE forgiving — a touched-but-byte-identical input won't trigger a
+# rebuild. Disabling it (pure mtime) would work against the goal here.
