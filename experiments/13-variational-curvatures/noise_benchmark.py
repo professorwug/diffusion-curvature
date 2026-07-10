@@ -61,10 +61,10 @@ NOISES = ("clean", "iso05", "iso15", "hd64", "hetero", "ar1")
 OUT_TPL = "processed_data/noise_bench_w{wid}.csv"
 
 
-def units():
+def units(dims=(3, 4, 5)):
     out = []
     for prof in PROFILES:
-        for d in (3, 4, 5):
+        for d in dims:
             for wseed in (0, 1):
                 for noise in NOISES:
                     out.append(dict(profile=prof, d=d, wseed=wseed,

@@ -25,9 +25,12 @@ import torch.nn as nn
 
 
 def harvest_pairs(traj: np.ndarray, gamma: float, lags_per_step: int,
-                  rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]:
+                  rng: np.random.Generator,
+                  min_lag: int = 1) -> tuple[np.ndarray, np.ndarray]:
     """Sample (anchor_state, future_state) pairs from walks with
-    k ~ Geom(1-gamma) lags (k >= 1), truncated at walk ends.
+    k ~ Geom(1-gamma) lags (k >= min_lag), truncated at walk ends.
+    min_lag > 1 decorrelates pairs from temporally correlated observation
+    noise (skip lags inside the noise correlation time).
 
     traj: (nt, T+1) int array of state indices.
     Returns (anchors, positives) as int arrays.
@@ -39,10 +42,47 @@ def harvest_pairs(traj: np.ndarray, gamma: float, lags_per_step: int,
     a_list, p_list = [], []
     for _ in range(lags_per_step):
         k = rng.geometric(p=1.0 - gamma, size=t_idx.size)
+        if min_lag > 1:
+            k = np.maximum(k, min_lag)
         ok = t_idx + k <= T
         a_list.append(traj[w_idx[ok], t_idx[ok]])
         p_list.append(traj[w_idx[ok], t_idx[ok] + k[ok]])
     return np.concatenate(a_list), np.concatenate(p_list)
+
+
+def noise_structure_cv(X: np.ndarray, traj: np.ndarray,
+                       n_probes: int = 256, m_ball: int = 200,
+                       rng=None) -> float:
+    """Coefficient of variation of the LOCAL noise floor across the manifold.
+
+    Local nugget: for probe transitions grouped by region, intercept of
+    MSD(k) at k=0 estimates 2*sigma_obs^2(x). Structured (spatially varying)
+    noise has high CV; isotropic noise (any magnitude) has low CV. Used to
+    auto-switch the jitter rule: structured noise wants uncorrected
+    over-smoothing; unstructured noise wants the nugget subtraction.
+    """
+    from scipy.spatial import cKDTree
+    rng = np.random.default_rng(rng)
+    nt, T1 = traj.shape
+    w = rng.integers(0, nt, 20000)
+    t = rng.integers(0, T1 - 2, 20000)
+    x0 = X[traj[w, t]]
+    d1 = ((X[traj[w, t + 1]] - x0)**2).sum(1)
+    d2 = ((X[traj[w, t + 2]] - x0)**2).sum(1)
+    probes = X[traj[rng.integers(0, nt, n_probes),
+                    rng.integers(0, T1, n_probes)]]
+    tree = cKDTree(x0)
+    sig2 = []
+    for q in range(n_probes):
+        _, idx = tree.query(probes[q], k=m_ball)
+        loc = max(0.0, float(np.mean(d1[idx])
+                             - (np.mean(d2[idx]) - np.mean(d1[idx])))) / 2
+        sig2.append(loc)
+    sig2 = np.asarray(sig2)
+    mu = float(np.mean(sig2))
+    if mu <= 1e-12:
+        return 0.0
+    return float(np.std(sig2) / mu)
 
 
 class _TabularCritic(nn.Module):
@@ -577,8 +617,9 @@ class TDInfoNCE:
                  n_candidates: int = 511, lr: float = 1e-3,
                  tau_polyak: float = 0.01, holdout_frac: float = 0.5,
                  lags_per_step: int = 8, aug_scale: float = 0.0,
-                 aug_nugget: bool = False, aug_anneal: bool = False,
+                 aug_nugget: bool | str = False, aug_anneal: bool = False,
                  holdout_phase: int | None = None, lam: float = 0.0,
+                 min_lag: int = 1, cv_threshold: float = 0.3,
                  device: str = "cuda:0", seed: int = 0):
         self.gamma = gamma
         self.z_dim = z_dim
@@ -596,6 +637,8 @@ class TDInfoNCE:
         self.aug_anneal = aug_anneal   # cosine 2x -> 0.25x over training
         self.holdout_phase = holdout_phase  # 0/1: complementary crossfit
         self.lam = lam                 # TD(lambda): weight of real-lag MC
+        self.min_lag = min_lag         # decorrelate from AR observation noise
+        self.cv_threshold = cv_threshold  # aug_nugget="auto" switch point
         self.device = device
         self.seed = seed
 
@@ -606,8 +649,19 @@ class TDInfoNCE:
         torch.manual_seed(self.seed)
         dev = self.device
         self.n_states = n_states
+        # aug_nugget="auto": detect structured noise (high spatial CV of the
+        # local nugget) -> disable the subtraction (structured noise wants
+        # over-smoothing); otherwise use the soft nugget.
+        nugget_mode = self.aug_nugget
+        self.cv_ = np.nan
+        if nugget_mode == "auto" and self.features == "coords":
+            self.cv_ = noise_structure_cv(np.asarray(X), traj,
+                                          rng=self.seed + 5)
+            nugget_mode = False if self.cv_ > self.cv_threshold else "soft"
+        self._nugget_mode = nugget_mode
         # geometric-lag pairs: held half -> DV readout; train half -> TD(lam)
-        a, p = harvest_pairs(traj, self.gamma, self.lags_per_step, rng)
+        a, p = harvest_pairs(traj, self.gamma, self.lags_per_step, rng,
+                             min_lag=self.min_lag)
         if self.holdout_phase is None:
             keep = rng.random(len(a)) < self.holdout_frac
         else:
@@ -641,7 +695,7 @@ class TDInfoNCE:
             sub = np.arange(0, len(a), max(1, len(a) // 4096))
             lag2 = np.median(np.linalg.norm(Xa[p[sub]] - Xa[a[sub]],
                                             axis=1))**2
-            if self.aug_nugget:
+            if nugget_mode:
                 nt_, T1 = traj.shape
                 w = rng.integers(0, nt_, 4096)
                 t = rng.integers(0, T1 - 2, 4096)
@@ -649,7 +703,7 @@ class TDInfoNCE:
                 d2 = ((Xa[traj[w, t + 2]] - Xa[traj[w, t]])**2).sum(1)
                 sig2 = max(0.0, float(np.mean(d1) - (np.mean(d2)
                                                      - np.mean(d1)))) / 2
-                if self.aug_nugget == "soft":
+                if nugget_mode == "soft":
                     # scale the subtraction by the noise-dominance ratio
                     # rho = 2sig^2/lag^2: full nugget when noise dominates
                     # (hd64), ~base jitter when geometry dominates (hetero)
