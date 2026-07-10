@@ -730,9 +730,9 @@ class TDInfoNCE:
                 loc = np.maximum(
                     0.0, d1[nn_].mean(1) - (d2[nn_].mean(1)
                                             - d1[nn_].mean(1))) / 2
-                tgt = np.quantile(loc, 0.9)
-                geo2 = max(lag2 - 2 * tgt, 0.01 * lag2)
-                jvec = np.sqrt(np.maximum(tgt - loc, 0.0)
+                sig2_tgt = np.quantile(loc, 0.9)
+                geo2 = max(lag2 - 2 * sig2_tgt, 0.01 * lag2)
+                jvec = np.sqrt(np.maximum(sig2_tgt - loc, 0.0)
                                + (self.aug_scale**2) * geo2)
                 jit = torch.as_tensor(jvec, dtype=torch.float32,
                                       device=dev)
