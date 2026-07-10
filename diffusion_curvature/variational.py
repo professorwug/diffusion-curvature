@@ -131,9 +131,11 @@ class _CoordCritic(nn.Module):
         self.Fnet = _MLP(X.shape[1], z_dim, hidden)
         self.Bnet = _MLP(X.shape[1], z_dim + 1, hidden)
 
-    def _emb(self, idx, jitter: float = 0.0):
+    def _emb(self, idx, jitter=0.0):
         x = self.X[idx]
-        if jitter > 0:
+        if isinstance(jitter, torch.Tensor):
+            x = x + jitter[idx][:, None] * torch.randn_like(x)
+        elif jitter > 0:
             x = x + jitter * torch.randn_like(x)
         return x
 
@@ -712,7 +714,30 @@ class TDInfoNCE:
                 else:
                     lag2 = max(lag2 - 2 * sig2, 0.01 * lag2)
             jit = float(self.aug_scale * np.sqrt(lag2))
-        self.jitter_ = jit
+            if self.aug_nugget == "equalize":
+                # per-state compensating jitter: homogenize the total noise
+                # across the manifold (structured sigma(x) -> iso), then add
+                # the geometric smoothing on top
+                from scipy.spatial import cKDTree as _KD
+                nt_, T1 = traj.shape
+                w = rng.integers(0, nt_, 20000)
+                t = rng.integers(0, T1 - 2, 20000)
+                x0 = Xa[traj[w, t]]
+                d1 = ((Xa[traj[w, t + 1]] - x0)**2).sum(1)
+                d2 = ((Xa[traj[w, t + 2]] - x0)**2).sum(1)
+                ptree = _KD(x0)
+                _, nn_ = ptree.query(Xa, k=64)
+                loc = np.maximum(
+                    0.0, d1[nn_].mean(1) - (d2[nn_].mean(1)
+                                            - d1[nn_].mean(1))) / 2
+                tgt = np.quantile(loc, 0.9)
+                geo2 = max(lag2 - 2 * tgt, 0.01 * lag2)
+                jvec = np.sqrt(np.maximum(tgt - loc, 0.0)
+                               + (self.aug_scale**2) * geo2)
+                jit = torch.as_tensor(jvec, dtype=torch.float32,
+                                      device=dev)
+        self.jitter_ = (float(jit.mean()) if isinstance(jit, torch.Tensor)
+                        else jit)
         opt = torch.optim.Adam(self.net.parameters(), lr=self.lr)
         sched = torch.optim.lr_scheduler.CosineAnnealingLR(
             opt, T_max=self.n_epochs, eta_min=self.lr * 1e-2)
@@ -723,7 +748,8 @@ class TDInfoNCE:
             Pmc = torch.as_tensor(p_tr, dtype=torch.long, device=dev)
         g = torch.Generator(device="cpu").manual_seed(self.seed + 1)
         for ep in range(self.n_epochs):
-            if self.aug_anneal and jit > 0:
+            if (self.aug_anneal and not isinstance(jit, torch.Tensor)
+                    and jit > 0):
                 frac = ep / max(self.n_epochs - 1, 1)
                 jit_e = jit * (0.25 + (2.0 - 0.25)
                                * 0.5 * (1 + np.cos(np.pi * frac)))
@@ -771,3 +797,166 @@ class TDInfoNCE:
 
     # readout shares VMI's semantics; reuse its implementation
     mi_field = VMI.mi_field
+
+
+# ---------------------------------------------------------------------------
+# specSENT — spectral successor features: learned eigenbasis + analytic
+# resolvent (no bootstrap, no softmax temperature, horizon = post-hoc knob)
+# ---------------------------------------------------------------------------
+
+class SpectralSF:
+    """Learn the top-k eigenfunctions of the transition operator via the
+    spectral contrastive loss (HaoChen et al.) on ONE-STEP pairs:
+        L = -2 E[phi(x)^T phi(x')] + E_{y ~ marginal}[(phi(x)^T phi(y))^2]
+    then rotate into the eigenbasis by solving the generalized eigenproblem
+    A w = lambda B w with A = E[phi(x) phi(x')^T]_sym, B = E[phi phi^T],
+    and reconstruct the successor measure ANALYTICALLY:
+        M_gamma(s, y) ~ sum_i (1-g)lam_i/(1-g lam_i) psi_i(s) psi_i(y)
+    Readout: clipped+normalized rows over a corpus subsample -> entropy
+    (orientation -H). Smoothness of eigenfunctions gives built-in robustness
+    to structured corruption; input jitter reuses the td4 auto rule."""
+
+    def __init__(self, gamma: float = 0.9, k_eig: int = 64,
+                 features: str = "coords", hidden: int = 256,
+                 n_epochs: int = 200, batch_size: int = 4096,
+                 lr: float = 1e-3, aug_scale: float = 0.5,
+                 aug_nugget: bool | str = "auto", cv_threshold: float = 0.3,
+                 ridge: float = 1e-4,
+                 device: str = "cuda:0", seed: int = 0):
+        self.gamma = gamma
+        self.k_eig = k_eig
+        self.features = features
+        self.hidden = hidden
+        self.n_epochs = n_epochs
+        self.batch_size = batch_size
+        self.lr = lr
+        self.aug_scale = aug_scale
+        self.aug_nugget = aug_nugget
+        self.cv_threshold = cv_threshold
+        self.ridge = ridge
+        self.device = device
+        self.seed = seed
+
+    def fit(self, traj: np.ndarray, n_states: int,
+            X: np.ndarray | None = None) -> "SpectralSF":
+        rng = np.random.default_rng(self.seed)
+        torch.manual_seed(self.seed)
+        dev = self.device
+        self.n_states = n_states
+        s = traj[:, :-1].ravel()
+        sp = traj[:, 1:].ravel()
+        # jitter via the td4 auto rule (lag scale at the gamma horizon)
+        jit = 0.0
+        if self.aug_scale > 0 and self.features == "coords":
+            Xa = np.asarray(X)
+            a_, p_ = harvest_pairs(traj, self.gamma, 2, rng)
+            sub = np.arange(0, len(a_), max(1, len(a_) // 4096))
+            lag2 = np.median(np.linalg.norm(Xa[p_[sub]] - Xa[a_[sub]],
+                                            axis=1))**2
+            mode = self.aug_nugget
+            self.cv_ = np.nan
+            if mode == "auto":
+                self.cv_ = noise_structure_cv(Xa, traj, rng=self.seed + 5)
+                mode = False if self.cv_ > self.cv_threshold else "soft"
+            if mode:
+                w = rng.integers(0, traj.shape[0], 4096)
+                t = rng.integers(0, traj.shape[1] - 2, 4096)
+                d1 = ((Xa[traj[w, t + 1]] - Xa[traj[w, t]])**2).sum(1)
+                d2 = ((Xa[traj[w, t + 2]] - Xa[traj[w, t]])**2).sum(1)
+                sig2 = max(0.0, float(np.mean(d1)
+                                      - (np.mean(d2) - np.mean(d1)))) / 2
+                rho = min(1.0, 2 * sig2 / max(lag2, 1e-12))
+                lag2 = max(lag2 - 2 * sig2 * rho, 0.01 * lag2)
+            jit = float(self.aug_scale * np.sqrt(lag2))
+        self.jitter_ = jit
+        if self.features == "tabular":
+            self.enc = nn.Embedding(n_states, self.k_eig).to(dev)
+            nn.init.normal_(self.enc.weight, std=0.1)
+
+            def phi(idx, jitter=0.0):
+                return self.enc(idx)
+        else:
+            Xt = torch.as_tensor(np.asarray(X), dtype=torch.float32,
+                                 device=dev)
+            self.enc = _MLP(Xt.shape[1], self.k_eig, self.hidden).to(dev)
+            self._X = Xt
+
+            def phi(idx, jitter=0.0):
+                x = Xt[idx]
+                if jitter > 0:
+                    x = x + jitter * torch.randn_like(x)
+                return self.enc(x)
+        self._phi = phi
+        St = torch.as_tensor(s, dtype=torch.long, device=dev)
+        Spt = torch.as_tensor(sp, dtype=torch.long, device=dev)
+        opt = torch.optim.Adam(self.enc.parameters(), lr=self.lr)
+        sched = torch.optim.lr_scheduler.CosineAnnealingLR(
+            opt, T_max=self.n_epochs, eta_min=self.lr * 1e-2)
+        n_tr = len(St)
+        g = torch.Generator(device="cpu").manual_seed(self.seed + 1)
+        for _ in range(self.n_epochs):
+            perm = torch.randperm(n_tr, generator=g).to(dev)
+            for lo in range(0, n_tr, self.batch_size):
+                idx = perm[lo:lo + self.batch_size]
+                f1 = phi(St[idx], jit)
+                f2 = phi(Spt[idx], jit)
+                # negatives from the OCCUPANCY marginal (required for
+                # the spectral optimum; uniform negatives distort the basis
+                # by a pi-ratio wherever occupancy is nonuniform)
+                y = St[torch.randint(0, n_tr, (512,), device=dev)]
+                fy = phi(y, jit)
+                pos = -2.0 * (f1 * f2).sum(1).mean()
+                neg = ((f1 @ fy.T)**2).mean()
+                loss = pos + neg
+                opt.zero_grad()
+                loss.backward()
+                opt.step()
+            sched.step()
+        # eigen-rotation: A w = lam B w on a large pair sample
+        from scipy.linalg import eigh
+        with torch.no_grad():
+            m = min(100000, n_tr)
+            ii = torch.as_tensor(rng.choice(n_tr, m, replace=False),
+                                 device=dev)
+            F1 = phi(St[ii]).cpu().numpy()
+            F2 = phi(Spt[ii]).cpu().numpy()
+        A = (F1.T @ F2 + F2.T @ F1) / (2 * m)
+        Bm = (F1.T @ F1 + F2.T @ F2) / (2 * m)
+        Bm += self.ridge * np.eye(self.k_eig)
+        lam, W = eigh(A, Bm)
+        self.lam_ = np.clip(lam, -0.999, 0.999)
+        self.W_ = W
+        return self
+
+    @torch.no_grad()
+    def sent_field(self, anchors: np.ndarray, corpus: np.ndarray,
+                   gamma: float | None = None) -> np.ndarray:
+        """-entropy of reconstructed resolvent rows over the corpus."""
+        gamma = gamma or self.gamma
+        dev = self.device
+        At = torch.as_tensor(np.asarray(anchors), dtype=torch.long,
+                             device=dev)
+        Ct = torch.as_tensor(np.asarray(corpus), dtype=torch.long,
+                             device=dev)
+        Pa = self._phi(At).cpu().numpy() @ self.W_
+        Pc = self._phi(Ct).cpu().numpy() @ self.W_
+        gcoef = (1 - gamma) * self.lam_ / (1 - gamma * self.lam_)
+        M = (Pa * gcoef[None, :]) @ Pc.T
+        M = np.maximum(M, 0.0) + 1e-15
+        M = M / M.sum(1, keepdims=True)
+        return (M * np.log(M)).sum(1)          # = -H, curvature orientation
+
+
+def spectral_coords(est: "SpectralSF", n_states: int,
+                    weight: str = "lam") -> np.ndarray:
+    """Diffusion-map-style coordinates from a trained SpectralSF:
+    Psi_hat(x) weighted per mode by lambda_hat (smooth modes emphasized).
+    The robust use of learned spectra: as a denoised REPRESENTATION for a
+    data-anchored estimator, not as an analytic resolvent (whose g(lambda)
+    weights are hypersensitive near lambda=1; see exp-13 round 6)."""
+    with torch.no_grad():
+        idx = torch.arange(n_states, device=est.device)
+        Psi = est._phi(idx).cpu().numpy() @ est.W_
+    if weight == "lam":
+        Psi = Psi * np.abs(est.lam_)[None, :]
+    return Psi.astype(np.float32)

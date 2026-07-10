@@ -127,3 +127,50 @@ def test_td_infonce_recovers_exact_field():
     m = np.isfinite(out.mi_bound)
     r = np.corrcoef(out.mi_bound[m], mi_exact[m])[0, 1]
     assert r > 0.8, f"TD-InfoNCE DV field corr {r:.2f} vs exact"
+
+
+@pytest.mark.xfail(reason="boundary result (round 6): analytic resolvent "
+                   "readouts through estimated spectra are hypersensitive "
+                   "to near-1 eigenvalue error (dg/dlam ~ 10); even exact "
+                   "eigenvectors + 4-decimal lambdas scramble the field. "
+                   "Use spectral_coords + TD readout instead.")
+def test_spectral_sf_recovers_exact_field():
+    """specSENT: learned eigenbasis + analytic resolvent should recover the
+    exact resolvent-entropy field on the small chain."""
+    from diffusion_curvature.variational import SpectralSF
+    gamma = 0.9
+    P, rng = _two_scale_chain()
+    traj = _walks(P, nt=20, T=800, rng=rng)
+    H_exact = np.log(P.shape[0]) - _exact_mi(P, gamma)
+    est = SpectralSF(gamma=gamma, k_eig=16, features="tabular",
+                     n_epochs=150, batch_size=2048, lr=1e-2, aug_scale=0.0,
+                     device="cpu", seed=0).fit(traj, P.shape[0])
+    # corpus must be OCCUPANCY-sampled: the spectral reconstruction is the
+    # ratio kernel M/rho, so rho enters through the corpus atoms
+    corpus = np.random.default_rng(3).choice(traj.ravel(), 2000)
+    field = est.sent_field(np.arange(P.shape[0]), corpus)
+    r = np.corrcoef(-field, H_exact)[0, 1]   # field is -H
+    assert r > 0.8, f"specSENT field corr {r:.2f} vs exact H"
+
+
+def test_spectral_coords_plus_td_recovers_exact_field():
+    """Round-6 pivot: learned eigenfunctions as denoised COORDINATES for
+    TD-InfoNCE (analytic spectral readouts are lambda-hypersensitive)."""
+    from diffusion_curvature.variational import (SpectralSF, TDInfoNCE,
+                                                 spectral_coords)
+    gamma = 0.9
+    P, rng = _two_scale_chain()
+    traj = _walks(P, nt=20, T=800, rng=rng)
+    mi_exact = _exact_mi(P, gamma)
+    spec = SpectralSF(gamma=gamma, k_eig=16, features="tabular",
+                      n_epochs=150, batch_size=2048, lr=1e-2, aug_scale=0.0,
+                      device="cpu", seed=0).fit(traj, P.shape[0])
+    Psi = spectral_coords(spec, P.shape[0])
+    est = TDInfoNCE(gamma=gamma, z_dim=16, features="coords", hidden=128,
+                    n_epochs=60, batch_size=2048, n_candidates=79,
+                    lr=1e-3, device="cpu", seed=0).fit(
+        traj, P.shape[0], X=Psi)
+    out = est.mi_field(np.arange(P.shape[0]))
+    m = np.isfinite(out.mi_bound)
+    r = np.corrcoef(out.mi_bound[m], mi_exact[m])[0, 1]
+    assert r > 0.8, f"spec+td field corr {r:.2f} vs exact"
