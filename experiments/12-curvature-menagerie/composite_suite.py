@@ -498,11 +498,13 @@ def _battery_features(instances, keep_fn, device: str,
     t0 = time.time()
     done = set()
     if ckpt.exists() and ckpt.stat().st_size > 0:
-        done = set(pd.read_csv(ckpt, usecols=["name"]).name.astype(str))
+        done = set(pd.read_csv(ckpt, usecols=["inst_id"]).inst_id.astype(int))
     header = not (ckpt.exists() and ckpt.stat().st_size > 0)
     n_new = 0
     for i, inst in enumerate(instances):
-        if not keep_fn(inst) or str(inst.get("name", "")) in done:
+        # key on the global instance index: battery names are NOT unique
+        # (many sadspheres share e.g. "2-Saddle").
+        if not keep_fn(inst) or i in done:
             continue
         X = np.asarray(inst["X"], dtype=np.float64)
         Xt = torch.as_tensor(X, dtype=torch.float32, device=device)
@@ -512,6 +514,7 @@ def _battery_features(instances, keep_fn, device: str,
         except Exception as e:
             print(f"  [batt] {i} failed: {str(e)[:80]}", flush=True)
             continue
+        fr["inst_id"] = i
         fr["ks"] = float(inst["ks_true"])
         fr["dim"] = int(inst["dim"])
         fr["shape"] = inst.get("shape", "")
