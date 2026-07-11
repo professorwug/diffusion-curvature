@@ -22,10 +22,9 @@ with app.setup:
     )
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
-    mo.md(
-        r"""
+    mo.md(r"""
     # The Curvature Menagerie & the MDS-Strain Channel
 
     This essay introduces the two headline artifacts of the summer's curvature
@@ -41,15 +40,13 @@ def _():
     analytic curvature. And an estimator needs only to interrogate that
     distance structure — which the MDS strain does through the oldest question
     in geometry processing: *does this patch embed flat?*
-    """
-    )
+    """)
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
-    mo.md(
-        r"""
+    mo.md(r"""
     ## PART I: THE MENAGERIE, OR MANIFOLDS WITH BIRTH CERTIFICATES
 
     A **warped product** over the sphere carries the metric
@@ -78,8 +75,7 @@ def _():
     distance matrices cost seconds. Every sampled point arrives with its true
     scalar curvature — a birth certificate the old function-graph benchmarks
     never issued.
-    """
-    )
+    """)
     return
 
 
@@ -140,25 +136,22 @@ def _():
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
-    mo.md(
-        r"""
+    mo.md(r"""
     Above: the **dumbbell** (left) and a two-pearl **necklace** (right) as
     honest surfaces of revolution, colored by their *certified* curvature
     field. In the battery these live at $d = 3\ldots6$ with $n = 1400$ points,
     exact pairwise geodesics, multiplicative distance-noise variants, and
     unit-median-distance normalization ($k_s \mapsto k_s \cdot s^2$: curvature
     in data-scale units, the only estimable kind).
-    """
-    )
+    """)
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
-    mo.md(
-        r"""
+    mo.md(r"""
     ## PART II: THE MDS-STRAIN CHANNEL, OR ASKING A PATCH TO LIE FLAT
 
     Take a small geodesic ball of $m$ points around an evaluation point,
@@ -191,8 +184,7 @@ def _():
        channels saturate.
     3. **Cheap** — one small eigendecomposition per patch; the dimension can
        even be estimated from the eigengap.
-    """
-    )
+    """)
     return
 
 
@@ -227,12 +219,16 @@ def mds_strain_score(D, eval_idx, d, m=60):
 
 @app.cell
 def _():
-    _f3, _L3 = dumbbell_profile(beta=0.8)
-    _wp3 = WarpedProduct(_f3, _L3, d=3)
-    _m3 = _wp3.sample(1100, rng=0)
-    _D3, _ks3 = _m3["D"], _m3["ks_field"]
+    def _build_dumbbell_arrays():
+        _f3, _L3 = dumbbell_profile(beta=0.8)
+        _m = WarpedProduct(_f3, _L3, d=3).sample(1100, rng=0)
+        return _m["D"], _m["ks_field"], _m["r"]
+
+    with mo.persistent_cache("dumbbell_d3_demo"):
+        _D3, _ks3, _r3 = _build_dumbbell_arrays()
+
     _s = np.median(_D3[np.triu_indices_from(_D3, 1)])
-    D_demo, ks_demo, r_demo = _D3 / _s, _m3["ks_field"] * _s**2, _m3["r"]
+    D_demo, ks_demo, r_demo = _D3 / _s, _ks3 * _s**2, _r3
 
     _order = np.argsort(ks_demo)
     eval_demo = _order[(np.linspace(0.02, 0.98, 120) * (len(ks_demo) - 1)).astype(int)]
@@ -241,7 +237,7 @@ def _():
     _pos = ks_demo[eval_demo] > 0
     _neg = ks_demo[eval_demo] < 0
     sign_acc = 0.5 * ((score_demo[_pos] > 0).mean() + (score_demo[_neg] < 0).mean())
-    return D_demo, eval_demo, field_r, ks_demo, r_demo, score_demo, sign_acc
+    return eval_demo, field_r, ks_demo, r_demo, score_demo, sign_acc
 
 
 @app.cell
@@ -302,24 +298,25 @@ def _(eval_demo, ks_demo, r_demo, score_demo):
         height=480, margin=dict(l=0, r=0, t=60, b=0),
         legend=dict(orientation="h"))
     fig_field
-    return (fig_field,)
+    return
 
 
 @app.cell
 def _():
-    _t = torus_flat(900, 3, rng=0)
-    _Dt = _t["D"] / np.median(_t["D"][np.triu_indices_from(_t["D"], 1)])
-    _idx = np.random.default_rng(0).choice(900, 120, replace=False)
-    flat_scores = mds_strain_score(_Dt, _idx, d=3, m=60)
+    with mo.persistent_cache("flat_null_demo"):
+        _t = torus_flat(900, 3, rng=0)
+        _Dt = _t["D"] / np.median(_t["D"][np.triu_indices_from(_t["D"], 1)])
+        _idx = np.random.default_rng(0).choice(900, 120, replace=False)
+        flat_scores = mds_strain_score(_Dt, _idx, d=3, m=60)
 
     _fig = go.Figure()
     _fig.add_trace(go.Histogram(x=flat_scores, nbinsx=40,
-                                name="flat torus T³"))
+                                name="flat torus T\u00b3"))
     _fig.update_layout(
         title=(f"The native zero, demonstrated: MDS-strain on a certified-"
-               f"flat T³ — median |score| = {np.median(np.abs(flat_scores)):.2e} "
+               f"flat T\u00b3 \u2014 median |score| = {np.median(np.abs(flat_scores)):.2e} "
                "(the rank-d limit is analytically exact; the residual here "
-               "is torus min-image wrap at this modest n — see the ladder "
+               "is torus min-image wrap at this modest n \u2014 see the ladder "
                "for the 1e-16 nulls at n=1400)"),
         xaxis_title="MDS-strain score", height=320,
         margin=dict(l=0, r=0, t=60, b=0))
@@ -327,10 +324,9 @@ def _():
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
-    mo.md(
-        r"""
+    mo.md(r"""
     ## THE LEDGER, FOR THE RECORD
 
     Benchmark numbers from the frozen ladder (`v4_mds_*` in
@@ -353,8 +349,116 @@ def _():
     *Provenance: developed 2026-07-10 in the V-series (flattening-flow
     program); see the revival zettel for the full falsification trail that
     led here.*
-    """
-    )
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    mo.md(r"""
+    ## PART III: THE SUITE ASSEMBLED, OR MANY INSTRUMENTS, ONE VERDICT
+
+    No single channel covers everything — each has a mapped regime. The
+    **channel suite** fuses seven of them with a small learned integrator:
+
+    | channel | family | native regime |
+    |---|---|---|
+    | `v4_m60`, `v4_m120` | MDS strain (embedding rigidity) | strong-curvature intrinsic fields; homogeneous manifolds |
+    | `v3_defect` | second-moment transport defect | strong-curvature fields (corroborant) |
+    | `sent` | resolvent successor entropy | collar-type geometry, magnitude ruler |
+    | `ent_cak` | scale-tuned diffusion entropy | **weak-curvature embedded clouds** (colosseum) |
+    | `frac` | diffusing-edge fraction | bottleneck geometry, sparse regimes |
+    | `kappa` | Diffusion ORC ($W_1$ contraction) | point estimates, positive side |
+
+    **Integration procedure.** Per evaluation point: extract all channels from
+    the distance matrix alone, plus four context features (eigengap dimension
+    estimate, measure spread, kNN radius, patch wrap fraction); orient so
+    higher = more positive $K$; z-score against a **regime-matched flat
+    reference** (flat tori for intrinsic distance data; embedded flat planes
+    for ambient pointclouds — mismatching this is *the* transfer failure mode);
+    feed a depth-4 gradient-boosted pair of heads (sign classifier + magnitude
+    regressor) trained on ~72 **randomized-profile** warped manifolds plus 33
+    homogeneous constant-$K$ manifolds (spheres, hyperbolic balls, tori — the
+    augmentation that closed the out-of-distribution gap). The colosseum is
+    never trained on: it is a pure transfer test.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    _pd = __import__("pandas")
+    _base = mo.notebook_dir() / "processed_data"
+    _e1 = _pd.read_csv(_base / "suite_e1_summary_aug.csv")
+    _e2 = _pd.read_csv(_base / "suite_e2_summary_aug.csv")
+    _e3 = _pd.read_csv(_base / "suite_e3_summary_aug.csv")
+    _e4 = _pd.read_csv(_base / "suite_e4_summary_aug.csv")
+
+    _rows = []
+    for _d in sorted(_e1.dim.unique()):
+        _g1 = _e1[(_e1.dim == _d) & (_e1.noise == 0.0)]
+        for _kind, _gk in _g1.groupby("kind"):
+            _rows.append(dict(battery=f"menagerie {_kind} (held-out)", dim=_d,
+                              metric="field r | sign",
+                              integrator=f"{_gk.r_integ.mean():.2f} | {_gk.sign_integ.mean():.2f}",
+                              best_single=f"V4: {_gk.r_v4_m60.mean():.2f} | {_gk.sign_v4_m60.mean():.2f}"))
+    for _d in sorted(_e2.dim.unique()):
+        _g = _e2[_e2.dim == _d]
+        _rows.append(dict(battery="tier1-v2 homogeneous", dim=_d,
+                          metric="cross-manifold sign",
+                          integrator=f"{_g.sign_integ.mean():.2f}",
+                          best_single=f"V4: {_g.sign_v4_m60.mean():.2f}"))
+    for _d in sorted(_e3.dim.unique()):
+        _g = _e3[_e3.dim == _d]
+        _rows.append(dict(battery="colosseum (pure transfer)", dim=_d,
+                          metric="field r | sign",
+                          integrator=f"{_g.r_integ.mean():.2f} | {_g.sign_integ.mean():.2f}",
+                          best_single=f"ent_cak: {_g.r_ent_cak.mean():.2f} | {_g.sign_ent_cak.mean():.2f}"))
+    for _d in sorted(_e4.dim.unique()):
+        _g = _e4[_e4.dim == _d]
+        _rows.append(dict(battery="SadSpheres", dim=_d, metric="AUC | sign",
+                          integrator=f"{_g.auc_integ.mean():.2f} | {_g.sign_integ.mean():.2f}",
+                          best_single=f"V4: {_g.auc_v4_m60.mean():.2f}"))
+    coverage_table = _pd.DataFrame(_rows)
+    mo.ui.table(coverage_table, page_size=25, label="Full coverage: integrator vs best single channel (augmented model; noiseless cells)")
+    return
+
+
+@app.cell(hide_code=True)
+def _():
+    mo.md(r"""
+    **READING THE COVERAGE TABLE.** Four verdicts, one per battery:
+
+    1. **Menagerie held-out families** — the integrator *ties V4 where V4 is
+       perfect and wins where every single channel fails*: at high-dim
+       necklaces (d=5–6) it holds sign 0.91–0.95 and positive field r where
+       V4-alone drops to 0.55–0.64 and all channels (and the isotonic
+       baseline) go *negative*. Multivariate fusion earns its keep exactly at
+       the hard cells.
+    2. **Equal-density homogeneous exam** — V4 alone scores sign = 1.00 at
+       every dimension, the first channel ever to crack this test (all
+       diffusion channels saturate to chance); the integrator matches it after
+       homogeneous augmentation (0.91–1.00; without augmentation it inverted —
+       a training-distribution gap, fixed for free).
+    3. **Colosseum (pure transfer)** — the transfer is carried by the
+       *diffusion* channels: `ent_cak` alone reaches r = 0.55–0.77 per dim,
+       matching the hand-built v6 composite, while V3/V4 sit at the floor
+       (colosseum |K| ~ 1–6 lies below their signal thresholds). Sign does not
+       yet transfer for anyone: the flat-*torus* reference miscalibrates zeros
+       for *embedded* pointclouds — the regime-matched embedded-plane
+       reference (v6's trick) is the scoped fix, in flight at time of writing.
+    4. **SadSpheres** — AUC 1.00 for V4, sent, and ent_cak at every dimension;
+       the integrator 0.89–1.00, its sign thresholds awaiting the same
+       reference fix.
+
+    **THE SENTENCE THE WHOLE PROGRAM EARNED.** Curvature sign from sampled
+    geometry is solved by *static, pooled, natively-zeroed channels with
+    regime-matched references and learned fusion* — not by flows, warps, or
+    dynamics, each of which was tried and fell to an identified mechanism
+    (noise compounding, potential overwrite, seeding circularity, entropy
+    production, re-derivation). The dead ends are documented in the revival
+    zettel; the survivors are in this notebook.
+    """)
     return
 
 
