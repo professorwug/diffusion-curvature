@@ -41,7 +41,7 @@ def build_refs(reps=5):
                 print(f"[refs] {est}/{br}/d{d} ({time.time()-t0:.0f}s)", flush=True)
             df = pd.concat(rows, ignore_index=True)
             store[(est, br)] = df.groupby(["n_bucket", "true_dim"])[list(cs.CHANNELS)].agg(["mean", "std"])
-    joblib.dump(store, PROC / "dist_bakeoff2_refs.joblib")
+    joblib.dump(store, PROC / "dist_est_down_refs.joblib")
     print(f"[refs] done {time.time()-t0:.0f}s")
 
 
@@ -58,7 +58,7 @@ def _flatz(fr, ref):
 
 
 def run():
-    refs = joblib.load(PROC / "dist_bakeoff2_refs.joblib")
+    refs = joblib.load(PROC / "dist_est_down_refs.joblib")
     model = joblib.load(PROC / "suite_model.joblib")
     t0 = time.time(); rows = []
     for d in DIMS:
@@ -83,7 +83,7 @@ def run():
                     except Exception as ex:
                         print(f"  [err] d{d} {br} {est}: {str(ex)[:60]}", flush=True)
             print(f"[run] d{d} s{seed} ({time.time()-t0:.0f}s)", flush=True)
-    df = pd.DataFrame(rows); df.to_csv(PROC / "dist_bakeoff2_points.csv", index=False)
+    df = pd.DataFrame(rows); df.to_csv(PROC / "dist_est_down_points.csv", index=False)
     summarize(df); print(f"[run] done {time.time()-t0:.0f}s")
 
 
@@ -97,7 +97,7 @@ def summarize(df):
         rec["r_integ"] = v3.pearson(g.integ_mag, g.ks)
         rec["s_integ"] = v3.balanced_sign(g.integ_sign.values, g.ks.values)
         rows.append(rec)
-    sdf = pd.DataFrame(rows); sdf.to_csv(PROC / "dist_bakeoff2_summary.csv", index=False)
+    sdf = pd.DataFrame(rows); sdf.to_csv(PROC / "dist_est_down_summary.csv", index=False)
     pd.set_option("display.width", 260); pd.set_option("display.max_columns", None)
     for br in BRANCHES:
         print(f"\n=== branch {br}: field r / balanced sign (mean over d3-5) per estimator ===")

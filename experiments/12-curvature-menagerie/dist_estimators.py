@@ -191,8 +191,8 @@ def run_bakeoff():
                                       v3_flat=float(np.median(np.abs(fr.v3_defect)))))
             except Exception:
                 pass
-    df = pd.DataFrame(rows); df.to_csv(PROC / "dist_bakeoff_points.csv", index=False)
-    fdf = pd.DataFrame(flat_rows); fdf.to_csv(PROC / "dist_bakeoff_flatnull.csv", index=False)
+    df = pd.DataFrame(rows); df.to_csv(PROC / "dist_est_points.csv", index=False)
+    fdf = pd.DataFrame(flat_rows); fdf.to_csv(PROC / "dist_est_flatnull.csv", index=False)
     # summary: V4 and ent_cak field r, mean over d/seed, per (corruption, est)
     pd.set_option("display.width", 240)
     for chan in ("v4_m60", "ent_cak"):
