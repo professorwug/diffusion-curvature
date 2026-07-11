@@ -443,13 +443,20 @@ def _():
     3. **Colosseum (pure transfer)** — the transfer is carried by the
        *diffusion* channels: `ent_cak` alone reaches r = 0.55–0.77 per dim,
        matching the hand-built v6 composite, while V3/V4 sit at the floor
-       (colosseum |K| ~ 1–6 lies below their signal thresholds). Sign does not
-       yet transfer for anyone: the flat-*torus* reference miscalibrates zeros
-       for *embedded* pointclouds — the regime-matched embedded-plane
-       reference (v6's trick) is the scoped fix, in flight at time of writing.
+       (colosseum |K| ~ 1–6 lies below their signal thresholds). Sign
+       transfers once the reference matches the regime: swapping the
+       flat-torus reference for an **embedded flat-plane** reference restores
+       balanced sign from chance to **0.72/0.76/0.70 at d=3–5 (mean 0.67 ≈
+       v6's 0.68, beating v6 at its weakest cells d3–4)** — confirming the
+       failure was zero-calibration, never the channels
+       (`suite_e3_rescore.csv`). One honest tension remains: homogeneous
+       augmentation helps the homogeneous exam but hurts colosseum (it shifts
+       weight onto V4, which is floor-bound there) — reference *and* training
+       distribution must both match the data regime; a single
+       regime-spanning model is the open refinement.
     4. **SadSpheres** — AUC 1.00 for V4, sent, and ent_cak at every dimension;
-       the integrator 0.89–1.00, its sign thresholds awaiting the same
-       reference fix.
+       the integrator 0.89–1.00, with sign-at-zero rising to
+       **0.70/1.00/1.00/0.93/1.00** under the embedded reference.
 
     **THE SENTENCE THE WHOLE PROGRAM EARNED.** Curvature sign from sampled
     geometry is solved by *static, pooled, natively-zeroed channels with
