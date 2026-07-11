@@ -1,0 +1,11 @@
+dataset,ref,dim,n,sign_integ_warped,sign_integ_aug,sign_v4_m60,sign_v4_m120,sign_v3_defect,sign_sent,sign_ent_cak,sign_kappa,v6_sign
+E4 sadspheres,torus,2,60,0.525,0.55,0.5,0.5,0.475,1.0,0.75,0.975,0.7
+E4 sadspheres,torus,3,60,0.8,0.775,0.5,0.5,0.5,1.0,0.825,0.5,0.51
+E4 sadspheres,torus,4,60,0.8,0.55,0.5,0.85,0.5,1.0,0.625,0.5,0.52
+E4 sadspheres,torus,5,60,0.5,0.625,1.0,0.925,0.45,1.0,0.525,0.5,0.76
+E4 sadspheres,torus,6,60,1.0,1.0,0.7,0.5,0.5,1.0,0.5,0.5,0.93
+E4 sadspheres,embedded,2,60,0.7,0.95,0.5,0.5,0.475,1.0,1.0,1.0,0.7
+E4 sadspheres,embedded,3,60,1.0,0.6499999999999999,0.5,0.5,0.5,0.975,0.975,0.925,0.51
+E4 sadspheres,embedded,4,60,1.0,0.825,0.5,0.5,0.475,0.525,0.85,0.95,0.52
+E4 sadspheres,embedded,5,60,0.925,0.825,0.5,0.5,0.25,0.5,0.7,0.5,0.76
+E4 sadspheres,embedded,6,60,1.0,0.475,0.5,0.5,0.5,0.5,0.95,0.4,0.93

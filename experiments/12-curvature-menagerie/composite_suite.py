@@ -175,8 +175,40 @@ def run_flatref(reps: int = 8) -> None:
     print(f"[flatref] {len(df)} rows, {len(stats)} cells in {time.time()-t0:.0f}s")
 
 
-def load_flatref() -> pd.DataFrame:
-    return pd.read_pickle(PROC / "suite_flatref.pkl")
+def run_flatref_embedded(reps: int = 12) -> None:
+    """Embedded flat-plane reference: flat plane of intrinsic dim d in ambient
+    R^{d+1} (codim 1), through the identical X->cdist->D pipeline the battery
+    uses. This matches the *embedded* data regime (colosseum/sadspheres) so the
+    channel zero-point transfers; the intrinsic torus reference stays for
+    menagerie-native evals. Anchored at the centroid-nearest point (interior,
+    like a central origin)."""
+    from diffusion_curvature.datasets import plane
+    buckets = {2000: [2, 3, 4, 5, 6], 3000: [2, 3, 4, 5, 6]}
+    t0 = time.time()
+    rows = []
+    for n, dims in buckets.items():
+        for d in dims:
+            for rep in range(reps):
+                rng = np.random.default_rng(8000 + 13 * d + rep)
+                X = np.hstack([np.asarray(plane(n, dim=d)), np.zeros((n, 1))])
+                X = X + rng.normal(scale=1e-6, size=X.shape)
+                Xt = torch.as_tensor(X, dtype=torch.float32, device=DEVICE)
+                D = torch.cdist(Xt, Xt).cpu().numpy().astype(np.float64)
+                a = int(np.argmin(np.linalg.norm(X - X.mean(0), axis=1)))
+                fr = extract_raw(D, np.array([a]), d)
+                fr["n_bucket"] = n
+                rows.append(fr)
+            print(f"[flatref-emb] n={n} d={d} ({time.time()-t0:.0f}s)", flush=True)
+    df = pd.concat(rows, ignore_index=True)
+    stats = df.groupby(["n_bucket", "true_dim"])[list(CHANNELS)].agg(
+        ["mean", "std"])
+    stats.to_pickle(PROC / "suite_flatref_embedded.pkl")
+    print(f"[flatref-emb] {len(df)} rows, {len(stats)} cells in {time.time()-t0:.0f}s")
+
+
+def load_flatref(embedded: bool = False) -> pd.DataFrame:
+    name = "suite_flatref_embedded.pkl" if embedded else "suite_flatref.pkl"
+    return pd.read_pickle(PROC / name)
 
 
 def apply_flatz(df: pd.DataFrame, flatref: pd.DataFrame) -> pd.DataFrame:
@@ -598,6 +630,45 @@ def run_e4(device: str = DEVICE) -> None:
     print(sdf[show].round(3).to_string(index=False))
 
 
+def run_rescore() -> None:
+    """Re-score E3/E4 sign from the saved feature checkpoints under the intrinsic
+    (torus) vs embedded (plane) reference, for warped and augmented models. AUC
+    is reference-invariant; only the zero-referenced sign columns move."""
+    ref_tor = load_flatref(embedded=False)
+    ref_emb = load_flatref(embedded=True)
+    models = {"warped": joblib.load(PROC / "suite_model.joblib"),
+              "aug": joblib.load(PROC / "suite_model_aug.joblib")}
+    key_singles = ["v4_m60", "v4_m120", "v3_defect", "sent", "ent_cak", "kappa"]
+    v6_sign = {2: 0.70, 3: 0.51, 4: 0.52, 5: 0.76, 6: 0.93}
+
+    for tag, raw_path in (("E3 colosseum", PROC / "suite_e3_raw.csv"),
+                          ("E4 sadspheres", PROC / "suite_e4_raw.csv")):
+        raw = pd.read_csv(raw_path)
+        out_rows = []
+        for refname, ref in (("torus", ref_tor), ("embedded", ref_emb)):
+            dfz = apply_flatz(raw, ref)
+            preds = {m: predict(dfz, mdl) for m, mdl in models.items()}
+            for d, idx in dfz.groupby("dim").groups.items():
+                g = dfz.loc[idx]
+                ks = g["ks"].values
+                rec = dict(dataset=tag, ref=refname, dim=int(d), n=len(g))
+                for m in models:
+                    s = preds[m]["integ_sign"][[dfz.index.get_loc(i) for i in idx]]
+                    rec[f"sign_integ_{m}"] = v3.balanced_sign(s, ks)
+                for c in key_singles:
+                    rec[f"sign_{c}"] = v3.balanced_sign(g[c].values, ks)
+                rec["v6_sign"] = v6_sign.get(int(d), np.nan)
+                out_rows.append(rec)
+        sdf = pd.DataFrame(out_rows)
+        sfx = "e3" if tag.startswith("E3") else "e4"
+        sdf.to_csv(PROC / f"suite_{sfx}_rescore.csv", index=False)
+        pd.set_option("display.width", 260); pd.set_option("display.max_columns", None)
+        print(f"\n=== {tag}: balanced sign, torus vs embedded reference ===")
+        show = ["ref", "dim", "sign_integ_warped", "sign_integ_aug",
+                "sign_v4_m60", "sign_ent_cak", "sign_sent", "sign_kappa", "v6_sign"]
+        print(sdf.sort_values(["dim", "ref"])[show].round(3).to_string(index=False))
+
+
 def main() -> None:
     global _AUG
     ap = argparse.ArgumentParser()
@@ -605,6 +676,8 @@ def main() -> None:
                     help="use the homogeneous-augmented model + suffixed outputs")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("flatref")
+    sub.add_parser("flatref-embedded")
+    sub.add_parser("rescore")
     tr = sub.add_parser("train"); tr.add_argument("--n-manifolds", type=int, default=72)
     tr.add_argument("--reuse", action="store_true",
                     help="reuse cached warped features from suite_train_points.csv")
@@ -615,6 +688,10 @@ def main() -> None:
     _AUG = args.aug
     if args.cmd == "flatref":
         run_flatref()
+    elif args.cmd == "flatref-embedded":
+        run_flatref_embedded()
+    elif args.cmd == "rescore":
+        run_rescore()
     elif args.cmd == "train":
         run_train(n_manifolds=args.n_manifolds, aug=args.aug, reuse=args.reuse)
     elif args.cmd == "e1":
