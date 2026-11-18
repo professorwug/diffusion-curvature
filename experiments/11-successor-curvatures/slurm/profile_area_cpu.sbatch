@@ -1,6 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=dc-profile-area
 #SBATCH --partition=cpu
+#SBATCH --account=henderson
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=32
