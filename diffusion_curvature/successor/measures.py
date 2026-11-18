@@ -80,3 +80,63 @@ def truncated_sliced_w1(
             coords, coords, w1, w2, n_projections=n_projections, seed=seed
         )
     )
+
+
+# ---------------------------------------------------------------------------
+# The gESS profile and its area
+# ---------------------------------------------------------------------------
+# Ported 2026-11-18 from reason_reckon (`successor_entropies.gess_profile` and its
+# neighbours, experiments/44, notebook 06, section 2b). The evidence for the three
+# choices (no hand-set scale, no crowding division, a ceiling set by the population)
+# is in reason_reckon experiments/47, notebook 05, sections 9 and 10.
+
+PROFILE_KAPPAS = 2.0 ** np.arange(-1, 13.5, 0.5)   # angular resolutions sqrt(2 / kappa) from 115 degrees down to 0.9
+
+
+def gess_profile(
+    M: np.ndarray,
+    B_embeddings: np.ndarray,
+    tau: float = 1.0,
+    kappas: np.ndarray = PROFILE_KAPPAS,
+    device: str | torch.device = "cpu",
+) -> tuple[np.ndarray, np.ndarray]:
+    """The successor measure of every row of `M`, read at every scale.
+
+    The weights are softmax(M / tau) over the corpus. At each kernel
+    concentration kappa the reading is the log geometric effective sample size
+    (You and Cho 2026): minus the log of pi' K pi with K = exp(-kappa (1 - cos))
+    between the unit-normalised backward embeddings.
+
+    Returns:
+        G   : (T, len(kappas)), rising with kappa from 0 towards its ceiling
+        top : (T,) the ceiling, log ESS of the weights
+    """
+    with torch.no_grad():
+        Bu = torch.nn.functional.normalize(
+            torch.as_tensor(np.asarray(B_embeddings), dtype=torch.float64, device=device), dim=1)
+        D = 1 - (Bu @ Bu.T).clamp(-1, 1)
+        Pi = torch.softmax(
+            torch.as_tensor(np.asarray(M), dtype=torch.float64, device=device) / max(tau, 1e-12), 1)
+        top = -torch.log((Pi ** 2).sum(1))
+        G = torch.stack(
+            [-torch.log(((Pi @ torch.exp(-float(k) * D)) * Pi).sum(1)) for k in kappas], 1)
+        return G.cpu().numpy(), top.cpu().numpy()
+
+
+def convergence_scale(
+    G: np.ndarray, top: np.ndarray, kappas: np.ndarray = PROFILE_KAPPAS, share: float = 0.95,
+) -> float:
+    """The population's ceiling for the area (after Limbeck et al. 2024): the
+    first concentration of the grid at which the median row's profile has
+    reached `share` of its ceiling. The grid's last scale when it never does."""
+    med = np.median(G / np.maximum(top[:, None], 1e-9), 0)
+    hit = np.where(med >= share)[0]
+    return float(kappas[hit[0]] if len(hit) else kappas[-1])
+
+
+def profile_area(G: np.ndarray, kappa_max: float, kappas: np.ndarray = PROFILE_KAPPAS) -> np.ndarray:
+    """The mean of each row's profile over the grid's scales coarser than
+    `kappa_max` (at least the coarsest one)."""
+    keep = np.asarray(kappas) < kappa_max
+    keep[0] = True
+    return G[:, keep].mean(1)

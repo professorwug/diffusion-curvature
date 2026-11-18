@@ -24,7 +24,11 @@ from sklearn.neighbors import NearestNeighbors
 from ..trajectory_utils import subsample_trajectories
 from .fb_modules import BackwardMap, ForwardMap
 from .measures import (
+    PROFILE_KAPPAS,
     compute_successor_measures,
+    convergence_scale,
+    gess_profile,
+    profile_area,
     softmax_measure,
     truncated_sliced_w1,
 )
@@ -192,6 +196,56 @@ class SuccessorEntropyCurvature(_SuccessorCurvatureBase):
         P = np.clip(P, 1e-12, 1.0)
         H = -(P * np.log(P)).sum(axis=1)
         self.curvature_ = -H
+        return self.curvature_
+
+
+class SuccessorProfileArea(_SuccessorCurvatureBase):
+    """Area under the gESS profile of the successor measure, per point.
+
+    Where ``SuccessorEntropyCurvature`` counts the corpus points a walk may
+    reach, this counts how many of them are distinct at each resolution of the
+    backward embedding, and averages that count over resolutions up to the
+    population's convergence scale. It takes no kernel scale from the user.
+
+    Points are comparable only under one ceiling. ``kappa_max=None`` sets it
+    from the rows of this call. To compare several point clouds, compute their
+    profiles (``profile_``, ``ceiling_``), set one ``kappa_max`` on the union
+    with ``convergence_scale``, and take ``profile_area`` under it.
+
+    As with the entropy, more spread means more negative curvature, so
+    ``fit_transform`` returns minus the area.
+    """
+
+    def __init__(self, tau: float = 1.0, kappa_max: float | None = None,
+                 share: float = 0.95, **kwargs):
+        super().__init__(**kwargs)
+        self.tau = tau
+        self.kappa_max = kappa_max
+        self.share = share
+
+    def fit_transform(
+        self,
+        G: pygsp.graphs.Graph | None = None,
+        X: np.ndarray | None = None,
+        trajectories: np.ndarray | list[np.ndarray] | None = None,
+        F_embeddings: np.ndarray | None = None,
+        B_embeddings: np.ndarray | None = None,
+        M: np.ndarray | None = None,
+    ) -> np.ndarray:
+        M_mat, F_emb, B_emb = self._resolve_inputs(
+            G, X, trajectories, F_embeddings, B_embeddings, M
+        )
+        self.M_ = M_mat
+        self.F_ = F_emb
+        self.B_ = B_emb
+
+        self.profile_, self.ceiling_ = gess_profile(
+            M_mat, B_emb, tau=self.tau, device=self.device)
+        self.kappa_max_ = (
+            convergence_scale(self.profile_, self.ceiling_, share=self.share)
+            if self.kappa_max is None else float(self.kappa_max)
+        )
+        self.curvature_ = -profile_area(self.profile_, self.kappa_max_)
         return self.curvature_
 
 
