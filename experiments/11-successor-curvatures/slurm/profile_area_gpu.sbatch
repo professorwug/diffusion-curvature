@@ -20,7 +20,7 @@
 #   ~/src/reason_reckon/.zetteldev/della/bin/della-submit --no-wait --array 0-<NUM_TASKS-1> \
 #       --env NUM_TASKS=<NUM_TASKS> ~/src/diffusion-curvature/experiments/11-successor-curvatures/slurm/profile_area_gpu.sbatch
 #
-# preflight: cd .. && JAX_PLATFORMS=cpu CUDA_VISIBLE_DEVICES= ../../.pixi/envs/default/bin/python benchmark_profile_area.py fleet --test-run --device cpu --prep-workers 2 --out-dir /tmp/dc_profile_fleet_preflight_$USER
+# preflight: cd .. && JAX_PLATFORMS=cpu CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 ../../.pixi/envs/default/bin/python -c "import numpy as np, benchmark_profile_area as b; from diffusion_curvature.successor.ensemble import FleetFBTrainer as F; t = F(obs_dim=3, seeds=[1, 2], n_epochs=1, device='cpu', **b.FB_BASE).fit([np.random.rand(4, 9, 3).astype('float32')] * 2); print('fleet of 2 fits:', t.measures(0, np.zeros((5, 3)), np.zeros((5, 3)))[0].shape)"
 set -euo pipefail
 cd "$HOME/src/diffusion-curvature/experiments/11-successor-curvatures"
 PY=../../.pixi/envs/default/bin/python
