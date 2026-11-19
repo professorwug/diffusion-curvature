@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --job-name=dc-profile-fleet
-#SBATCH --partition=gpu
 #SBATCH --account=henderson
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -10,6 +9,8 @@
 #SBATCH --time=01:00:00
 #SBATCH --output=/home/km5839/src/diffusion-curvature/experiments/11-successor-curvatures/logs/profile_fleet_%A_%a.out
 # The gESS profile area on the Curvature Colosseum, a fleet of FB nets to a card.
+# No partition is named: Della refuses a script that names `gpu`, and routes a job that
+# asks for a card and names none to the A100s itself.
 # One net cannot fill a card, so FLEET of them train in one batched pass: every pending
 # manifold of a (regime, dimension) group at once. NUM_TASKS array tasks tile the ten
 # groups (two regimes by five dimensions). A task appends to its own shard after every
